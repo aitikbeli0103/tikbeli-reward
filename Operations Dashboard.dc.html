@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0C0D;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#F3F5F4}
+a{color:#9BDBB5}a:hover{color:#B9EDCB}
+*{-webkit-tap-highlight-color:transparent}
+.sq::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 44px;box-sizing:border-box">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:#101315;overflow:hidden">
+
+<div style="flex-shrink:0;padding:52px 16px 13px;border-bottom:1px solid #222A2B">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="flex:1;min-width:0">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#8A9694">{{ headerKicker }}</div>
+<div style="font-size:18px;font-weight:800;letter-spacing:-.3px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ headerTitle }}</div>
+</div>
+<div onClick="{{ cycleOutlet }}" style="display:flex;align-items:center;gap:7px;flex-shrink:0;padding:10px 13px;border-radius:12px;background:#1F2626;border:1px solid #2B3334;cursor:pointer" style-hover="background:#252D2D">
+<div style="font-size:12px;font-weight:800;color:#F3F5F4;white-space:nowrap">{{ outletName }}</div>
+<div style="font-size:11px;font-weight:800;color:#8A9694">⌄</div>
+</div>
+</div>
+</div>
+
+<div class="sq" style="flex:1;overflow-y:auto;overflow-x:hidden">
+<div style="{{ zoomStyle }}">
+
+<sc-if value="{{ isOps }}" hint-placeholder-val="{{ true }}">
+<div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:18px">
+
+<sc-if value="{{ hasAlerts }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ alerts }}" as="a" hint-placeholder-count="3">
+<div onClick="{{ a.act }}" style="{{ a.rowStyle }}">
+<div style="{{ a.iconStyle }}">{{ a.icon }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ a.title }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#AEB9B8;margin-top:3px;line-height:1.4">{{ a.detail }}</div>
+</div>
+<div style="{{ a.ctaStyle }}">{{ a.cta }}</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:18px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.todaySales }}</div>
+<div style="display:flex;align-items:center;gap:5px;background:#1F2A24;border:1px solid #2F4438;border-radius:99px;padding:5px 10px">
+<div style="width:6px;height:6px;border-radius:99px;background:#9BDBB5"></div>
+<div style="font-size:11px;font-weight:800;color:#9BDBB5;letter-spacing:.4px">{{ t.live }}</div>
+</div>
+</div>
+<div style="display:flex;align-items:flex-end;gap:10px;margin-top:13px">
+<div style="font-size:40px;font-weight:800;letter-spacing:-1.8px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">{{ salesToday }}</div>
+<div style="font-size:12px;font-weight:700;color:#9BDBB5;padding-bottom:6px;min-width:0;white-space:nowrap">{{ vsYesterday }}</div>
+</div>
+<div style="height:11px;border-radius:99px;background:#232B2C;margin-top:15px;overflow:hidden">
+<div style="{{ targetBarStyle }}"></div>
+</div>
+<div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px;font-weight:700">
+<div style="color:#AEB9B8">{{ t.dayTarget }} {{ dayTarget }}</div>
+<div style="{{ targetPctStyle }}">{{ targetPct }}</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ tiles }}" as="x" hint-placeholder-count="6">
+<div style="{{ x.cardStyle }}">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8A9694;line-height:1.3;height:26px;overflow:hidden">{{ x.label }}</div>
+<div style="{{ x.valueStyle }}">{{ x.value }}</div>
+<div style="{{ x.subStyle }}">{{ x.sub }}</div>
+</div>
+</sc-for>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.collections }}</div>
+<div style="font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ collectedTotal }}</div>
+</div>
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:6px 16px">
+<sc-for list="{{ collections }}" as="c" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #1E2526">
+<div style="{{ c.dotStyle }}"></div>
+<div style="flex:1;min-width:0;font-size:13px;font-weight:700">{{ c.label }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#8A9694;white-space:nowrap">{{ c.count }}</div>
+<div style="font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:78px;text-align:right">{{ c.amount }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.attendance }}</div>
+<div style="font-size:12px;font-weight:700;color:#8A9694">8 / 10 {{ t.onShift }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ staffRows }}" as="p" hint-placeholder-count="4">
+<div style="{{ p.rowStyle }}">
+<div style="{{ p.avatarStyle }}">{{ p.initials }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800">{{ p.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#AEB9B8;margin-top:3px">{{ p.detail }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ p.sales }}</div>
+<div style="{{ p.statusStyle }}">{{ p.status }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.customers }}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+<sc-for list="{{ custTiles }}" as="x" hint-placeholder-count="3">
+<div style="border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:14px 12px">
+<div style="font-size:24px;font-weight:800;letter-spacing:-.8px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">{{ x.value }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#8A9694;margin-top:6px;line-height:1.25">{{ x.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.payrollStatus }}</div>
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:17px">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+<div style="min-width:0">
+<div style="font-size:29px;font-weight:800;letter-spacing:-1.1px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">RM 41,280</div>
+<div style="font-size:12px;font-weight:700;color:#AEB9B8;margin-top:6px">{{ t.estPayroll }}</div>
+</div>
+<div style="flex-shrink:0;padding:6px 11px;border-radius:99px;font-size:11px;font-weight:800;background:#2A2622;border:1px solid #453C2C;color:#E0B978">{{ t.draft }}</div>
+</div>
+<div style="font-size:11.5px;font-weight:600;color:#8A9694;line-height:1.5;margin-top:13px">{{ t.payrollNote }}</div>
+</div>
+</div>
+
+<div onClick="{{ toClosing }}" style="border-radius:18px;padding:17px;background:#9BDBB5;display:flex;align-items:center;gap:12px;cursor:pointer" style-hover="background:#B9EDCB">
+<div style="flex:1;min-width:0">
+<div style="font-size:16px;font-weight:800;color:#102018">{{ t.dailyClosing }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#2C4A39;margin-top:3px">{{ t.closingSub }}</div>
+</div>
+<div style="font-size:18px;font-weight:800;color:#102018">›</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isClosing }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:16px">
+
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:17px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.cashDrawer }}</div>
+<div style="display:flex;align-items:flex-end;gap:10px;margin-top:11px">
+<div style="{{ varianceStyle }}">{{ varianceLabel }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:15px">
+<sc-for list="{{ drawer }}" as="d" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="flex:1;min-width:0;font-size:13px;font-weight:700;color:#AEB9B8">{{ d.label }}</div>
+<div style="{{ d.valueStyle }}">{{ d.value }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;overflow:hidden">
+<div style="padding:15px 16px 11px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.collections }}</div>
+<sc-for list="{{ collections }}" as="c" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid #1E2526">
+<div style="{{ c.dotStyle }}"></div>
+<div style="flex:1;min-width:0;font-size:13px;font-weight:700">{{ c.label }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#8A9694;white-space:nowrap">{{ c.count }}</div>
+<div style="font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:78px;text-align:right">{{ c.amount }}</div>
+</div>
+</sc-for>
+<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid #2B3334;background:#141A1B">
+<div style="flex:1;min-width:0;font-size:13.5px;font-weight:800">{{ t.totalCollected }}</div>
+<div style="font-size:17px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ collectedTotal }}</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ closingTiles }}" as="x" hint-placeholder-count="4">
+<div style="{{ x.cardStyle }}">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#8A9694;line-height:1.3;height:26px;overflow:hidden">{{ x.label }}</div>
+<div style="{{ x.valueStyle }}">{{ x.value }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:17px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.closingNotes }}</div>
+<div style="margin-top:11px;padding:14px;border-radius:12px;background:#141A1B;border:1px solid #232B2C;font-size:12.5px;font-weight:600;color:#8A9694;line-height:1.5">{{ t.notesPlaceholder }}</div>
+</div>
+
+<sc-if value="{{ blockedByExceptions }}" hint-placeholder-val="{{ true }}">
+<div style="border-radius:18px;border:1px solid #4A322A;background:#1F1917;padding:16px">
+<div style="font-size:13.5px;font-weight:800;color:#E89A6B">{{ t.resolveFirst }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#C79A80;line-height:1.5;margin-top:5px">{{ t.resolveNote }}</div>
+</div>
+</sc-if>
+
+<div onClick="{{ confirmClosing }}" style="{{ confirmStyle }}">{{ confirmLabel }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#8A9694;line-height:1.5;text-align:center;padding:0 8px">{{ t.lockNote }}</div>
+
+</div>
+</sc-if>
+
+</div>
+</div>
+
+<div style="flex-shrink:0;display:flex;background:#141A1B;border-top:1px solid #222A2B;padding:11px 6px 32px">
+<sc-for list="{{ tabs }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">
+<div style="{{ b.dotStyle }}"></div>
+{{ b.label }}
+</div>
+</sc-for>
+</div>
+
+</div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940},&quot;displaySize&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Standard&quot;,&quot;Large&quot;,&quot;Extra Large&quot;],&quot;default&quot;:&quot;Large&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Accessibility&quot;},&quot;hasExceptions&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Daily closing&quot;}}">
+const money = (n) => "RM " + Math.round(n).toLocaleString("en-US");
+
+const T = {
+  en: { ops: "Operations", closing: "Daily closing", today: "Today · 20 Sept",
+    live: "LIVE", todaySales: "Today's sales", dayTarget: "Day target", vsYest: "vs yesterday",
+    collections: "Collections", attendance: "Attendance & performance", onShift: "on shift",
+    customers: "Customers today", payrollStatus: "Payroll", estPayroll: "Estimated September payroll",
+    draft: "DRAFT", payrollNote: "Updates from approved activity. Locks when HR approves the run.",
+    dailyClosing: "Start daily closing", closingSub: "Reconcile and lock today",
+    cashDrawer: "Cash drawer", totalCollected: "Total collected",
+    closingNotes: "Closing notes", notesPlaceholder: "Add a note for anything unusual today — refunds, disputes, staff changes.",
+    resolveFirst: "2 exceptions need resolving", resolveNote: "One unallocated payment and one refund awaiting approval. Closing stays open until both are cleared.",
+    confirm: "Confirm and lock day", locked: "Day locked ✓",
+    lockNote: "Confirming creates a locked snapshot. Later corrections need an authorised adjustment with a reason.",
+    tApptmts: "Appointments", tCheckins: "Checked in", tTreatments: "Treatments done",
+    tOutstanding: "Outstanding", tRefunds: "Refunds pending", tLowStock: "Low stock",
+    cCash: "Cash", cCard: "Credit card", cDebit: "Debit card", cQr: "DuitNow QR", cTransfer: "Bank transfer",
+    cNew: "New", cReturning: "Returning", cReferrals: "Referrals",
+    sOnTime: "On time", sLate: "Late", sAbsent: "Absent", sLeave: "Medical leave",
+    expected: "Expected in drawer", counted: "Counted", variance: "Variance",
+    receipts: "Receipts issued", avgTicket: "Average ticket", voids: "Voids", discounts: "Discounts given",
+    alertPayment: "Unallocated payment", alertPaymentD: "RM 890 received, not matched to an invoice",
+    alertRefund: "Refund awaiting approval", alertRefundD: "Amy Wong · RM 420 · raised 2h ago",
+    alertStock: "3 products below reorder level", alertStockD: "Hydra serum, collagen ampoule, SPF 50",
+    review: "Review", approve: "Approve", order: "Order" },
+  zh: { ops: "营运看板", closing: "每日结账", today: "今日 · 9月20日",
+    live: "实时", todaySales: "今日营业额", dayTarget: "日目标", vsYest: "较昨日",
+    collections: "收款明细", attendance: "出勤与业绩", onShift: "在岗",
+    customers: "今日顾客", payrollStatus: "薪资", estPayroll: "九月薪资预估",
+    draft: "草稿", payrollNote: "依据已核准的业务活动更新，HR 核准后锁定。",
+    dailyClosing: "开始每日结账", closingSub: "核对并锁定今日",
+    cashDrawer: "现金抽屉", totalCollected: "收款总额",
+    closingNotes: "结账备注", notesPlaceholder: "记录今日异常情况 — 退款、纠纷、人员调动。",
+    resolveFirst: "2 项异常待处理", resolveNote: "1 笔未配对款项与 1 笔待核准退款。两项清除前无法结账。",
+    confirm: "确认并锁定当日", locked: "当日已锁定 ✓",
+    lockNote: "确认后生成锁定快照。事后更正须经授权调整并填写原因。",
+    tApptmts: "预约数", tCheckins: "已到店", tTreatments: "完成疗程",
+    tOutstanding: "未收款", tRefunds: "待退款", tLowStock: "低库存",
+    cCash: "现金", cCard: "信用卡", cDebit: "借记卡", cQr: "DuitNow QR", cTransfer: "银行转账",
+    cNew: "新客", cReturning: "回头客", cReferrals: "推荐",
+    sOnTime: "准时", sLate: "迟到", sAbsent: "缺勤", sLeave: "病假",
+    expected: "应有金额", counted: "实点金额", variance: "差异",
+    receipts: "开单数", avgTicket: "客单价", voids: "作废单", discounts: "折扣金额",
+    alertPayment: "未配对款项", alertPaymentD: "收到 RM890，未匹配发票",
+    alertRefund: "退款待核准", alertRefundD: "Amy Wong · RM420 · 2小时前提交",
+    alertStock: "3 项产品低于补货线", alertStockD: "水润精华、胶原安瓶、SPF50",
+    review: "处理", approve: "核准", order: "补货" },
+  ms: { ops: "Operasi", closing: "Penutupan harian", today: "Hari ini · 20 Sept",
+    live: "LANGSUNG", todaySales: "Jualan hari ini", dayTarget: "Sasaran harian", vsYest: "vs semalam",
+    collections: "Kutipan", attendance: "Kehadiran & prestasi", onShift: "bertugas",
+    customers: "Pelanggan hari ini", payrollStatus: "Gaji", estPayroll: "Anggaran gaji September",
+    draft: "DRAF", payrollNote: "Dikemas kini daripada aktiviti diluluskan. Dikunci apabila HR meluluskan.",
+    dailyClosing: "Mula penutupan harian", closingSub: "Selaras dan kunci hari ini",
+    cashDrawer: "Laci tunai", totalCollected: "Jumlah kutipan",
+    closingNotes: "Nota penutupan", notesPlaceholder: "Catat perkara luar biasa hari ini — bayaran balik, pertikaian, pertukaran staf.",
+    resolveFirst: "2 pengecualian perlu diselesaikan", resolveNote: "Satu bayaran tidak diperuntukkan dan satu bayaran balik menunggu kelulusan.",
+    confirm: "Sahkan dan kunci hari", locked: "Hari dikunci ✓",
+    lockNote: "Pengesahan mencipta petikan terkunci. Pembetulan kemudian perlu pelarasan yang dibenarkan.",
+    tApptmts: "Temujanji", tCheckins: "Daftar masuk", tTreatments: "Rawatan selesai",
+    tOutstanding: "Tertunggak", tRefunds: "Bayaran balik", tLowStock: "Stok rendah",
+    cCash: "Tunai", cCard: "Kad kredit", cDebit: "Kad debit", cQr: "DuitNow QR", cTransfer: "Pindahan bank",
+    cNew: "Baharu", cReturning: "Kembali", cReferrals: "Rujukan",
+    sOnTime: "Tepat masa", sLate: "Lewat", sAbsent: "Tidak hadir", sLeave: "Cuti sakit",
+    expected: "Dijangka dalam laci", counted: "Dikira", variance: "Perbezaan",
+    receipts: "Resit dikeluarkan", avgTicket: "Purata tiket", voids: "Pembatalan", discounts: "Diskaun diberi",
+    alertPayment: "Bayaran tidak diperuntukkan", alertPaymentD: "RM890 diterima, tiada padanan invois",
+    alertRefund: "Bayaran balik menunggu kelulusan", alertRefundD: "Amy Wong · RM420 · 2j lalu",
+    alertStock: "3 produk bawah paras pesanan", alertStockD: "Serum hydra, ampul kolagen, SPF 50",
+    review: "Semak", approve: "Lulus", order: "Pesan" }
+};
+
+const OUTLETS = ["Bukit Bintang", "Mid Valley", "Sunway", "All outlets"];
+
+class Component extends DCLogic {
+  state = { screen: "ops", lang: "en", outlet: 0, locked: false };
+
+  renderVals() {
+    const s = this.state, lang = s.lang, t = T[lang];
+    const L3 = (e, z, m) => ({ en: e, zh: z, ms: m })[lang];
+
+    const zoom = { Standard: 1, Large: 1.08, "Extra Large": 1.18 }[this.props.displaySize ?? "Large"] ?? 1.08;
+    const exceptions = this.props.hasExceptions ?? true;
+    const all = s.outlet === 3;
+    const mult = all ? 3.4 : 1;
+
+    const sales = Math.round(18640 * mult);
+    const target = Math.round(24000 * mult);
+    const pct = Math.min(100, (sales / target) * 100);
+
+    const coll = [
+      { label: t.cCash, amount: 3210, count: 11, color: "#9BDBB5" },
+      { label: t.cCard, amount: 8450, count: 14, color: "#8FBEDB" },
+      { label: t.cDebit, amount: 2180, count: 6, color: "#C9A7E8" },
+      { label: t.cQr, amount: 3900, count: 19, color: "#E0B978" },
+      { label: t.cTransfer, amount: 900, count: 2, color: "#AEB9B8" }
+    ].map(c => ({ ...c, amount: Math.round(c.amount * mult), count: Math.round(c.count * mult) }));
+    const collected = coll.reduce((a, c) => a + c.amount, 0);
+
+    const tile = (label, value, sub, tone) => ({ label, value, sub,
+      cardStyle: "border-radius:16px;border:1px solid " + (tone === "warn" ? "#4A322A" : "#2B3334") + ";background:#181D1E;padding:15px",
+      valueStyle: "font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:1;margin-top:4px;font-variant-numeric:tabular-nums;white-space:nowrap;color:" +
+        (tone === "warn" ? "#E89A6B" : "#F3F5F4"),
+      subStyle: "font-size:11.5px;font-weight:700;margin-top:6px;color:" + (tone === "warn" ? "#C79A80" : "#8A9694") });
+
+    return {
+      t, zoomStyle: "zoom:" + zoom,
+      isOps: s.screen === "ops", isClosing: s.screen === "closing",
+      headerKicker: s.screen === "ops" ? t.today : t.ops,
+      headerTitle: s.screen === "ops" ? t.ops : t.closing,
+      outletName: OUTLETS[s.outlet] === "All outlets" ? L3("All outlets", "所有分店", "Semua cawangan") : OUTLETS[s.outlet],
+      cycleOutlet: () => this.setState({ outlet: (s.outlet + 1) % OUTLETS.length }),
+      toClosing: () => this.setState({ screen: "closing" }),
+
+      hasAlerts: exceptions,
+      alerts: [
+        { icon: "!", title: t.alertPayment, detail: t.alertPaymentD, cta: t.review, warn: true },
+        { icon: "↺", title: t.alertRefund, detail: t.alertRefundD, cta: t.approve, warn: true },
+        { icon: "▦", title: t.alertStock, detail: t.alertStockD, cta: t.order, warn: false }
+      ].map(a => ({ ...a,
+        rowStyle: "display:flex;align-items:center;gap:12px;border-radius:16px;padding:14px;cursor:pointer;background:#181D1E;border:1px solid " + (a.warn ? "#4A322A" : "#2B3334"),
+        iconStyle: "width:36px;height:36px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;" +
+          (a.warn ? "background:#3A2A22;color:#E89A6B" : "background:#1F2626;color:#AEB9B8"),
+        ctaStyle: "flex-shrink:0;padding:9px 13px;border-radius:10px;font-size:11.5px;font-weight:800;" +
+          (a.warn ? "background:#9BDBB5;color:#102018" : "background:#1F2626;border:1px solid #2B3334;color:#F3F5F4"),
+        act: () => this.setState({ screen: "ops" }) })),
+
+      salesToday: money(sales),
+      vsYesterday: "▲ 12% " + t.vsYest,
+      dayTarget: money(target),
+      targetPct: Math.round(pct) + "%",
+      targetPctStyle: "font-weight:700;color:" + (pct >= 70 ? "#9BDBB5" : "#E0B978"),
+      targetBarStyle: "height:100%;width:" + pct + "%;border-radius:99px;background:linear-gradient(90deg,#5FB88A,#9BDBB5)",
+
+      tiles: [
+        tile(t.tApptmts, String(Math.round(24 * mult)), "6 " + L3("walk-ins", "散客", "walk-in")),
+        tile(t.tCheckins, String(Math.round(19 * mult)), "3 " + L3("waiting", "等候中", "menunggu")),
+        tile(t.tTreatments, String(Math.round(16 * mult)), "2 " + L3("in progress", "进行中", "sedang berjalan")),
+        tile(t.tOutstanding, money(4320 * mult), "7 " + L3("invoices", "张发票", "invois"), "warn"),
+        tile(t.tRefunds, money(420), "1 " + L3("awaiting approval", "待核准", "menunggu"), exceptions ? "warn" : null),
+        tile(t.tLowStock, "3", L3("below reorder level", "低于补货线", "bawah paras pesanan"), "warn")
+      ],
+
+      collections: coll.map(c => ({ label: c.label, amount: money(c.amount),
+        count: c.count + " " + L3("txn", "笔", "urus"),
+        dotStyle: "width:10px;height:10px;border-radius:99px;flex-shrink:0;background:" + c.color })),
+      collectedTotal: money(collected),
+
+      staffRows: [
+        { initials: "SL", name: "Sarah Lim", st: "sOnTime", detail: L3("Clocked in 9:52 AM · 4 treatments", "9:52 打卡 · 4个疗程", "Masuk 9:52 AM · 4 rawatan"), sales: money(2140) },
+        { initials: "JW", name: "Joyce Wong", st: "sLate", detail: L3("Clocked in 10:24 AM · 22 min late", "10:24 打卡 · 迟到22分钟", "Masuk 10:24 AM · lewat 22 min"), sales: money(1680) },
+        { initials: "NH", name: "Nurul Huda", st: "sLeave", detail: L3("MC submitted · approved", "已提交病假 · 已核准", "MC dihantar · diluluskan"), sales: "—" },
+        { initials: "KC", name: "Kelly Chan", st: "sAbsent", detail: L3("No clock-in, not contactable", "未打卡，无法联系", "Tiada daftar masuk"), sales: "—" }
+      ].map(p => {
+        const tone = { sOnTime: "#1F2A24|#9BDBB5|#2B3334", sLate: "#3A2A22|#E89A6B|#4A322A",
+          sLeave: "#1F2626|#AEB9B8|#2B3334", sAbsent: "#3A2222|#E88080|#4A2A2A" }[p.st].split("|");
+        return { initials: p.initials, name: p.name, detail: p.detail, sales: p.sales, status: t[p.st],
+          rowStyle: "display:flex;align-items:center;gap:12px;border-radius:16px;background:#181D1E;padding:13px 14px;border:1px solid " + tone[2],
+          avatarStyle: "width:40px;height:40px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;background:" + tone[0] + ";color:" + tone[1],
+          statusStyle: "font-size:11px;font-weight:800;padding:4px 8px;border-radius:7px;margin-top:5px;display:inline-block;background:" + tone[0] + ";color:" + tone[1] };
+      }),
+
+      custTiles: [
+        { value: String(Math.round(5 * mult)), label: t.cNew },
+        { value: String(Math.round(14 * mult)), label: t.cReturning },
+        { value: String(Math.round(3 * mult)), label: t.cReferrals }
+      ],
+
+      drawer: [
+        { label: t.expected, value: money(3210 * mult), tone: null },
+        { label: t.counted, value: money(3190 * mult), tone: null },
+        { label: t.variance, value: "−" + money(20 * mult), tone: "warn" }
+      ].map(d => ({ label: d.label, value: d.value,
+        valueStyle: "font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:" + (d.tone === "warn" ? "#E89A6B" : "#F3F5F4") })),
+      varianceLabel: "−" + money(20 * mult) + " " + t.variance,
+      varianceStyle: "font-size:30px;font-weight:800;letter-spacing:-1.1px;line-height:1;color:#E89A6B;white-space:nowrap",
+
+      closingTiles: [
+        tile(t.receipts, String(Math.round(52 * mult)), ""),
+        tile(t.avgTicket, money(358), ""),
+        tile(t.voids, "1", "", "warn"),
+        tile(t.discounts, money(640 * mult), "")
+      ].map(x => ({ ...x, subStyle: "display:none" })),
+
+      blockedByExceptions: exceptions && !s.locked,
+      confirmLabel: s.locked ? t.locked : t.confirm,
+      confirmStyle: "border-radius:99px;padding:17px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;" +
+        (s.locked ? "background:#1F2A24;border:1px solid #2F4438;color:#9BDBB5"
+          : exceptions ? "background:#1F2626;border:1px solid #2B3334;color:#6F7B7A;cursor:not-allowed"
+          : "background:#9BDBB5;color:#102018"),
+      confirmClosing: () => { if (!exceptions) this.setState({ locked: !s.locked }); },
+
+      tabs: [["ops", t.ops], ["closing", t.closing]].map(([k, label]) => ({
+        label, pick: () => this.setState({ screen: k }),
+        style: "flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;font-size:11.5px;font-weight:800;cursor:pointer;color:" + (s.screen === k ? "#9BDBB5" : "#8A9694"),
+        dotStyle: "width:9px;height:9px;border-radius:99px;background:" + (s.screen === k ? "#9BDBB5" : "#2B3334") }))
+    };
+  }
+}
+</script>
+</body>
+</html>

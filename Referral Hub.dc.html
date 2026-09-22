@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+body{margin:0;background:#E7E0F7;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#3A2F55}
+a{color:#7B68D9}a:hover{color:#6250C0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+.sq::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 44px">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#F5F0FF 0%,#EDE6FB 100%);overflow:hidden">
+
+<div style="flex-shrink:0;padding:52px 14px 12px;background:rgba(255,255,255,.82);box-shadow:0 6px 16px rgba(110,91,196,.09)">
+<div style="display:flex;align-items:center;gap:9px">
+<img src="brand/tikbeli-reward-mark.png" alt="" style="width:36px;height:36px;border-radius:12px;object-fit:contain;flex-shrink:0">
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16.5px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ headerTitle }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#6B6385;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ headerSub }}</div>
+</div>
+<div style="display:flex;gap:2px;background:#EEE8FC;border-radius:12px;padding:3px;flex-shrink:0">
+<sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+<div onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;gap:3px;background:#EEE8FC;border-radius:13px;padding:3px;margin-top:11px">
+<sc-for list="{{ roles }}" as="r" hint-placeholder-count="2">
+<div onClick="{{ r.pick }}" style="{{ r.style }}">{{ r.label }}</div>
+</sc-for>
+</div>
+<div style="{{ subTabRowStyle }}">
+<sc-for list="{{ custTabs }}" as="c" hint-placeholder-count="2">
+<div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div>
+</sc-for>
+</div>
+</div>
+
+<div class="sq" style="flex:1;overflow-y:auto;overflow-x:hidden">
+
+<sc-if value="{{ isProgram }}" hint-placeholder-val="{{ true }}">
+<div style="padding:14px 0 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="padding:0 14px">
+<div style="border-radius:28px;overflow:hidden;position:relative;background:linear-gradient(145deg,#5A48A8 0%,#7B5EB8 52%,#A84E7E 100%);box-shadow:0 8px 0 rgba(72,56,127,.35),0 14px 28px rgba(110,91,196,.24)">
+<div style="position:absolute;right:-44px;top:-44px;width:170px;height:170px;border-radius:99px;background:rgba(255,255,255,.14)"></div>
+<div style="position:relative;padding:20px">
+<div style="font-size:10px;font-weight:800;letter-spacing:1.6px;color:#FFEBC2">{{ c.heroKicker }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:27px;font-weight:700;color:#fff;line-height:1.12;margin-top:6px;white-space:pre-line">{{ c.heroTitle }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#fff;line-height:1.5;margin-top:9px">{{ c.heroSub }}</div>
+<div style="display:flex;gap:10px;margin-top:17px">
+<sc-for list="{{ c.split }}" as="s" hint-placeholder-count="2">
+<div style="flex:1;min-width:0;border-radius:17px;background:rgba(32,22,66,.26);padding:13px">
+<div style="font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#fff">{{ s.who }}</div>
+<div style="font-size:20px;font-weight:800;color:#fff;margin-top:5px;white-space:nowrap">{{ s.gets }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#fff;margin-top:4px;line-height:1.35">{{ s.detail }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#fff;border-radius:26px;padding:19px 17px;text-align:center;box-shadow:0 7px 0 rgba(139,121,224,.18),0 11px 24px rgba(110,91,196,.13)">
+<div style="font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:#7C7399">{{ c.yourCode }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:26px;font-weight:700;letter-spacing:.5px;margin-top:7px">{{ code }}</div>
+<div style="width:148px;height:148px;margin:15px auto 0;border-radius:22px;background:#F8F5FF;border:2px solid #EAE2FA;display:flex;align-items:center;justify-content:center">
+<i class="ph-duotone ph-qr-code" style="font-size:94px;color:#3A2F55"></i>
+</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-top:13px">{{ c.codeHint }}</div>
+<div style="display:flex;gap:9px;margin-top:15px">
+<div onClick="{{ shareWA }}" style="{{ waStyle }}"><i class="ph-fill ph-whatsapp-logo" style="font-size:19px"></i>{{ waLabel }}</div>
+<div onClick="{{ copyLink }}" style="{{ copyStyle }}"><i class="ph-duotone ph-link-simple" style="font-size:18px"></i>{{ copyLabel }}</div>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:12px">{{ c.howTitle }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+<div style="display:flex;align-items:flex-start;gap:12px;background:#fff;border-radius:20px;padding:14px;box-shadow:0 5px 0 rgba(139,121,224,.15)">
+<div style="width:30px;height:30px;border-radius:99px;background:#8B79E0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;box-shadow:0 3px 0 #6E5BC4">{{ s.n }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ s.title }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.45;margin-top:4px">{{ s.detail }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ c.ladder }}</div>
+<div style="font-size:11.5px;font-weight:800;color:#6E5BC4">{{ c.ladderNow }}</div>
+</div>
+<div style="background:#fff;border-radius:24px;padding:17px;box-shadow:0 6px 0 rgba(139,121,224,.17),0 10px 22px rgba(110,91,196,.12)">
+<div style="height:9px;border-radius:99px;background:#EFE8FB;overflow:hidden">
+<div style="{{ ladderBarStyle }}"></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;margin-top:16px">
+<sc-for list="{{ tiers }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="{{ r.dotStyle }}">{{ r.dot }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800;line-height:1.3;color:{{ r.textColor }}">{{ r.prize }}</div>
+<div style="font-size:11px;font-weight:600;color:#7C7399;margin-top:2px">{{ r.need }}</div>
+</div>
+<div style="{{ r.pillStyle }}">{{ r.pill }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:12px">{{ c.friends }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ friends }}" as="f" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:14px;box-shadow:0 5px 0 rgba(139,121,224,.15)">
+<div style="{{ f.avatarStyle }}">{{ f.initials }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800">{{ f.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px">{{ f.meta }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="{{ f.stageStyle }}">{{ f.stage }}</div>
+<div style="font-size:11px;font-weight:800;color:{{ f.earnColor }};margin-top:5px;white-space:nowrap">{{ f.earn }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ c.assets }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ c.assetsHint }}</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;margin:0 -14px;padding:0 14px 6px">
+<sc-for list="{{ assets }}" as="a" hint-placeholder-count="3">
+<div style="flex:none;width:150px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.15)">
+<div style="{{ a.posterStyle }}"></div>
+<div style="padding:11px 12px 13px">
+<div style="font-size:11.5px;font-weight:800;line-height:1.3">{{ a.title }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#7C7399;margin-top:4px">{{ a.meta }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#F6F1FF;border-radius:22px;padding:16px">
+<div style="font-size:12.5px;font-weight:800;margin-bottom:8px">{{ c.rulesTitle }}</div>
+<div style="display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ rules }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:8px;font-size:11px;font-weight:600;color:#6B6385;line-height:1.5">
+<div style="color:#8B79E0;flex-shrink:0">•</div>{{ r.text }}
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isGuide }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 0 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="padding:0 14px">
+<div onClick="{{ playVideo }}" style="position:relative;border-radius:26px;overflow:hidden;aspect-ratio:16/9;cursor:pointer;background:linear-gradient(145deg,#5A48A8 0%,#7B5EB8 52%,#A84E7E 100%);box-shadow:0 8px 0 rgba(72,56,127,.32),0 13px 26px rgba(110,91,196,.22)">
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:11px">
+<div style="{{ playStyle }}"><i class="ph-fill ph-play" style="font-size:25px;margin-left:4px"></i></div>
+<div style="background:rgba(255,255,255,.92);border-radius:11px;padding:7px 12px;font-family:ui-monospace,Menlo,monospace;font-size:9px;font-weight:500;color:#5A48A8">drop referral explainer video here</div>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 16px 14px;background:linear-gradient(180deg,rgba(40,24,80,0),rgba(40,24,80,.8))">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:17px;font-weight:700;color:#fff;line-height:1.25">{{ g.videoTitle }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#fff;margin-top:4px">{{ g.videoMeta }}</div>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ g.levelsTitle }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ g.levelsHint }}</div>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ levels }}" as="v" hint-placeholder-count="2">
+<div style="{{ v.cardStyle }}">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="{{ v.badgeStyle }}">{{ v.badge }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800;line-height:1.3">{{ v.who }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px;line-height:1.4">{{ v.rel }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:19px;font-weight:800;color:#6E5BC4;white-space:nowrap">{{ v.reward }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#7C7399;margin-top:3px;white-space:nowrap">{{ v.pv }}</div>
+</div>
+</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-top:11px;padding-top:11px;border-top:1px solid #F1EAFB">{{ v.example }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ g.payoutTitle }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ g.payoutHint }}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
+<div onClick="{{ p.pick }}" style="{{ p.cardStyle }}">
+<div style="{{ p.iconStyle }}"><i class="{{ p.iconClass }}"></i></div>
+<div style="font-size:12.5px;font-weight:800;margin-top:11px;line-height:1.3">{{ p.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.45;margin-top:5px">{{ p.detail }}</div>
+<div style="{{ p.rateStyle }}">{{ p.rate }}</div>
+</div>
+</sc-for>
+</div>
+<div style="{{ payoutNoteStyle }}">{{ payoutNote }}</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:12px">{{ g.stepsTitle }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ guideSteps }}" as="s" hint-placeholder-count="4">
+<div style="display:flex;align-items:flex-start;gap:12px;background:#fff;border-radius:20px;padding:15px;box-shadow:0 5px 0 rgba(139,121,224,.15)">
+<div style="width:30px;height:30px;border-radius:99px;background:#8B79E0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;box-shadow:0 3px 0 #6E5BC4">{{ s.n }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ s.title }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-top:5px">{{ s.detail }}</div>
+<div style="{{ s.tipStyle }}">{{ s.tip }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:12px">{{ g.faqTitle }}</div>
+<div style="background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 6px 0 rgba(139,121,224,.17)">
+<sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+<div onClick="{{ f.toggle }}" style="padding:15px;border-bottom:1px solid #F1EDFB;cursor:pointer">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="flex:1;min-width:0;font-size:12.5px;font-weight:800;line-height:1.35">{{ f.q }}</div>
+<div style="{{ f.signStyle }}">{{ f.sign }}</div>
+</div>
+<div style="{{ f.aStyle }}">{{ f.a }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isStaff }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 0 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="padding:0 14px">
+<div style="border-radius:26px;padding:19px;background:linear-gradient(145deg,#3A2F55,#4A3C6E);box-shadow:0 8px 0 rgba(30,22,52,.35),0 13px 26px rgba(58,47,85,.25)">
+<div style="font-size:10px;font-weight:800;letter-spacing:1.4px;color:#F5D98C">{{ st.kicker }}</div>
+<div style="display:flex;align-items:flex-end;gap:10px;margin-top:8px">
+<div style="font-size:34px;font-weight:800;letter-spacing:-1.2px;color:#fff;line-height:1;font-variant-numeric:tabular-nums">{{ st.bonus }}</div>
+<div style="font-size:12px;font-weight:700;color:#C9BEE8;padding-bottom:4px">{{ st.bonusSub }}</div>
+</div>
+<div style="font-size:11.5px;font-weight:600;color:#C9BEE8;line-height:1.5;margin-top:9px">{{ st.bonusRule }}</div>
+<div style="display:flex;gap:9px;margin-top:16px">
+<sc-for list="{{ staffStats }}" as="s" hint-placeholder-count="3">
+<div style="flex:1;min-width:0;border-radius:15px;background:rgba(255,255,255,.1);padding:12px">
+<div style="font-size:19px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap">{{ s.value }}</div>
+<div style="font-size:9.5px;font-weight:700;color:#B8ACD8;margin-top:5px;line-height:1.3">{{ s.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#fff;border-radius:24px;padding:17px;box-shadow:0 6px 0 rgba(139,121,224,.17),0 10px 22px rgba(110,91,196,.12)">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700">{{ st.chainTitle }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-top:6px">{{ st.chainHint }}</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<sc-for list="{{ staffLevels }}" as="v" hint-placeholder-count="2">
+<div style="display:flex;align-items:center;gap:11px;border-radius:17px;background:#F8F5FF;padding:13px">
+<div style="{{ v.badgeStyle }}">{{ v.badge }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800;line-height:1.3">{{ v.label }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px;line-height:1.4">{{ v.detail }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:16px;font-weight:800;color:#6E5BC4;white-space:nowrap">{{ v.bonus }}</div>
+<div style="font-size:10px;font-weight:700;color:#7C7399;margin-top:3px;white-space:nowrap">{{ v.kpi }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ st.askTitle }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ st.askHint }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ advocates }}" as="a" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:14px;box-shadow:0 5px 0 rgba(139,121,224,.15)">
+<div style="{{ a.avatarStyle }}">{{ a.initials }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800">{{ a.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.4;margin-top:3px">{{ a.why }}</div>
+</div>
+<div onClick="{{ a.invite }}" style="{{ a.btnStyle }}">{{ a.btn }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ st.scripts }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ st.scriptsHint }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ scripts }}" as="m" hint-placeholder-count="3">
+<div onClick="{{ m.copy }}" style="{{ m.cardStyle }}">
+<div style="display:flex;align-items:center;gap:9px">
+<div style="{{ m.tagStyle }}">{{ m.tag }}</div>
+<div style="flex:1"></div>
+<div style="font-size:11px;font-weight:800;color:#6E5BC4">{{ m.action }}</div>
+</div>
+<div style="font-size:12px;font-weight:600;color:#3A2F55;line-height:1.55;margin-top:10px">{{ m.body }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ st.board }}</div>
+<div style="font-size:11px;font-weight:700;color:#7C7399">{{ st.boardMonth }}</div>
+</div>
+<div style="background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 6px 0 rgba(139,121,224,.17),0 10px 22px rgba(110,91,196,.12)">
+<sc-for list="{{ leaderboard }}" as="l" hint-placeholder-count="5">
+<div style="{{ l.rowStyle }}">
+<div style="{{ l.rankStyle }}">{{ l.rank }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800">{{ l.name }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#7C7399;margin-top:2px">{{ l.outlet }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:13px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ l.count }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#7C7399;margin-top:2px;white-space:nowrap">{{ l.bonus }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#F6F1FF;border-radius:22px;padding:16px">
+<div style="font-size:12.5px;font-weight:800;margin-bottom:8px">{{ st.rulesTitle }}</div>
+<div style="display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ staffRules }}" as="r" hint-placeholder-count="4">
+<div style="display:flex;gap:8px;font-size:11px;font-weight:600;color:#6B6385;line-height:1.5">
+<div style="color:#8B79E0;flex-shrink:0">•</div>{{ r.text }}
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isHQ }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 0 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="padding:0 14px">
+<div style="background:linear-gradient(150deg,#3A2F55,#5A48A8);border-radius:24px;padding:18px;color:#fff">
+<div style="font-size:10px;font-weight:800;letter-spacing:.16em;opacity:.75">{{ hq.kicker }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:19px;font-weight:700;margin-top:6px;line-height:1.25">{{ hq.title }}</div>
+<div style="font-size:11.5px;font-weight:600;line-height:1.5;margin-top:7px;opacity:.85">{{ hq.sub }}</div>
+</div>
+</div>
+
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:13px">
+<sc-for list="{{ hqGroups }}" as="grp" hint-placeholder-count="2">
+<div style="background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(139,121,224,.15);padding:16px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="{{ grp.badgeStyle }}">{{ grp.badge }}</div>
+<div>
+<div style="font-size:13.5px;font-weight:800">{{ grp.title }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:2px">{{ grp.sub }}</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:9px;margin-top:13px">
+<sc-for list="{{ grp.fields }}" as="f" hint-placeholder-count="2">
+<div style="display:flex;align-items:center;gap:10px;background:#F8F5FF;border-radius:16px;padding:10px 11px">
+<div style="flex:1;min-width:0">
+<div style="font-size:11.5px;font-weight:800;color:#3A2F55">{{ f.label }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#6B6385;margin-top:2px">{{ f.hint }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
+<div onClick="{{ f.dec }}" style="width:30px;height:30px;border-radius:10px;background:#fff;box-shadow:0 2px 0 rgba(110,91,196,.25);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#6E5BC4;cursor:pointer;user-select:none">−</div>
+<div style="min-width:66px;text-align:center;font-size:13px;font-weight:800;color:#3A2F55">{{ f.display }}</div>
+<div onClick="{{ f.inc }}" style="width:30px;height:30px;border-radius:10px;background:#8B79E0;box-shadow:0 2px 0 #6E5BC4;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;cursor:pointer;user-select:none">+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#F6F1FF;border-radius:22px;padding:16px">
+<div style="font-size:12.5px;font-weight:800;margin-bottom:9px">{{ hq.previewTitle }}</div>
+<div style="display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ hqPreview }}" as="p" hint-placeholder-count="4">
+<div style="display:flex;justify-content:space-between;gap:10px;font-size:11.5px;font-weight:700;color:#6B6385;line-height:1.5">
+<div>{{ p.k }}</div>
+<div style="color:#3A2F55;font-weight:800;text-align:right">{{ p.v }}</div>
+</div>
+</sc-for>
+</div>
+<div style="{{ hq.dirtyStyle }}">{{ hq.dirtyNote }}</div>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+</div>
+
+<div style="flex-shrink:0;padding:10px 14px 30px;background:rgba(255,255,255,.9);box-shadow:0 -6px 18px rgba(110,91,196,.1)">
+<div onClick="{{ primary }}" style="{{ primaryStyle }}">{{ primaryLabel }}</div>
+</div>
+
+</div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940},&quot;friendReward&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:50,&quot;max&quot;:300,&quot;step&quot;:50,&quot;unit&quot;:&quot;RM&quot;,&quot;section&quot;:&quot;Referral economics&quot;},&quot;staffBonus&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:50,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:20,&quot;max&quot;:200,&quot;step&quot;:10,&quot;unit&quot;:&quot;RM&quot;,&quot;section&quot;:&quot;Referral economics&quot;}}">
+class Component extends DCLogic {
+  state = { lang: "en", role: "customer", copied: null, custTab: 0, payout: "ewallet", faq: 0, playing: false,
+    cfg: null, saved: true };
+
+  cfgNow() {
+    return this.state.cfg ?? {
+      l1: this.props.friendReward ?? 100, l1pv: 100,
+      l2: 30, l2pv: 30,
+      s1: this.props.staffBonus ?? 50, s1kpi: 1,
+      s2: 20, s2kpi: 0.5
+    };
+  }
+
+  bump(key, delta, min, max) {
+    const c = { ...this.cfgNow() };
+    const v = Math.round((c[key] + delta) * 10) / 10;
+    c[key] = Math.min(max, Math.max(min, v));
+    this.setState({ cfg: c, saved: false });
+  }
+
+  renderVals() {
+    const s = this.state, lang = s.lang;
+    const L = (e, z, m) => ({ en: e, zh: z, ms: m })[lang];
+    const isCust = s.role === "customer";
+    const isHQ = s.role === "hq";
+    const cfg = this.cfgNow();
+    const reward = cfg.l1;
+    const staffBonus = cfg.s1;
+    const money = (n) => "RM " + n.toLocaleString("en-US");
+    const CARD = "background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(139,121,224,.15)";
+    const avatar = (g) => "width:40px;height:40px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;background:linear-gradient(145deg," + g + ")";
+
+    const joined = 3;
+    const TIERS = [
+      { n: 1, prize: L("RM 100 beauty credit", "RM 100 美丽奖励金", "Kredit kecantikan RM 100") },
+      { n: 3, prize: L("Free signature facial", "免费尊享护理一次", "Facial signature percuma") },
+      { n: 5, prize: L("Gold tier upgrade", "升级金卡会员", "Naik taraf ahli Gold") },
+      { n: 10, prize: L("RM 1,000 treatment voucher", "RM 1,000 疗程现金券", "Vaucar rawatan RM 1,000") }
+    ];
+
+    const FRIENDS = [
+      { name: "Chloe Ng", g: "#A594EC,#C3A1E6", stage: "rewarded",
+        meta: L("Visited 6 Sept · Bukit Bintang", "9月6日到访 · Bukit Bintang", "Lawat 6 Sept · Bukit Bintang") },
+      { name: "Farah Aziz", g: "#F2A9C6,#E58FB3", stage: "visited",
+        meta: L("First trial done 14 Sept", "9月14日完成首次体验", "Cubaan pertama 14 Sept") },
+      { name: "Wei Ling", g: "#8FD6B4,#68BE99", stage: "booked",
+        meta: L("Booked 27 Sept · OUG", "9月27日已预约 · OUG", "Ditempah 27 Sept · OUG") },
+      { name: "Priya R.", g: "#E0B978,#CDA05A", stage: "claimed", lvl2: true,
+        meta: L("Level 2 · via Chloe Ng · claimed 19 Sept", "第二级 · 经 Chloe Ng · 9月19日领取", "Peringkat 2 · melalui Chloe Ng · 19 Sept") }
+    ];
+    const STAGE = {
+      claimed: [L("Claimed", "已领取", "Dituntut"), "#EEE8FC|#5A5080"],
+      booked: [L("Booked", "已预约", "Ditempah"), "#E2EEFB|#2E6BA8"],
+      visited: [L("Visited", "已到访", "Telah lawat"), "#FCEBD2|#8A5A14"],
+      rewarded: [L("You earned", "已入账", "Anda dapat"), "#D7F0E2|#1F4F36"]
+    };
+
+    const lvl2 = cfg.l2;
+    const staffL2 = cfg.s2;
+    const kpiLabel = (n) => (n > 0 ? "+" : "") + n + " ";
+
+    const hqGroups = [
+      { badge: "L1", grad: "#A594EC,#8B79E0",
+        title: L("Level 1 · direct referral", "第一级 · 直接推荐", "Peringkat 1 · rujukan terus"),
+        sub: L("Friend joins on the customer's own code", "朋友使用顾客的推荐码加入", "Rakan sertai dengan kod pelanggan"),
+        fields: [
+          { key: "l1", label: L("Customer reward", "顾客奖励", "Ganjaran pelanggan"), hint: L("Paid after first treatment", "首次疗程后发放", "Dibayar selepas rawatan pertama"), step: 10, min: 0, max: 1000, fmt: money },
+          { key: "l1pv", label: L("Customer PV", "顾客 PV", "PV pelanggan"), hint: L("Counts toward member tier", "计入会员等级", "Dikira untuk tahap ahli"), step: 10, min: 0, max: 1000, fmt: (n) => n + " PV" },
+          { key: "s1", label: L("Consultant bonus", "顾问奖金", "Bonus perunding"), hint: L("Paid to the named consultant", "发放给指定顾问", "Kepada perunding bertanggungjawab"), step: 5, min: 0, max: 500, fmt: money },
+          { key: "s1kpi", label: L("Consultant KPI", "顾问 KPI", "KPI perunding"), hint: L("New-customer KPI credit", "新客 KPI 计数", "Kredit KPI pelanggan baharu"), step: 0.5, min: 0, max: 5, fmt: (n) => kpiLabel(n) + "KPI" }
+        ] },
+      { badge: "L2", grad: "#E0B978,#CDA05A",
+        title: L("Level 2 · chain referral", "第二级 · 链式推荐", "Peringkat 2 · rujukan rantaian"),
+        sub: L("That friend brings in someone new", "该朋友再带来新客", "Rakan itu bawa orang baharu"),
+        fields: [
+          { key: "l2", label: L("Customer reward", "顾客奖励", "Ganjaran pelanggan"), hint: L("Paid to the original referrer", "发放给最初推荐人", "Kepada perujuk asal"), step: 10, min: 0, max: 1000, fmt: money },
+          { key: "l2pv", label: L("Customer PV", "顾客 PV", "PV pelanggan"), hint: L("Level two PV credit", "第二级 PV", "PV peringkat dua"), step: 10, min: 0, max: 1000, fmt: (n) => n + " PV" },
+          { key: "s2", label: L("Consultant bonus", "顾问奖金", "Bonus perunding"), hint: L("Same consultant, level two", "同一顾问，第二级", "Perunding sama, peringkat dua"), step: 5, min: 0, max: 500, fmt: money },
+          { key: "s2kpi", label: L("Consultant KPI", "顾问 KPI", "KPI perunding"), hint: L("Half credit by default", "默认计半个", "Separuh kredit secara lalai"), step: 0.5, min: 0, max: 5, fmt: (n) => kpiLabel(n) + "KPI" }
+        ] }
+    ].map(g => ({
+      badge: g.badge, title: g.title, sub: g.sub,
+      badgeStyle: "width:38px;height:38px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#fff;background:linear-gradient(145deg," + g.grad + ")",
+      fields: g.fields.map(f => ({
+        label: f.label, hint: f.hint, display: f.fmt(cfg[f.key]),
+        dec: () => this.bump(f.key, -f.step, f.min, f.max),
+        inc: () => this.bump(f.key, f.step, f.min, f.max)
+      }))
+    }));
+
+    return {
+      isCust: isCust, isStaff: s.role === "staff", isHQ,
+      hqGroups,
+      hq: {
+        kicker: L("HQ · REFERRAL SETTINGS", "总部 · 推荐设置", "IBU PEJABAT · TETAPAN RUJUKAN"),
+        title: L("Edit every level bonus", "调整各级奖励", "Ubah setiap bonus peringkat"),
+        sub: L("Changes apply to all outlets on the next referral that completes a first treatment. Existing claims are not repriced.",
+          "更改将于下一笔完成首次疗程的推荐生效，已发放的奖励不受影响。",
+          "Perubahan berkuat kuasa pada rujukan seterusnya yang habis rawatan pertama. Tuntutan sedia ada tidak diubah."),
+        previewTitle: L("What customers and staff will see", "顾客与员工看到的内容", "Apa pelanggan dan staf nampak"),
+        dirtyNote: s.saved
+          ? L("Live rates · last changed by HQ on 12 Sept", "已生效 · 总部于9月12日更新", "Aktif · dikemas kini HQ 12 Sept")
+          : L("Unsaved changes · will publish to all outlets", "有未保存的更改 · 将发布至所有门店", "Perubahan belum disimpan · akan diterbitkan ke semua cawangan"),
+        dirtyStyle: "margin-top:12px;padding:11px 13px;border-radius:15px;font-size:11px;font-weight:800;line-height:1.45;" +
+          (s.saved ? "background:#E4F4EA;color:#1F4F36" : "background:#FDECD8;color:#8A5A12")
+      },
+      hqPreview: [
+        { k: L("L1 customer", "第一级 顾客", "L1 pelanggan"), v: money(cfg.l1) + " + " + cfg.l1pv + " PV" },
+        { k: L("L1 consultant", "第一级 顾问", "L1 perunding"), v: money(cfg.s1) + " + " + cfg.s1kpi + " KPI" },
+        { k: L("L2 customer", "第二级 顾客", "L2 pelanggan"), v: money(cfg.l2) + " + " + cfg.l2pv + " PV" },
+        { k: L("L2 consultant", "第二级 顾问", "L2 perunding"), v: money(cfg.s2) + " + " + cfg.s2kpi + " KPI" }
+      ],
+      isProgram: isCust && s.custTab === 0,
+      isGuide: isCust && s.custTab === 1,
+      subTabRowStyle: isCust ? "display:flex;gap:8px;margin-top:10px" : "display:none",
+      custTabs: [L("The programme", "奖励计划", "Program"), L("How to refer", "如何推荐", "Cara merujuk")].map((label, i) => ({
+        label, pick: () => this.setState({ custTab: i }),
+        style: "flex:1;text-align:center;padding:9px 10px;border-radius:12px;font-size:12px;font-weight:800;cursor:pointer;" +
+          (s.custTab === i ? "background:#fff;color:#6E5BC4;box-shadow:0 3px 0 rgba(139,121,224,.22)" : "background:#F3EFFC;color:#7C7399") })),
+
+      g: {
+        videoTitle: L("Watch: how to refer in 60 seconds", "观看：60秒学会推荐", "Tonton: cara merujuk dalam 60 saat"),
+        videoMeta: L("1 min 12 sec · English, 中文, BM subtitles", "1分12秒 · 提供中英马字幕", "1 min 12 saat · Sari kata EN, 中文, BM"),
+        levelsTitle: L("Two levels, two payouts", "两级推荐，双重回报", "Dua peringkat, dua ganjaran"),
+        levelsHint: L("You earn on the friend you bring in, and again when she brings someone in.",
+          "你不仅可从直接推荐的朋友获得奖励，她推荐的人也会为你带来收益。",
+          "Anda dapat ganjaran daripada rakan yang anda bawa, dan sekali lagi apabila dia membawa orang lain."),
+        payoutTitle: L("Choose how you get paid", "选择你的回报方式", "Pilih cara ganjaran anda"),
+        payoutHint: L("Switch any time before you claim. Everything converts from the same referral balance.",
+          "领取前可随时更改。所有方式皆由同一推荐余额换算。",
+          "Tukar bila-bila sebelum menuntut. Semua ditukar daripada baki rujukan yang sama."),
+        stepsTitle: L("Step by step", "详细步骤", "Langkah demi langkah"),
+        faqTitle: L("Common questions", "常见问题", "Soalan lazim")
+      },
+
+      playVideo: () => this.setState({ playing: !s.playing }),
+      playStyle: "width:62px;height:62px;border-radius:99px;display:flex;align-items:center;justify-content:center;color:#5A48A8;background:rgba(255,255,255,.95);box-shadow:0 6px 0 rgba(72,56,127,.35)",
+
+      levels: [
+        { badge: "L1", who: L("Your friend", "你直接推荐的朋友", "Rakan anda"),
+          rel: L("Someone you invite with your own code", "使用你的推荐码加入的新客", "Seseorang yang anda jemput dengan kod anda"),
+          reward: money(reward), pv: cfg.l1pv + " PV",
+          example: L("Chloe joins on your code and finishes her RM 19 trial. You receive " + money(reward) + " and 100 PV that day.",
+            "Chloe 用你的推荐码加入并完成 RM 19 体验，你当天获得 " + money(reward) + " 及 100 PV。",
+            "Chloe sertai dengan kod anda dan habis cubaan RM 19. Anda terima " + money(reward) + " dan 100 PV hari itu.") },
+        { badge: "L2", who: L("Her friend", "她推荐的朋友", "Rakan dia"),
+          rel: L("Anyone your friend brings in afterwards", "你的朋友日后推荐的新客", "Sesiapa yang rakan anda bawa kemudian"),
+          reward: money(lvl2), pv: cfg.l2pv + " PV",
+          example: L("Chloe then refers her sister. Chloe earns the full " + money(reward) + ", and you earn " + money(lvl2) + " on top as level two.",
+            "Chloe 再推荐她的姐妹：Chloe 获得完整的 " + money(reward) + "，你作为第二级另得 " + money(lvl2) + "。",
+            "Chloe kemudian merujuk adiknya. Chloe dapat " + money(reward) + " penuh, anda dapat " + money(lvl2) + " sebagai peringkat kedua.") }
+      ].map((v, i) => ({ ...v,
+        badgeStyle: "width:40px;height:40px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;background:" +
+          (i === 0 ? "linear-gradient(145deg,#8B79E0,#6E5BC4)" : "linear-gradient(145deg,#C08AB4,#A84E7E)"),
+        cardStyle: "background:#fff;border-radius:22px;padding:15px;box-shadow:0 5px 0 rgba(139,121,224,.15),0 9px 20px rgba(110,91,196,.1)" })),
+
+      payouts: [
+        { k: "ewallet", name: L("E-wallet credit", "电子钱包余额", "Kredit e-dompet"), icon: "wallet",
+          detail: L("Straight into your TikBeli wallet, spend on any treatment.", "直接存入 TikBeli 钱包，任何疗程可用。", "Terus ke dompet TikBeli, guna untuk apa-apa rawatan."),
+          rate: L("1:1 · instant", "1:1 · 即时到账", "1:1 · serta-merta") },
+        { k: "voucher", name: L("Cash voucher", "现金券", "Vaucar tunai"), icon: "ticket",
+          detail: L("Printed or digital, transferable to family.", "电子或纸本，可转让家人使用。", "Cetak atau digital, boleh dipindah ke keluarga."),
+          rate: L("1:1 · 12-month validity", "1:1 · 有效期12个月", "1:1 · sah 12 bulan") },
+        { k: "product", name: L("Free products", "免费产品", "Produk percuma"), icon: "gift",
+          detail: L("Pick from the home-care shelf at any outlet.", "于任一门店选购居家护理产品。", "Pilih daripada rak penjagaan rumah."),
+          rate: L(money(reward) + " = 1 serum", money(reward) + " = 1 支精华", money(reward) + " = 1 serum") },
+        { k: "pv", name: L("PV points", "PV 积分", "Mata PV"), icon: "chart-line-up",
+          detail: L("Counts toward member tier and the yearly bonus pool.", "计入会员等级与年度奖金池。", "Dikira untuk tahap ahli dan kolam bonus tahunan."),
+          rate: L("RM 1 = 1 PV", "RM 1 = 1 PV", "RM 1 = 1 PV") }
+      ].map(p => {
+        const on = s.payout === p.k;
+        return { name: p.name, detail: p.detail, rate: p.rate,
+          iconClass: "ph-duotone ph-" + p.icon,
+          iconStyle: "width:44px;height:44px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:24px;" +
+            (on ? "background:#8B79E0;color:#fff;box-shadow:0 4px 0 #6E5BC4" : "background:#F1EDFB;color:#6E5BC4"),
+          rateStyle: "display:inline-block;margin-top:9px;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:800;" +
+            (on ? "background:#EDE5FF;color:#5A48A8" : "background:#F5F2FC;color:#7C7399"),
+          cardStyle: "background:#fff;border-radius:22px;padding:15px;cursor:pointer;box-shadow:0 5px 0 rgba(139,121,224,.15)" +
+            (on ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+          pick: () => this.setState({ payout: p.k }) };
+      }),
+      payoutNote: L("Selected: ", "已选择：", "Dipilih: ") +
+        ({ ewallet: L("E-wallet credit", "电子钱包余额", "Kredit e-dompet"), voucher: L("Cash voucher", "现金券", "Vaucar tunai"),
+           product: L("Free products", "免费产品", "Produk percuma"), pv: L("PV points", "PV 积分", "Mata PV") })[s.payout] +
+        L(" · applies to both referral levels", " · 适用于两个推荐级别", " · untuk kedua-dua peringkat"),
+      payoutNoteStyle: "margin-top:12px;padding:12px 14px;border-radius:16px;background:#EDE5FF;font-size:11.5px;font-weight:800;color:#5A48A8;line-height:1.45",
+
+      guideSteps: [
+        { n: "1", title: L("Open Refer a friend in the app", "在应用内打开「推荐朋友」", "Buka Rujuk rakan dalam app"),
+          detail: L("It sits on the bottom reminder bar of every screen, and under Rewards.", "每个页面底部的提醒条都可进入，奖励页面亦有入口。", "Ia ada pada bar peringatan di setiap skrin, dan di bawah Ganjaran."),
+          tip: "" },
+        { n: "2", title: L("Send your code or link", "发送你的推荐码或链接", "Hantar kod atau pautan anda"),
+          detail: L("WhatsApp is fastest. She can also show your code at any counter without the app.", "WhatsApp 最快。她也可不用应用，直接在柜台出示你的推荐码。", "WhatsApp paling pantas. Dia juga boleh tunjuk kod di kaunter tanpa app."),
+          tip: L("Tip: send it right after a treatment, when your results are visible.", "小提示：疗程后立即发送，效果最明显时最有说服力。", "Tip: hantar selepas rawatan, ketika hasil paling ketara.") },
+        { n: "3", title: L("She books the RM 19 first facial", "她预约 RM 19 首次护理", "Dia tempah facial pertama RM 19"),
+          detail: L("Any outlet, any date within 60 days, no deposit.", "60天内任选门店与日期，无需订金。", "Mana-mana cawangan dalam 60 hari, tanpa deposit."), tip: "" },
+        { n: "4", title: L("Claim your reward your way", "以你喜欢的方式领取奖励", "Tuntut ganjaran ikut cara anda"),
+          detail: L("E-wallet, cash voucher, free product or PV. Change your choice before you claim.", "电子钱包、现金券、免费产品或 PV，领取前可更改。", "E-dompet, vaucar tunai, produk percuma atau PV. Tukar sebelum menuntut."),
+          tip: L("Level two pays automatically when your friend refers someone.", "当你的朋友推荐他人时，第二级奖励自动发放。", "Peringkat dua dibayar automatik apabila rakan anda merujuk orang.") }
+      ].map(x => ({ ...x, tipStyle: x.tip ? "margin-top:9px;padding:10px 12px;border-radius:14px;background:#F6F1FF;font-size:11px;font-weight:700;color:#5A48A8;line-height:1.45" : "display:none" })),
+
+      faqs: [
+        { q: L("How many people can I refer?", "我可以推荐多少人？", "Berapa ramai boleh saya rujuk?"),
+          a: L("There is no limit at either level. The ladder rewards reset each calendar year, the per-referral payout does not.",
+            "两个级别皆无上限。阶梯奖励每年重置，单笔推荐奖励则不重置。",
+            "Tiada had pada kedua-dua peringkat. Ganjaran tangga ditetap semula setiap tahun, bayaran setiap rujukan tidak.") },
+        { q: L("When exactly do I get paid?", "奖励什么时候发放？", "Bila saya dibayar?"),
+          a: L("The moment your friend finishes her first treatment, not when she books. Level two pays on the same rule.",
+            "在朋友完成首次疗程时发放，而非预约时。第二级适用相同规则。",
+            "Sebaik rakan anda habis rawatan pertama, bukan semasa tempahan. Peringkat dua ikut peraturan sama.") },
+        { q: L("Can I change my payout choice later?", "之后可以更改回报方式吗？", "Boleh tukar pilihan ganjaran kemudian?"),
+          a: L("Yes, any time before you claim a balance. Already-claimed vouchers and products cannot be converted back.",
+            "可以，领取前随时更改。已领取的现金券与产品不可换回。",
+            "Boleh, bila-bila sebelum menuntut. Vaucar dan produk yang sudah dituntut tidak boleh ditukar semula.") },
+        { q: L("Does my consultant benefit too?", "我的顾问也有奖励吗？", "Perunding saya dapat juga?"),
+          a: L("Yes. Your consultant earns a KPI bonus on both levels, which is why she will happily help you send the invites.",
+            "有。你的顾问在两个级别都能获得 KPI 奖金，因此她乐意协助你发送邀请。",
+            "Ya. Perunding anda dapat bonus KPI pada kedua-dua peringkat, jadi dia akan bantu anda hantar jemputan.") }
+      ].map((f, i) => {
+        const open = s.faq === i;
+        return { q: f.q, a: f.a, sign: open ? "−" : "+",
+          signStyle: "width:24px;height:24px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;" +
+            (open ? "background:#8B79E0;color:#fff" : "background:#F1EDFB;color:#6E5BC4"),
+          aStyle: open ? "font-size:11.5px;font-weight:600;color:#6B6385;line-height:1.55;margin-top:10px" : "display:none",
+          toggle: () => this.setState({ faq: open ? null : i }) };
+      }),
+
+      staffLevels: [
+        { badge: "L1", label: L("Customer refers a friend", "顾客推荐朋友", "Pelanggan rujuk rakan"),
+          detail: L("Your customer brings in someone new who completes a first treatment.", "你的顾客带来新客并完成首次疗程。", "Pelanggan anda bawa orang baharu yang habis rawatan pertama."),
+          bonus: money(staffBonus), kpi: L("+" + cfg.s1kpi + " new customer KPI", "新客 KPI +" + cfg.s1kpi, "+" + cfg.s1kpi + " KPI pelanggan baharu") },
+        { badge: "L2", label: L("That friend refers again", "该朋友再推荐他人", "Rakan itu merujuk lagi"),
+          detail: L("The chain continues under the same customer, one level deep.", "推荐链在同一顾客名下延续一级。", "Rantaian berterusan di bawah pelanggan sama, satu peringkat."),
+          bonus: money(staffL2), kpi: L("+" + cfg.s2kpi + " new customer KPI", "新客 KPI +" + cfg.s2kpi, "+" + cfg.s2kpi + " KPI pelanggan baharu") }
+      ].map((v, i) => ({ ...v,
+        badgeStyle: "width:38px;height:38px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;color:#fff;background:" +
+          (i === 0 ? "linear-gradient(145deg,#8B79E0,#6E5BC4)" : "linear-gradient(145deg,#C08AB4,#A84E7E)") })),
+      code: "BEAUTY-MTAN88",
+      headerTitle: L("Refer a friend", "推荐朋友", "Rujuk rakan"),
+      headerSub: isHQ ? L("HQ admin · all outlets", "总部管理 · 全门店", "Admin HQ · semua cawangan") : isCust ? "Michelle Tan · TB-0098231" : L("Sarah Lim · Senior Consultant", "Sarah Lim · 高级顾问", "Sarah Lim · Perunding Kanan"),
+
+      langs: [["en", "EN"], ["zh", "中"], ["ms", "BM"]].map(([k, label]) => ({
+        label, pick: () => this.setState({ lang: k }),
+        style: "padding:5px 7px;border-radius:9px;font-size:10.5px;font-weight:800;cursor:pointer;" +
+          (lang === k ? "background:#8B79E0;color:#fff;box-shadow:0 2px 0 #6E5BC4" : "color:#6B6385") })),
+      roles: [["customer", L("Customer", "顾客版", "Pelanggan")], ["staff", L("Staff", "员工版", "Staf")], ["hq", L("HQ", "总部", "HQ")]].map(([k, label]) => ({
+        label, pick: () => this.setState({ role: k, copied: null }),
+        style: "flex:1;text-align:center;padding:9px 10px;border-radius:11px;font-size:12px;font-weight:800;cursor:pointer;" +
+          (s.role === k ? (k === "customer" ? "background:#8B79E0;color:#fff;box-shadow:0 3px 0 #6E5BC4" : "background:#3A2F55;color:#fff;box-shadow:0 3px 0 rgba(30,22,52,.5)") : "color:#6B6385") })),
+
+      c: {
+        heroKicker: L("BRING A FRIEND", "带朋友一起变美", "BAWA RAKAN"),
+        heroTitle: L("Give " + money(reward) + ",\nget " + money(reward), "送 " + money(reward) + "，\n赚 " + money(reward), "Beri " + money(reward) + ",\ndapat " + money(reward)),
+        heroSub: L("She gets her first facial for RM 19. You get credit the day she walks in.",
+          "她可以 RM 19 体验首次护理。她到店当天，你的奖励金即时入账。",
+          "Dia dapat facial pertama RM 19. Anda dapat kredit pada hari dia datang."),
+        split: [
+          { who: L("Your friend", "你的朋友", "Rakan anda"), gets: "RM 19",
+            detail: L("First signature facial, normally RM 288", "首次尊享护理，原价 RM 288", "Facial pertama, biasa RM 288") },
+          { who: L("You", "你", "Anda"), gets: money(reward),
+            detail: L("Credit on her first visit", "她首次到访即入账", "Kredit pada lawatan pertamanya") }
+        ],
+        yourCode: L("Your referral code", "你的推荐码", "Kod rujukan anda"),
+        codeHint: L("Share the link, or let her show this code at any outlet counter.",
+          "分享链接，或让她在任一门店出示此码。",
+          "Kongsi pautan, atau tunjuk kod ini di mana-mana kaunter."),
+        howTitle: L("How it works", "如何运作", "Cara ia berfungsi"),
+        ladder: L("Reward ladder", "推荐奖励阶梯", "Tangga ganjaran"),
+        ladderNow: joined + L(" of 10 friends", " / 10 位朋友", " daripada 10 rakan"),
+        friends: L("Friends you invited", "你邀请的朋友", "Rakan yang anda jemput"),
+        assets: L("Ready to share", "现成分享素材", "Sedia untuk dikongsi"),
+        assetsHint: L("Save a card and post it. Your code is already printed on it.",
+          "保存图片并发布，你的推荐码已印在上面。",
+          "Simpan kad dan siarkan. Kod anda sudah tercetak."),
+        rulesTitle: L("The fine print", "条款细则", "Terma ringkas")
+      },
+
+      steps: [
+        { n: "1", title: L("Send your link", "发送你的链接", "Hantar pautan anda"),
+          detail: L("WhatsApp, Instagram, or show the QR at the counter.", "WhatsApp、Instagram，或在柜台出示二维码。", "WhatsApp, Instagram, atau tunjuk QR di kaunter.") },
+        { n: "2", title: L("She books her RM 19 trial", "她预约 RM 19 体验", "Dia tempah cubaan RM 19"),
+          detail: L("No deposit. She can pick any outlet and any date within 60 days.", "无需订金。她可在60天内选择任意门店与日期。", "Tanpa deposit. Mana-mana cawangan dalam 60 hari.") },
+        { n: "3", title: L("You both get paid", "双方同时获得奖励", "Anda berdua dapat ganjaran"),
+          detail: L("Your credit lands the moment she finishes her first treatment.", "她完成首次疗程时，你的奖励金即时入账。", "Kredit masuk sebaik dia habis rawatan pertama.") }
+      ],
+
+      ladderBarStyle: "height:100%;width:" + Math.round((joined / 10) * 100) + "%;border-radius:99px;background:linear-gradient(90deg,#A594EC,#8B79E0)",
+      tiers: TIERS.map(r => {
+        const done = joined >= r.n;
+        return { prize: r.prize, dot: done ? "✓" : String(r.n),
+          need: done ? L("Unlocked", "已解锁", "Dibuka") : L(r.n - joined + " more to go", "还差 " + (r.n - joined) + " 位", r.n - joined + " lagi"),
+          textColor: done ? "#3A2F55" : "#6B6385",
+          dotStyle: "width:30px;height:30px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;" +
+            (done ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 3px 0 rgba(47,107,71,.3)" : "background:#F1EDFB;color:#8177A6"),
+          pill: done ? L("Claimed", "已领取", "Dituntut") : L(r.n + " friends", r.n + " 位朋友", r.n + " rakan"),
+          pillStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:800;" +
+            (done ? "background:#D7F0E2;color:#1F4F36" : "background:#F1EDFB;color:#7C7399") };
+      }),
+
+      friends: FRIENDS.map(f => {
+        const st = STAGE[f.stage], tone = st[1].split("|");
+        return { name: f.name, meta: f.meta, initials: f.name.split(" ").map(w => w[0]).join(""),
+          avatarStyle: avatar(f.g), stage: st[0],
+          stageStyle: "display:inline-block;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:800;background:" + tone[0] + ";color:" + tone[1],
+          earn: f.stage === "rewarded" ? "+ " + money(f.lvl2 ? lvl2 : reward) : L("Pending", "待入账", "Menunggu"),
+          earnColor: f.stage === "rewarded" ? "#2F6B47" : "#7C7399" };
+      }),
+
+      assets: [
+        { title: L("RM 100 credit card", "RM 100 奖励金卡", "Kad kredit RM 100"), meta: L("Instagram story", "Instagram 限时动态", "Story Instagram"), src: "brand/rm100-beauty-credit.png" },
+        { title: L("RM 19 trial poster", "RM 19 体验海报", "Poster cubaan RM 19"), meta: L("WhatsApp image", "WhatsApp 图片", "Imej WhatsApp"), src: "brand/rm19-trial-facial.png" },
+        { title: L("Free facial invite", "免费护理邀请卡", "Jemputan facial percuma"), meta: L("Square post", "方形贴文", "Siaran persegi"), src: "brand/free-facial-trial.png" }
+      ].map(a => ({ title: a.title, meta: a.meta,
+        posterStyle: "height:150px;background-image:url('" + a.src + "');background-size:cover;background-position:center" })),
+
+      rules: [
+        L("The friend must be new to TikBeli, with no visit in the past 24 months.", "受邀朋友须为新客，过去24个月内无到访纪录。", "Rakan mesti pelanggan baharu, tiada lawatan 24 bulan lepas."),
+        L("Credit is released after her first treatment is completed, not at booking.", "奖励金于她完成首次疗程后发放，预约时不发放。", "Kredit dilepaskan selepas rawatan pertama selesai."),
+        L("Credit can be used on any treatment or package, not on products.", "奖励金可用于任何疗程或套餐，不适用于产品。", "Kredit boleh digunakan untuk rawatan atau pakej, bukan produk."),
+        L("No cap on how many friends you refer. Ladder rewards reset each calendar year.", "推荐人数不设上限。阶梯奖励每年重置。", "Tiada had bilangan rujukan. Ganjaran tangga ditetap semula setiap tahun.")
+      ].map(text => ({ text })),
+
+      st: {
+        kicker: L("YOUR REFERRAL BONUS · SEPTEMBER", "你的推荐奖金 · 九月", "BONUS RUJUKAN ANDA · SEPTEMBER"),
+        bonus: money(450),
+        bonusSub: L("earned so far", "已赚取", "diperoleh setakat ini"),
+        bonusRule: L(money(staffBonus) + " for every referred customer who completes a first treatment. Counts toward your new-customer KPI.",
+          "每位受推荐顾客完成首次疗程即得 " + money(staffBonus) + "，并计入新客 KPI。",
+          money(staffBonus) + " bagi setiap pelanggan rujukan yang habis rawatan pertama. Dikira dalam KPI pelanggan baharu."),
+        chainTitle: L("You earn on both levels", "两级皆有奖金", "Anda dapat pada kedua-dua peringkat"),
+        chainHint: L("The referral bonus is paid to the consultant named on the customer's account, on level one and level two.",
+          "推荐奖金发放给顾客账户上记录的顾问，第一级与第二级皆适用。",
+          "Bonus rujukan dibayar kepada perunding pada akaun pelanggan, untuk peringkat satu dan dua."),
+        askTitle: L("Ask these customers today", "今天可以开口的顾客", "Tanya pelanggan ini hari ini"),
+        askHint: L("Picked on visit frequency and how they rated their last treatment. Tap to send her the invite on WhatsApp.",
+          "依到访频率与上次疗程评分挑选。点击即可用 WhatsApp 发送邀请。",
+          "Dipilih ikut kekerapan lawatan dan penilaian rawatan lepas. Ketik untuk hantar jemputan WhatsApp."),
+        scripts: L("Message templates", "话术模板", "Templat mesej"),
+        scriptsHint: L("Tap to copy. Her name and your outlet are filled in automatically.",
+          "点击复制。顾客姓名与门店会自动填入。",
+          "Ketik untuk salin. Nama dan cawangan diisi automatik."),
+        board: L("Outlet leaderboard", "门店排行榜", "Papan pendahulu"),
+        boardMonth: L("September", "九月", "September"),
+        rulesTitle: L("How the bonus is paid", "奖金发放规则", "Cara bonus dibayar")
+      },
+
+      staffStats: [
+        { value: "9", label: L("Referrals converted", "成功转化", "Rujukan berjaya") },
+        { value: "14", label: L("Invites sent", "已发送邀请", "Jemputan dihantar") },
+        { value: "64%", label: L("Conversion rate", "转化率", "Kadar penukaran") }
+      ],
+
+      advocates: [
+        { name: "Michelle Tan", g: "#A594EC,#C3A1E6",
+          why: L("3 referrals already, rated last visit 5 stars", "已推荐3位，上次评分5星", "3 rujukan, beri 5 bintang") },
+        { name: "Amy Wong", g: "#F2A9C6,#E58FB3",
+          why: L("Visits every 3 weeks, never asked yet", "每3周到访一次，尚未邀请", "Lawat setiap 3 minggu, belum ditanya") },
+        { name: "Nurul Huda", g: "#8FD6B4,#68BE99",
+          why: L("Just finished a package, good moment to ask", "刚完成套餐，适合开口", "Baru habis pakej, masa sesuai") },
+        { name: "Jane Lee", g: "#E0B978,#CDA05A",
+          why: L("Came in on a referral herself in March", "她本身是三月的受推荐顾客", "Dia sendiri datang melalui rujukan Mac") }
+      ].map(a => {
+        const sent = s.copied === a.name;
+        return { name: a.name, why: a.why, initials: a.name.split(" ").map(w => w[0]).join(""),
+          avatarStyle: avatar(a.g),
+          btn: sent ? L("Sent ✓", "已发送 ✓", "Dihantar ✓") : L("Invite", "邀请", "Jemput"),
+          btnStyle: "flex-shrink:0;padding:9px 14px;border-radius:99px;font-size:11.5px;font-weight:800;cursor:pointer;" +
+            (sent ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 3px 0 rgba(47,107,71,.3)" : "background:#8B79E0;color:#fff;box-shadow:0 3px 0 #6E5BC4"),
+          invite: () => this.setState({ copied: a.name }) };
+      }),
+
+      scripts: [
+        { id: "warm", tag: L("After a good visit", "疗程后", "Selepas lawatan baik"), tone: "#EDE5FF|#6E5BC4",
+          body: L("Hi Michelle, so glad your skin is glowing today. If you have a friend who has never tried us, she can do her first signature facial for RM 19 and you get " + money(reward) + " credit. Want me to send you the link?",
+            "Michelle 你好，很高兴看到你今天气色这么好。如果有朋友还没试过我们，她的首次尊享护理只需 RM 19，你也会获得 " + money(reward) + " 奖励金。要我把链接发给你吗？",
+            "Hai Michelle, gembira kulit awak berseri hari ini. Kalau ada kawan yang belum pernah cuba, dia boleh buat facial pertama RM 19 dan awak dapat kredit " + money(reward) + ". Nak saya hantar pautan?") },
+        { id: "quiet", tag: L("Quiet customer", "许久未到访", "Pelanggan senyap"), tone: "#E2EEFB|#2E6BA8",
+          body: L("Hi Amy, we miss you at Bukit Bintang. September has a bring-a-friend offer: her first facial is RM 19, your account gets " + money(reward) + ". Shall I hold two slots this weekend?",
+            "Amy 你好，Bukit Bintang 很想念你。九月推出带朋友优惠：她首次护理 RM 19，你的账户获得 " + money(reward) + "。这个周末帮你留两个时段好吗？",
+            "Hai Amy, kami rindu awak di Bukit Bintang. September ada tawaran bawa rakan: facial pertama dia RM 19, akaun awak dapat " + money(reward) + ". Nak saya tahan dua slot hujung minggu ini?") },
+        { id: "thanks", tag: L("Thank you note", "答谢讯息", "Nota terima kasih"), tone: "#D7F0E2|#1F4F36",
+          body: L("Thank you for sending Chloe to us, she loved her first session. Your " + money(reward) + " credit is already in your account and never expires while you stay a member.",
+            "谢谢你把 Chloe 介绍给我们，她非常满意首次体验。" + money(reward) + " 奖励金已存入你的账户，会员期间永不过期。",
+            "Terima kasih kerana menghantar Chloe kepada kami, dia sangat suka sesi pertamanya. Kredit " + money(reward) + " sudah masuk ke akaun awak.") }
+      ].map(m => {
+        const done = s.copied === m.id, tone = m.tone.split("|");
+        return { tag: m.tag, body: m.body,
+          action: done ? L("Copied ✓", "已复制 ✓", "Disalin ✓") : L("Copy", "复制", "Salin"),
+          tagStyle: "padding:5px 11px;border-radius:99px;font-size:10px;font-weight:800;background:" + tone[0] + ";color:" + tone[1],
+          cardStyle: CARD + ";padding:15px;cursor:pointer" + (done ? ";outline:2.5px solid #8FD6B4;outline-offset:-2.5px" : ""),
+          copy: () => this.setState({ copied: m.id }) };
+      }),
+
+      leaderboard: [
+        { name: "Joyce Wong", outlet: "OUG", count: 14 },
+        { name: "Sarah Lim", outlet: "Bukit Bintang", count: 9, me: true },
+        { name: "Amira Yusof", outlet: "Setia Alam", count: 8 },
+        { name: "Tan Mei Xin", outlet: "Bukit Bintang", count: 6 },
+        { name: "Farhana Idris", outlet: "OUG", count: 4 }
+      ].map((l, i) => ({ name: l.name, outlet: l.outlet,
+        rank: String(i + 1),
+        count: l.count + L(" referred", " 位", " dirujuk"),
+        bonus: money(l.count * staffBonus),
+        rankStyle: "width:26px;height:26px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;" +
+          (i === 0 ? "background:#F5D98C;color:#4A3A12" : l.me ? "background:#8B79E0;color:#fff" : "background:#F1EDFB;color:#7C7399"),
+        rowStyle: "display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid #F1EDFB" +
+          (l.me ? ";background:#F8F5FF" : "") })),
+
+      staffRules: [
+        L(money(staffBonus) + " per referred customer, paid in the month her first treatment completes.", "每位受推荐顾客 " + money(staffBonus) + "，于其完成首次疗程当月发放。", money(staffBonus) + " setiap pelanggan rujukan, dibayar bulan rawatan pertama selesai."),
+        L("The bonus follows the consultant named on the referral, not the outlet that serves her.", "奖金归属推荐记录上的顾问，而非服务门店。", "Bonus mengikut perunding yang dinamakan, bukan cawangan yang melayan."),
+        L("Referrals also count toward the new-customer KPI, so the same visit pays twice.", "推荐同时计入新客 KPI，一次到访双重计算。", "Rujukan juga dikira dalam KPI pelanggan baharu."),
+        L("Self-referrals and re-registering an existing customer are removed at payroll review.", "自我推荐或为老客重新注册，将在薪资审核时剔除。", "Rujukan sendiri dan pendaftaran semula pelanggan sedia ada akan dibuang.")
+      ].map(text => ({ text })),
+
+      shareWA: () => this.setState({ copied: "wa" }),
+      copyLink: () => this.setState({ copied: "link" }),
+      waLabel: s.copied === "wa" ? L("Opening WhatsApp", "正在打开 WhatsApp", "Membuka WhatsApp") : L("WhatsApp", "WhatsApp", "WhatsApp"),
+      waStyle: "flex:1.3;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:99px;font-size:13px;font-weight:800;cursor:pointer;color:#fff;background:#25D366;box-shadow:0 5px 0 #1FA851",
+      copyLabel: s.copied === "link" ? L("Link copied ✓", "链接已复制 ✓", "Pautan disalin ✓") : L("Copy link", "复制链接", "Salin pautan"),
+      copyStyle: "flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:13px;border-radius:99px;font-size:12.5px;font-weight:800;cursor:pointer;color:#6E5BC4;background:#F1EDFB;box-shadow:0 5px 0 rgba(139,121,224,.22)",
+
+      primary: () => this.setState(isHQ ? { saved: true } : { copied: isCust ? "wa" : "invite-all" }),
+      primaryLabel: isHQ
+        ? (s.saved ? L("Rates published ✓", "费率已发布 ✓", "Kadar diterbitkan ✓") : L("Publish to all outlets", "发布至所有门店", "Terbitkan ke semua cawangan"))
+        : isCust
+        ? L("Share my code", "分享我的推荐码", "Kongsi kod saya")
+        : (s.copied === "invite-all" ? L("14 invites queued ✓", "已排入14条邀请 ✓", "14 jemputan dibariskan ✓") : L("Send today's invites", "发送今日邀请", "Hantar jemputan hari ini")),
+      primaryStyle: "border-radius:99px;padding:16px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;color:#fff;" +
+        (isHQ && s.saved ? "background:#9C93B8;box-shadow:0 7px 0 rgba(58,47,85,.4)" : isCust ? "background:#8B79E0;box-shadow:0 7px 0 #6E5BC4,0 12px 22px rgba(110,91,196,.3)"
+                : "background:#3A2F55;box-shadow:0 7px 0 rgba(30,22,52,.5)")
+    };
+  }
+}
+</script>
+</body>
+</html>

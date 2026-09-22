@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0A0C0D;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#F3F5F4}
+a{color:#9BDBB5}a:hover{color:#B9EDCB}
+*{-webkit-tap-highlight-color:transparent}
+.sq::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 44px;box-sizing:border-box">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:#101315;overflow:hidden">
+
+<div style="flex-shrink:0;padding:52px 16px 14px;background:#101315;border-bottom:1px solid #222A2B">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="width:42px;height:42px;border-radius:14px;background:#1F2626;border:1px solid #2B3334;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#9BDBB5;flex-shrink:0">SL</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:16px;font-weight:800;letter-spacing:-.2px">Sarah Lim</div>
+<div style="font-size:12.5px;font-weight:600;color:#AEB9B8;margin-top:2px">{{ t.consultant }} · Bukit Bintang</div>
+</div>
+<div onClick="{{ toggleClock }}" style="{{ clockStyle }}">
+<div style="{{ clockDotStyle }}"></div>
+{{ clockLabel }}
+</div>
+</div>
+</div>
+
+<div class="sq" style="flex:1;overflow-y:auto;overflow-x:hidden">
+<div style="{{ zoomStyle }}">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;overflow:hidden">
+<div style="padding:18px 18px 16px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.salaryWallet }}</div>
+<div style="display:flex;align-items:center;gap:5px;background:#1F2A24;border:1px solid #2F4438;border-radius:99px;padding:5px 10px">
+<div style="width:6px;height:6px;border-radius:99px;background:#9BDBB5"></div>
+<div style="font-size:11px;font-weight:800;color:#9BDBB5;letter-spacing:.4px">{{ t.live }}</div>
+</div>
+</div>
+<div style="display:flex;align-items:flex-end;gap:10px;margin-top:13px">
+<div style="font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">{{ estSalary }}</div>
+<div style="font-size:12px;font-weight:700;color:#AEB9B8;padding-bottom:6px;min-width:0">{{ t.estimated }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:11px;padding:9px 11px;border-radius:11px;background:#1A2224;border:1px solid #2B3334">
+<div style="font-size:12px;line-height:1.4;font-weight:600;color:#AEB9B8">{{ t.pendingNote }}</div>
+</div>
+</div>
+
+<div style="border-top:1px solid #2B3334">
+<sc-for list="{{ walletRows }}" as="w" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid #1E2526">
+<div style="{{ w.markStyle }}"></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:700">{{ w.label }}</div>
+<div style="font-size:12px;font-weight:600;color:#8A9694;margin-top:2px">{{ w.source }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="{{ w.valueStyle }}">{{ w.value }}</div>
+<div style="{{ w.stateStyle }}">{{ w.state }}</div>
+</div>
+</div>
+</sc-for>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;background:#141A1B">
+<div style="font-size:11.5px;font-weight:700;color:#8A9694;letter-spacing:.4px">{{ t.ruleVersion }}</div>
+<div onClick="{{ toWallet }}" style="font-size:12.5px;font-weight:800;color:#9BDBB5;cursor:pointer">{{ t.howCalc }}</div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.quickActions }}</div>
+<div onClick="{{ scanQr }}" style="display:flex;align-items:center;gap:13px;border-radius:18px;padding:16px;background:#9BDBB5;cursor:pointer;margin-bottom:10px">
+<div style="width:44px;height:44px;border-radius:14px;background:#102018;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<svg width="21" height="21" viewBox="0 0 22 22" fill="none"><path d="M3 7.5V4.5A1.5 1.5 0 0 1 4.5 3h3M14.5 3h3A1.5 1.5 0 0 1 19 4.5v3M19 14.5v3a1.5 1.5 0 0 1-1.5 1.5h-3M7.5 19h-3A1.5 1.5 0 0 1 3 17.5v-3" stroke="#9BDBB5" stroke-width="1.9" stroke-linecap="round"></path><path d="M3 11h16" stroke="#9BDBB5" stroke-width="1.9" stroke-linecap="round"></path></svg>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:16px;font-weight:800;color:#102018">{{ t.scanQr }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#2C4A39;margin-top:2px">{{ t.scanSub }}</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ actions }}" as="a" hint-placeholder-count="6">
+<div onClick="{{ a.go }}" style="display:flex;align-items:center;gap:11px;border-radius:16px;padding:14px 13px;background:#181D1E;border:1px solid #2B3334;cursor:pointer" style-hover="background:#1F2626">
+<div style="{{ a.iconStyle }}">{{ a.icon }}</div>
+<div style="font-size:12.5px;font-weight:700;line-height:1.25">{{ a.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.monthTarget }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#AEB9B8">{{ t.septMonth }}</div>
+</div>
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:18px">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+<div>
+<div style="font-size:31px;font-weight:800;letter-spacing:-1.2px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">RM 38,400</div>
+<div style="font-size:12.5px;font-weight:700;color:#AEB9B8;margin-top:6px;white-space:nowrap">{{ t.ofTarget }} RM 50,000</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:26px;font-weight:800;color:#9BDBB5;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">77%</div>
+<div style="font-size:12px;font-weight:700;color:#AEB9B8;margin-top:5px">{{ t.achieved }}</div>
+</div>
+</div>
+<div style="height:11px;border-radius:99px;background:#232B2C;margin-top:15px;overflow:hidden">
+<div style="height:100%;width:77%;border-radius:99px;background:linear-gradient(90deg,#5FB88A,#9BDBB5)"></div>
+</div>
+<div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px;font-weight:700">
+<div style="color:#9BDBB5">{{ t.today }} RM 2,140</div>
+<div style="color:#AEB9B8">RM 11,600 {{ t.toGo }}</div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.kpis }}</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+<div style="border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:14px 15px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="flex:1;min-width:0;font-size:13px;font-weight:700">{{ k.label }}</div>
+<div style="{{ k.badgeStyle }}">{{ k.badge }}</div>
+<div style="font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right;white-space:nowrap;flex-shrink:0">{{ k.value }}</div>
+</div>
+<div style="height:7px;border-radius:99px;background:#232B2C;margin-top:11px;overflow:hidden">
+<div style="{{ k.barStyle }}"></div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ ph.title }}</div>
+<div style="border-radius:20px;border:1px solid #4A3226;background:#221A18;padding:17px">
+<div style="display:flex;align-items:flex-start;gap:12px">
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:800;line-height:1.3">{{ ph.rule }}</div>
+<div style="font-size:12px;font-weight:600;color:#C9A98F;line-height:1.5;margin-top:6px">{{ ph.ruleDetail }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:24px;font-weight:800;letter-spacing:-.7px;color:#E8896B;font-variant-numeric:tabular-nums;white-space:nowrap">{{ ph.deduction }}</div>
+<div style="font-size:10.5px;font-weight:800;color:#C9A98F;margin-top:4px">{{ ph.thisMonth }}</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;margin-top:15px">
+<sc-for list="{{ ph.stats }}" as="s" hint-placeholder-count="3">
+<div style="flex:1;min-width:0;border-radius:14px;background:#191312;border:1px solid #3A2A25;padding:12px">
+<div style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ s.value }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#AEB9B8;margin-top:5px;line-height:1.3">{{ s.label }}</div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:14px;padding-top:14px;border-top:1px solid #3A2A25;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ ph.offenders }}" as="o" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800">{{ o.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#AEB9B8;margin-top:2px">{{ o.meta }}</div>
+</div>
+<div style="{{ o.tagStyle }}">{{ o.tag }}</div>
+<div style="font-size:12.5px;font-weight:800;color:#E8896B;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">{{ o.amount }}</div>
+</div>
+</sc-for>
+</div>
+<div style="font-size:11px;font-weight:600;color:#9C8479;line-height:1.5;margin-top:14px">{{ ph.appeal }}</div>
+</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.queue }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#AEB9B8">4 {{ t.today }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ queue }}" as="q" hint-placeholder-count="4">
+<div onClick="{{ q.open }}" style="{{ q.rowStyle }}">
+<div style="width:52px;flex-shrink:0;text-align:center">
+<div style="font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap">{{ q.time }}</div>
+<div style="font-size:11px;font-weight:700;color:#8A9694;margin-top:3px">{{ q.ampm }}</div>
+</div>
+<div style="width:1px;align-self:stretch;background:#2B3334;flex-shrink:0"></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800;line-height:1.25">{{ q.name }}</div>
+<div style="font-size:12px;font-weight:600;color:#AEB9B8;margin-top:3px">{{ q.service }}</div>
+</div>
+<div style="{{ q.statusStyle }}">{{ q.status }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.reactivation }}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ reactStats }}" as="r" hint-placeholder-count="4">
+<div style="{{ r.cardStyle }}">
+<div style="font-size:26px;font-weight:800;letter-spacing:-.8px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">{{ r.value }}</div>
+<div style="{{ r.labelStyle }}">{{ r.label }}</div>
+</div>
+</sc-for>
+</div>
+<div onClick="{{ toFollowUps }}" style="margin-top:10px;border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:15px;display:flex;align-items:center;gap:11px;cursor:pointer" style-hover="background:#1F2626">
+<div style="flex:1;min-width:0;font-size:13px;font-weight:700">{{ t.openFollowUps }}</div>
+<div style="font-size:15px;font-weight:700;color:#9BDBB5">›</div>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isWallet }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:16px">
+<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:18px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.howCalc }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#AEB9B8;line-height:1.55;margin-top:9px">{{ t.walletExplain }}</div>
+</div>
+<sc-for list="{{ walletDetail }}" as="d" hint-placeholder-count="5">
+<div style="border-radius:18px;border:1px solid #2B3334;background:#181D1E;padding:16px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+<div style="font-size:14px;font-weight:800">{{ d.label }}</div>
+<div style="{{ d.valueStyle }}">{{ d.value }}</div>
+</div>
+<div style="font-size:12.5px;font-weight:600;color:#AEB9B8;line-height:1.5;margin-top:7px">{{ d.formula }}</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:11px;flex-wrap:wrap">
+<div style="font-size:11px;font-weight:800;letter-spacing:.4px;padding:5px 9px;border-radius:7px;background:#1F2626;border:1px solid #2B3334;color:#8A9694">{{ d.version }}</div>
+<div style="{{ d.stateStyle }}">{{ d.state }}</div>
+<div style="font-size:12px;font-weight:600;color:#8A9694">{{ d.sources }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFollowUps }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:16px">
+
+<div style="display:flex;gap:8px">
+<sc-for list="{{ fuTabs }}" as="f" hint-placeholder-count="3">
+<div onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</div>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ followUps }}" as="c" hint-placeholder-count="4">
+<div style="border-radius:18px;border:1px solid #2B3334;background:#181D1E;padding:15px">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="{{ c.avatarStyle }}">{{ c.initials }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:800">{{ c.name }}</div>
+<div style="font-size:12px;font-weight:600;color:#AEB9B8;margin-top:3px">{{ c.meta }}</div>
+</div>
+<div style="{{ c.dueStyle }}">{{ c.due }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:9px;margin-top:13px;padding:11px;border-radius:12px;background:#141A1B;border:1px solid #232B2C">
+<div style="font-size:12px;font-weight:600;color:#AEB9B8;line-height:1.45">{{ c.lastNote }}</div>
+</div>
+<div style="display:flex;gap:9px;margin-top:12px">
+<div style="flex:1;border-radius:12px;padding:12px;text-align:center;font-size:12.5px;font-weight:800;background:#9BDBB5;color:#102018;cursor:pointer">{{ t.whatsapp }}</div>
+<div style="flex:1;border-radius:12px;padding:12px;text-align:center;font-size:12.5px;font-weight:800;background:#1F2626;border:1px solid #2B3334;color:#F3F5F4;cursor:pointer">{{ t.logOutcome }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+
+<div style="flex-shrink:0;display:flex;background:#141A1B;border-top:1px solid #222A2B;padding:11px 6px 32px">
+<sc-for list="{{ tabs }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">
+<div style="{{ b.dotStyle }}"></div>
+{{ b.label }}
+</div>
+</sc-for>
+</div>
+
+</div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940},&quot;displaySize&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Standard&quot;,&quot;Large&quot;,&quot;Extra Large&quot;],&quot;default&quot;:&quot;Large&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Accessibility&quot;},&quot;showPendingSplit&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Salary wallet&quot;},&quot;clockedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Shift&quot;}}">
+const money = (n) => "RM " + Math.round(n).toLocaleString("en-US");
+
+const T = {
+  en: { consultant: "Senior Consultant", clockIn: "Clock in", clockedIn: "On shift",
+    salaryWallet: "Live salary wallet", live: "LIVE", estimated: "estimated this month",
+    pendingNote: "Estimate only. Finalized when the September payroll run is approved.",
+    ruleVersion: "Rules v2026.09 · effective 1 Sept", howCalc: "How is this calculated?",
+    quickActions: "Quick actions", scanQr: "Scan customer QR", scanSub: "Opens the treatment card",
+    newSale: "New sale", completeTrt: "Complete treatment", collect: "Collect payment",
+    book: "Book appointment", followUp: "Customer follow-up", myPayslip: "My payslips",
+    monthTarget: "Monthly target", septMonth: "September", ofTarget: "of", achieved: "achieved",
+    today: "Today", toGo: "to go", kpis: "KPI progress", queue: "Treatment queue",
+    reactivation: "Reactivation work", openFollowUps: "Open my follow-up list",
+    walletExplain: "Every amount below traces to recorded activity and the rule version active on the date it was earned. Approving payroll locks these figures; nothing recalculates afterwards.",
+    whatsapp: "WhatsApp", logOutcome: "Log outcome",
+    tabHome: "Today", tabSales: "Sales", tabCustomers: "Customers", tabMe: "Me",
+    basic: "Basic salary", commission: "Personal commission", kpiBonus: "KPI bonus",
+    challenge: "Challenge bonus", referral: "Referral bonus", shared: "Shared sales credit",
+    final: "Final", pending: "Pending",
+    kSales: "Personal sales", kRetail: "Retail attachment", kAttend: "Lateness / attendance",
+    kTreat: "Treatments completed", kReact: "Reactivation returns",
+    rAssigned: "Assigned", rDueToday: "Due today", rOverdue: "Overdue", rReturned: "Returned",
+    fuToday: "Today", fuOverdue: "Overdue", fuAll: "All assigned",
+    confirmed: "Confirmed", inChair: "In chair", waiting: "Waiting", done: "Done" },
+  zh: { consultant: "高级顾问", clockIn: "打卡上班", clockedIn: "在岗",
+    salaryWallet: "实时薪资钱包", live: "实时", estimated: "本月预估",
+    pendingNote: "仅为预估。九月薪资核准后方为最终金额。",
+    ruleVersion: "规则 v2026.09 · 9月1日生效", howCalc: "如何计算？",
+    quickActions: "快捷操作", scanQr: "扫描顾客二维码", scanSub: "打开疗程卡",
+    newSale: "新建销售", completeTrt: "完成疗程", collect: "收款",
+    book: "预约", followUp: "顾客跟进", myPayslip: "我的工资单",
+    monthTarget: "月度目标", septMonth: "九月", ofTarget: "／", achieved: "达成",
+    today: "今日", toGo: "待完成", kpis: "KPI 进度", queue: "疗程排程",
+    reactivation: "唤醒工作", openFollowUps: "打开我的跟进名单",
+    walletExplain: "以下每一笔金额都可追溯到实际业务记录，以及赚取当日生效的规则版本。薪资核准后即锁定，不会重新计算。",
+    whatsapp: "WhatsApp", logOutcome: "记录结果",
+    tabHome: "今日", tabSales: "业绩", tabCustomers: "顾客", tabMe: "我的",
+    basic: "基本薪资", commission: "个人佣金", kpiBonus: "KPI 奖金",
+    challenge: "挑战奖金", referral: "推荐奖金", shared: "共享业绩",
+    final: "已确定", pending: "待定",
+    kSales: "个人业绩", kRetail: "产品连带", kAttend: "迟到／出勤",
+    kTreat: "完成疗程数", kReact: "唤醒回店",
+    rAssigned: "已分配", rDueToday: "今日到期", rOverdue: "已逾期", rReturned: "已回店",
+    fuToday: "今日", fuOverdue: "逾期", fuAll: "全部",
+    confirmed: "已确认", inChair: "护理中", waiting: "等候", done: "已完成" },
+  ms: { consultant: "Perunding Kanan", clockIn: "Daftar masuk", clockedIn: "Sedang bertugas",
+    salaryWallet: "Dompet gaji langsung", live: "LANGSUNG", estimated: "anggaran bulan ini",
+    pendingNote: "Anggaran sahaja. Dimuktamadkan apabila gaji September diluluskan.",
+    ruleVersion: "Peraturan v2026.09 · berkuat kuasa 1 Sept", howCalc: "Bagaimana ia dikira?",
+    quickActions: "Tindakan pantas", scanQr: "Imbas QR pelanggan", scanSub: "Buka kad rawatan",
+    newSale: "Jualan baharu", completeTrt: "Selesai rawatan", collect: "Kutip bayaran",
+    book: "Buat temujanji", followUp: "Susulan pelanggan", myPayslip: "Slip gaji saya",
+    monthTarget: "Sasaran bulanan", septMonth: "September", ofTarget: "daripada", achieved: "dicapai",
+    today: "Hari ini", toGo: "lagi", kpis: "Kemajuan KPI", queue: "Giliran rawatan",
+    reactivation: "Kerja pengaktifan semula", openFollowUps: "Buka senarai susulan saya",
+    walletExplain: "Setiap jumlah di bawah boleh dijejak kepada aktiviti yang direkodkan dan versi peraturan yang berkuat kuasa pada tarikh ia diperoleh. Kelulusan gaji mengunci angka ini.",
+    whatsapp: "WhatsApp", logOutcome: "Rekod hasil",
+    tabHome: "Hari ini", tabSales: "Jualan", tabCustomers: "Pelanggan", tabMe: "Saya",
+    basic: "Gaji asas", commission: "Komisen peribadi", kpiBonus: "Bonus KPI",
+    challenge: "Bonus cabaran", referral: "Bonus rujukan", shared: "Kredit jualan dikongsi",
+    final: "Muktamad", pending: "Belum selesai",
+    kSales: "Jualan peribadi", kRetail: "Lampiran runcit", kAttend: "Lewat / kehadiran",
+    kTreat: "Rawatan selesai", kReact: "Pulangan pengaktifan",
+    rAssigned: "Diberikan", rDueToday: "Hari ini", rOverdue: "Lewat tempoh", rReturned: "Kembali",
+    fuToday: "Hari ini", fuOverdue: "Lewat tempoh", fuAll: "Semua",
+    confirmed: "Disahkan", inChair: "Dalam rawatan", waiting: "Menunggu", done: "Selesai" }
+};
+
+class Component extends DCLogic {
+  state = { screen: "home", lang: "en", clockedIn: null, fuTab: 0 };
+
+  renderVals() {
+    const s = this.state, lang = s.lang, t = T[lang];
+    const onShift = s.clockedIn === null ? (this.props.clockedIn ?? true) : s.clockedIn;
+    const splitPending = this.props.showPendingSplit ?? true;
+    const L3 = (e, z, m) => ({ en: e, zh: z, ms: m })[lang];
+
+    const stateChip = (final) => "font-size:11px;font-weight:800;letter-spacing:.4px;padding:4px 8px;border-radius:7px;margin-top:4px;display:inline-block;" +
+      (final ? "background:#1F2A24;color:#9BDBB5;border:1px solid #2F4438" : "background:#2A2622;color:#E0B978;border:1px solid #453C2C");
+
+    const wallet = [
+      { label: t.basic, value: 2800, final: true, src: L3("Full-time contract", "全职合约", "Kontrak sepenuh masa"),
+        formula: L3("Fixed monthly basic for full-time consultants.", "全职顾问固定月薪。", "Gaji asas tetap bulanan."), ver: "payroll.fulltime v4" },
+      { label: t.commission, value: 1920, final: false, src: L3("38,400 personal sales · tier 3 at 5%", "个人业绩 38,400 · 第三档 5%", "Jualan 38,400 · tier 3 pada 5%"),
+        formula: L3("Tiered on personal sales: 3% to 20k, 4% to 30k, 5% above.", "按个人业绩分档：2万内3%，3万内4%，超出5%。", "Berperingkat: 3% hingga 20k, 4% hingga 30k, 5% ke atas."), ver: "commission.personal v7" },
+      { label: t.shared, value: 410, final: false, src: L3("3 customers at 0.5 credit", "3位顾客 各0.5业绩", "3 pelanggan pada kredit 0.5"),
+        formula: L3("0.5 credit each when the owning consultant is on leave. Allocation follows last month's lateness KPI.", "原顾问休假时，双方各得0.5业绩。分配依上月迟到KPI。", "Kredit 0.5 setiap satu apabila perunding asal bercuti."), ver: "sharing.rule v3" },
+      { label: t.kpiBonus, value: 600, final: false, src: L3("4 of 5 KPIs met", "5项KPI达成4项", "4 daripada 5 KPI dicapai"),
+        formula: L3("RM150 per KPI met. Lateness KPI not yet met this period.", "每达成一项 RM150。本期迟到KPI未达成。", "RM150 setiap KPI. KPI lewat belum dicapai."), ver: "kpi.consultant v5" },
+      { label: t.challenge, value: 300, final: true, src: L3("September retail sprint", "九月产品冲刺", "Sprint runcit September"),
+        formula: L3("Awarded when retail attachment passes 30% for the month.", "产品连带率超过30%即发放。", "Diberi apabila lampiran runcit melebihi 30%."), ver: "campaign.sep26 v1" },
+      { label: t.referral, value: 200, final: true, src: L3("2 referrals returned", "2位推荐顾客回店", "2 rujukan kembali"),
+        formula: L3("RM100 per referred customer who completes a paid treatment.", "每位推荐顾客完成付费疗程 RM100。", "RM100 bagi setiap rujukan yang selesai rawatan berbayar."), ver: "referral.staff v2" }
+    ];
+    const total = wallet.reduce((a, w) => a + w.value, 0);
+
+    const titles = { home: t.tabHome, wallet: t.salaryWallet, followups: t.followUp };
+
+    const zoom = { Standard: 1, Large: 1.08, "Extra Large": 1.18 }[this.props.displaySize ?? "Large"] ?? 1.08;
+
+    return {
+      t, estSalary: money(total),
+      zoomStyle: "zoom:" + zoom,
+      isHome: s.screen === "home", isWallet: s.screen === "wallet", isFollowUps: s.screen === "followups",
+      headerTitle: titles[s.screen],
+      toWallet: () => this.setState({ screen: "wallet" }),
+      toFollowUps: () => this.setState({ screen: "followups" }),
+      scanQr: () => this.setState({ screen: "followups" }),
+
+      clockLabel: onShift ? t.clockedIn : t.clockIn,
+      toggleClock: () => this.setState({ clockedIn: !onShift }),
+      clockStyle: "display:flex;align-items:center;gap:7px;flex-shrink:0;padding:9px 13px;border-radius:99px;font-size:12.5px;font-weight:800;cursor:pointer;" +
+        (onShift ? "background:#1F2A24;border:1px solid #2F4438;color:#9BDBB5" : "background:#1F2626;border:1px solid #2B3334;color:#AEB9B8"),
+      clockDotStyle: "width:7px;height:7px;border-radius:99px;background:" + (onShift ? "#9BDBB5" : "#8A9694"),
+
+      walletRows: wallet.map(w => ({
+        label: w.label, source: w.src, value: money(w.value),
+        markStyle: "width:4px;height:30px;border-radius:99px;flex-shrink:0;background:" + (splitPending && !w.final ? "#E0B978" : "#9BDBB5"),
+        valueStyle: "font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0",
+        state: splitPending ? (w.final ? t.final : t.pending) : "",
+        stateStyle: splitPending ? stateChip(w.final) : "display:none" })),
+
+      walletDetail: wallet.map(w => ({
+        label: w.label, value: money(w.value),
+        valueStyle: "font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:" + (w.final ? "#9BDBB5" : "#E0B978"),
+        formula: w.formula, version: w.ver, sources: w.src,
+        state: w.final ? t.final : t.pending, stateStyle: stateChip(w.final).replace("margin-top:4px;", "") })),
+
+      actions: [
+        [t.newSale, "＋", "#9BDBB5"], [t.completeTrt, "✓", "#9BDBB5"],
+        [t.collect, "＄", "#E0B978"], [t.book, "▤", "#8FBEDB"],
+        [t.followUp, "☏", "#C9A7E8"], [t.myPayslip, "▦", "#AEB9B8"]
+      ].map(([label, icon, color]) => ({ label, icon,
+        iconStyle: "width:36px;height:36px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;background:#1F2626;border:1px solid #2B3334;color:" + color,
+        go: () => this.setState({ screen: label === t.followUp ? "followups" : label === t.myPayslip ? "wallet" : "home" }) })),
+
+      ph: {
+        title: L3("Photo compliance", "照片合规", "Pematuhan foto"),
+        rule: L3("Every treatment needs a before and an after photo",
+          "每个疗程必须上传疗程前与疗程后照片", "Setiap rawatan perlu foto sebelum dan selepas"),
+        ruleDetail: L3("RM 30 is deducted from KPI bonus for each visit closed without both photos. The rule is not waivable and applies to the consultant on duty.",
+          "每有一次到访未上传完整照片，从 KPI 奖金扣除 RM 30。此规则不可豁免，由当值顾问承担。",
+          "RM 30 ditolak daripada bonus KPI bagi setiap lawatan yang ditutup tanpa kedua-dua foto. Peraturan ini tidak boleh dikecualikan."),
+        deduction: "− RM 90",
+        thisMonth: L3("September", "九月", "September"),
+        stats: [
+          { value: "61 / 64", label: L3("Visits with both photos", "照片齐全的到访", "Lawatan dengan kedua-dua foto") },
+          { value: "95%", label: L3("Compliance rate · target 100%", "合规率 · 目标100%", "Kadar pematuhan · sasaran 100%") },
+          { value: "3", label: L3("Missing this month", "本月缺失", "Tiada bulan ini") }
+        ],
+        offenders: [
+          { name: "Nurul Huda", meta: L3("18 Sept · Black Pearl Laser", "9月18日 · 黑珍珠激光", "18 Sept · Laser Black Pearl"),
+            tag: L3("No after photo", "缺疗程后", "Tiada foto selepas"), amount: "− RM 30" },
+          { name: "Amy Wong", meta: L3("9 Sept · AI Body Master", "9月9日 · AI Body Master", "9 Sept · AI Body Master"),
+            tag: L3("No photos", "两张皆缺", "Tiada foto"), amount: "− RM 30" },
+          { name: "Jane Lee", meta: L3("2 Sept · First trial facial", "9月2日 · 首次体验护理", "2 Sept · Cubaan facial pertama"),
+            tag: L3("No before photo", "缺疗程前", "Tiada foto sebelum"), amount: "− RM 30" }
+        ].map(o => ({ ...o, tagStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:800;background:#3A2A22;color:#E89A6B" })),
+        appeal: L3("Photos uploaded late still count if the visit is reopened by a manager within 24 hours. After that the deduction is final and appears on the payslip.",
+          "如经经理在24小时内重开该次到访，补传照片仍然有效。逾期扣款即为最终结果，并显示在工资单上。",
+          "Foto yang dimuat naik lewat masih dikira jika lawatan dibuka semula oleh pengurus dalam 24 jam. Selepas itu potongan adalah muktamad.")
+      },
+
+      kpis: [
+        { label: L3("Before & after photos", "疗程前后照片", "Foto sebelum & selepas"), value: "61 / 64", pct: 95, ok: false },
+        { label: t.kSales, value: "77%", pct: 77, ok: true },
+        { label: t.kRetail, value: "34%", pct: 88, ok: true },
+        { label: t.kAttend, value: "2 " + L3("late", "次迟到", "lewat"), pct: 42, ok: false },
+        { label: t.kTreat, value: "68 / 80", pct: 85, ok: true },
+        { label: t.kReact, value: "5 / 6", pct: 83, ok: true }
+      ].map(k => ({ label: k.label, value: k.value,
+        badge: k.ok ? "✓" : "!",
+        badgeStyle: "width:20px;height:20px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;" +
+          (k.ok ? "background:#1F2A24;color:#9BDBB5" : "background:#3A2A22;color:#E89A6B"),
+        barStyle: "height:100%;width:" + k.pct + "%;border-radius:99px;background:" + (k.ok ? "#9BDBB5" : "#E89A6B") })),
+
+      queue: [
+        { time: "10:30", ampm: "AM", name: "Michelle Tan", service: L3("Glow Signature · session 7 of 12", "焕采尊享 · 第7／12次", "Glow Signature · sesi 7/12"), st: "done" },
+        { time: "12:00", ampm: "PM", name: "Amy Wong", service: L3("AI Body Master · session 2 of 4", "AI Body Master · 第2／4次", "AI Body Master · sesi 2/4"), st: "inChair" },
+        { time: "2:30", ampm: "PM", name: "Nurul Huda", service: L3("Black Pearl Laser · single", "黑珍珠激光 · 单次", "Laser Black Pearl · tunggal"), st: "waiting" },
+        { time: "4:15", ampm: "PM", name: "Jane Lee", service: L3("First trial facial · new customer", "首次体验护理 · 新客", "Cubaan facial pertama · pelanggan baharu"), st: "confirmed" }
+      ].map(q => {
+        const tone = { done: "#1F2A24|#9BDBB5", inChair: "#2A2622|#E0B978", waiting: "#1F2626|#AEB9B8", confirmed: "#1F2626|#AEB9B8" }[q.st].split("|");
+        return { time: q.time, ampm: q.ampm, name: q.name, service: q.service, status: t[q.st],
+          rowStyle: "display:flex;align-items:center;gap:12px;border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:13px 14px;cursor:pointer" +
+            (q.st === "inChair" ? ";border-color:#453C2C" : ""),
+          statusStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.3px;background:" + tone[0] + ";color:" + tone[1],
+          open: () => this.setState({ screen: "followups" }) };
+      }),
+
+      reactStats: [
+        { value: "12", label: t.rAssigned, alert: false },
+        { value: "4", label: t.rDueToday, alert: false },
+        { value: "3", label: t.rOverdue, alert: true },
+        { value: "5", label: t.rReturned, alert: false }
+      ].map(r => ({ value: r.value, label: r.label,
+        cardStyle: "border-radius:16px;padding:15px;background:#181D1E;border:1px solid " + (r.alert ? "#4A322A" : "#2B3334"),
+        labelStyle: "font-size:12px;font-weight:700;margin-top:6px;color:" + (r.alert ? "#E89A6B" : "#AEB9B8") })),
+
+      fuTabs: [t.fuToday, t.fuOverdue, t.fuAll].map((label, i) => ({ label,
+        pick: () => this.setState({ fuTab: i }),
+        style: "flex:1;text-align:center;padding:11px 8px;border-radius:12px;font-size:12.5px;font-weight:800;cursor:pointer;" +
+          (s.fuTab === i ? "background:#9BDBB5;color:#102018" : "background:#181D1E;border:1px solid #2B3334;color:#AEB9B8") })),
+
+      followUps: [
+        { initials: "KW", name: "Karen Wong", days: 112, overdue: false, tone: "#2F4438|#9BDBB5",
+          note: L3("Asked to be called after Raya. Interested in slimming course.", "要求开斋节后联系，对纤体疗程有兴趣。", "Minta dihubungi selepas Raya. Berminat kursus pelangsingan.") },
+        { initials: "SC", name: "Serena Chan", days: 96, overdue: true, tone: "#4A322A|#E89A6B",
+          note: L3("No answer twice. Try WhatsApp instead of call.", "两次未接听，改用 WhatsApp。", "Dua kali tiada jawapan. Cuba WhatsApp.") },
+        { initials: "FA", name: "Farah Aziz", days: 134, overdue: true, tone: "#4A322A|#E89A6B",
+          note: L3("Package expired in July. Eligible for win-back voucher.", "套餐7月到期，符合回归礼券资格。", "Pakej tamat Julai. Layak vaucar kembali.") },
+        { initials: "LT", name: "Lisa Tan", days: 91, overdue: false, tone: "#2F4438|#9BDBB5",
+          note: L3("Booked for Saturday. Confirm the day before.", "已预约周六，前一天确认。", "Ditempah Sabtu. Sahkan sehari sebelum.") }
+      ].map(c => {
+        const tone = c.tone.split("|");
+        return { initials: c.initials, name: c.name, lastNote: c.note,
+          meta: L3("No visit for ", "已 ", "Tiada lawatan ") + c.days + L3(" days", " 天未到店", " hari"),
+          avatarStyle: "width:42px;height:42px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;background:#1F2626;border:1px solid " + tone[0] + ";color:" + tone[1],
+          due: c.overdue ? t.fuOverdue : t.fuToday,
+          dueStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:11px;font-weight:800;background:" + (c.overdue ? "#3A2A22;color:#E89A6B" : "#1F2A24;color:#9BDBB5") };
+      }),
+
+      tabs: [["home", t.tabHome], ["sales", t.tabSales], ["customers", t.tabCustomers], ["me", t.tabMe]].map(([k, label]) => {
+        const on = (k === "home" && s.screen === "home") || (k === "customers" && s.screen === "followups") || (k === "me" && s.screen === "wallet");
+        return { label,
+          pick: () => this.setState({ screen: k === "customers" ? "followups" : k === "me" ? "wallet" : "home" }),
+          style: "flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;font-size:12px;font-weight:800;cursor:pointer;color:" + (on ? "#9BDBB5" : "#8A9694"),
+          dotStyle: "width:9px;height:9px;border-radius:99px;background:" + (on ? "#9BDBB5" : "#2B3334") };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

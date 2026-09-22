@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E7E0F7;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#2D2640}
+a{color:#7C5DD8}a:hover{color:#6A4BC4}
+*{-webkit-tap-highlight-color:transparent}
+.sq::-webkit-scrollbar{width:0;height:0}
+@keyframes rcfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 44px;box-sizing:border-box">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:#F5F1FF;overflow:hidden">
+
+<div style="flex-shrink:0;padding:52px 18px 12px">
+<div style="display:flex;align-items:center;gap:10px">
+<img src="assets/tikbevi-logo.png" alt="TIKBEVI" style="width:38px;height:38px;border-radius:12px;object-fit:cover;flex-shrink:0;box-shadow:0 4px 0 rgba(124,93,216,.3)">
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700;line-height:1.2">Beauty Rewards Club</div>
+<div style="font-size:8.5px;font-weight:700;color:#615272;letter-spacing:.5px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SHARE BEAUTY • EARN REWARDS • CELEBRATE WELLNESS</div>
+</div>
+<div style="display:flex;gap:2px;background:#EAE2FA;border-radius:12px;padding:3px;flex-shrink:0">
+<sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+<div onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div class="sq" style="flex:1;overflow-y:auto;overflow-x:hidden">
+
+<div style="padding:8px 18px 18px">
+<div style="font-size:10px;font-weight:800;color:#7C5DD8;letter-spacing:1.2px;text-transform:uppercase">{{ pageLabel }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:25px;font-weight:700;line-height:1.2;margin-top:6px">{{ pageTitle }}</div>
+<div style="font-size:12.5px;font-weight:500;color:#615272;margin-top:7px;line-height:1.45">{{ pageSub }}</div>
+</div>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="padding:0 18px 20px;display:flex;flex-direction:column;gap:16px">
+
+<div style="border-radius:26px;padding:18px;background:linear-gradient(135deg,#FFE0E8 0%,#FFD0DC 50%,#FFC8C8 100%);display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(255,150,170,.28)">
+<div style="position:relative;flex-shrink:0;width:108px;height:130px">
+<img src="girl-3d.png" alt="" style="width:108px;height:130px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))">
+<div style="position:absolute;top:8px;right:4px;font-size:22px;font-weight:700;color:#B85870;animation:rcfloat 3s ease-in-out infinite">♪</div>
+<div style="position:absolute;top:40px;right:-6px;font-size:16px;font-weight:700;color:#B85870;animation:rcfloat 3s ease-in-out infinite .5s">♫</div>
+<div style="position:absolute;top:18px;left:0;font-size:14px;font-weight:700;color:#B85870;animation:rcfloat 3s ease-in-out infinite 1s">♪</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:9px;font-weight:800;color:#993E5B;letter-spacing:1.4px;text-transform:uppercase">{{ t.helloOwner }}</div>
+<div style="font-size:15.5px;font-weight:700;line-height:1.25;margin-top:6px">{{ t.generated }}</div>
+<div style="font-size:30px;font-weight:800;color:#8B3A5C;letter-spacing:-.8px;line-height:1;margin-top:5px;font-variant-numeric:tabular-nums">RM78,000</div>
+<div style="font-size:10px;font-weight:700;color:#8B3A5C;margin-top:4px">{{ t.thisMonthVs }}</div>
+<div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:linear-gradient(135deg,#9B7CE8,#7C5DD8);color:#fff;border-radius:99px;padding:9px 15px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 rgba(106,75,196,.55)">{{ t.launchCampaign }}</div>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);flex-shrink:0;display:flex;align-items:center;justify-content:center">
+<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 8v4h3l5 3.5V4.5L6 8H3Z" fill="#fff"></path><path d="M14.5 6.8a4.6 4.6 0 0 1 0 6.4" stroke="#fff" stroke-width="1.7" stroke-linecap="round"></path></svg>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:9px;font-weight:800;color:#7C5DD8;letter-spacing:.7px;text-transform:uppercase">{{ t.nextBest }}</div>
+<div style="font-size:13px;font-weight:700;margin-top:3px;line-height:1.3">{{ t.coldLeads }}</div>
+</div>
+<div style="color:#615272;font-size:15px;font-weight:700">›</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ stats }}" as="s" hint-placeholder-count="6">
+<div style="background:#fff;border-radius:18px;padding:15px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="font-size:9px;font-weight:800;color:#615272;letter-spacing:.6px;text-transform:uppercase;line-height:1.3;height:24px;overflow:hidden">{{ s.label }}</div>
+<div style="font-size:23px;font-weight:800;letter-spacing:-.6px;margin-top:5px;font-variant-numeric:tabular-nums">{{ s.value }}</div>
+</div>
+</sc-for>
+</div>
+
+<div>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ t.funnel }}</div>
+<div style="font-size:10px;font-weight:800;color:#6A4BC4;background:#F0E8FF;padding:5px 11px;border-radius:99px">35% {{ t.conversion }}</div>
+</div>
+<div style="background:#fff;border-radius:22px;padding:16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<sc-for list="{{ funnel }}" as="f" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;padding:10px 0">
+<div style="font-size:12px;font-weight:700;color:#615272;min-width:62px">{{ f.label }}</div>
+<div style="flex:1;height:9px;border-radius:99px;background:#F0E8FF;overflow:hidden">
+<div style="{{ f.fillStyle }}"></div>
+</div>
+<div style="font-size:14px;font-weight:800;min-width:32px;text-align:right;font-variant-numeric:tabular-nums">{{ f.value }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.topReferrers }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ referrers }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="{{ r.avatarStyle }}">{{ r.initial }}
+<div style="{{ r.crownStyle }}">♕</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:800">{{ r.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#615272;margin-top:2px">{{ r.stats }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:9px;font-weight:700;color:#615272;letter-spacing:.5px;text-transform:uppercase">{{ t.credit }}</div>
+<div style="font-size:14px;font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums">{{ r.amount }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.recentActivity }}</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ recentActivity }}" as="a" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 4px 0 rgba(155,124,232,.11)">
+<div style="{{ a.dotStyle }}"></div>
+<div style="flex:1;min-width:0;font-size:12.5px;font-weight:600;line-height:1.35">{{ a.text }}</div>
+<div style="font-size:11px;font-weight:700;color:#615272;flex-shrink:0">{{ a.time }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isGifts }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 18px 20px;display:flex;flex-direction:column;gap:16px">
+<sc-for list="{{ gifts }}" as="g" hint-placeholder-count="3">
+<div style="background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 6px 0 rgba(155,124,232,.16),0 10px 22px rgba(124,93,216,.1)">
+<div style="{{ g.imageStyle }}">
+<div style="position:absolute;top:12px;left:12px;background:#fff;padding:6px 12px;border-radius:99px;font-size:9.5px;font-weight:800;color:#6A4BC4;letter-spacing:.5px">{{ g.badge }}</div>
+<div style="{{ g.statusStyle }}">{{ g.status }}</div>
+<div style="position:absolute;left:14px;bottom:12px">
+<div style="font-size:27px;font-weight:800;color:#fff;line-height:1;text-shadow:0 2px 7px rgba(80,40,60,.6)">{{ g.price }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#fff;margin-top:3px;text-shadow:0 2px 6px rgba(80,40,60,.6)">{{ g.priceLabel }}</div>
+</div>
+<div style="{{ g.hintStyle }}">{{ g.hint }}</div>
+</div>
+<div style="padding:16px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ g.title }}</div>
+<div style="font-size:12px;font-weight:500;color:#615272;margin-top:4px">{{ g.desc }}</div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:13px">
+<div style="font-size:11.5px;font-weight:600;color:#615272">{{ g.dates }}</div>
+<div style="font-size:11.5px;font-weight:800;color:#6A4BC4">{{ g.friends }}</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isClub }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 18px 20px;display:flex;flex-direction:column;gap:18px">
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(135deg,#FFE0E8 0%,#FFD0DC 50%,#FFC8C8 100%);box-shadow:0 6px 0 rgba(216,124,162,.22)">
+<div style="display:flex;justify-content:space-between;gap:12px">
+<div>
+<div style="font-size:9.5px;font-weight:800;color:#8B3A5C;letter-spacing:.7px;text-transform:uppercase">{{ t.member }}</div>
+<div style="font-size:18px;font-weight:800;margin-top:3px">Jane</div>
+</div>
+<div style="text-align:right">
+<div style="font-size:9.5px;font-weight:800;color:#8B3A5C;letter-spacing:.7px;text-transform:uppercase">{{ t.memberId }}</div>
+<div style="font-size:18px;font-weight:800;margin-top:3px">JANE123</div>
+</div>
+</div>
+<div style="background:rgba(255,255,255,.8);border-radius:14px;padding:12px;margin-top:16px">
+<div style="font-size:9px;font-weight:800;color:#8B3A5C;letter-spacing:.7px;text-transform:uppercase">{{ t.inviteLink }}</div>
+<div style="font-size:12.5px;font-weight:600;margin-top:4px;word-break:break-all">https://beautygrowth.app/r/JANE123</div>
+</div>
+<div style="display:flex;gap:11px;margin-top:15px">
+<div onClick="{{ copyLink }}" style="flex:1;background:rgba(255,255,255,.9);border-radius:14px;padding:13px;text-align:center;font-size:12.5px;font-weight:800;cursor:pointer">{{ copyLabel }}</div>
+<div style="flex:1.2;background:#7C5DD8;color:#fff;border-radius:14px;padding:13px;text-align:center;font-size:12.5px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #6A4BC4">{{ t.sendGift }}</div>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.myStats }}</div>
+<div style="display:flex;gap:10px">
+<sc-for list="{{ memberStats }}" as="m" hint-placeholder-count="3">
+<div style="flex:1;background:#fff;border-radius:18px;padding:15px 10px;text-align:center;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums">{{ m.value }}</div>
+<div style="font-size:9px;font-weight:700;color:#615272;letter-spacing:.5px;text-transform:uppercase;margin-top:5px;line-height:1.3">{{ m.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.howItWorks }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ steps }}" as="x" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800">{{ x.n }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800;line-height:1.3">{{ x.title }}</div>
+<div style="font-size:11px;font-weight:500;color:#615272;margin-top:3px;line-height:1.4">{{ x.desc }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.templates }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ templates }}" as="x" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="width:40px;height:40px;border-radius:13px;background:#F0E8FF;color:#6A4BC4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800">✦</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800;line-height:1.3">{{ x.title }}</div>
+<div style="font-size:11px;font-weight:500;color:#615272;margin-top:3px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ x.desc }}</div>
+</div>
+<div style="width:32px;height:32px;border-radius:99px;border:1.5px solid #E2D8F5;color:#6A4BC4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer">➤</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isRewards }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 18px 20px;display:flex;flex-direction:column;gap:17px">
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(135deg,#FFE0E8 0%,#FFD0DC 50%,#FFC8C8 100%);box-shadow:0 6px 0 rgba(216,124,162,.22)">
+<div style="font-size:10px;font-weight:800;color:#993E5B;letter-spacing:.8px;text-transform:uppercase">{{ t.availCredit }}</div>
+<div style="font-size:36px;font-weight:800;color:#8B3A5C;letter-spacing:-1.4px;line-height:1;margin-top:8px;font-variant-numeric:tabular-nums">RM2,250</div>
+<div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+<div style="background:rgba(255,255,255,.85);padding:6px 12px;border-radius:99px;font-size:11px;font-weight:800;color:#8B3A5C">1,500 {{ t.beautyPoints }}</div>
+<div style="background:rgba(255,255,255,.85);padding:6px 12px;border-radius:99px;font-size:11px;font-weight:800;color:#8B3A5C">+RM450 {{ t.thisWeek }}</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ creditGrid }}" as="c" hint-placeholder-count="4">
+<div style="background:#fff;border-radius:18px;padding:15px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="font-size:9px;font-weight:800;color:#615272;letter-spacing:.6px;text-transform:uppercase">{{ c.label }}</div>
+<div style="font-size:21px;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums">{{ c.value }}</div>
+<div style="font-size:11px;font-weight:500;color:#615272;margin-top:3px">{{ c.desc }}</div>
+</div>
+</sc-for>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.friendsActivity }}</div>
+<div style="background:#fff;border-radius:22px;padding:6px 16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<sc-for list="{{ friendsActivity }}" as="a" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;padding:12px 0">
+<div style="width:36px;height:36px;border-radius:11px;background:#F0E8FF;color:#6A4BC4;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">{{ a.icon }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ a.title }}</div>
+<div style="font-size:11px;font-weight:500;color:#615272;margin-top:2px">{{ a.desc }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:13px;font-weight:800;font-variant-numeric:tabular-nums">{{ a.value }}</div>
+<div style="font-size:10px;font-weight:600;color:#615272;margin-top:2px">{{ a.date }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:12px;background:#fff;border-radius:14px;padding:14px;text-align:center;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 5px 0 rgba(155,124,232,.14)">{{ t.viewHistory }}</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.usageRules }}</div>
+<div style="background:#fff;border-radius:22px;padding:16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="font-size:9px;font-weight:800;color:#2E7D4F;letter-spacing:.7px;text-transform:uppercase">{{ t.canRedeem }}</div>
+<div style="display:flex;flex-direction:column;gap:7px;margin-top:9px">
+<sc-for list="{{ canRedeem }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600">
+<div style="width:17px;height:17px;border-radius:99px;background:#DFF1E6;color:#2E7D4F;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">✓</div>
+{{ r }}
+</div>
+</sc-for>
+</div>
+<div style="font-size:9px;font-weight:800;color:#C0392B;letter-spacing:.7px;text-transform:uppercase;margin-top:17px">{{ t.notApplicable }}</div>
+<div style="display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;margin-top:9px">
+<div style="width:17px;height:17px;border-radius:99px;background:#FBE3E0;color:#C0392B;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0">✕</div>
+{{ t.massage }}
+</div>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 18px 20px;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ contacts }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 5px 0 rgba(155,124,232,.14)">
+<div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px">{{ c.icon }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800;line-height:1.3">{{ c.title }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#615272;margin-top:3px">{{ c.desc }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+
+<div style="flex-shrink:0;padding:0 18px 30px">
+<div style="display:flex;justify-content:space-around;align-items:center;background:linear-gradient(135deg,#C9B5FF 0%,#9B7CE8 100%);border-radius:24px;padding:12px 16px;box-shadow:0 8px 26px rgba(155,124,232,.38)">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="4">
+<div onClick="{{ n.pick }}" style="{{ n.style }}">
+<div style="{{ n.iconStyle }}">{{ n.icon }}</div>
+{{ n.label }}
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940}}">
+const L3 = (e, z, m) => ({ en: e, zh: z, ms: m });
+
+const T = {
+  en: { navHome: "Home", navGifts: "Gifts", navClub: "Club", navRewards: "Rewards", navContact: "Contact", hContact: "Get in touch", sContact: "We're here to help with your referral program",
+    lblClub: "Beauty Rewards Club", lblRewards: "My Beauty Rewards",
+    hHome: "Hello, DrNano! 👋", sHome: "Your salon's referral performance at a glance",
+    hGifts: "Choose a Beauty Experience to Share", sGifts: "2 exclusive experiences • 3 total gifts",
+    hClub: "Share Beauty, Earn Rewards", sClub: "Send a beauty gift to someone you love and unlock exclusive member rewards.",
+    hRewards: "My Beauty Rewards", sRewards: "Gold Member • enjoy exclusive rewards and gifts",
+    helloOwner: "Hello, DrNano 👋", generated: "Your customers generated", thisMonthVs: "this month · +24% vs last",
+    launchCampaign: "🚀 Launch new campaign", nextBest: "Next best action",
+    coldLeads: "4 leads went cold — send a follow-up gift",
+    funnel: "Referral funnel", conversion: "conversion", topReferrers: "Top referrers", credit: "Credit",
+    recentActivity: "Recent activity",
+    member: "Member", memberId: "Member ID", inviteLink: "My invitation link",
+    copyLink: "Copy link", copied: "Copied ✓", sendGift: "Send a beauty gift",
+    myStats: "My member stats", howItWorks: "How it works", templates: "Beauty gift templates",
+    availCredit: "Available beauty credit", beautyPoints: "Beauty Points", thisWeek: "this week",
+    friendsActivity: "Friends activity", viewHistory: "View full history ›",
+    usageRules: "Credit usage rules", canRedeem: "Can redeem", notApplicable: "Not applicable", massage: "Massage packages",
+    sShared: "Referral shares", sClaims: "Voucher claims", sAppts: "Appointments",
+    sPurchased: "Purchased", sRevenue: "Referral revenue", sIssued: "Rewards issued",
+    fShared: "Shared", fClaimed: "Claimed", fBooked: "Booked", fPurchased: "Purchased",
+    mShared: "Gifts shared", mInvited: "Friends invited", mEarned: "Rewards earned",
+    cBeauty: "Beauty credit", cProduct: "Product credit", cVoucher: "Voucher credit", cPoints: "Beauty points",
+    dTreat: "Treatments & services", dSkin: "Skincare products", dCampaign: "Campaign rewards", dVolume: "Personal volume",
+    active: "Active", draft: "Draft" },
+  zh: { navHome: "主页", navGifts: "礼遇", navClub: "俱乐部", navRewards: "奖励", navContact: "联系", hContact: "联系我们", sContact: "推荐计划相关问题，我们随时协助",
+    lblClub: "美丽奖励俱乐部", lblRewards: "我的美丽奖励",
+    hHome: "你好，DrNano！👋", sHome: "沙龙推荐表现一览",
+    hGifts: "选择要分享的美丽体验", sGifts: "2 项专属体验 • 共 3 份礼遇",
+    hClub: "分享美丽，赚取奖励", sClub: "把美丽礼遇送给你在乎的人，解锁专属会员奖励。",
+    hRewards: "我的美丽奖励", sRewards: "金卡会员 • 享专属奖励与礼遇",
+    helloOwner: "你好，DrNano 👋", generated: "你的顾客带来", thisMonthVs: "本月 · 环比 +24%",
+    launchCampaign: "🚀 发起新活动", nextBest: "下一步建议",
+    coldLeads: "4 位潜在顾客冷却了 — 发送跟进礼遇",
+    funnel: "推荐漏斗", conversion: "转化率", topReferrers: "推荐榜", credit: "奖励金",
+    recentActivity: "近期动态",
+    member: "会员", memberId: "会员编号", inviteLink: "我的邀请链接",
+    copyLink: "复制链接", copied: "已复制 ✓", sendGift: "赠送美丽礼遇",
+    myStats: "我的会员数据", howItWorks: "如何运作", templates: "礼遇文案模板",
+    availCredit: "可用美丽奖励金", beautyPoints: "美丽积分", thisWeek: "本周",
+    friendsActivity: "好友动态", viewHistory: "查看完整记录 ›",
+    usageRules: "奖励金使用规则", canRedeem: "可兑换", notApplicable: "不适用", massage: "按摩套餐",
+    sShared: "推荐分享", sClaims: "优惠券领取", sAppts: "预约",
+    sPurchased: "成交", sRevenue: "推荐营收", sIssued: "已发放奖励",
+    fShared: "已分享", fClaimed: "已领取", fBooked: "已预约", fPurchased: "已购买",
+    mShared: "已送礼遇", mInvited: "已邀请好友", mEarned: "已赚奖励",
+    cBeauty: "美丽奖励金", cProduct: "产品奖励金", cVoucher: "优惠券金额", cPoints: "美丽积分",
+    dTreat: "疗程与服务", dSkin: "护肤产品", dCampaign: "活动奖励", dVolume: "个人业绩",
+    active: "进行中", draft: "草稿" },
+  ms: { navHome: "Utama", navGifts: "Hadiah", navClub: "Kelab", navRewards: "Ganjaran", navContact: "Hubungi", hContact: "Hubungi kami", sContact: "Kami sedia membantu program rujukan anda",
+    lblClub: "Beauty Rewards Club", lblRewards: "Ganjaran saya",
+    hHome: "Helo, DrNano! 👋", sHome: "Prestasi rujukan salun anda sepintas lalu",
+    hGifts: "Pilih pengalaman kecantikan untuk dikongsi", sGifts: "2 pengalaman eksklusif • 3 hadiah",
+    hClub: "Kongsi kecantikan, dapat ganjaran", sClub: "Hantar hadiah kecantikan kepada orang tersayang dan buka ganjaran ahli eksklusif.",
+    hRewards: "Ganjaran kecantikan saya", sRewards: "Ahli Gold • nikmati ganjaran eksklusif",
+    helloOwner: "Helo, DrNano 👋", generated: "Pelanggan anda menjana", thisMonthVs: "bulan ini · +24% vs lepas",
+    launchCampaign: "🚀 Lancar kempen baharu", nextBest: "Tindakan seterusnya",
+    coldLeads: "4 prospek sejuk — hantar hadiah susulan",
+    funnel: "Corong rujukan", conversion: "penukaran", topReferrers: "Perujuk teratas", credit: "Kredit",
+    recentActivity: "Aktiviti terkini",
+    member: "Ahli", memberId: "ID ahli", inviteLink: "Pautan jemputan saya",
+    copyLink: "Salin pautan", copied: "Disalin ✓", sendGift: "Hantar hadiah",
+    myStats: "Statistik ahli saya", howItWorks: "Cara ia berfungsi", templates: "Templat hadiah",
+    availCredit: "Kredit kecantikan tersedia", beautyPoints: "Mata Kecantikan", thisWeek: "minggu ini",
+    friendsActivity: "Aktiviti rakan", viewHistory: "Lihat sejarah penuh ›",
+    usageRules: "Peraturan penggunaan kredit", canRedeem: "Boleh tebus", notApplicable: "Tidak berkenaan", massage: "Pakej urutan",
+    sShared: "Perkongsian rujukan", sClaims: "Tuntutan vaucar", sAppts: "Temujanji",
+    sPurchased: "Pembelian", sRevenue: "Hasil rujukan", sIssued: "Ganjaran dikeluarkan",
+    fShared: "Dikongsi", fClaimed: "Dituntut", fBooked: "Ditempah", fPurchased: "Dibeli",
+    mShared: "Hadiah dikongsi", mInvited: "Rakan dijemput", mEarned: "Ganjaran diperoleh",
+    cBeauty: "Kredit kecantikan", cProduct: "Kredit produk", cVoucher: "Kredit vaucar", cPoints: "Mata kecantikan",
+    dTreat: "Rawatan & servis", dSkin: "Produk penjagaan kulit", dCampaign: "Ganjaran kempen", dVolume: "Volum peribadi",
+    active: "Aktif", draft: "Draf" }
+};
+
+const HINT = "position:absolute;right:12px;bottom:12px;padding:5px 9px;border-radius:9px;background:rgba(255,255,255,.85);font-family:ui-monospace,Menlo,monospace;font-size:8.5px;font-weight:500;color:#6A4BC4";
+
+class Component extends DCLogic {
+  state = { page: "home", lang: "en", copied: false };
+
+  renderVals() {
+    const s = this.state, lang = s.lang, t = T[lang];
+    const labels = { home: t.lblClub, gifts: t.lblClub, club: t.lblClub, rewards: t.lblRewards, contact: t.navContact };
+    const titles = { home: t.hHome, gifts: t.hGifts, club: t.hClub, rewards: t.hRewards, contact: t.hContact };
+    const subs = { home: t.sHome, gifts: t.sGifts, club: t.sClub, rewards: t.sRewards, contact: t.sContact };
+
+    return {
+      t, pageLabel: labels[s.page], pageTitle: titles[s.page], pageSub: subs[s.page],
+      isHome: s.page === "home", isGifts: s.page === "gifts", isClub: s.page === "club",
+      isRewards: s.page === "rewards", isContact: s.page === "contact",
+      contacts: [
+        { icon: "✉", title: L3("Email support", "邮件支持", "Sokongan e-mel")[lang], desc: "support@beautyrewards.club" },
+        { icon: "☎", title: "WhatsApp", desc: "+60 12-345 6789" },
+        { icon: "◉", title: L3("Visit us", "到店拜访", "Lawati kami")[lang], desc: L3("Kuala Lumpur, Malaysia", "马来西亚 吉隆坡", "Kuala Lumpur, Malaysia")[lang] }
+      ],
+
+      langs: [["en", "EN"], ["zh", "中"], ["ms", "BM"]].map(([k, label]) => ({
+        label, pick: () => this.setState({ lang: k }),
+        style: "padding:6px 8px;border-radius:9px;font-size:10.5px;font-weight:800;cursor:pointer;" +
+          (lang === k ? "background:#7C5DD8;color:#fff;box-shadow:0 2px 0 #6A4BC4" : "color:#615272") })),
+
+      nav: [["home", t.navHome, "⌂"], ["gifts", t.navGifts, "❋"], ["club", t.navClub, "◎"], ["rewards", t.navRewards, "♕"], ["contact", t.navContact, "✉"]].map(([k, label, icon]) => {
+        const on = s.page === k;
+        return { label, icon, pick: () => this.setState({ page: k, copied: false }),
+          style: "display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:9.5px;font-weight:800;color:" + (on ? "#fff" : "rgba(255,255,255,.82)"),
+          iconStyle: on
+            ? "width:44px;height:44px;border-radius:99px;background:#fff;color:#6A4BC4;display:flex;align-items:center;justify-content:center;font-size:19px;margin-top:-22px;box-shadow:0 5px 15px rgba(70,45,130,.3)"
+            : "font-size:19px;line-height:1.1" };
+      }),
+
+      stats: [[t.sShared, "128"], [t.sClaims, "52"], [t.sAppts, "31"], [t.sPurchased, "18"], [t.sRevenue, "RM78,000"], [t.sIssued, "RM7,250"]]
+        .map(([label, value]) => ({ label, value })),
+
+      funnel: [[t.fShared, 128, 100], [t.fClaimed, 52, 41], [t.fBooked, 31, 24], [t.fPurchased, 18, 14]].map(([label, value, w]) => ({
+        label, value: String(value),
+        fillStyle: "height:100%;width:" + w + "%;border-radius:99px;background:linear-gradient(90deg,#7C5DD8,#C9B5FF)" })),
+
+      referrers: [
+        { initial: "J", name: "Jane", refs: 12, rev: "RM35,000", amount: "RM5,500", crown: true },
+        { initial: "A", name: "Amy", refs: 8, rev: "RM20,000", amount: "RM2,250", crown: false },
+        { initial: "M", name: "Mary", refs: 5, rev: "RM9,000", amount: "RM1,200", crown: false }
+      ].map(r => ({ ...r, stats: r.refs + " " + L3("referrals", "位推荐", "rujukan")[lang] + " • " + r.rev + " " + L3("revenue", "营收", "hasil")[lang] })).map(r => ({ ...r,
+        avatarStyle: "position:relative;width:44px;height:44px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,#FFC8B8,#FFB8C8);box-shadow:0 4px 0 rgba(216,124,162,.3)",
+        crownStyle: r.crown ? "position:absolute;top:-6px;right:-4px;font-size:13px;color:#E8A33D" : "display:none" })),
+
+      recentActivity: [
+        { text: L3("Amy purchased RM15,000", "Amy 消费 RM15,000", "Amy membeli RM15,000")[lang], time: L3("2h ago", "2小时前", "2j lalu")[lang], alt: false },
+        { text: L3("Jane earned RM2,250 credit", "Jane 获得 RM2,250 奖励金", "Jane dapat kredit RM2,250")[lang], time: L3("2h ago", "2小时前", "2j lalu")[lang], alt: true },
+        { text: L3("Mary earned RM450 bonus", "Mary 获得 RM450 奖金", "Mary dapat bonus RM450")[lang], time: L3("5h ago", "5小时前", "5j lalu")[lang], alt: true }
+      ].map(a => ({ ...a, dotStyle: "width:9px;height:9px;border-radius:99px;flex-shrink:0;background:" + (a.alt ? "#C9B5FF" : "#7C5DD8") })),
+
+      gifts: [
+        { badge: "FREE TRIAL", status: t.active, price: "FREE", g: "#FFC2D2,#FFA9BE", ok: true,
+          priceLabel: L3("Facial Trial", "面部体验", "Cubaan Facial")[lang],
+          title: L3("Parents' Day Beauty Gift", "父母节美丽礼遇", "Hadiah Kecantikan Hari Ibu Bapa")[lang],
+          desc: L3("Worth RM497 — limited time only", "价值 RM497 — 限时", "Bernilai RM497 — masa terhad")[lang],
+          dates: "2026-06-01 → 2026-07-30",
+          friends: L3("42 friends enjoyed", "42 位好友已享用", "42 rakan telah menikmati")[lang], hint: "drop gift 1 photo" },
+        { badge: "PAID TRIAL", status: t.active, price: "RM19", g: "#FFB79F,#FFA9BE", ok: true,
+          priceLabel: L3("Trial Facial", "体验护理", "Facial Cubaan")[lang],
+          title: L3("Trial Beauty Experience", "美丽体验疗程", "Pengalaman Kecantikan Cubaan")[lang],
+          desc: L3("Try our signature treatment at intro price", "以优惠价体验经典疗程", "Cuba rawatan signature pada harga pengenalan")[lang],
+          dates: "2026-06-01 → 2026-08-31",
+          friends: L3("28 friends enjoyed", "28 位好友已享用", "28 rakan telah menikmati")[lang], hint: "drop gift 2 photo" },
+        { badge: "BEAUTY CREDIT", status: t.draft, price: "RM100", g: "#F0A87E,#E8C05A", ok: false,
+          priceLabel: L3("Beauty Credit", "美丽奖励金", "Kredit Kecantikan")[lang],
+          title: L3("VIP Welcome Beauty Credit", "VIP 迎新奖励金", "Kredit Kecantikan Selamat Datang VIP")[lang],
+          desc: L3("Applicable on product purchase", "可用于产品消费", "Boleh guna untuk pembelian produk")[lang],
+          dates: "2026-07-01 → 2026-12-31",
+          friends: L3("0 gift claims", "0 次领取", "0 tuntutan hadiah")[lang], hint: "drop gift 3 photo" }
+      ].map(g => ({ ...g,
+        imageStyle: "position:relative;height:142px;background:linear-gradient(180deg,rgba(40,14,28,0) 42%,rgba(40,14,28,.62) 100%),linear-gradient(135deg," + g.g + ")",
+        statusStyle: "position:absolute;top:12px;right:12px;background:#fff;padding:6px 12px;border-radius:99px;font-size:9.5px;font-weight:800;color:" + (g.ok ? "#2E7D4F" : "#A84A64"),
+        hintStyle: HINT })),
+
+      copyLabel: s.copied ? t.copied : t.copyLink,
+      copyLink: () => this.setState({ copied: true }),
+
+      memberStats: [[t.mShared, "12"], [t.mInvited, "12"], [t.mEarned, "RM5,500"]].map(([label, value]) => ({ label, value })),
+
+      steps: [
+        { n: "1", title: L3("Share a beauty gift", "分享美丽礼遇", "Kongsi hadiah kecantikan")[lang],
+          desc: L3("Send a beauty experience to someone you care about.", "把美丽体验送给你在乎的人。", "Hantar pengalaman kecantikan kepada orang tersayang.")[lang] },
+        { n: "2", title: L3("Friend enjoys the experience", "好友享用体验", "Rakan menikmati pengalaman")[lang],
+          desc: L3("Your friend claims the gift and visits the salon.", "好友领取礼遇并到店体验。", "Rakan anda tuntut hadiah dan melawat salun.")[lang] },
+        { n: "3", title: L3("Both receive rewards", "双方获得奖励", "Kedua-dua dapat ganjaran")[lang],
+          desc: L3("Your friend enjoys beauty benefits and you earn Beauty Rewards.", "好友享有优惠，你获得美丽奖励金。", "Rakan dapat manfaat, anda dapat Ganjaran Kecantikan.")[lang] }
+      ],
+
+      templates: [
+        { title: L3("FREE Facial Trial", "免费面部体验", "Cubaan Facial PERCUMA")[lang],
+          desc: L3("Hi! 💆 I'd love to invite you to claim a FREE facial trial wort…", "嗨！💆 邀请你领取免费面部体验，价值…", "Hai! 💆 Saya nak jemput anda tuntut cubaan facial PERCUMA…")[lang] },
+        { title: L3("RM19 Trial Facial", "RM19 体验护理", "Facial Cubaan RM19")[lang],
+          desc: L3("Hey babe! 🌸 Try our signature facial for only RM19 (usuall…", "亲爱的！🌸 只需 RM19 体验经典护理（原价…", "Hai! 🌸 Cuba facial signature kami hanya RM19 (biasa…")[lang] },
+        { title: L3("RM100 Beauty Credit", "RM100 美丽奖励金", "Kredit Kecantikan RM100")[lang],
+          desc: L3("Surprise! 🎁 I have a RM100 Beauty Credit to gift you — a…", "惊喜！🎁 送你 RM100 美丽奖励金 —…", "Kejutan! 🎁 Saya ada Kredit RM100 untuk anda —…")[lang] },
+        { title: L3("Custom message", "自定义文案", "Mesej tersuai")[lang],
+          desc: L3("Hi! ✨ Treat yourself today — claim your exclusive beauty…", "嗨！✨ 今天犒赏自己 — 领取专属美丽…", "Hai! ✨ Manjakan diri hari ini — tuntut kecantikan…")[lang] }
+      ],
+
+      creditGrid: [[t.cBeauty, "RM2,250", t.dTreat], [t.cProduct, "RM300", t.dSkin], [t.cVoucher, "RM100", t.dCampaign], [t.cPoints, "1,500", t.dVolume]]
+        .map(([label, value, desc]) => ({ label, value, desc })),
+
+      friendsActivity: [
+        { icon: "↑", title: L3("Beauty reward", "美丽奖励", "Ganjaran kecantikan")[lang],
+          desc: L3("Amy enjoyed her beauty experience", "Amy 已享用体验", "Amy menikmati pengalamannya")[lang], value: "+RM2,250", date: "Jul 15" },
+        { icon: "↑", title: L3("Member bonus", "会员奖金", "Bonus ahli")[lang],
+          desc: L3("Michelle joined the club", "Michelle 加入俱乐部", "Michelle sertai kelab")[lang], value: "+RM450", date: "Jul 15" },
+        { icon: "✦", title: L3("Beauty points earned", "获得美丽积分", "Mata kecantikan diperoleh")[lang],
+          desc: L3("Premium experience", "尊享体验", "Pengalaman premium")[lang], value: "+1,500 BV", date: "Jul 12" },
+        { icon: "✦", title: L3("VIP welcome gift", "VIP 迎新礼", "Hadiah selamat datang VIP")[lang],
+          desc: L3("Member exclusive", "会员专属", "Eksklusif ahli")[lang], value: "+RM100", date: "Jul 08" }
+      ],
+
+      canRedeem: [
+        L3("Facial treatments", "面部疗程", "Rawatan facial")[lang],
+        L3("Beauty services", "美容服务", "Servis kecantikan")[lang],
+        L3("Skincare products", "护肤产品", "Produk penjagaan kulit")[lang]
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

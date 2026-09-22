@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F3FF}
+a{color:#6E5BC4}a:hover{color:#4C3C96}
+</style>
+</helmet>
+
+<div style="font-family:Manrope,system-ui,sans-serif;color:#2B2340;max-width:980px;margin:0 auto;padding:30px 20px 60px;display:flex;flex-direction:column;gap:30px">
+
+<div>
+<div style="font-size:11px;font-weight:800;letter-spacing:.18em;color:#8B79E0">REFERRAL SCHEME</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:34px;font-weight:700;line-height:1.15;margin-top:6px">How one referral pays four people</div>
+<div style="font-size:14.5px;font-weight:600;color:#6B6385;line-height:1.6;margin-top:10px;max-width:640px;text-wrap:pretty">Every reward in the scheme comes from one event: a new customer finishing her first treatment. Nothing pays on a booking. Below is the whole structure in one page, with the numbers you can change.</div>
+</div>
+
+<div style="background:#fff;border-radius:24px;box-shadow:0 5px 0 rgba(139,121,224,.15);padding:24px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:20px;font-weight:700">The chain, in plain words</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:16px">
+<sc-for list="{{ chain }}" as="c" hint-placeholder-count="3">
+<div style="background:#F8F5FF;border-radius:18px;padding:16px">
+<div style="{{ c.badgeStyle }}">{{ c.badge }}</div>
+<div style="font-size:14px;font-weight:800;margin-top:11px">{{ c.who }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#6B6385;line-height:1.55;margin-top:5px">{{ c.what }}</div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:16px;padding:14px 16px;border-radius:16px;background:#EDE5FF;font-size:13px;font-weight:700;color:#5A48A8;line-height:1.55">{{ chainNote }}</div>
+</div>
+
+<div style="background:#fff;border-radius:24px;box-shadow:0 5px 0 rgba(139,121,224,.15);padding:24px;overflow-x:auto">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:20px;font-weight:700">Who gets what</div>
+<div style="font-size:12.5px;font-weight:600;color:#6B6385;margin-top:5px">Michelle refers Chloe. Later Chloe refers her sister. Each row is one payout.</div>
+
+<div style="min-width:640px;margin-top:16px;display:flex;flex-direction:column;gap:8px">
+<div style="display:grid;grid-template-columns:96px 1.4fr 1.6fr 130px 110px;gap:12px;padding:0 14px;font-size:10.5px;font-weight:800;letter-spacing:.1em;color:#8B79E0">
+<div>LEVEL</div><div>WHO IS PAID</div><div>WHY</div><div>MONEY</div><div>POINTS / KPI</div>
+</div>
+<sc-for list="{{ payouts }}" as="p" hint-placeholder-count="4">
+<div style="{{ p.rowStyle }}">
+<div style="{{ p.badgeStyle }}">{{ p.level }}</div>
+<div style="font-size:13.5px;font-weight:800">{{ p.who }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#6B6385;line-height:1.5">{{ p.why }}</div>
+<div style="font-size:15px;font-weight:800;color:#3A2F55">{{ p.money }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#6E5BC4">{{ p.pts }}</div>
+</div>
+</sc-for>
+</div>
+<div style="min-width:640px;margin-top:14px;display:grid;grid-template-columns:96px 1fr 130px 110px;gap:12px;padding:14px;border-radius:16px;background:#3A2F55;color:#fff">
+<div style="font-size:12px;font-weight:800;opacity:.7">TOTAL</div>
+<div style="font-size:13px;font-weight:700;opacity:.85">Cost of a two-deep chain</div>
+<div style="font-size:15px;font-weight:800">{{ totalMoney }}</div>
+<div style="font-size:12.5px;font-weight:700;opacity:.85">{{ totalPts }}</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px">
+
+<div style="background:#fff;border-radius:24px;box-shadow:0 5px 0 rgba(139,121,224,.15);padding:24px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:18px;font-weight:700">Reward ladder</div>
+<div style="font-size:12.5px;font-weight:600;color:#6B6385;line-height:1.55;margin-top:5px">Paid on top of the per-referral reward, counted by friends who completed a first treatment in the calendar year.</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+<sc-for list="{{ ladder }}" as="l" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#F8F5FF;border-radius:15px;padding:12px 14px">
+<div style="width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;background:linear-gradient(145deg,#A594EC,#8B79E0)">{{ l.n }}</div>
+<div style="font-size:13px;font-weight:700">{{ l.prize }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="background:#fff;border-radius:24px;box-shadow:0 5px 0 rgba(139,121,224,.15);padding:24px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:18px;font-weight:700">How the money is taken</div>
+<div style="font-size:12.5px;font-weight:600;color:#6B6385;line-height:1.55;margin-top:5px">The customer picks one, and it applies to both levels. She can change it any time before claiming.</div>
+<div style="display:flex;flex-direction:column;gap:8px;margin-top:14px">
+<sc-for list="{{ payoutModes }}" as="m" hint-placeholder-count="4">
+<div style="display:flex;justify-content:space-between;gap:12px;background:#F8F5FF;border-radius:15px;padding:12px 14px">
+<div style="font-size:13px;font-weight:800">{{ m.name }}</div>
+<div style="font-size:12px;font-weight:700;color:#6B6385;text-align:right">{{ m.rate }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+
+<div style="background:#fff;border-radius:24px;box-shadow:0 5px 0 rgba(139,121,224,.15);padding:24px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:20px;font-weight:700">The rules that never change</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:14px">
+<sc-for list="{{ rules }}" as="r" hint-placeholder-count="6">
+<div style="background:#F8F5FF;border-radius:16px;padding:14px">
+<div style="font-size:12.5px;font-weight:800;color:#5A48A8">{{ r.q }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#6B6385;line-height:1.55;margin-top:5px">{{ r.a }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="background:linear-gradient(150deg,#3A2F55,#5A48A8);border-radius:24px;padding:24px;color:#fff">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:20px;font-weight:700">What HQ can change</div>
+<div style="font-size:13px;font-weight:600;line-height:1.6;margin-top:6px;opacity:.85;max-width:620px">These eight numbers are the only ones that move. Everything on this page is calculated from them. Tell me the values you want and I will set them in the HQ screen.</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:16px">
+<sc-for list="{{ editable }}" as="e" hint-placeholder-count="8">
+<div style="background:rgba(255,255,255,.1);border-radius:15px;padding:13px 14px">
+<div style="font-size:11px;font-weight:800;letter-spacing:.08em;opacity:.65">{{ e.lvl }}</div>
+<div style="font-size:13px;font-weight:800;margin-top:4px">{{ e.name }}</div>
+<div style="font-size:17px;font-weight:800;margin-top:5px">{{ e.val }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;l1&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:1000,&quot;step&quot;:10,&quot;unit&quot;:&quot;RM&quot;,&quot;section&quot;:&quot;Level 1&quot;},&quot;l1pv&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:1000,&quot;step&quot;:10,&quot;unit&quot;:&quot;PV&quot;,&quot;section&quot;:&quot;Level 1&quot;},&quot;s1&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:50,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:500,&quot;step&quot;:5,&quot;unit&quot;:&quot;RM&quot;,&quot;section&quot;:&quot;Level 1&quot;},&quot;s1kpi&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:5,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Level 1&quot;},&quot;l2&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:30,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:1000,&quot;step&quot;:10,&quot;unit&quot;:&quot;RM&quot;,&quot;section&quot;:&quot;Level 2&quot;},&quot;l2pv&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:30,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:1000,&quot;step&quot;:10,&quot;unit&quot;:&quot;PV&quot;,&quot;section&quot;:&quot;Level 2&quot;},&quot;s2&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:500,&quot;step&quot;:5,&quot;unit&quot;:&quot;RM&quot;,&quot;section&quot;:&quot;Level 2&quot;},&quot;s2kpi&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0.5,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:0,&quot;max&quot;:5,&quot;step&quot;:0.5,&quot;section&quot;:&quot;Level 2&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const p = this.props;
+    const l1 = p.l1 ?? 100, l1pv = p.l1pv ?? 100, s1 = p.s1 ?? 50, s1kpi = p.s1kpi ?? 1;
+    const l2 = p.l2 ?? 30, l2pv = p.l2pv ?? 30, s2 = p.s2 ?? 20, s2kpi = p.s2kpi ?? 0.5;
+    const rm = (n) => "RM " + n.toLocaleString("en-US");
+    const badge = (g) => "width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;background:linear-gradient(145deg," + g + ")";
+
+    return {
+      chain: [
+        { badge: "1", grad: "#A594EC,#8B79E0", who: "Michelle, an existing customer",
+          what: "Shares her code with Chloe. Chloe books the RM 19 first trial and completes it." },
+        { badge: "2", grad: "#F2A9C6,#E58FB3", who: "Chloe becomes a customer",
+          what: "Michelle is paid level 1 that day. Chloe now has her own code and can refer too." },
+        { badge: "3", grad: "#E0B978,#CDA05A", who: "Chloe refers her sister",
+          what: "Chloe is paid level 1 on her sister. Michelle is paid level 2, because the chain started with her." }
+      ].map(c => ({ ...c, badgeStyle: badge(c.grad) })),
+      chainNote: "The chain stops there. Michelle earns nothing on whoever the sister refers next — the scheme is two levels deep, not a pyramid.",
+
+      payouts: [
+        { level: "L1", grad: "#A594EC,#8B79E0", who: "Michelle (customer)", why: "Chloe joined on her code and finished her first treatment", money: rm(l1), pts: l1pv + " PV" },
+        { level: "L1", grad: "#A594EC,#8B79E0", who: "Sarah (consultant)", why: "Named on Michelle's account, so she owns the relationship", money: rm(s1), pts: "+" + s1kpi + " new-customer KPI" },
+        { level: "L2", grad: "#E0B978,#CDA05A", who: "Michelle (customer)", why: "Chloe, whom she introduced, brought in someone new", money: rm(l2), pts: l2pv + " PV" },
+        { level: "L2", grad: "#E0B978,#CDA05A", who: "Sarah (consultant)", why: "Same consultant, one level down the chain", money: rm(s2), pts: "+" + s2kpi + " new-customer KPI" }
+      ].map((r, i) => ({ ...r,
+        badgeStyle: badge(r.grad),
+        rowStyle: "display:grid;grid-template-columns:96px 1.4fr 1.6fr 130px 110px;gap:12px;align-items:center;padding:14px;border-radius:18px;background:" + (i < 2 ? "#F8F5FF" : "#FDF6EA")
+      })),
+      totalMoney: rm(l1 + s1 + l2 + s2),
+      totalPts: (l1pv + l2pv) + " PV · " + (s1kpi + s2kpi) + " KPI",
+
+      ladder: [
+        { n: "1", prize: "RM 100 beauty credit" },
+        { n: "3", prize: "Free signature facial" },
+        { n: "5", prize: "Gold tier upgrade" },
+        { n: "10", prize: "RM 1,000 treatment voucher" }
+      ],
+
+      payoutModes: [
+        { name: "E-wallet credit", rate: "Instant, spend on any treatment" },
+        { name: "Cash voucher", rate: "Printed at the outlet, 12-month validity" },
+        { name: "Free products", rate: rm(l1) + " = 1 serum" },
+        { name: "PV points", rate: "RM 1 = 1 PV" }
+      ],
+
+      rules: [
+        { q: "When does a reward pay?", a: "When the new customer finishes her first treatment. Never on a booking, never on a deposit." },
+        { q: "How deep does the chain go?", a: "Two levels. Level 3 and beyond pay nothing to anyone." },
+        { q: "How many friends can one customer refer?", a: "No limit. The ladder prizes reset each calendar year, the per-referral reward does not." },
+        { q: "Who is the consultant on a referral?", a: "The consultant named on the referring customer's account, not whoever serves the new customer." },
+        { q: "Can a reward expire?", a: "No, not while she stays a member. Claimed vouchers and products cannot be swapped back." },
+        { q: "What if the same person is referred twice?", a: "Only the first code counts. The second referrer is paid nothing." }
+      ],
+
+      editable: [
+        { lvl: "LEVEL 1", name: "Customer reward", val: rm(l1) },
+        { lvl: "LEVEL 1", name: "Customer PV", val: l1pv + " PV" },
+        { lvl: "LEVEL 1", name: "Consultant bonus", val: rm(s1) },
+        { lvl: "LEVEL 1", name: "Consultant KPI", val: s1kpi + " KPI" },
+        { lvl: "LEVEL 2", name: "Customer reward", val: rm(l2) },
+        { lvl: "LEVEL 2", name: "Customer PV", val: l2pv + " PV" },
+        { lvl: "LEVEL 2", name: "Consultant bonus", val: rm(s2) },
+        { lvl: "LEVEL 2", name: "Consultant KPI", val: s2kpi + " KPI" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

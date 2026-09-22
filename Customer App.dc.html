@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+body{margin:0;color:#28174F;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;background:#EDE7DC}
+a{color:#7137E8}a:hover{color:#5E2BC4}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+.sq::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 44px">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#FBF8FF 0%,#F4ECFD 100%);overflow:hidden">
+
+<div style="flex-shrink:0;padding:54px 18px 13px;background:rgba(255,255,255,.8);box-shadow:0 6px 16px rgba(110,91,196,.08)">
+<div style="display:flex;align-items:center;gap:11px">
+<img src="brand/tikbeli-reward-mark.png" alt="" style="width:38px;height:38px;border-radius:12px;object-fit:contain;flex-shrink:0">
+<div style="flex:1;min-width:0">
+<div style="font-size:16px;font-weight:800;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ headerTitle }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:1px">{{ headerSub }}</div>
+</div>
+<div style="display:flex;gap:2px;background:#F1EBFC;border-radius:11px;padding:3px;flex-shrink:0">
+<sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+<div onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div class="sq" style="flex:1;overflow-y:auto;overflow-x:hidden">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="padding:16px 18px 26px;display:flex;flex-direction:column;gap:16px">
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(135deg,#A594EC 0%,#C3A1E6 52%,#EFA6C2 100%);color:#fff;position:relative;overflow:hidden;box-shadow:0 10px 24px rgba(110,91,196,.26)">
+<div style="position:absolute;right:-38px;top:-38px;width:140px;height:140px;border-radius:99px;background:rgba(255,255,255,.16)"></div>
+<div style="position:relative;display:flex;align-items:center;gap:13px">
+<img src="brand/mascot-phone.png" alt="" style="width:52px;height:52px;border-radius:99px;object-fit:cover;flex-shrink:0;border:3px solid rgba(255,255,255,.7)">
+<div style="flex:1;min-width:0">
+<div style="font-size:19px;font-weight:800;letter-spacing:-.3px">{{ t.hiMichelle }}</div>
+<div style="display:inline-flex;align-items:center;gap:6px;margin-top:5px;padding:5px 11px;border-radius:99px;background:rgba(255,255,255,.88);color:#7137E8;font-size:11.5px;font-weight:800">
+<i class="ph-fill ph-crown-simple" style="font-size:14px"></i>{{ t.goldMember }}
+</div>
+</div>
+</div>
+<div style="position:relative;display:flex;gap:10px;margin-top:17px">
+<div style="flex:1;border-radius:16px;background:rgba(255,255,255,.2);padding:12px">
+<div style="font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.9">{{ t.points }}</div>
+<div style="font-size:23px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums;white-space:nowrap">2,840</div>
+</div>
+<div style="flex:1;border-radius:16px;background:rgba(255,255,255,.2);padding:12px">
+<div style="font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.9">{{ t.credit }}</div>
+<div style="font-size:23px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums;white-space:nowrap">RM 200</div>
+</div>
+</div>
+</div>
+
+<div style="{{ nextApptStyle }}">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="flex:none;width:46px;height:46px;border-radius:15px;background:#EDE5FF;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1">
+<div style="font-size:9.5px;font-weight:800;color:#7137E8;letter-spacing:.4px">{{ nextAppt.month }}</div>
+<div style="font-size:17px;font-weight:800;color:#28174F">{{ nextAppt.day }}</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#7A6B92">{{ t.nextVisit }}</div>
+<div style="font-size:15px;font-weight:800;margin-top:3px">{{ nextAppt.service }}</div>
+<div style="font-size:12px;font-weight:600;color:#7A6B92;margin-top:3px">{{ nextAppt.meta }}</div>
+</div>
+</div>
+<div style="display:flex;gap:9px;margin-top:14px">
+<div onClick="{{ toBookings }}" style="flex:1;padding:12px;border-radius:14px;text-align:center;font-size:13px;font-weight:800;cursor:pointer;background:#F3EEFF;color:#6E5BC4">{{ t.reschedule }}</div>
+<div onClick="{{ toBookings }}" style="flex:1;padding:12px;border-radius:14px;text-align:center;font-size:13px;font-weight:800;cursor:pointer;background:#8B79E0;color:#fff">{{ t.viewDetails }}</div>
+</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-size:15px;font-weight:800">{{ t.myPackages }}</div>
+<div onClick="{{ toPackages }}" style="font-size:12.5px;font-weight:700;color:#7137E8;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ homePackages }}" as="p" hint-placeholder-count="2">
+<div onClick="{{ toPackages }}" style="{{ cardStyle }}">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="flex:1;min-width:0">
+<div style="font-size:14.5px;font-weight:800">{{ p.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:3px">{{ p.expiry }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ p.left }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#7A6B92">{{ t.sessionsLeft }}</div>
+</div>
+</div>
+<div style="height:9px;border-radius:99px;background:#EFE8FB;margin-top:12px;overflow:hidden">
+<div style="{{ p.barStyle }}"></div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:800;margin-bottom:11px">{{ t.quickActions }}</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+<sc-for list="{{ quickActions }}" as="q" hint-placeholder-count="4">
+<div onClick="{{ q.go }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer">
+<div style="{{ q.iconStyle }}"><i class="{{ q.iconClass }}"></i></div>
+<div style="font-size:11px;font-weight:700;text-align:center;line-height:1.25">{{ q.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:800;margin-bottom:11px">{{ t.forYou }}</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;margin:0 -18px;padding:0 18px 6px">
+<sc-for list="{{ promos }}" as="p" hint-placeholder-count="3">
+<div style="flex:none;width:212px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13),0 8px 18px rgba(110,91,196,.1)">
+<div style="{{ p.posterStyle }}"></div>
+<div style="padding:13px 14px 15px">
+<div style="font-size:13.5px;font-weight:800;line-height:1.3">{{ p.title }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:4px;line-height:1.4">{{ p.detail }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isPackages }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 26px;display:flex;flex-direction:column;gap:13px">
+<sc-for list="{{ packages }}" as="p" hint-placeholder-count="3">
+<div style="{{ cardStyle }}">
+<div style="display:flex;align-items:flex-start;gap:11px">
+<div style="flex:1;min-width:0">
+<div style="{{ p.tagStyle }}">{{ p.tag }}</div>
+<div style="font-size:16px;font-weight:800;margin-top:9px">{{ p.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:4px">{{ p.expiry }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap">{{ p.left }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#7A6B92;margin-top:4px">{{ t.ofTotal }} {{ p.total }}</div>
+</div>
+</div>
+<div style="height:9px;border-radius:99px;background:#EFE8FB;margin-top:13px;overflow:hidden">
+<div style="{{ p.barStyle }}"></div>
+</div>
+<div style="display:flex;align-items:center;gap:9px;margin-top:13px;padding-top:13px;border-top:1px solid #F1EAFB">
+<i class="ph-duotone ph-clock-counter-clockwise" style="font-size:19px;color:#8B79E0;flex-shrink:0"></i>
+<div style="flex:1;min-width:0;font-size:11.5px;font-weight:600;color:#7A6B92">{{ p.lastUsed }}</div>
+<div onClick="{{ toBookings }}" style="flex-shrink:0;padding:9px 14px;border-radius:12px;font-size:12px;font-weight:800;cursor:pointer;background:#8B79E0;color:#fff">{{ t.book }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isBookings }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 18px 26px">
+<div style="display:flex;gap:8px;margin-bottom:15px">
+<sc-for list="{{ bookingTabs }}" as="b" hint-placeholder-count="2">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ bookings }}" as="b" hint-placeholder-count="3">
+<div style="{{ cardStyle }}">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="{{ b.dateStyle }}">
+<div style="font-size:9.5px;font-weight:800;letter-spacing:.4px">{{ b.month }}</div>
+<div style="font-size:18px;font-weight:800">{{ b.day }}</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14.5px;font-weight:800">{{ b.service }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:3px">{{ b.time }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:2px">{{ b.staff }}</div>
+</div>
+<div style="{{ b.statusStyle }}">{{ b.status }}</div>
+</div>
+<div style="{{ b.actionsStyle }}">
+<div style="flex:1;padding:11px;border-radius:13px;text-align:center;font-size:12.5px;font-weight:800;cursor:pointer;background:#F3EEFF;color:#6E5BC4">{{ t.reschedule }}</div>
+<div style="flex:1;padding:11px;border-radius:13px;text-align:center;font-size:12.5px;font-weight:800;cursor:pointer;background:#FFF0F4;color:#B34F7C">{{ t.cancel }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div onClick="{{ toPackages }}" style="margin-top:14px;padding:15px;border-radius:18px;text-align:center;font-size:14px;font-weight:800;cursor:pointer;background:#8B79E0;color:#fff;box-shadow:0 6px 0 #6E5BC4">{{ t.bookNew }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRewards }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 26px;display:flex;flex-direction:column;gap:16px">
+
+<div style="border-radius:24px;padding:20px;text-align:center;background:linear-gradient(145deg,#fff,#F7F1FF);box-shadow:0 6px 0 rgba(139,121,224,.15),0 10px 22px rgba(110,91,196,.12)">
+<div style="font-size:10.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#7A6B92">{{ t.yourCode }}</div>
+<div style="font-size:24px;font-weight:800;letter-spacing:-.4px;margin-top:7px">BEAUTY-MTAN88</div>
+<div style="width:150px;height:150px;margin:15px auto 0;border-radius:20px;background:#fff;border:2px solid #EFE8FB;display:flex;align-items:center;justify-content:center">
+<i class="ph-duotone ph-qr-code" style="font-size:96px;color:#28174F"></i>
+</div>
+<div style="font-size:12px;font-weight:600;color:#7A6B92;line-height:1.5;margin-top:13px">{{ t.scanAtCounter }}</div>
+<div onClick="{{ share }}" style="{{ shareStyle }}"><i class="ph-fill ph-whatsapp-logo" style="font-size:20px"></i>{{ shareLabel }}</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ referralStats }}" as="r" hint-placeholder-count="2">
+<div style="border-radius:18px;padding:15px;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<div style="font-size:24px;font-weight:800;letter-spacing:-.6px;white-space:nowrap">{{ r.value }}</div>
+<div style="font-size:11px;font-weight:700;color:#7A6B92;margin-top:5px;line-height:1.3">{{ r.label }}</div>
+</div>
+</sc-for>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:800;margin-bottom:11px">{{ t.redeemable }}</div>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ rewards }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:15px;border-radius:20px;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<div style="{{ r.iconStyle }}"><i class="{{ r.iconClass }}"></i></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800;line-height:1.3">{{ r.name }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#7A6B92;margin-top:3px">{{ r.cost }}</div>
+</div>
+<div style="{{ r.btnStyle }}">{{ r.btn }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:800;margin-bottom:11px">{{ t.paymentHistory }}</div>
+<div style="border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<sc-for list="{{ invoices }}" as="i" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:11px;padding:14px 15px;border-bottom:1px solid #F4EFFB">
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800">{{ i.ref }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:3px">{{ i.date }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ i.amount }}</div>
+<div style="{{ i.statusStyle }}">{{ i.status }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 26px;display:flex;flex-direction:column;gap:16px">
+
+<div style="display:flex;gap:10px">
+<sc-for list="{{ historyStats }}" as="s" hint-placeholder-count="3">
+<div style="flex:1;min-width:0;border-radius:18px;padding:14px 12px;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<div style="font-size:19px;font-weight:800;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.value }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#7A6B92;margin-top:5px;line-height:1.3">{{ s.label }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+<div>
+<div style="{{ h.monthStyle }}">{{ h.month }}</div>
+<div style="border-radius:22px;padding:16px;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.14),0 8px 18px rgba(110,91,196,.1)">
+<div style="display:flex;align-items:flex-start;gap:12px">
+<div style="flex:none;width:46px;height:46px;border-radius:15px;background:#F4EFFB;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;color:#6E5BC4">
+<div style="font-size:9.5px;font-weight:800;letter-spacing:.4px">{{ h.mon }}</div>
+<div style="font-size:17px;font-weight:800">{{ h.day }}</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14.5px;font-weight:800;line-height:1.3">{{ h.service }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7A6B92;margin-top:4px">{{ h.staff }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ h.amount }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#7A6B92;margin-top:4px">{{ h.paidWith }}</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;margin-top:13px;padding-top:13px;border-top:1px solid #F1EAFB">
+<div style="flex:1;min-width:0;font-size:11.5px;font-weight:700;color:{{ h.promptColor }};line-height:1.35">{{ h.prompt }}</div>
+<div style="display:flex;gap:3px;flex-shrink:0">
+<sc-for list="{{ h.stars }}" as="st" hint-placeholder-count="5">
+<i onClick="{{ st.rate }}" class="{{ st.iconClass }}" style="{{ st.style }}"></i>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 18px 26px;display:flex;flex-direction:column;gap:16px">
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(135deg,#A594EC 0%,#C3A1E6 52%,#EFA6C2 100%);color:#fff;box-shadow:0 10px 24px rgba(110,91,196,.26)">
+<div style="display:flex;align-items:center;gap:13px">
+<img src="brand/mascot-phone.png" alt="" style="width:58px;height:58px;border-radius:99px;object-fit:cover;flex-shrink:0;border:3px solid rgba(255,255,255,.7)">
+<div style="flex:1;min-width:0">
+<div style="font-size:19px;font-weight:800;letter-spacing:-.3px">Michelle Tan</div>
+<div style="font-size:12px;font-weight:700;opacity:.92;margin-top:3px">{{ pf.memberNo }} · TB-0098231</div>
+</div>
+</div>
+<div style="margin-top:17px;border-radius:16px;background:rgba(255,255,255,.2);padding:14px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+<div style="font-size:12px;font-weight:800">{{ tierLabel }}</div>
+<div style="font-size:11.5px;font-weight:700;opacity:.92">{{ pf.toNext }}</div>
+</div>
+<div style="height:8px;border-radius:99px;background:rgba(255,255,255,.3);margin-top:10px;overflow:hidden">
+<div style="height:100%;width:72%;border-radius:99px;background:#fff"></div>
+</div>
+</div>
+</div>
+
+<div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<sc-for list="{{ profileFields }}" as="f" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F4EFFB">
+<i class="{{ f.iconClass }}" style="font-size:22px;color:#8B79E0;flex-shrink:0"></i>
+<div style="flex:1;min-width:0;font-size:12px;font-weight:700;color:#7A6B92">{{ f.label }}</div>
+<div style="font-size:13px;font-weight:800;text-align:right">{{ f.value }}</div>
+</div>
+</sc-for>
+</div>
+
+<div>
+<div style="font-size:15px;font-weight:800;margin-bottom:11px">{{ pf.notifications }}</div>
+<div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<sc-for list="{{ toggles }}" as="g" hint-placeholder-count="3">
+<div onClick="{{ g.flip }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid #F4EFFB;cursor:pointer">
+<div style="flex:1;min-width:0;font-size:13px;font-weight:700;line-height:1.35">{{ g.label }}</div>
+<div style="{{ g.trackStyle }}"><div style="{{ g.knobStyle }}"></div></div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.13)">
+<sc-for list="{{ profileLinks }}" as="l" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid #F4EFFB;cursor:pointer">
+<i class="{{ l.iconClass }}" style="font-size:22px;color:#8B79E0;flex-shrink:0"></i>
+<div style="flex:1;min-width:0;font-size:13.5px;font-weight:800">{{ l.label }}</div>
+<i class="ph-bold ph-caret-right" style="font-size:15px;color:#C3BAD8"></i>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:15px;border-radius:18px;text-align:center;font-size:14px;font-weight:800;cursor:pointer;background:#FFF0F4;color:#B34F7C">{{ pf.logOut }}</div>
+
+</div>
+</sc-if>
+
+<div style="{{ referBarStyle }}">
+<a href="Referral Hub.dc.html" style="flex:1;min-width:0;display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit">
+<div style="width:38px;height:38px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;background:rgba(255,255,255,.22);color:#fff"><i class="ph-fill ph-gift"></i></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;color:#fff;line-height:1.25">{{ referBar.title }}</div>
+<div style="font-size:11px;font-weight:600;color:#fff;margin-top:2px;line-height:1.3">{{ referBar.sub }}</div>
+</div>
+<div style="flex-shrink:0;padding:9px 14px;border-radius:99px;background:#fff;color:#5A48A8;font-size:11.5px;font-weight:800;white-space:nowrap">{{ referBar.cta }}</div>
+</a>
+<div onClick="{{ hideReferBar }}" style="flex-shrink:0;width:26px;height:26px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;background:rgba(255,255,255,.18);cursor:pointer">×</div>
+</div>
+
+<div style="flex-shrink:0;display:flex;background:rgba(255,255,255,.92);box-shadow:0 -6px 18px rgba(110,91,196,.1);padding:10px 8px 32px">
+<sc-for list="{{ tabs }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">
+<i class="{{ b.iconClass }}" style="{{ b.iconStyle }}"></i>
+{{ b.label }}
+</div>
+</sc-for>
+</div>
+
+</div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940},&quot;memberTier&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Silver&quot;,&quot;Gold&quot;,&quot;Platinum&quot;],&quot;default&quot;:&quot;Gold&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Customer&quot;}}">
+const T = {
+  en: {
+    hiMichelle: "Hi, Michelle!", goldMember: "Gold Member", points: "Reward points", credit: "Beauty credit",
+    nextVisit: "Next visit", reschedule: "Reschedule", viewDetails: "View details", cancel: "Cancel",
+    myPackages: "My packages", viewAll: "View all", sessionsLeft: "left", ofTotal: "of",
+    quickActions: "Quick actions", forYou: "For you",
+    qBook: "Book", qScan: "My QR", qInvoices: "Invoices", qRefer: "Refer",
+    book: "Book", bookNew: "Book a new appointment",
+    upcoming: "Upcoming", past: "Past",
+    confirmed: "Confirmed", completed: "Completed", pending: "Pending confirmation",
+    yourCode: "Your referral code", scanAtCounter: "Show this at the counter, or share the link with a friend.",
+    shareGift: "Share a Beauty Gift", shared: "Link copied",
+    friendsJoined: "Friends joined", creditEarned: "Credit earned",
+    redeemable: "Redeem your points", paymentHistory: "Payment history",
+    paid: "Paid", redeem: "Redeem", notEnough: "Locked",
+    lastUsed: "Last used ", pts: " pts",
+    tabHome: "Home", tabPackages: "Packages", tabBookings: "Bookings", tabRewards: "Rewards"
+  },
+  zh: {
+    hiMichelle: "你好，Michelle！", goldMember: "金卡会员", points: "奖励积分", credit: "美丽奖励金",
+    nextVisit: "下次到访", reschedule: "改期", viewDetails: "查看详情", cancel: "取消",
+    myPackages: "我的套餐", viewAll: "查看全部", sessionsLeft: "剩余", ofTotal: "／",
+    quickActions: "快捷操作", forYou: "为你推荐",
+    qBook: "预约", qScan: "我的码", qInvoices: "账单", qRefer: "推荐",
+    book: "预约", bookNew: "预约新疗程",
+    upcoming: "即将到来", past: "过往",
+    confirmed: "已确认", completed: "已完成", pending: "待确认",
+    yourCode: "你的推荐码", scanAtCounter: "到店出示此码，或将链接分享给朋友。",
+    shareGift: "分享美丽礼遇", shared: "链接已复制",
+    friendsJoined: "朋友加入", creditEarned: "累积奖励金",
+    redeemable: "积分兑换", paymentHistory: "付款纪录",
+    paid: "已付款", redeem: "兑换", notEnough: "未达标",
+    lastUsed: "上次使用 ", pts: " 分",
+    tabHome: "主页", tabPackages: "套餐", tabBookings: "预约", tabRewards: "奖励"
+  },
+  ms: {
+    hiMichelle: "Hai, Michelle!", goldMember: "Ahli Gold", points: "Mata ganjaran", credit: "Kredit kecantikan",
+    nextVisit: "Lawatan seterusnya", reschedule: "Jadual semula", viewDetails: "Lihat butiran", cancel: "Batal",
+    myPackages: "Pakej saya", viewAll: "Lihat semua", sessionsLeft: "baki", ofTotal: "daripada",
+    quickActions: "Tindakan pantas", forYou: "Untuk anda",
+    qBook: "Tempah", qScan: "QR saya", qInvoices: "Invois", qRefer: "Rujuk",
+    book: "Tempah", bookNew: "Tempah temujanji baharu",
+    upcoming: "Akan datang", past: "Lepas",
+    confirmed: "Disahkan", completed: "Selesai", pending: "Menunggu pengesahan",
+    yourCode: "Kod rujukan anda", scanAtCounter: "Tunjukkan di kaunter, atau kongsi pautan dengan rakan.",
+    shareGift: "Kongsi Hadiah Kecantikan", shared: "Pautan disalin",
+    friendsJoined: "Rakan menyertai", creditEarned: "Kredit diperoleh",
+    redeemable: "Tebus mata anda", paymentHistory: "Sejarah pembayaran",
+    paid: "Dibayar", redeem: "Tebus", notEnough: "Berkunci",
+    lastUsed: "Kali terakhir ", pts: " mata",
+    tabHome: "Utama", tabPackages: "Pakej", tabBookings: "Tempahan", tabRewards: "Ganjaran"
+  }
+};
+
+const CARD = "border-radius:22px;padding:16px;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.14),0 8px 18px rgba(110,91,196,.1);cursor:pointer";
+
+class Component extends DCLogic {
+  state = { lang: "en", screen: "home", bookingTab: 0, shared: false, points: 2840,
+    ratings: { h2: 5, h4: 4, h6: 5 },
+    notify: { reminders: true, promos: true, whatsapp: false } };
+
+  renderVals() {
+    const s = this.state, lang = s.lang, t = T[lang];
+    const L3 = (e, z, m) => ({ en: e, zh: z, ms: m })[lang];
+
+    const packages = [
+      { name: L3("Glow Signature", "焕采尊享", "Glow Signature"), tag: "GOLD", left: 7, total: 16,
+        expiry: L3("Expires 14 Mar 2027", "2027年3月14日到期", "Tamat 14 Mac 2027"),
+        lastUsed: t.lastUsed + L3("12 Sept", "9月12日", "12 Sept"), tone: "#F3E4C4|#7A5E22" },
+      { name: L3("AI Body Master", "AI Body Master", "AI Body Master"), tag: "BODY", left: 2, total: 4,
+        expiry: L3("Expires 30 Nov 2026", "2026年11月30日到期", "Tamat 30 Nov 2026"),
+        lastUsed: t.lastUsed + L3("2 Sept", "9月2日", "2 Sept"), tone: "#E3DDF6|#5A4D93" },
+      { name: L3("Hydra Facial Course", "补水护理疗程", "Kursus Facial Hydra"), tag: "FACIAL", left: 0, total: 6,
+        expiry: L3("Expired 1 Aug 2026", "2026年8月1日已过期", "Tamat 1 Ogos 2026"),
+        lastUsed: t.lastUsed + L3("28 Jul", "7月28日", "28 Julai"), tone: "#F7D9E6|#A34270" }
+    ].map(p => {
+      const pct = Math.round((p.left / p.total) * 100);
+      const tone = p.tone.split("|");
+      return { name: p.name, tag: p.tag, left: String(p.left), total: String(p.total),
+        expiry: p.expiry, lastUsed: p.lastUsed,
+        tagStyle: "display:inline-block;padding:5px 11px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:1px;background:" + tone[0] + ";color:" + tone[1],
+        barStyle: "height:100%;width:" + Math.max(pct, 3) + "%;border-radius:99px;background:" +
+          (p.left === 0 ? "#D9CFE8" : "linear-gradient(90deg,#A594EC,#8B79E0)") };
+    });
+
+    const allBookings = [
+      { month: "SEP", day: "24", service: L3("Glow Signature Facial", "焕采尊享护理", "Facial Glow Signature"),
+        time: L3("Thursday · 2:30 PM", "周四 · 下午2:30", "Khamis · 2:30 PTG"),
+        staff: L3("with Sarah Lim · Bukit Bintang", "顾问 Sarah Lim · Bukit Bintang", "bersama Sarah Lim · Bukit Bintang"),
+        status: "confirmed", upcoming: true },
+      { month: "OCT", day: "08", service: L3("AI Body Master", "AI Body Master", "AI Body Master"),
+        time: L3("Wednesday · 11:00 AM", "周三 · 上午11:00", "Rabu · 11:00 PG"),
+        staff: L3("Any available staff · OUG", "任何有空员工 · OUG", "Mana-mana staf · OUG"),
+        status: "pending", upcoming: true },
+      { month: "SEP", day: "12", service: L3("Glow Signature Facial", "焕采尊享护理", "Facial Glow Signature"),
+        time: L3("Friday · 3:00 PM", "周五 · 下午3:00", "Jumaat · 3:00 PTG"),
+        staff: L3("with Sarah Lim · Bukit Bintang", "顾问 Sarah Lim · Bukit Bintang", "bersama Sarah Lim · Bukit Bintang"),
+        status: "completed", upcoming: false },
+      { month: "SEP", day: "02", service: L3("AI Body Master", "AI Body Master", "AI Body Master"),
+        time: L3("Tuesday · 10:30 AM", "周二 · 上午10:30", "Selasa · 10:30 PG"),
+        staff: L3("with Joyce Wong · OUG", "美疗师 Joyce Wong · OUG", "bersama Joyce Wong · OUG"),
+        status: "completed", upcoming: false }
+    ];
+    const wantUpcoming = s.bookingTab === 0;
+    const bookings = allBookings.filter(b => b.upcoming === wantUpcoming).map(b => {
+      const tone = { confirmed: "#E4F5EC|#2F6B47", pending: "#FFF1DC|#96601A", completed: "#F1EDF9|#6B6285" }[b.status].split("|");
+      return { month: b.month, day: b.day, service: b.service, time: b.time, staff: b.staff, status: t[b.status],
+        dateStyle: "flex:none;width:48px;height:48px;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;background:" +
+          (b.upcoming ? "#EDE5FF;color:#28174F" : "#F4EFFB;color:#7A6B92"),
+        statusStyle: "flex-shrink:0;padding:6px 11px;border-radius:99px;font-size:10.5px;font-weight:800;background:" + tone[0] + ";color:" + tone[1],
+        actionsStyle: b.upcoming ? "display:flex;gap:9px;margin-top:13px;padding-top:13px;border-top:1px solid #F1EAFB" : "display:none" };
+    });
+
+    const rewards = [
+      { name: L3("RM 50 treatment voucher", "RM 50 疗程券", "Vaucar rawatan RM 50"), cost: 1500, icon: "ticket", tone: "#EDE5FF|#6E5BC4" },
+      { name: L3("Free hydrating add-on", "免费补水加购", "Tambahan penghidratan percuma"), cost: 2000, icon: "drop", tone: "#E4F1FF|#2E6BA8" },
+      { name: L3("Signature facial upgrade", "升级尊享护理", "Naik taraf facial signature"), cost: 3500, icon: "sparkle", tone: "#FFE8F1|#B34F7C" }
+    ].map(r => {
+      const can = s.points >= r.cost;
+      const tone = r.tone.split("|");
+      return { name: r.name, cost: r.cost.toLocaleString("en-US") + t.pts,
+        iconClass: "ph-duotone ph-" + r.icon,
+        iconStyle: "flex:none;width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;background:" + tone[0] + ";color:" + tone[1],
+        btn: can ? t.redeem : t.notEnough,
+        btnStyle: "flex-shrink:0;padding:10px 15px;border-radius:12px;font-size:12px;font-weight:800;" +
+          (can ? "background:#8B79E0;color:#fff;cursor:pointer" : "background:#F1EDF9;color:#A79FC4") };
+    });
+
+    const hist = [
+      { id: "h1", group: L3("September 2026", "2026年9月", "September 2026"), mon: "SEP", day: "12",
+        service: L3("Glow Signature Facial", "焕采尊享护理", "Facial Glow Signature"), staff: "Sarah Lim · Bukit Bintang",
+        amount: L3("Package", "套餐扣除", "Pakej"), paid: L3("1 session", "1 次", "1 sesi") },
+      { id: "h2", group: L3("September 2026", "2026年9月", "September 2026"), mon: "SEP", day: "02",
+        service: "AI Body Master", staff: "Joyce Wong · OUG", amount: "RM 180", paid: "DuitNow QR" },
+      { id: "h3", group: L3("July 2026", "2026年7月", "Julai 2026"), mon: "JUL", day: "28",
+        service: L3("Hydra Facial Course", "补水护理疗程", "Kursus Facial Hydra"), staff: "Sarah Lim · Bukit Bintang",
+        amount: "RM 888", paid: L3("Cash", "现金", "Tunai") },
+      { id: "h4", group: L3("March 2026", "2026年3月", "Mac 2026"), mon: "MAR", day: "19",
+        service: L3("Signature Body Contour", "尊享塑形护理", "Kontur Badan Signature"), staff: "Joyce Wong · OUG",
+        amount: "RM 1,280", paid: L3("Card", "信用卡", "Kad") },
+      { id: "h5", group: L3("November 2025", "2025年11月", "November 2025"), mon: "NOV", day: "06",
+        service: L3("Glow Signature Facial", "焕采尊享护理", "Facial Glow Signature"), staff: "Sarah Lim · Bukit Bintang",
+        amount: L3("Package", "套餐扣除", "Pakej"), paid: L3("1 session", "1 次", "1 sesi") },
+      { id: "h6", group: L3("June 2025", "2025年6月", "Jun 2025"), mon: "JUN", day: "21",
+        service: L3("Hydra Facial Course", "补水护理疗程", "Kursus Facial Hydra"), staff: "Amira Yusof · Setia Alam",
+        amount: "RM 660", paid: L3("Card", "信用卡", "Kad") },
+      { id: "h7", group: L3("February 2025", "2025年2月", "Februari 2025"), mon: "FEB", day: "14",
+        service: L3("Bridal Glow Package", "婚礼焕肤套餐", "Pakej Glow Pengantin"), staff: "Sarah Lim · Bukit Bintang",
+        amount: "RM 2,388", paid: L3("Card", "信用卡", "Kad") },
+      { id: "h8", group: L3("August 2024", "2024年8月", "Ogos 2024"), mon: "AUG", day: "30",
+        service: "AI Body Master", staff: "Joyce Wong · OUG", amount: "RM 180", paid: "DuitNow QR" },
+      { id: "h9", group: L3("October 2023", "2023年10月", "Oktober 2023"), mon: "OCT", day: "05",
+        service: L3("First Trial Facial", "首次体验护理", "Facial Cubaan Pertama"), staff: "Amira Yusof · Setia Alam",
+        amount: "RM 19", paid: L3("Cash", "现金", "Tunai") }
+    ];
+    let lastGroup = null;
+    const history = hist.map(h => {
+      const rated = s.ratings[h.id] || 0;
+      const newGroup = h.group !== lastGroup;
+      lastGroup = h.group;
+      return { month: h.group, mon: h.mon, day: h.day, service: h.service, staff: h.staff,
+        amount: h.amount, paidWith: h.paid,
+        monthStyle: newGroup
+          ? "font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#7A6B92;margin:6px 0 9px 4px"
+          : "display:none",
+        prompt: rated ? L3("You rated this visit", "你已评价此次到访", "Anda telah menilai lawatan ini")
+                      : L3("How was this visit?", "此次到访体验如何？", "Bagaimana lawatan ini?"),
+        promptColor: rated ? "#7A6B92" : "#6E5BC4",
+        stars: [1, 2, 3, 4, 5].map(n => ({
+          iconClass: n <= rated ? "ph-fill ph-star" : "ph-duotone ph-star",
+          style: "font-size:19px;cursor:pointer;color:" + (n <= rated ? "#E6A93C" : "#D5CBE8"),
+          rate: () => this.setState(st => ({ ratings: Object.assign({}, st.ratings, { [h.id]: n }) })) })) };
+    });
+
+    const pf = {
+      memberNo: L3("Member", "会员编号", "Ahli"),
+      toNext: L3("660 pts to Platinum", "距离白金卡 660 分", "660 mata ke Platinum"),
+      notifications: L3("Notifications", "通知设置", "Pemberitahuan"),
+      logOut: L3("Log out", "退出登录", "Log keluar")
+    };
+    const tierName = this.props.memberTier || "Gold";
+
+    return {
+      referBar: {
+        title: L3("Refer a friend, get RM 100", "推荐朋友，赚 RM 100", "Rujuk rakan, dapat RM 100"),
+        sub: L3("She pays RM 19 for her first facial", "她的首次护理只需 RM 19", "Dia bayar RM 19 untuk facial pertama"),
+        cta: L3("Refer", "去推荐", "Rujuk")
+      },
+      referBarStyle: s.hideRefer ? "display:none"
+        : "flex-shrink:0;display:flex;align-items:center;gap:9px;margin:0 12px 9px;padding:12px 13px;border-radius:20px;background:linear-gradient(135deg,#5A48A8,#7B5EB8 55%,#A84E7E);box-shadow:0 6px 0 rgba(72,56,127,.3),0 10px 22px rgba(110,91,196,.26)",
+      hideReferBar: () => this.setState({ hideRefer: true }),
+
+      t, pf, cardStyle: CARD, history,
+      toPackages: () => this.setState({ screen: "packages" }),
+      toBookings: () => this.setState({ screen: "bookings" }), tierLabel: tierName + " " + L3("member", "会员", "ahli"),
+      isHome: s.screen === "home", isPackages: s.screen === "packages",
+      isBookings: s.screen === "bookings", isRewards: s.screen === "rewards",
+      isHistory: s.screen === "history", isProfile: s.screen === "profile",
+      historyStats: [
+        { value: "24", label: L3("Visits in 3 years", "3年到访次数", "Lawatan dalam 3 tahun") },
+        { value: "RM 9,480", label: L3("Total spent", "累计消费", "Jumlah perbelanjaan") },
+        { value: "4.8", label: L3("Average rating given", "平均评分", "Purata penilaian") }
+      ],
+      profileFields: [
+        ["ph-duotone ph-phone", L3("Mobile", "手机号码", "Telefon"), "+60 12-388 4021"],
+        ["ph-duotone ph-envelope-simple", L3("Email", "电邮", "E-mel"), "michelle.t@gmail.com"],
+        ["ph-duotone ph-cake", L3("Birthday", "生日", "Hari lahir"), L3("14 March", "3月14日", "14 Mac")],
+        ["ph-duotone ph-storefront", L3("Home outlet", "常用门店", "Cawangan utama"), "Bukit Bintang"],
+        ["ph-duotone ph-calendar-blank", L3("Member since", "入会日期", "Ahli sejak"), L3("Oct 2023", "2023年10月", "Okt 2023")]
+      ].map(([iconClass, label, value]) => ({ iconClass, label, value })),
+      toggles: [
+        ["reminders", L3("Appointment reminders", "预约提醒", "Peringatan temujanji")],
+        ["promos", L3("Promotions and offers", "促销与优惠", "Promosi dan tawaran")],
+        ["whatsapp", L3("WhatsApp updates", "WhatsApp 通知", "Kemas kini WhatsApp")]
+      ].map(([k, label]) => {
+        const on = s.notify[k];
+        return { label,
+          flip: () => this.setState(st => ({ notify: Object.assign({}, st.notify, { [k]: !st.notify[k] }) })),
+          trackStyle: "flex:none;width:46px;height:27px;border-radius:99px;padding:3px;display:flex;transition:background .18s;background:" + (on ? "#8B79E0" : "#E3DCF0"),
+          knobStyle: "width:21px;height:21px;border-radius:99px;background:#fff;transition:transform .18s;box-shadow:0 1px 3px rgba(40,23,79,.25);transform:translateX(" + (on ? "19px" : "0") + ")" };
+      }),
+      profileLinks: [
+        ["ph-duotone ph-credit-card", L3("Payment methods", "付款方式", "Kaedah pembayaran")],
+        ["ph-duotone ph-shield-check", L3("Privacy and data", "隐私与资料", "Privasi dan data")],
+        ["ph-duotone ph-question", L3("Help and support", "帮助与支持", "Bantuan dan sokongan")]
+      ].map(([iconClass, label]) => ({ iconClass, label })),
+      headerTitle: { home: "TikBeli", packages: t.myPackages, bookings: t.tabBookings, rewards: t.tabRewards,
+        history: L3("Treatment history", "疗程纪录", "Sejarah rawatan"), profile: L3("My profile", "我的档案", "Profil saya") }[s.screen],
+      headerSub: { home: t.goldMember + " · Michelle Tan", packages: L3("3 active packages", "3个有效套餐", "3 pakej aktif"),
+        bookings: L3("2 upcoming", "2个即将到来", "2 akan datang"), rewards: "2,840 " + t.points.toLowerCase(),
+        history: L3("Last 3 years", "近三年", "3 tahun lepas"), profile: "TB-0098231" }[s.screen],
+
+      langs: [["en", "EN"], ["zh", "中"], ["ms", "BM"]].map(([k, label]) => ({
+        label, pick: () => this.setState({ lang: k }),
+        style: "padding:6px 9px;border-radius:9px;font-size:11px;font-weight:800;cursor:pointer;" +
+          (s.lang === k ? "background:#8B79E0;color:#fff" : "color:#7A6B92") })),
+
+      nextAppt: { month: "SEP", day: "24", service: L3("Glow Signature Facial", "焕采尊享护理", "Facial Glow Signature"),
+        meta: L3("Thu 2:30 PM · Sarah Lim · Bukit Bintang", "周四 下午2:30 · Sarah Lim · Bukit Bintang", "Kha 2:30 PTG · Sarah Lim · Bukit Bintang") },
+      nextApptStyle: "border-radius:22px;padding:16px;background:#fff;box-shadow:0 5px 0 rgba(139,121,224,.14),0 8px 18px rgba(110,91,196,.1)",
+
+      homePackages: packages.slice(0, 2),
+      packages,
+
+      quickActions: [
+        [t.qBook, "calendar-plus", "#EDE5FF|#6E5BC4", "bookings"],
+        [t.qScan, "qr-code", "#E4F1FF|#2E6BA8", "rewards"],
+        [t.qInvoices, "receipt", "#FFF1DC|#96601A", "rewards"],
+        [t.qRefer, "gift", "#FFE8F1|#B34F7C", "rewards"]
+      ].map(([label, icon, tone, go]) => {
+        const c = tone.split("|");
+        return { label, iconClass: "ph-duotone ph-" + icon,
+          iconStyle: "width:54px;height:54px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:27px;background:" + c[0] + ";color:" + c[1] + ";box-shadow:0 5px 0 rgba(139,121,224,.14)",
+          go: () => this.setState({ screen: go }) };
+      }),
+
+      promos: [
+        { title: L3("September 10% off", "九月全单9折", "10% diskaun September"),
+          detail: L3("On Gold packages and above", "金卡套餐以上适用", "Pakej Gold ke atas"), src: "brand/rm100-beauty-credit.png" },
+        { title: L3("Serum at RM 59", "精华加购 RM 59", "Serum pada RM 59"),
+          detail: L3("Normally RM 199, with any package", "原价 RM 199，凡购套餐可享", "Biasanya RM 199, dengan mana-mana pakej"), src: "brand/rm19-trial-facial.png" },
+        { title: L3("Refer a friend", "推荐朋友", "Rujuk rakan"),
+          detail: L3("They get a free trial, you get RM 100", "朋友获免费体验，你得 RM 100", "Rakan dapat cubaan percuma, anda RM 100"), src: "brand/free-facial-trial.png" }
+      ].map(p => ({ title: p.title, detail: p.detail,
+        posterStyle: "height:112px;background-image:url('" + p.src + "');background-size:cover;background-position:center" })),
+
+      bookingTabs: [t.upcoming, t.past].map((label, i) => ({ label,
+        pick: () => this.setState({ bookingTab: i }),
+        style: "flex:1;text-align:center;padding:12px 8px;border-radius:14px;font-size:13px;font-weight:800;cursor:pointer;" +
+          (s.bookingTab === i ? "background:#8B79E0;color:#fff;box-shadow:0 4px 0 #6E5BC4" : "background:#fff;color:#7A6B92") })),
+      bookings,
+
+      share: () => this.setState({ shared: true }),
+      shareLabel: s.shared ? t.shared + " ✓" : t.shareGift,
+      shareStyle: "display:flex;align-items:center;justify-content:center;gap:9px;margin-top:15px;padding:14px;border-radius:99px;font-size:14px;font-weight:800;cursor:pointer;color:#fff;" +
+        (s.shared ? "background:#4F9A6E;box-shadow:0 5px 0 #3C7A56" : "background:#25D366;box-shadow:0 5px 0 #1FA851"),
+
+      referralStats: [
+        { value: "6", label: t.friendsJoined },
+        { value: "RM 480", label: t.creditEarned }
+      ],
+      rewards,
+
+      invoices: [
+        { ref: "INV-2026-0912", date: L3("12 Sept 2026 · Card", "2026年9月12日 · 信用卡", "12 Sept 2026 · Kad"), amount: "RM 2,388", ok: true },
+        { ref: "INV-2026-0902", date: L3("2 Sept 2026 · DuitNow QR", "2026年9月2日 · DuitNow QR", "2 Sept 2026 · DuitNow QR"), amount: "RM 180", ok: true },
+        { ref: "INV-2026-0728", date: L3("28 July 2026 · Cash", "2026年7月28日 · 现金", "28 Julai 2026 · Tunai"), amount: "RM 888", ok: true }
+      ].map(i => ({ ref: i.ref, date: i.date, amount: i.amount, status: t.paid,
+        statusStyle: "font-size:10.5px;font-weight:800;margin-top:4px;color:#2F6B47" })),
+
+      tabs: [["home", t.tabHome, "house"], ["bookings", t.tabBookings, "calendar-check"],
+             ["history", L3("History", "纪录", "Sejarah"), "clock-counter-clockwise"],
+             ["rewards", t.tabRewards, "gift"],
+             ["profile", L3("Profile", "我的", "Profil"), "user"]].map(([k, label, icon]) => {
+        const on = s.screen === k;
+        return { label, pick: () => this.setState({ screen: k }),
+          iconClass: (on ? "ph-fill ph-" : "ph-duotone ph-") + icon,
+          iconStyle: "font-size:23px;line-height:1",
+          style: "flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:4px 0;font-size:10.5px;font-weight:800;cursor:pointer;color:" +
+            (on ? "#6E5BC4" : "#A79FC4") };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

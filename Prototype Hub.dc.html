@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  body { margin:0; background:#2D2640; }
+  a { text-decoration:none; color:#7C5DD8; }
+  a:hover { color:#5F42B8; }
+</style>
+</helmet>
+<div style="min-height:100vh;background:#2D2640;font-family:'Plus Jakarta Sans',-apple-system,sans-serif;padding:32px 20px 64px;color:#2D2640">
+  <div style="max-width:1080px;margin:0 auto">
+
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px">
+      <div style="width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:800">T</div>
+      <div>
+        <div style="font-size:20px;font-weight:800;color:#fff;letter-spacing:-0.3px">TikBeli Prototype Hub</div>
+        <div style="font-size:11px;font-weight:600;color:#A99BC4;letter-spacing:1.2px;text-transform:uppercase">All screens in one place</div>
+      </div>
+    </div>
+    <div style="font-size:13px;color:#A99BC4;margin:0 0 32px 58px;max-width:520px;text-wrap:pretty">Tap any card to open that screen. Everything runs locally — no login, no server, no subscription.</div>
+
+    <div style="font-size:11px;font-weight:700;color:#C9B5FF;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px">Customer facing</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:36px">
+      <a href="Customer%20App.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFE0E8,#FFC8C8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-mobile-screen" style="color:#8B3A5C"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Customer App</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Home, bookings, treatment history, rewards, profile</div>
+      </a>
+      <a href="Rewards%20Club.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFE0E8,#FFC8C8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-gift" style="color:#8B3A5C"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Rewards Club</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Gifts, share links, beauty credit balance</div>
+      </a>
+      <a href="Claim%20Beauty%20Gift.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFE0E8,#FFC8C8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-wand-magic-sparkles" style="color:#8B3A5C"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Claim Beauty Gift</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">What a referred friend sees on the invite link</div>
+      </a>
+      <a href="Treatment%20Catalogue.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFE0E8,#FFC8C8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-spa" style="color:#8B3A5C"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Treatment Catalogue</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">24 live treatments, prices, photos and videos</div>
+      </a>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#C9B5FF;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px">Staff and consultant</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:36px">
+      <a href="Login.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-key" style="color:#fff"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Login</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Entry point for every staff role</div>
+      </a>
+      <a href="Consultant%20Quote%20App.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-file-pen" style="color:#fff"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Consultant Quote App</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Quotes, treatment record, before/after, pitch history</div>
+      </a>
+      <a href="Staff%20Dashboard.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-th-large" style="color:#fff"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Staff Dashboard</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Shift, targets, commission for one staff member</div>
+      </a>
+      <a href="Waiting%20List.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#C9B5FF,#9B7CE8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-calendar" style="color:#fff"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Waiting List</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Queue and appointment overflow handling</div>
+      </a>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#C9B5FF;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px">HQ and admin</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:36px">
+      <a href="TikBeli%20Admin.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFD86E,#FFC8B8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-desktop" style="color:#2D2640"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">TikBeli Admin</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Dashboard, appointments, referral admin</div>
+      </a>
+      <a href="Operations%20Dashboard.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFD86E,#FFC8B8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-chart-line" style="color:#2D2640"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Operations Dashboard</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Outlet performance and daily closing</div>
+      </a>
+      <a href="Referral%20Hub.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#FFD86E,#FFC8B8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-share-nodes" style="color:#2D2640"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Referral Hub</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Customer, staff and HQ bonus settings</div>
+      </a>
+    </div>
+
+    <div style="font-size:11px;font-weight:700;color:#C9B5FF;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px">Reference</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px">
+      <a href="Referral%20Scheme%20Explained.dc.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:#F0E8FF;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-book" style="color:#9B7CE8"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Referral Scheme Explained</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">Two-level chain, worked example, payout ladder</div>
+      </a>
+      <a href="Original%20Rewards%20Club.html" style="display:block;background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.18)" style-hover="transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.28)">
+        <div style="width:38px;height:38px;border-radius:11px;background:#F0E8FF;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px"><i class="fas fa-clock-rotate-left" style="color:#9B7CE8"></i></div>
+        <div style="font-size:15px;font-weight:700;color:#2D2640;margin-bottom:4px">Original Rewards Club</div>
+        <div style="font-size:12px;color:#6B5B7C;line-height:1.45">The first imported version, kept for reference</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

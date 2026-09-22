@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+body{margin:0;color:#21104f;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;background:radial-gradient(circle at 10% 5%,rgba(255,232,245,.95),transparent 30%),radial-gradient(circle at 94% 17%,rgba(217,191,255,.7),transparent 29%),linear-gradient(135deg,#fcf6fc 0%,#f1e6ff 48%,#fff7f4 100%)}
+a{color:#6630d2}a:hover{color:#4f24a8}
+*{box-sizing:border-box}
+.sq::-webkit-scrollbar{width:0;height:0}
+input,select{font-family:inherit}
+</style>
+</helmet>
+
+<div style="display:grid;gap:18px;min-width:0;padding:26px;max-width:1480px;margin:0 auto">
+
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap">
+<div style="min-width:0">
+<div style="color:#3d286b;font-size:18px;font-weight:700">{{ t.separatePage }}</div>
+<div style="margin-top:5px;color:#21104f;font-size:36px;font-weight:800;letter-spacing:-.8px;line-height:1.1">{{ t.title }}</div>
+<div style="display:block;margin-top:8px;color:#5b4a78;font-size:19px;font-weight:600">{{ t.subtitle }}</div>
+</div>
+<div style="display:flex;gap:11px;flex-wrap:wrap;flex-shrink:0">
+<div onClick="{{ toAppointments }}" style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-radius:16px;font-size:17px;font-weight:800;cursor:pointer;background:linear-gradient(145deg,#fffdff,#f3ebff);border:1px solid #e4d8f6;color:#3d286b">
+<i class="ph-bold ph-calendar-check" style="font-size:20px"></i>{{ t.backToAppts }}
+</div>
+<div title="{{ t.notThisPhase }}" style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-radius:16px;font-size:17px;font-weight:800;cursor:not-allowed;background:#efe8fa;border:1px solid #e4d8f6;color:#9286ad">
+<i class="ph-bold ph-plus" style="font-size:20px"></i>{{ t.addRequest }}
+</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;border-radius:26px;padding:20px;background:linear-gradient(145deg,#fffefd,#fff8fc);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.14),-7px -8px 18px rgba(255,255,255,.96)">
+<div style="grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+<div onClick="{{ prevDay }}" style="{{ navBtnStyle }}"><i class="ph-bold ph-caret-left" style="font-size:20px"></i></div>
+<div style="flex:1;min-width:190px;text-align:center;font-size:21px;font-weight:800">{{ dateLabel }}</div>
+<div onClick="{{ nextDay }}" style="{{ navBtnStyle }}"><i class="ph-bold ph-caret-right" style="font-size:20px"></i></div>
+<div onClick="{{ today }}" style="padding:12px 18px;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;box-shadow:6px 9px 14px rgba(81,35,174,.3)">{{ t.today }}</div>
+</div>
+<label style="display:grid;gap:8px;font-size:17px;font-weight:800;min-width:0">{{ t.outlet }}
+<select value="{{ outletValue }}" onChange="{{ setOutlet }}" style="{{ selectStyle }}">
+<sc-for list="{{ outletOptions }}" as="o" hint-placeholder-count="4">
+<option value="{{ o.name }}">{{ o.name }}</option>
+</sc-for>
+</select>
+</label>
+<label style="display:grid;gap:8px;font-size:17px;font-weight:800;min-width:0">{{ t.preference }}
+<select value="{{ prefValue }}" onChange="{{ setPref }}" style="{{ selectStyle }}">
+<sc-for list="{{ prefOptions }}" as="p" hint-placeholder-count="3">
+<option value="{{ p.name }}">{{ p.name }}</option>
+</sc-for>
+</select>
+</label>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:16px">
+<sc-for list="{{ summary }}" as="s" hint-placeholder-count="4">
+<div style="{{ s.cardStyle }}">
+<i class="{{ s.iconClass }}" style="{{ s.iconStyle }}"></i>
+<div style="min-width:0">
+<div style="{{ s.labelStyle }}">{{ s.label }}</div>
+<div style="{{ s.valueStyle }}">{{ s.value }}</div>
+<div style="color:#6c5b7e;font-size:18px;font-weight:700;margin-top:2px">{{ s.unit }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(145deg,#fffefd,#fff8fc);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.14),-7px -8px 18px rgba(255,255,255,.96)">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:14px">
+<div style="min-width:0">
+<div style="display:flex;align-items:center;gap:9px;font-size:24px;font-weight:800;letter-spacing:-.3px">{{ t.overviewTitle }}<i class="ph-fill ph-info" style="font-size:17px;color:#6630d2"></i></div>
+<div style="margin-top:4px;color:#5b4a78;font-size:18px;font-weight:600">{{ t.overviewSub }}</div>
+</div>
+</div>
+
+<div class="sq" style="overflow-x:auto">
+<div style="{{ gridHeadStyle }}">
+<div style="flex:none;width:76px"></div>
+<sc-for list="{{ staffColumns }}" as="c" hint-placeholder-count="4">
+<div style="{{ c.headStyle }}">
+<div style="min-width:0">
+<div style="font-size:18px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div>
+<div style="font-size:15px;font-weight:600;color:#6c5b7e;margin-top:2px">{{ c.subtitle }}</div>
+</div>
+<div style="{{ c.countStyle }}">{{ c.count }}</div>
+<div style="font-size:13px;font-weight:800;letter-spacing:.6px;color:#6c5b7e">{{ t.waitingCaps }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="{{ gridBodyStyle }}">
+<div style="flex:none;width:76px;position:relative">
+<sc-for list="{{ hourMarks }}" as="h" hint-placeholder-count="11">
+<div style="{{ h.labelStyle }}">{{ h.label }}</div>
+</sc-for>
+</div>
+<sc-for list="{{ staffColumns }}" as="c" hint-placeholder-count="4">
+<div style="{{ c.colStyle }}">
+<sc-for list="{{ hourMarks }}" as="h" hint-placeholder-count="11">
+<div style="{{ h.lineStyle }}"></div>
+</sc-for>
+<sc-for list="{{ c.requests }}" as="r" hint-placeholder-count="2">
+<div onClick="{{ r.highlight }}" style="{{ r.wrapStyle }}">
+<div style="{{ r.stripStyle }}">
+<strong style="font-size:22px;font-weight:800;line-height:1">{{ r.code }}</strong>
+<span style="font-size:15px;font-weight:800;text-transform:uppercase">{{ r.codeWord }}</span>
+</div>
+<div style="{{ r.cardStyle }}">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<div style="{{ r.timeStyle }}">{{ r.time }}</div>
+<div style="{{ r.durStyle }}">{{ r.duration }}</div>
+</div>
+<div style="font-size:18px;font-weight:800;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.customer }}</div>
+<div style="font-size:15px;font-weight:600;color:#6c5b7e;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.service }}</div>
+</div>
+</div>
+</sc-for>
+<div style="{{ c.emptyStyle }}">
+<i class="ph-duotone ph-calendar-check" style="font-size:32px;color:#b6a6cf"></i>
+<div style="font-size:17px;font-weight:800;margin-top:7px">{{ t.noWaiting }}</div>
+<div style="font-size:15px;font-weight:600;color:#6c5b7e;margin-top:3px">{{ t.readyForData }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid #ece2f8">
+<div style="display:flex;align-items:flex-start;gap:10px">
+<div style="flex:none;width:18px;height:18px;border-radius:5px;background:#07833e;margin-top:3px"></div>
+<div><b style="font-size:17px;font-weight:800">{{ t.asFull }}</b><div style="color:#675677;font-size:16px;font-weight:600;margin-top:2px">{{ t.asDesc }}</div></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:10px">
+<div style="flex:none;width:18px;height:18px;border-radius:5px;background:#e11120;margin-top:3px"></div>
+<div><b style="font-size:17px;font-weight:800">{{ t.dsFull }}</b><div style="color:#675677;font-size:16px;font-weight:600;margin-top:2px">{{ t.dsDesc }}</div></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:10px">
+<i class="ph-duotone ph-hourglass-medium" style="flex:none;font-size:26px;color:#2f55da"></i>
+<div><b style="font-size:17px;font-weight:800">{{ t.waitingCount }}</b><div style="color:#675677;font-size:16px;font-weight:600;margin-top:2px">{{ t.waitingCountDesc }}</div></div>
+</div>
+</div>
+</div>
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(145deg,#fffefd,#fff8fc);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.14),-7px -8px 18px rgba(255,255,255,.96)">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:14px">
+<div style="min-width:0">
+<div style="font-size:24px;font-weight:800;letter-spacing:-.3px">{{ currentTitle }}</div>
+<div style="margin-top:4px;color:#5b4a78;font-size:18px;font-weight:600">{{ t.clickRow }}</div>
+</div>
+<div style="display:flex;gap:11px;flex-wrap:wrap">
+<label style="display:flex;align-items:center;gap:9px;padding:0 14px;border-radius:14px;background:#fff;border:1px solid #ddcdf0;min-height:52px">
+<i class="ph-bold ph-magnifying-glass" style="font-size:18px;color:#7a6b92"></i>
+<input value="{{ searchValue }}" onChange="{{ setSearch }}" placeholder="{{ t.searchPlaceholder }}" style="border:0;outline:0;background:transparent;font-size:17px;font-weight:600;color:#21104f;min-width:0;width:230px">
+</label>
+<label style="display:flex;align-items:center;gap:9px;padding:0 14px;border-radius:14px;background:#fff;border:1px solid #ddcdf0;min-height:52px">
+<i class="ph-bold ph-funnel" style="font-size:18px;color:#7a6b92"></i>
+<select value="{{ statusValue }}" onChange="{{ setStatus }}" style="border:0;outline:0;background:transparent;font-size:17px;font-weight:700;color:#21104f;min-width:0">
+<sc-for list="{{ statusOptions }}" as="o" hint-placeholder-count="4">
+<option value="{{ o.name }}">{{ o.name }}</option>
+</sc-for>
+</select>
+</label>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+<div onClick="{{ r.highlight }}" style="{{ r.rowStyle }}">
+<div style="{{ r.codeStyle }}">{{ r.code }}</div>
+<div style="flex:1;min-width:150px">
+<div style="font-size:19px;font-weight:800">{{ r.customer }}</div>
+<div style="font-size:16px;font-weight:600;color:#6c5b7e;margin-top:3px">{{ r.contact }}</div>
+</div>
+<div style="flex:1;min-width:150px">
+<div style="font-size:17px;font-weight:700">{{ r.service }}</div>
+<div style="font-size:16px;font-weight:600;color:#6c5b7e;margin-top:3px">{{ r.outlet }}</div>
+</div>
+<div style="flex:none;min-width:150px">
+<div style="font-size:17px;font-weight:800">{{ r.time }}</div>
+<div style="font-size:16px;font-weight:600;color:#6c5b7e;margin-top:3px">{{ r.duration }}</div>
+</div>
+<div style="{{ r.statusStyle }}">{{ r.status }}</div>
+</div>
+</sc-for>
+<div style="{{ emptyRowsStyle }}">{{ t.noMatch }}</div>
+</div>
+<div style="padding:13px 2px 0;color:#776887;font-size:17px;font-weight:700">{{ showingLabel }}</div>
+</div>
+
+<div style="border-radius:26px;padding:20px;background:linear-gradient(145deg,#fffefd,#fff8fc);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.14),-7px -8px 18px rgba(255,255,255,.96)">
+<div style="font-size:24px;font-weight:800;letter-spacing:-.3px;padding-bottom:14px">{{ t.howItWorks }}</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px">
+<sc-for list="{{ logic }}" as="l" hint-placeholder-count="5">
+<div style="display:grid;align-content:start;gap:8px">
+<b style="color:#2445c1;font-size:20px;font-weight:800">{{ l.title }}</b>
+<sc-for list="{{ l.lines }}" as="p" hint-placeholder-count="2">
+<div style="display:flex;align-items:flex-start;gap:9px;font-size:17px;font-weight:600;color:#3f3355;line-height:1.45">
+<i class="{{ p.iconClass }}" style="{{ p.iconStyle }}"></i>
+<div><strong style="{{ p.strongStyle }}">{{ p.strong }}</strong>{{ p.text }}</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;align-items:flex-start;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid #ece2f8;color:#3f3355;font-size:17px;font-weight:700">
+<i class="ph-fill ph-info" style="flex:none;font-size:19px;color:#2f55da;margin-top:2px"></i>
+<div>{{ t.neverDeleted }}</div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1700}}">
+const DAY_START = 10 * 60, DAY_END = 20 * 60;
+const PX_PER_MIN = 1.15;
+
+const T = {
+  en: {
+    separatePage: "Separate appointment operations page", title: "Waiting List",
+    subtitle: "View fixed-time and flexible waiting requests in one place.",
+    backToAppts: "Back to Appointments", addRequest: "Add Waiting Request",
+    notThisPhase: "Creation workflow is not part of this visual phase",
+    today: "Today", outlet: "Outlet", preference: "Staff preference",
+    asShort: "AS (Any Staff)", dsShort: "DS (Designated Staff)",
+    totalWaiting: "Total Waiting", totalAppointments: "Total Appointments",
+    requests: "Request(s)", apptsOnDate: "Appointment(s) on selected date",
+    overviewTitle: "Appointment + Waiting Overview",
+    overviewSub: "Fixed-date requests follow their actual requested start and end times.",
+    waitingCaps: "WAITING", noWaiting: "No waiting requests", readyForData: "This column is ready for real staff data.",
+    asFull: "AS = Any Staff", asDesc: "Customer can accept any available staff.",
+    dsFull: "DS = Designated Staff", dsDesc: "Customer wants a specific real staff member.",
+    waitingCount: "Waiting count", waitingCountDesc: "Same requested time range and preference are grouped.",
+    currentWaiting: "Current Waiting Requests", clickRow: "Click a row to highlight its fixed-time request in the calendar above.",
+    searchPlaceholder: "Search customer / phone / service…",
+    allStatuses: "All statuses", waiting: "Waiting", contacted: "Contacted", converted: "Converted",
+    noMatch: "No fixed-time waiting requests match the current filters.",
+    showing: "Showing ", ofFixed: " fixed-time request(s)", of: " of ",
+    howItWorks: "How the Waiting List works",
+    l1: "1. AS vs DS", l2: "2. Waiting Grouping", l3: "3. Appointment Impact",
+    l4: "4. Fixed-time Placement", l5: "5. Anytime / Flexible",
+    l1a: "Customer can accept any available staff.", l1b: "Customer requests one specific staff member.",
+    l2t: "Requests with the same date, time range and preference may be grouped.",
+    l3t: "Waiting customers are not appointments until staff confirms the booking.",
+    l4t: "Only requests with real start and end times appear on the timeline.",
+    l5t: "Flexible AS and DS requests stay in their separate sections until a time is agreed.",
+    neverDeleted: "Waiting records are never deleted from this view; their operational status is updated.",
+    anyStaff: "Any", designated: "Designated", mins: " min", hr: " hr"
+  },
+  zh: {
+    separatePage: "独立的预约营运页面", title: "候补名单",
+    subtitle: "在同一页查看指定时间与弹性时间的候补申请。",
+    backToAppts: "返回预约", addRequest: "新增候补申请",
+    notThisPhase: "建立流程不属于此视觉阶段",
+    today: "今日", outlet: "分店", preference: "员工偏好",
+    asShort: "AS（任何员工）", dsShort: "DS（指定员工）",
+    totalWaiting: "候补总数", totalAppointments: "预约总数",
+    requests: "宗申请", apptsOnDate: "所选日期的预约数",
+    overviewTitle: "预约与候补总览",
+    overviewSub: "指定日期的申请依其实际申请起讫时间显示。",
+    waitingCaps: "候补", noWaiting: "暂无候补申请", readyForData: "此栏已准备好接入真实员工资料。",
+    asFull: "AS＝任何员工", asDesc: "顾客可接受任何有空的员工。",
+    dsFull: "DS＝指定员工", dsDesc: "顾客指定某位员工。",
+    waitingCount: "候补计数", waitingCountDesc: "相同时段与偏好的申请会合并计算。",
+    currentWaiting: "目前候补申请", clickRow: "点击任一列，可在上方行事历中标示该指定时间申请。",
+    searchPlaceholder: "搜寻顾客／电话／服务…",
+    allStatuses: "全部状态", waiting: "候补中", contacted: "已联系", converted: "已转预约",
+    noMatch: "没有符合目前筛选条件的指定时间候补申请。",
+    showing: "显示 ", ofFixed: " 宗指定时间申请", of: " ／ ",
+    howItWorks: "候补名单运作方式",
+    l1: "1. AS 与 DS", l2: "2. 候补合并", l3: "3. 对预约的影响",
+    l4: "4. 指定时间摆放", l5: "5. 弹性时间",
+    l1a: "顾客可接受任何有空的员工。", l1b: "顾客指定某一位员工。",
+    l2t: "同日期、同时段、同偏好的申请可合并计算。",
+    l3t: "员工确认前，候补顾客不算正式预约。",
+    l4t: "只有具备实际起讫时间的申请会出现在时间轴上。",
+    l5t: "弹性的 AS 与 DS 申请会留在各自区块，直到谈妥时间。",
+    neverDeleted: "候补纪录不会从此页删除，只会更新其营运状态。",
+    anyStaff: "任何", designated: "指定", mins: " 分钟", hr: " 小时"
+  },
+  ms: {
+    separatePage: "Halaman operasi temujanji berasingan", title: "Senarai Menunggu",
+    subtitle: "Lihat permintaan menunggu masa tetap dan fleksibel di satu tempat.",
+    backToAppts: "Kembali ke Temujanji", addRequest: "Tambah Permintaan",
+    notThisPhase: "Aliran kerja penciptaan bukan sebahagian fasa visual ini",
+    today: "Hari ini", outlet: "Cawangan", preference: "Pilihan staf",
+    asShort: "AS (Mana-mana Staf)", dsShort: "DS (Staf Ditetapkan)",
+    totalWaiting: "Jumlah Menunggu", totalAppointments: "Jumlah Temujanji",
+    requests: "Permintaan", apptsOnDate: "Temujanji pada tarikh dipilih",
+    overviewTitle: "Gambaran Temujanji + Menunggu",
+    overviewSub: "Permintaan tarikh tetap mengikut masa mula dan tamat sebenar.",
+    waitingCaps: "MENUNGGU", noWaiting: "Tiada permintaan menunggu", readyForData: "Lajur ini sedia untuk data staf sebenar.",
+    asFull: "AS = Mana-mana Staf", asDesc: "Pelanggan boleh terima mana-mana staf yang ada.",
+    dsFull: "DS = Staf Ditetapkan", dsDesc: "Pelanggan mahu staf tertentu.",
+    waitingCount: "Kiraan menunggu", waitingCountDesc: "Julat masa dan pilihan yang sama dikumpulkan.",
+    currentWaiting: "Permintaan Menunggu Semasa", clickRow: "Klik baris untuk menyerlahkan permintaan masa tetapnya di kalendar di atas.",
+    searchPlaceholder: "Cari pelanggan / telefon / servis…",
+    allStatuses: "Semua status", waiting: "Menunggu", contacted: "Dihubungi", converted: "Ditukar",
+    noMatch: "Tiada permintaan menunggu masa tetap sepadan dengan penapis semasa.",
+    showing: "Memaparkan ", ofFixed: " permintaan masa tetap", of: " daripada ",
+    howItWorks: "Cara Senarai Menunggu berfungsi",
+    l1: "1. AS lawan DS", l2: "2. Pengumpulan Menunggu", l3: "3. Kesan Temujanji",
+    l4: "4. Penempatan Masa Tetap", l5: "5. Bila-bila / Fleksibel",
+    l1a: "Pelanggan boleh terima mana-mana staf yang ada.", l1b: "Pelanggan meminta staf tertentu.",
+    l2t: "Permintaan dengan tarikh, julat masa dan pilihan sama boleh dikumpulkan.",
+    l3t: "Pelanggan menunggu bukan temujanji sehingga staf mengesahkan tempahan.",
+    l4t: "Hanya permintaan dengan masa mula dan tamat sebenar muncul pada garis masa.",
+    l5t: "Permintaan AS dan DS fleksibel kekal di bahagian berasingan sehingga masa dipersetujui.",
+    neverDeleted: "Rekod menunggu tidak pernah dipadam dari paparan ini; statusnya dikemas kini.",
+    anyStaff: "Mana-mana", designated: "Ditetapkan", mins: " min", hr: " jam"
+  }
+};
+
+const RECORDS = [
+  { id: "w1", staff: 0, pref: "as", start: 11 * 60, end: 12 * 60 + 30, customer: "Michelle Tan",
+    contact: "+6011 2393 7687", service: { en: "Deep Cleansing Facial", zh: "深层清洁护理", ms: "Facial Pembersihan" },
+    outlet: 0, status: "waiting" },
+  { id: "w2", staff: 1, pref: "ds", start: 14 * 60, end: 15 * 60, customer: "Amy Wong",
+    contact: "+6012 771 4420", service: { en: "AI Body Master", zh: "AI Body Master", ms: "AI Body Master" },
+    outlet: 0, status: "contacted" },
+  { id: "w3", staff: 0, pref: "as", start: 16 * 60 + 30, end: 18 * 60, customer: "Nurul Huda",
+    contact: "+6019 338 2019", service: { en: "Black Pearl Laser", zh: "黑珍珠激光", ms: "Laser Black Pearl" },
+    outlet: 1, status: "waiting" },
+  { id: "w4", staff: 2, pref: "ds", start: 12 * 60 + 30, end: 13 * 60 + 30, customer: "Jane Lee",
+    contact: "+6017 220 8845", service: { en: "Hydrating Facial", zh: "补水护理", ms: "Facial Penghidratan" },
+    outlet: 0, status: "waiting" }
+];
+
+const STAFF = [
+  { name: "Mia Tan", subtitle: { en: "Senior Consultant", zh: "高级顾问", ms: "Perunding Kanan" } },
+  { name: "Sarah Lim", subtitle: { en: "Consultant", zh: "顾问", ms: "Perunding" } },
+  { name: "Joyce Wong", subtitle: { en: "Therapist", zh: "美疗师", ms: "Juruterapi" } },
+  { name: null, subtitle: { en: "Staff column", zh: "员工栏位", ms: "Lajur staf" } }
+];
+
+const OUTLET_NAMES = ["OUG", "Bukit Bintang", "Mid Valley"];
+
+class Component extends DCLogic {
+  state = { lang: "en", dayOffset: 0, outlet: -1, pref: "all", search: "", status: "all", highlighted: null };
+
+  fmt(mins) {
+    const h = Math.floor(mins / 60), m = mins % 60;
+    const ap = h >= 12 ? "PM" : "AM", hh = h % 12 === 0 ? 12 : h % 12;
+    return hh + ":" + String(m).padStart(2, "0") + " " + ap;
+  }
+
+  renderVals() {
+    const s = this.state, lang = s.lang, t = T[lang];
+    const L3 = (e, z, m) => ({ en: e, zh: z, ms: m })[lang];
+
+    const d = new Date(2026, 8, 20 + s.dayOffset);
+    const dateLabel = d.toLocaleDateString(lang === "zh" ? "zh-CN" : lang === "ms" ? "ms-MY" : "en-GB",
+      { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+    const outletOptions = [{ name: L3("All outlets", "所有分店", "Semua cawangan") }].concat(OUTLET_NAMES.map(n => ({ name: n })));
+    const outletValue = s.outlet < 0 ? outletOptions[0].name : OUTLET_NAMES[s.outlet];
+    const prefList = [[ "all", L3("All preferences", "所有偏好", "Semua pilihan") ], ["as", t.asShort], ["ds", t.dsShort]];
+    const statusList = [["all", t.allStatuses], ["waiting", t.waiting], ["contacted", t.contacted], ["converted", t.converted]];
+
+    const inScope = RECORDS.filter(r =>
+      (s.outlet < 0 || r.outlet === s.outlet) && (s.pref === "all" || r.pref === s.pref));
+
+    const asCount = inScope.filter(r => r.pref === "as").length;
+    const dsCount = inScope.filter(r => r.pref === "ds").length;
+
+    const summaryCard = (tone, border, fg, bg) => ({
+      cardStyle: "display:flex;gap:14px;min-height:126px;align-items:center;padding:18px;border-radius:22px;background:linear-gradient(145deg,#fffefd,#fff8fc);border:2px solid " + border +
+        ";box-shadow:11px 15px 23px rgba(119,75,166,.13),-6px -7px 15px rgba(255,255,255,.96)",
+      iconStyle: "flex:0 0 auto;padding:9px;border-radius:16px;font-size:35px;line-height:1;color:" + fg + ";background:" + bg,
+      labelStyle: "font-size:20px;font-weight:800;line-height:1.2;color:" + fg,
+      valueStyle: "font-size:38px;font-weight:800;line-height:1;margin-top:5px;color:" + fg
+    });
+
+    const hourMarks = [];
+    for (let m = DAY_START; m <= DAY_END; m += 60) {
+      const top = (m - DAY_START) * PX_PER_MIN;
+      hourMarks.push({ label: this.fmt(m),
+        labelStyle: "position:absolute;top:" + (top - 9) + "px;right:10px;font-size:14px;font-weight:700;color:#7a6b92;white-space:nowrap",
+        lineStyle: "position:absolute;left:0;right:0;top:" + top + "px;height:1px;background:#f0e8fa" });
+    }
+
+    const highlight = (id) => () => {
+      this.setState({ highlighted: id });
+      setTimeout(() => this.setState({ highlighted: null }), 1600);
+    };
+
+    const staffColumns = STAFF.map((st, i) => {
+      const reqs = inScope.filter(r => r.staff === i);
+      const placeholder = !st.name;
+      return {
+        name: st.name || L3("Awaiting staff data", "待接入员工资料", "Menunggu data staf"),
+        subtitle: st.subtitle[lang], count: String(reqs.length),
+        headStyle: "flex:1;min-width:212px;display:flex;align-items:center;gap:10px;padding:13px 14px;border-left:1px solid #f0e8fa" +
+          (placeholder ? ";opacity:.6" : ""),
+        countStyle: "flex:none;font-size:22px;font-weight:800;color:" + (reqs.length ? "#6630d2" : "#b6a6cf"),
+        colStyle: "flex:1;min-width:212px;position:relative;border-left:1px solid #f0e8fa;height:" + ((DAY_END - DAY_START) * PX_PER_MIN) + "px",
+        emptyStyle: reqs.length ? "display:none"
+          : "position:absolute;left:12px;right:12px;top:50%;transform:translateY(-50%);text-align:center;color:#6c5b7e",
+        requests: reqs.map(r => {
+          const top = (Math.max(DAY_START, r.start) - DAY_START) * PX_PER_MIN;
+          const h = (Math.min(DAY_END, r.end) - Math.max(DAY_START, r.start)) * PX_PER_MIN;
+          const as = r.pref === "as";
+          const on = s.highlighted === r.id;
+          const mins = r.end - r.start;
+          return { code: as ? "AS" : "DS", codeWord: as ? t.anyStaff : t.designated,
+            time: this.fmt(r.start) + " – " + this.fmt(r.end),
+            duration: mins >= 60 ? (mins / 60) + t.hr : mins + t.mins,
+            customer: r.customer, service: r.service[lang],
+            highlight: highlight(r.id),
+            wrapStyle: "position:absolute;left:8px;right:8px;top:" + top + "px;height:" + h + "px;cursor:pointer;transition:transform .18s ease",
+            stripStyle: "position:absolute;top:0;bottom:0;left:0;width:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:14px 0 0 14px;color:#fff;background:" +
+              (as ? "#07a04d" : "#e11120"),
+            cardStyle: "position:absolute;inset:0 0 0 90px;padding:11px 13px;border-radius:0 14px 14px 0;background:#fff;overflow:hidden;border:2px solid " +
+              (as ? "#72c995" : "#ff8a91") + (on ? ";box-shadow:0 0 0 4px rgba(102,48,210,.35)" : ";box-shadow:4px 6px 12px rgba(91,52,142,.12)"),
+            timeStyle: "font-size:18px;font-weight:800;color:" + (as ? "#078b3f" : "#c81120"),
+            durStyle: "padding:3px 8px;border-radius:8px;font-size:14px;font-weight:800;border:1px solid " +
+              (as ? "#72c995;color:#078b3f;background:#e9f8ef" : "#ff9d9d;color:#c81120;background:#fff0f0") };
+        })
+      };
+    });
+
+    const q = s.search.trim().toLowerCase();
+    const rows = inScope.filter(r =>
+      (s.status === "all" || r.status === s.status) &&
+      (!q || (r.customer + r.contact + r.service[lang]).toLowerCase().includes(q))
+    ).map(r => {
+      const as = r.pref === "as";
+      const mins = r.end - r.start;
+      const tone = { waiting: "#eef2ff|#2445c1", contacted: "#fff5e6|#a35b08", converted: "#e9f8ef|#07833e" }[r.status].split("|");
+      return { code: as ? "AS" : "DS", customer: r.customer, contact: r.contact,
+        service: r.service[lang], outlet: OUTLET_NAMES[r.outlet],
+        time: this.fmt(r.start) + " – " + this.fmt(r.end),
+        duration: mins >= 60 ? (mins / 60) + t.hr : mins + t.mins,
+        status: t[r.status], highlight: highlight(r.id),
+        rowStyle: "display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:15px 16px;border-radius:18px;cursor:pointer;background:#fff;border:1px solid " +
+          (s.highlighted === r.id ? "#a54bf0;box-shadow:0 0 0 4px rgba(165,75,240,.18)" : "#ece2f8"),
+        codeStyle: "flex:none;width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;background:" +
+          (as ? "#07a04d" : "#e11120"),
+        statusStyle: "flex:none;padding:8px 14px;border-radius:10px;font-size:16px;font-weight:800;background:" + tone[0] + ";color:" + tone[1] };
+    });
+
+    const fixedCount = inScope.length;
+
+    return {
+      t, dateLabel,
+      prevDay: () => this.setState({ dayOffset: s.dayOffset - 1 }),
+      nextDay: () => this.setState({ dayOffset: s.dayOffset + 1 }),
+      today: () => this.setState({ dayOffset: 0 }),
+      toAppointments: () => this.setState({ dayOffset: 0 }),
+      navBtnStyle: "flex:none;width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:linear-gradient(145deg,#fffdff,#f3ebff);border:1px solid #e4d8f6;color:#3d286b",
+      selectStyle: "width:100%;min-height:54px;padding:10px 14px;border:1px solid #ddcdf0;border-radius:14px;background:#fff;color:#21104f;font-size:17px;font-weight:700",
+
+      outletOptions, outletValue,
+      setOutlet: (e) => this.setState({ outlet: OUTLET_NAMES.indexOf(e.target.value) }),
+      prefOptions: prefList.map(([, name]) => ({ name })),
+      prefValue: (prefList.find(([k]) => k === s.pref) || prefList[0])[1],
+      setPref: (e) => this.setState({ pref: (prefList.find(([, n]) => n === e.target.value) || prefList[0])[0] }),
+      statusOptions: statusList.map(([, name]) => ({ name })),
+      statusValue: (statusList.find(([k]) => k === s.status) || statusList[0])[1],
+      setStatus: (e) => this.setState({ status: (statusList.find(([, n]) => n === e.target.value) || statusList[0])[0] }),
+      searchValue: s.search, setSearch: (e) => this.setState({ search: e.target.value }),
+
+      summary: [
+        { ...summaryCard("as", "#83d4a4", "#07833e", "#e9f8ef"), iconClass: "ph-duotone ph-users-three",
+          label: t.asShort, value: String(asCount), unit: t.requests },
+        { ...summaryCard("ds", "#ff9d9d", "#e41622", "#fff0f0"), iconClass: "ph-duotone ph-user-circle",
+          label: t.dsShort, value: String(dsCount), unit: t.requests },
+        { ...summaryCard("w", "#9eb9ff", "#2445c1", "#eef2ff"), iconClass: "ph-duotone ph-hourglass-medium",
+          label: t.totalWaiting, value: String(asCount + dsCount), unit: t.requests },
+        { ...summaryCard("a", "#bb9cf7", "#6630d2", "#f3edff"), iconClass: "ph-duotone ph-calendar-check",
+          label: t.totalAppointments, value: "24", unit: t.apptsOnDate }
+      ],
+
+      gridHeadStyle: "display:flex;min-width:920px;border-bottom:1px solid #ece2f8",
+      gridBodyStyle: "display:flex;min-width:920px;position:relative;padding-top:10px",
+      hourMarks, staffColumns,
+
+      currentTitle: t.currentWaiting + " (" + fixedCount + ")",
+      rows, emptyRowsStyle: rows.length ? "display:none"
+        : "padding:26px;text-align:center;color:#6c5b7e;font-size:18px;font-weight:700;border-radius:18px;background:#faf6ff;border:1px dashed #ddcdf0",
+      showingLabel: t.showing + rows.length + t.of + fixedCount + t.ofFixed,
+
+      logic: [
+        { title: t.l1, lines: [
+          { strong: "AS = Any Staff ", text: t.l1a, iconClass: "", iconStyle: "display:none", strongStyle: "color:#078a42;font-weight:800" },
+          { strong: "DS = Designated Staff ", text: t.l1b, iconClass: "", iconStyle: "display:none", strongStyle: "color:#e11120;font-weight:800" }] },
+        { title: t.l2, lines: [{ strong: "", text: t.l2t, iconClass: "ph-duotone ph-hourglass-medium", iconStyle: "flex:none;font-size:22px;color:#2f55da", strongStyle: "display:none" }] },
+        { title: t.l3, lines: [{ strong: "", text: t.l3t, iconClass: "ph-duotone ph-calendar-check", iconStyle: "flex:none;font-size:22px;color:#2f55da", strongStyle: "display:none" }] },
+        { title: t.l4, lines: [{ strong: "", text: t.l4t, iconClass: "ph-duotone ph-clock", iconStyle: "flex:none;font-size:22px;color:#2f55da", strongStyle: "display:none" }] },
+        { title: t.l5, lines: [{ strong: "", text: t.l5t, iconClass: "ph-duotone ph-users-three", iconStyle: "flex:none;font-size:22px;color:#2f55da", strongStyle: "display:none" }] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

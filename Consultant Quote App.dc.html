@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E7E0F7;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#3A2F55}
+a{color:#7B68D9}a:hover{color:#6250C0}
+*{-webkit-tap-highlight-color:transparent}
+.sq::-webkit-scrollbar{width:0;height:0}
+input[type=range]{-webkit-appearance:none;appearance:none;background:transparent}
+input[type=range]::-webkit-slider-runnable-track{height:12px;border-radius:99px;background:#E7E0F7;box-shadow:inset 0 2px 4px rgba(96,76,166,.22)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-9px;border-radius:99px;background:#8B79E0;border:5px solid #fff;box-shadow:0 5px 0 rgba(110,91,196,.55),0 8px 16px rgba(96,76,166,.3)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px 44px;box-sizing:border-box">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div style="height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,#F3EEFF 0%,#EDE6FB 100%);overflow:hidden">
+
+<div style="flex-shrink:0;padding:52px 14px 12px;background:rgba(255,255,255,.78);box-shadow:0 6px 16px rgba(110,91,196,.09)">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:11px">
+<div style="display:flex;gap:3px;background:#EEE8FC;border-radius:13px;padding:3px;box-shadow:inset 0 2px 4px rgba(96,76,166,.13)">
+<sc-for list="{{ roles }}" as="r" hint-placeholder-count="2">
+<div onClick="{{ r.pick }}" style="{{ r.style }}">{{ r.label }}</div>
+</sc-for>
+</div>
+<div style="flex:1"></div>
+<div style="{{ roleNoteStyle }}">{{ roleNote }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:9px">
+<div onClick="{{ goBack }}" style="width:36px;height:36px;border-radius:13px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;box-shadow:0 4px 0 rgba(139,121,224,.22)" style-hover="background:#F6F2FF">
+<svg width="9" height="15" viewBox="0 0 9 15" fill="none"><path d="M7.5 1.5L2 7.5l5.5 6" stroke="#6E5BC4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2">{{ headerTitle }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#6B6385;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ headerSub }}</div>
+</div>
+<div onClick="{{ toQuote }}" style="{{ cartStyle }}">
+<svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M1 1.8h2.1l1.9 8.4h7.3l1.7-6H4.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="6" cy="13.4" r="1.3" fill="currentColor"></circle><circle cx="11.6" cy="13.4" r="1.3" fill="currentColor"></circle></svg>
+{{ cartCount }}
+</div>
+<div style="display:flex;gap:2px;background:#EEE8FC;border-radius:12px;padding:3px;flex-shrink:0;box-shadow:inset 0 2px 4px rgba(96,76,166,.13)">
+<sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+<div onClick="{{ l.pick }}" style="{{ l.style }}">{{ l.label }}</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div class="sq" style="flex:1;overflow-y:auto;overflow-x:hidden">
+
+<sc-if value="{{ isCustHome }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="margin:12px 14px 0;display:flex;align-items:center;gap:12px;border-radius:20px;padding:13px 15px;background:linear-gradient(135deg,#FFE0EB,#FFD3C2);box-shadow:0 5px 0 rgba(216,124,162,.22)">
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3;color:#8C3F5E">{{ t.referHead }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#8C4A62;margin-top:3px">{{ t.referSub }}</div>
+</div>
+<div style="flex-shrink:0;background:#fff;color:#B34F7C;border-radius:99px;padding:9px 14px;font-size:11px;font-weight:800;cursor:pointer">{{ t.inviteNow }}</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:19px;font-weight:700;margin-bottom:11px">{{ t.greetName }}</div>
+<div style="display:flex;gap:9px">
+<sc-for list="{{ wallet }}" as="w" hint-placeholder-count="3">
+<div style="flex:1;background:#fff;border-radius:19px;padding:13px 12px;box-shadow:0 5px 0 rgba(139,121,224,.16)">
+<div style="font-size:9.5px;font-weight:800;color:#6B6385;letter-spacing:.5px;text-transform:uppercase;line-height:1.2;height:22px;overflow:hidden">{{ w.k }}</div>
+<div style="font-size:16px;font-weight:800;font-variant-numeric:tabular-nums;margin-top:5px;color:#3A2F55">{{ w.v }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#fff;border-radius:24px;padding:15px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.12)">
+<div style="display:flex;align-items:center;gap:9px">
+<div style="{{ flashPillStyle }}">{{ t.flashSale }}</div>
+<div style="flex:1"></div>
+<sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
+<div style="text-align:center">
+<div style="min-width:26px;padding:4px 5px;border-radius:9px;background:#3A2F55;color:#fff;font-size:12px;font-weight:800;font-variant-numeric:tabular-nums">{{ c.v }}</div>
+<div style="font-size:7.5px;font-weight:800;color:#6B6385;letter-spacing:.5px;margin-top:3px">{{ c.k }}</div>
+</div>
+</sc-for>
+</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;margin:14px -15px 0;padding:0 15px 4px">
+<sc-for list="{{ flashItems }}" as="f" hint-placeholder-count="3">
+<div onClick="{{ f.open }}" style="flex:none;width:126px;cursor:pointer">
+<div style="{{ f.thumbStyle }}">
+<div style="position:absolute;left:7px;top:7px;padding:3px 7px;border-radius:8px;background:#E04A72;color:#fff;font-size:8.5px;font-weight:800;letter-spacing:.5px">{{ f.badge }}</div>
+<div style="{{ f.hintStyle }}">{{ f.hint }}</div>
+</div>
+<div style="font-size:11.5px;font-weight:700;line-height:1.3;margin-top:8px;height:30px;overflow:hidden">{{ f.name }}</div>
+<div style="display:flex;align-items:baseline;gap:5px;margin-top:3px">
+<div style="font-size:14.5px;font-weight:800;color:#E04A72;font-variant-numeric:tabular-nums">{{ f.price }}</div>
+<div style="font-size:10px;font-weight:600;color:#7C7399;text-decoration:line-through">{{ f.was }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div>
+<div style="padding:0 14px;font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">{{ t.ourCategories }}</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:6px 10px 0">
+<sc-for list="{{ catIcons }}" as="c" hint-placeholder-count="8">
+<div onClick="{{ c.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 2px;cursor:pointer">
+<div style="{{ c.iconStyle }}">{{ c.icon }}</div>
+<div style="{{ c.labelStyle }}">{{ c.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<sc-for list="{{ rails }}" as="r" hint-placeholder-count="3">
+<div>
+<div style="{{ r.headStyle }}">
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;color:#fff;line-height:1.2">{{ r.title }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#fff;margin-top:3px">{{ r.sub }}</div>
+</div>
+<div onClick="{{ r.shopAll }}" style="flex-shrink:0;background:rgba(255,255,255,.92);color:#4A3C70;border-radius:99px;padding:8px 13px;font-size:10.5px;font-weight:800;cursor:pointer">{{ t.shopAll }}</div>
+</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;padding:12px 14px 8px">
+<sc-for list="{{ r.items }}" as="p" hint-placeholder-count="3">
+<div style="{{ p.cardStyle }}">
+<div onClick="{{ p.open }}" style="{{ p.thumbStyle }}">
+<div style="{{ p.badgeStyle }}">{{ p.badge }}</div>
+<div style="{{ p.hintStyle }}">{{ p.hint }}</div>
+</div>
+<div style="padding:11px">
+<div onClick="{{ p.open }}" style="font-size:11.5px;font-weight:700;line-height:1.35;height:31px;overflow:hidden;cursor:pointer">{{ p.name }}</div>
+<div style="font-size:16px;font-weight:800;color:#E04A72;font-variant-numeric:tabular-nums;margin-top:6px">{{ p.price }}</div>
+<div style="{{ p.wasStyle }}">{{ p.was }}</div>
+<div onClick="{{ p.add }}" style="{{ p.btnStyle }}">{{ p.btn }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+
+<div>
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ t.hotSelling }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px">{{ t.hotSub }}</div>
+<div class="sq" style="display:flex;gap:16px;overflow-x:auto;margin-top:11px">
+<sc-for list="{{ hotTabs }}" as="x" hint-placeholder-count="3">
+<div onClick="{{ x.pick }}" style="{{ x.style }}">{{ x.label }}
+<div style="{{ x.barStyle }}"></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:13px 14px 0">
+<sc-for list="{{ hotItems }}" as="p" hint-placeholder-count="4">
+<div style="{{ p.cardStyle }}">
+<div onClick="{{ p.open }}" style="{{ p.thumbStyle }}">
+<div style="{{ p.badgeStyle }}">{{ p.badge }}</div>
+<div style="{{ p.hintStyle }}">{{ p.hint }}</div>
+</div>
+<div style="padding:11px 11px 12px">
+<div onClick="{{ p.open }}" style="font-size:12px;font-weight:700;line-height:1.35;height:32px;overflow:hidden;cursor:pointer">{{ p.name }}</div>
+<div style="display:flex;align-items:baseline;gap:5px;margin-top:6px;flex-wrap:wrap">
+<div style="{{ p.priceStyle }}">{{ p.price }}</div>
+<div style="{{ p.wasStyle }}">{{ p.was }}</div>
+</div>
+<div onClick="{{ p.add }}" style="{{ p.btnStyle }}">{{ p.btn }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="padding:0 14px;font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.vouchers }}</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;padding:0 14px 8px">
+<sc-for list="{{ vouchers }}" as="v" hint-placeholder-count="3">
+<div style="{{ v.cardStyle }}">
+<div style="width:62px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.22);padding:12px 0">
+<div style="font-size:19px;font-weight:800;color:#fff;line-height:1">{{ v.amount }}</div>
+<div style="font-size:8px;font-weight:800;color:#fff;letter-spacing:.6px;margin-top:3px">{{ v.unit }}</div>
+</div>
+<div style="flex:1;min-width:0;padding:12px">
+<div style="font-size:11.5px;font-weight:800;color:#fff;line-height:1.3">{{ v.title }}</div>
+<div style="font-size:9.5px;font-weight:600;color:#fff;margin-top:4px;line-height:1.35">{{ v.cond }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.ambassador }}</div>
+<div style="border-radius:22px;overflow:hidden;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.12)">
+<div style="height:126px;background:linear-gradient(145deg,#E2D6F7,#F2A9C6);display:flex;align-items:center;justify-content:center">
+<div style="{{ eventHintStyle }}">drop ambassador event photo</div>
+</div>
+<div style="background:#fff;padding:13px 14px">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ t.eventTitle }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:4px;line-height:1.4">{{ t.eventWhen }}</div>
+</div>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div style="padding:14px 0 26px;display:flex;flex-direction:column;gap:18px">
+
+<div style="padding:0 14px">
+<div style="border-radius:26px;overflow:hidden;position:relative;aspect-ratio:16/9;background:linear-gradient(145deg,#A594EC 0%,#C3A1E6 55%,#F2A9C6 100%);box-shadow:0 8px 0 rgba(122,98,196,.28),0 14px 28px rgba(110,91,196,.24)">
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+<div style="background:rgba(255,255,255,.92);border-radius:13px;padding:9px 14px;font-family:ui-monospace,Menlo,monospace;font-size:10px;font-weight:500;color:#6E5BC4">drop September campaign banner here</div>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;padding:26px 16px 13px;background:linear-gradient(180deg,rgba(60,40,110,0) 0%,rgba(60,40,110,.78) 70%)">
+<div style="font-size:9.5px;font-weight:800;letter-spacing:1.6px;color:#F5D98C">{{ t.thisMonth }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:19px;font-weight:700;color:#fff;line-height:1.2;margin-top:2px">{{ t.heroTitle }}</div>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#fff;border-radius:24px;padding:15px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.12)">
+<div style="display:flex;align-items:center;gap:9px">
+<div style="{{ flashPillStyle }}">{{ t.flashSale }}</div>
+<div style="flex:1"></div>
+<sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
+<div style="text-align:center">
+<div style="min-width:26px;padding:4px 5px;border-radius:9px;background:#3A2F55;color:#fff;font-size:12px;font-weight:800;font-variant-numeric:tabular-nums">{{ c.v }}</div>
+<div style="font-size:7.5px;font-weight:800;color:#6B6385;letter-spacing:.5px;margin-top:3px">{{ c.k }}</div>
+</div>
+</sc-for>
+</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;margin:14px -15px 0;padding:0 15px 4px">
+<sc-for list="{{ flashItems }}" as="f" hint-placeholder-count="3">
+<div onClick="{{ f.open }}" style="flex:none;width:126px;cursor:pointer">
+<div style="{{ f.thumbStyle }}">
+<div style="position:absolute;left:7px;top:7px;padding:3px 7px;border-radius:8px;background:#E04A72;color:#fff;font-size:8.5px;font-weight:800;letter-spacing:.5px">{{ f.badge }}</div>
+<div style="{{ f.hintStyle }}">{{ f.hint }}</div>
+</div>
+<div style="font-size:11.5px;font-weight:700;line-height:1.3;margin-top:8px;height:30px;overflow:hidden">{{ f.name }}</div>
+<div style="display:flex;align-items:baseline;gap:5px;margin-top:3px">
+<div style="font-size:14.5px;font-weight:800;color:#E04A72;font-variant-numeric:tabular-nums">{{ f.price }}</div>
+<div style="font-size:10px;font-weight:600;color:#7C7399;text-decoration:line-through">{{ f.was }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.pickPromo }}</div>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ promoList }}" as="p" hint-placeholder-count="4">
+<div onClick="{{ p.toggle }}" style="{{ p.cardStyle }}">
+<div style="{{ p.iconStyle }}">{{ p.icon }}</div>
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+<div style="{{ p.pillStyle }}">{{ p.kind }}</div>
+<div style="font-size:9.5px;font-weight:700;color:#7C7399">{{ p.window }}</div>
+</div>
+<div style="font-size:13px;font-weight:800;line-height:1.3;margin-top:5px">{{ p.title }}</div>
+<div style="font-size:11px;font-weight:500;color:#6B6385;line-height:1.4;margin-top:3px">{{ p.detail }}</div>
+</div>
+<div style="{{ p.checkStyle }}">{{ p.check }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ t.promoBundles }}</div>
+<div onClick="{{ toCatalog }}" style="font-size:11.5px;font-weight:800;color:#6E5BC4;cursor:pointer">{{ t.shopAll }}</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ promoBundles }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.open }}" style="{{ b.cardStyle }}">
+<div style="{{ b.thumbStyle }}">
+<div style="position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:9px;background:#E04A72;color:#fff;font-size:9px;font-weight:800">{{ b.badge }}</div>
+<div style="{{ b.hintStyle }}">{{ b.hint }}</div>
+</div>
+<div style="padding:11px 11px 12px">
+<div style="font-size:12px;font-weight:700;line-height:1.35;height:32px;overflow:hidden">{{ b.name }}</div>
+<div style="font-size:17px;font-weight:800;color:#E04A72;font-variant-numeric:tabular-nums;margin-top:6px">{{ b.price }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#7C7399;text-decoration:line-through">{{ b.was }}</div>
+<div style="{{ b.btnStyle }}">{{ b.btn }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.vouchers }}</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;margin:0 -14px;padding:0 14px 8px">
+<sc-for list="{{ vouchers }}" as="v" hint-placeholder-count="3">
+<div style="{{ v.cardStyle }}">
+<div style="width:62px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.22);padding:12px 0">
+<div style="font-size:19px;font-weight:800;color:#fff;line-height:1">{{ v.amount }}</div>
+<div style="font-size:8px;font-weight:800;color:#fff;letter-spacing:.6px;margin-top:3px">{{ v.unit }}</div>
+</div>
+<div style="flex:1;min-width:0;padding:12px 12px">
+<div style="font-size:11.5px;font-weight:800;color:#fff;line-height:1.3">{{ v.title }}</div>
+<div style="font-size:9.5px;font-weight:600;color:#fff;margin-top:4px;line-height:1.35">{{ v.cond }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isCatalog }}" hint-placeholder-val="{{ false }}">
+<div style="padding:12px 0 26px">
+
+<div style="padding:0 14px">
+<div style="display:flex;align-items:center;gap:9px;background:#fff;border-radius:99px;padding:11px 15px;box-shadow:inset 0 2px 5px rgba(96,76,166,.1),0 4px 0 rgba(139,121,224,.14)">
+<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.2" stroke="#7C7399" stroke-width="1.8"></circle><path d="M10.9 10.9L14.5 14.5" stroke="#7C7399" stroke-width="1.8" stroke-linecap="round"></path></svg>
+<div style="font-size:12.5px;font-weight:600;color:#7C7399">{{ t.searchHint }}</div>
+</div>
+</div>
+
+<div class="sq" style="display:flex;gap:16px;overflow-x:auto;padding:14px 14px 0;margin-bottom:2px">
+<sc-for list="{{ tabsRow }}" as="x" hint-placeholder-count="4">
+<div onClick="{{ x.pick }}" style="{{ x.style }}">{{ x.label }}
+<div style="{{ x.barStyle }}"></div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;align-items:stretch;gap:0;margin-top:10px">
+
+<div class="sq" style="flex:none;width:76px;background:#EFE9FB;padding:6px 0 20px;display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ railCats }}" as="r" hint-placeholder-count="8">
+<div onClick="{{ r.pick }}" style="{{ r.style }}">
+<div style="{{ r.markStyle }}"></div>
+{{ r.label }}
+</div>
+</sc-for>
+</div>
+
+<div style="flex:1;min-width:0;padding:12px 12px 20px">
+
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:11px">
+<div onClick="{{ toggleFitOnly }}" style="{{ fitOnlyStyle }}">{{ fitOnlyLabel }}</div>
+<div style="flex:1"></div>
+<div style="font-size:11px;font-weight:700;color:#6B6385">{{ resultCount }}</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px">
+<sc-for list="{{ subChips }}" as="c" hint-placeholder-count="4">
+<div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div>
+</sc-for>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{ catalogItems }}" as="p" hint-placeholder-count="6">
+<div style="{{ p.cardStyle }}">
+<div onClick="{{ p.open }}" style="{{ p.thumbStyle }}">
+<div style="{{ p.badgeStyle }}">{{ p.badge }}</div>
+<div style="{{ p.hintStyle }}">{{ p.hint }}</div>
+</div>
+<div style="padding:10px 10px 11px">
+<div onClick="{{ p.open }}" style="font-size:11.5px;font-weight:700;line-height:1.35;height:31px;overflow:hidden;cursor:pointer">{{ p.name }}</div>
+<div style="display:flex;align-items:baseline;gap:5px;margin-top:6px;flex-wrap:wrap">
+<div style="{{ p.priceStyle }}">{{ p.price }}</div>
+<div style="{{ p.wasStyle }}">{{ p.was }}</div>
+</div>
+<div onClick="{{ p.add }}" style="{{ p.btnStyle }}">{{ p.btn }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div style="{{ emptyStyle }}">{{ t.noMatch }}</div>
+
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 14px 26px;display:flex;flex-direction:column;gap:17px">
+
+<div style="border-radius:26px;padding:19px;background:linear-gradient(145deg,#5A48A8 0%,#6E5BC4 55%,#94456A 100%);position:relative;overflow:hidden;box-shadow:0 8px 0 rgba(122,98,196,.3),0 14px 28px rgba(110,91,196,.24)">
+<div style="position:absolute;right:-38px;top:-38px;width:140px;height:140px;border-radius:99px;background:rgba(255,255,255,.16)"></div>
+<div style="position:relative;display:flex;align-items:center;gap:13px">
+<div style="width:52px;height:52px;border-radius:99px;background:rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:800;flex-shrink:0">MT</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:20px;font-weight:700;color:#fff">Michelle Tan</div>
+<div style="font-size:11px;font-weight:700;color:#fff;margin-top:1px">{{ t.memberSince }} 2024 · Silver</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:22px;font-weight:800;color:#F5D98C;line-height:1;font-variant-numeric:tabular-nums">1,240</div>
+<div style="font-size:9px;font-weight:800;color:#fff;letter-spacing:.7px;text-transform:uppercase;margin-top:3px">{{ t.points }}</div>
+</div>
+</div>
+<div style="position:relative;height:8px;border-radius:99px;background:rgba(255,255,255,.26);margin-top:16px;overflow:hidden">
+<div style="height:100%;width:62%;border-radius:99px;background:#F5D98C"></div>
+</div>
+<div style="position:relative;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.88);margin-top:7px">RM 760 {{ t.toNextTier }}</div>
+</div>
+
+<div style="{{ activeCardStyle }}">
+<div style="display:flex;align-items:center;gap:12px">
+<div style="width:44px;height:44px;border-radius:15px;background:linear-gradient(145deg,#F3E4C4,#E6CE9A);flex-shrink:0"></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#6B6385">{{ t.activePkg }}</div>
+<div style="font-size:13.5px;font-weight:800;line-height:1.3;margin-top:3px">{{ activePkgName }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:21px;font-weight:800;color:#6E5BC4;line-height:1;font-variant-numeric:tabular-nums">9</div>
+<div style="font-size:9px;font-weight:700;color:#6B6385;margin-top:3px">{{ t.sessionsLeft }}</div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ t.myVouchers }}</div>
+<div style="font-size:11.5px;font-weight:800;color:#6E5BC4">{{ t.viewAll }}</div>
+</div>
+<div class="sq" style="display:flex;gap:11px;overflow-x:auto;margin:0 -14px;padding:0 14px 8px">
+<sc-for list="{{ myVouchers }}" as="v" hint-placeholder-count="2">
+<div style="{{ v.cardStyle }}">
+<div style="width:62px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.22);padding:12px 0">
+<div style="font-size:19px;font-weight:800;color:#fff;line-height:1">{{ v.amount }}</div>
+<div style="font-size:8px;font-weight:800;color:#fff;letter-spacing:.6px;margin-top:3px">{{ v.unit }}</div>
+</div>
+<div style="flex:1;min-width:0;padding:11px 12px">
+<div style="font-size:11.5px;font-weight:800;color:#fff;line-height:1.3">{{ v.title }}</div>
+<div style="font-size:9.5px;font-weight:600;color:#fff;margin-top:3px">{{ v.cond }}</div>
+<div style="display:inline-block;margin-top:7px;background:#fff;color:#4A3C70;border-radius:99px;padding:5px 12px;font-size:10px;font-weight:800;cursor:pointer">{{ t.redeem }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.upcoming }}</div>
+<div style="display:flex;align-items:center;gap:13px;background:#fff;border-radius:22px;padding:14px;box-shadow:0 6px 0 rgba(139,121,224,.16),0 10px 22px rgba(110,91,196,.12)">
+<div style="width:52px;flex-shrink:0;border-radius:16px;background:#EFE7FF;padding:9px 0;text-align:center">
+<div style="font-size:19px;font-weight:800;color:#6E5BC4;line-height:1;font-variant-numeric:tabular-nums">24</div>
+<div style="font-size:9px;font-weight:800;color:#6B6385;letter-spacing:.6px;margin-top:3px">SEP</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ upcomingName }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px">2:30 PM · Bukit Bintang</div>
+</div>
+<div style="flex-shrink:0;background:#F3EFFD;color:#6E5BC4;border-radius:99px;padding:9px 13px;font-size:11px;font-weight:800;cursor:pointer">{{ t.reschedule }}</div>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:11px">{{ t.history }}</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ historyRows }}" as="h" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:12px 14px;box-shadow:0 5px 0 rgba(139,121,224,.14)">
+<div style="{{ h.dotStyle }}"></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800;line-height:1.3">{{ h.name }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#6B6385;margin-top:2px">{{ h.date }}</div>
+</div>
+<div style="font-size:12px;font-weight:800;color:#6B6385;font-variant-numeric:tabular-nums">{{ h.price }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isIntake }}" hint-placeholder-val="{{ false }}">
+<div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:17px">
+
+<div style="background:#fff;border-radius:26px;padding:17px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.13)">
+<div style="display:flex;align-items:center;gap:13px">
+<div style="width:52px;height:52px;border-radius:99px;background:linear-gradient(145deg,#A594EC,#F2A9C6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:800;flex-shrink:0;box-shadow:0 4px 0 rgba(122,98,196,.35)">MT</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:18px;font-weight:700">Michelle Tan</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;margin-top:1px">{{ t.memberSince }} 2024 · Silver</div>
+</div>
+<div onClick="{{ toggleFirstTimer }}" style="{{ firstTimerPill }}">{{ t.firstTimer }}</div>
+</div>
+<div onClick="{{ toRecord }}" style="{{ recordEntryStyle }}">
+<div style="width:34px;height:34px;border-radius:12px;background:#EEE8FC;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">◑</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800">{{ rec.entryTitle }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#6B6385;margin-top:2px">{{ rec.entrySub }}</div>
+</div>
+<div style="font-size:15px;font-weight:800;color:#8B79E0">›</div>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700;margin-bottom:11px">{{ t.concerns }}</div>
+<div style="display:flex;flex-wrap:wrap;gap:9px">
+<sc-for list="{{ concernChips }}" as="c" hint-placeholder-count="6">
+<div onClick="{{ c.toggle }}" style="{{ c.style }}">{{ c.label }}</div>
+</sc-for>
+</div>
+</div>
+
+<div style="background:#fff;border-radius:28px;padding:19px 17px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.13)">
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700">{{ t.budgetInMind }}</div>
+<div style="font-size:27px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums;color:#6E5BC4">{{ budgetLabel }}</div>
+</div>
+<input type="range" min="300" max="6000" step="100" value="{{ budget }}" onChange="{{ setBudget }}" style="width:100%;margin:18px 0 6px;height:30px">
+<div style="display:flex;gap:8px;margin-top:8px">
+<sc-for list="{{ budgetChips }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</div>
+</sc-for>
+</div>
+<div style="font-size:11.5px;font-weight:500;color:#6B6385;line-height:1.5;margin-top:15px">{{ t.budgetHint }}</div>
+</div>
+
+<div onClick="{{ toCatalog }}" style="background:#8B79E0;color:#fff;border-radius:99px;padding:16px;text-align:center;font-size:15.5px;font-weight:800;cursor:pointer;box-shadow:0 7px 0 #6E5BC4,0 12px 22px rgba(110,91,196,.3)" style-hover="background:#7E6CD8">{{ t.continue }}</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isRecord }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 0 26px;display:flex;flex-direction:column;gap:17px">
+
+<div class="sq" style="display:flex;gap:8px;overflow-x:auto;padding:0 14px 4px">
+<sc-for list="{{ visitChips }}" as="v" hint-placeholder-count="4">
+<div onClick="{{ v.pick }}" style="{{ v.style }}">{{ v.label }}</div>
+</sc-for>
+</div>
+
+<div style="padding:0 14px">
+<div style="background:#fff;border-radius:26px;padding:17px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.13)">
+<div style="display:flex;align-items:flex-start;gap:11px">
+<div style="flex:1;min-width:0">
+<div style="{{ visit.statusStyle }}">{{ visit.status }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:17px;font-weight:700;margin-top:9px;line-height:1.25">{{ visit.treatment }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#6B6385;margin-top:4px">{{ visit.when }}</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid #EFEAF9">
+<sc-for list="{{ visit.people }}" as="p" hint-placeholder-count="4">
+<div>
+<div style="font-size:9.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#7C7399">{{ p.role }}</div>
+<div style="font-size:12.5px;font-weight:800;margin-top:4px;line-height:1.3">{{ p.name }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="display:flex;align-items:center;gap:9px;margin-bottom:11px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700">{{ rec.photos }}</div>
+<div style="{{ photoReqStyle }}">{{ photoReq }}</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:11px">
+<sc-for list="{{ photoSlots }}" as="p" hint-placeholder-count="2">
+<div>
+<div onClick="{{ p.toggle }}" style="{{ p.slotStyle }}">
+<div style="{{ p.hintStyle }}">{{ p.hint }}</div>
+<div style="{{ p.tickStyle }}">✓</div>
+</div>
+<div style="display:flex;align-items:baseline;gap:6px;margin-top:8px">
+<div style="font-size:12px;font-weight:800">{{ p.label }}</div>
+<div style="font-size:10px;font-weight:700;color:{{ p.stampColor }}">{{ p.stamp }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;align-items:flex-start;gap:9px;margin-top:11px;padding:12px 13px;border-radius:16px;background:#FFEFF5;box-shadow:inset 0 2px 5px rgba(179,79,124,.1)">
+<div style="font-size:13px;flex-shrink:0;line-height:1.35">⚠</div>
+<div style="flex:1;min-width:0;font-size:11px;font-weight:800;color:#96355C;line-height:1.5">{{ rec.photoPenalty }}</div>
+</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.5;margin-top:11px">{{ rec.photosHint }}</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="border-radius:26px;padding:17px;background:linear-gradient(145deg,#3A2F55,#4A3C6E);box-shadow:0 7px 0 rgba(30,22,52,.35),0 12px 24px rgba(58,47,85,.25)">
+<div style="display:flex;align-items:center;gap:9px">
+<div style="width:28px;height:28px;border-radius:10px;background:rgba(245,217,140,.18);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">🔒</div>
+<div style="flex:1;min-width:0">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700;color:#fff">{{ rec.internal }}</div>
+<div style="font-size:9.5px;font-weight:800;letter-spacing:.4px;color:#F5D98C;margin-top:2px">{{ rec.internalWho }}</div>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:14px">
+<sc-for list="{{ behaviourTags }}" as="b" hint-placeholder-count="5">
+<div onClick="{{ b.toggle }}" style="{{ b.style }}">{{ b.label }}</div>
+</sc-for>
+</div>
+<div style="margin-top:13px;border-radius:17px;background:rgba(255,255,255,.08);padding:14px">
+<div style="font-size:9.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#B8ACD8">{{ rec.consultantNote }}</div>
+<div style="font-size:12px;font-weight:500;color:#EDE8FA;line-height:1.55;margin-top:7px">{{ visit.note }}</div>
+<div style="font-size:10px;font-weight:700;color:#9C8FC4;margin-top:9px">{{ visit.noteBy }}</div>
+</div>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ rec.proposeNext }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ rec.proposeNextHint }}</div>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ proposals }}" as="p" hint-placeholder-count="3">
+<div style="{{ p.cardStyle }}">
+<div style="display:flex;align-items:flex-start;gap:11px">
+<div style="{{ p.thumbStyle }}"></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ p.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.45;margin-top:4px">{{ p.why }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ p.price }}</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #EFEAF9">
+<div style="flex:1;min-width:0;font-size:10.5px;font-weight:700;color:#7C7399">{{ rec.carry }}</div>
+<div onClick="{{ p.flip }}" style="{{ p.carryStyle }}">{{ p.carryLabel }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;margin-bottom:4px">{{ rec.proposedBefore }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.5;margin-bottom:12px">{{ rec.proposedBeforeHint }}</div>
+<div style="background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.12)">
+<sc-for list="{{ pastProposals }}" as="h" hint-placeholder-count="4">
+<div style="padding:14px 15px;border-bottom:1px solid #F1EDFB">
+<div style="display:flex;align-items:center;gap:9px">
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800;line-height:1.3">{{ h.name }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#7C7399;margin-top:3px">{{ h.meta }}</div>
+</div>
+<div style="{{ h.outcomeStyle }}">{{ h.outcome }}</div>
+</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;line-height:1.45;margin-top:8px">{{ h.reason }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="padding:0 14px">
+<div onClick="{{ saveRecord }}" style="{{ saveRecordStyle }}">{{ saveRecordLabel }}</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+<div style="padding:0 0 26px">
+
+<div style="{{ detail.heroStyle }}">
+<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+<div style="background:rgba(255,255,255,.9);border-radius:13px;padding:9px 14px;font-family:ui-monospace,Menlo,monospace;font-size:10px;font-weight:500;color:#6E5BC4">{{ detail.photoHint }}</div>
+</div>
+</div>
+
+<div style="padding:17px 16px 0">
+<div style="{{ detail.tagStyle }}">{{ detail.tag }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:25px;font-weight:700;letter-spacing:-.3px;margin-top:12px">{{ detail.name }}</div>
+<div style="font-size:12.5px;font-weight:500;color:#6B6385;margin-top:5px;line-height:1.5">{{ detail.bestFor }}</div>
+
+<div style="display:flex;align-items:flex-end;gap:14px;margin-top:17px;padding:17px;background:#fff;border-radius:26px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.13)">
+<div>
+<div style="font-size:10px;font-weight:800;color:#6B6385;letter-spacing:.8px;text-transform:uppercase">{{ t.packagePrice }}</div>
+<div style="font-size:31px;font-weight:800;letter-spacing:-1.3px;font-variant-numeric:tabular-nums;margin-top:5px;line-height:1">{{ detail.priceLabel }}</div>
+</div>
+<div style="flex:1"></div>
+<div style="text-align:right">
+<div style="font-size:10px;font-weight:800;color:#6B6385;letter-spacing:.8px;text-transform:uppercase">{{ t.instalment }}</div>
+<div style="font-size:16px;font-weight:800;margin-top:7px;font-variant-numeric:tabular-nums;color:#6E5BC4">{{ detail.instalLabel }}</div>
+</div>
+</div>
+
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700;margin:21px 0 12px">{{ t.included }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ detail.includes }}" as="i" hint-placeholder-count="4">
+<div style="display:flex;gap:11px;align-items:flex-start">
+<div style="width:21px;height:21px;border-radius:99px;background:#CDEBD9;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 0 rgba(63,107,74,.22)">
+<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1.2 4L3.7 6.5 8.8 1.3" stroke="#2F6B47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div style="font-size:12.5px;font-weight:600;line-height:1.5">{{ i }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700;margin:23px 0 12px">{{ t.offersApply }}</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ detail.offers }}" as="o" hint-placeholder-count="3">
+<div style="{{ o.rowStyle }}">
+<div style="{{ o.pillStyle }}">{{ o.kind }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:12.5px;font-weight:800;line-height:1.3">{{ o.title }}</div>
+<div style="font-size:11px;font-weight:500;color:#6B6385;margin-top:2px">{{ o.detail }}</div>
+</div>
+<div style="font-size:12px;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums">{{ o.value }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:flex;gap:11px;margin-top:23px">
+<div onClick="{{ toCompare }}" style="{{ compareBtnStyle }}" style-hover="background:#F7F3FF">{{ t.compare }}</div>
+<div onClick="{{ addToQuote }}" style="flex:1.4;background:#8B79E0;color:#fff;border-radius:99px;padding:15px;text-align:center;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 7px 0 #6E5BC4,0 12px 20px rgba(110,91,196,.28)" style-hover="background:#7E6CD8">{{ addToQuoteLabel }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCompare }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 0 26px">
+<div style="padding:0 16px 13px;font-size:12px;font-weight:600;color:#6B6385;line-height:1.5">{{ t.compareHint }}</div>
+<div class="sq" style="display:flex;gap:12px;overflow-x:auto;padding:2px 16px 14px">
+<sc-for list="{{ compareCols }}" as="c" hint-placeholder-count="3">
+<div style="{{ c.colStyle }}">
+<div style="{{ c.tagStyle }}">{{ c.tag }}</div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:17px;font-weight:700;margin-top:10px;line-height:1.2;min-height:40px">{{ c.name }}</div>
+<div style="font-size:24px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums;margin-top:7px">{{ c.priceLabel }}</div>
+<div style="height:2px;border-radius:99px;background:#EEE8FC;margin:14px 0"></div>
+<sc-for list="{{ c.rows }}" as="r" hint-placeholder-count="5">
+<div style="margin-bottom:12px">
+<div style="font-size:9.5px;font-weight:800;color:#6B6385;letter-spacing:.6px;text-transform:uppercase">{{ r.k }}</div>
+<div style="{{ r.vStyle }}">{{ r.v }}</div>
+</div>
+</sc-for>
+<div onClick="{{ c.choose }}" style="{{ c.btnStyle }}">{{ t.choose }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isQuote }}" hint-placeholder-val="{{ false }}">
+<div style="padding:14px 16px 26px;display:flex;flex-direction:column;gap:15px">
+
+<div style="{{ budgetCardStyle }}">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#6B6385">{{ t.budget }} {{ budgetLabel }}</div>
+<div style="{{ fitBadgeStyle }}">{{ fitLabel }}</div>
+</div>
+<div style="display:flex;align-items:flex-end;gap:10px;margin-top:11px">
+<div style="font-size:38px;font-weight:800;letter-spacing:-1.8px;font-variant-numeric:tabular-nums;line-height:1">{{ totalLabel }}</div>
+<div style="font-size:12px;font-weight:700;color:#6B6385;padding-bottom:6px">{{ t.total }}</div>
+</div>
+<div style="height:14px;border-radius:99px;background:#EEE8FC;margin-top:15px;overflow:hidden;box-shadow:inset 0 2px 5px rgba(96,76,166,.18)">
+<div style="{{ barStyle }}"></div>
+</div>
+<div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11.5px;font-weight:800">
+<div style="color:#2F6B47">{{ savingsLabel }}</div>
+<div style="color:#6B6385">{{ gapLabel }}</div>
+</div>
+</div>
+
+<sc-if value="{{ showTrim }}" hint-placeholder-val="{{ false }}">
+<div style="background:#FFEFF5;border-radius:26px;padding:17px;box-shadow:0 6px 0 rgba(216,124,162,.2),0 10px 22px rgba(196,104,142,.16)">
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:16px;font-weight:700;color:#B34F7C">{{ t.trimToFit }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#A2667F;line-height:1.45;margin-top:4px">{{ trimHint }}</div>
+<div style="display:flex;flex-direction:column;gap:9px;margin-top:13px">
+<sc-for list="{{ trims }}" as="s" hint-placeholder-count="2">
+<div onClick="{{ s.apply }}" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;padding:13px;cursor:pointer;box-shadow:0 4px 0 rgba(216,124,162,.18)" style-hover="background:#FFF7FA">
+<div style="flex:1;min-width:0;font-size:12.5px;font-weight:700;line-height:1.35">{{ s.label }}</div>
+<div style="font-size:12px;font-weight:800;color:#2F6B47;white-space:nowrap;font-variant-numeric:tabular-nums">{{ s.saves }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<div style="background:#fff;border-radius:26px;overflow:hidden;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.13)">
+<div style="padding:15px 16px 11px;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#6B6385">{{ linesHeading }}</div>
+<sc-for list="{{ lines }}" as="l" hint-placeholder-count="3">
+<div style="padding:13px 16px;border-top:1.5px solid #F2EDFC;display:flex;align-items:center;gap:11px">
+<div style="flex:1;min-width:0">
+<div style="font-size:13px;font-weight:800;line-height:1.3">{{ l.name }}</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px">{{ l.meta }}</div>
+</div>
+<sc-if value="{{ l.stepper }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:3px;background:#EEE8FC;border-radius:99px;padding:3px;box-shadow:inset 0 2px 4px rgba(96,76,166,.12)">
+<div onClick="{{ l.dec }}" style="width:28px;height:28px;border-radius:99px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#6E5BC4;cursor:pointer;line-height:1;box-shadow:0 2px 0 rgba(139,121,224,.28)">−</div>
+<div style="min-width:19px;text-align:center;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums">{{ l.qty }}</div>
+<div onClick="{{ l.inc }}" style="width:28px;height:28px;border-radius:99px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#6E5BC4;cursor:pointer;line-height:1;box-shadow:0 2px 0 rgba(139,121,224,.28)">+</div>
+</div>
+</sc-if>
+<div style="{{ l.priceStyle }}">{{ l.price }}</div>
+</div>
+</sc-for>
+<div style="padding:14px 16px 16px;border-top:1.5px solid #F2EDFC;background:#FBF9FF;display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ totalsRows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+<div style="{{ r.kStyle }}">{{ r.k }}</div>
+<div style="{{ r.vStyle }}">{{ r.v }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div>
+<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:15px;font-weight:700;margin-bottom:11px">{{ t.addons }}</div>
+<div style="display:flex;flex-direction:column;gap:9px">
+<sc-for list="{{ addonRows }}" as="a" hint-placeholder-count="4">
+<div onClick="{{ a.toggle }}" style="{{ a.rowStyle }}">
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">
+<div style="font-size:12.5px;font-weight:800;line-height:1.3">{{ a.name }}</div>
+<div style="{{ a.pillStyle }}">{{ a.pill }}</div>
+</div>
+<div style="font-size:11px;font-weight:600;color:#6B6385;margin-top:3px">{{ a.meta }}</div>
+</div>
+<div style="{{ a.btnStyle }}">{{ a.btn }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;gap:11px">
+<div onClick="{{ toCompare }}" style="{{ compareBtnStyle }}" style-hover="background:#F7F3FF">{{ t.compare }}</div>
+<div onClick="{{ sendQuote }}" style="{{ sendStyle }}">{{ sendLabel }}</div>
+</div>
+
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ showQuoteBar }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ toQuote }}" style="{{ quoteBarStyle }}">
+<div style="flex:1;min-width:0">
+<div style="font-size:9.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.72)">{{ quoteBarLabel }}</div>
+<div style="display:flex;align-items:baseline;gap:7px;margin-top:3px">
+<div style="font-size:21px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;line-height:1">{{ totalLabel }}</div>
+<div style="font-size:10.5px;font-weight:700;color:rgba(255,255,255,.8)">{{ gapLabel }}</div>
+</div>
+<div style="height:6px;border-radius:99px;background:rgba(255,255,255,.28);margin-top:7px;overflow:hidden">
+<div style="{{ quoteBarFillStyle }}"></div>
+</div>
+</div>
+<div style="flex-shrink:0;background:#fff;color:#4A3C70;border-radius:99px;padding:11px 16px;font-size:12.5px;font-weight:800">{{ t.openQuote }}</div>
+</div>
+</sc-if>
+
+<div style="flex-shrink:0;display:flex;background:rgba(255,255,255,.9);box-shadow:0 -6px 18px rgba(110,91,196,.12);padding:10px 6px 32px">
+<sc-for list="{{ tabs }}" as="b" hint-placeholder-count="5">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">
+<div style="{{ b.dotStyle }}"></div>
+{{ b.label }}
+</div>
+</sc-for>
+</div>
+
+</div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:940}}">
+const money = (n) => "RM " + Math.round(n).toLocaleString("en-US");
+const L3 = (e, z, m) => ({ en: e, zh: z, ms: m });
+
+const STR = {
+  en: { thisMonth: "SEPTEMBER PROMO", heroTitle: "TikBeli × Vesson — member month", flashSale: "FLASH SALE",
+    pickPromo: "Pick the promos to apply", promoBundles: "Promo bundles", shopAll: "Shop all ›", vouchers: "Vouchers",
+    searchHint: "Search treatment, package or product", memberSince: "Member since", firstTimer: "1st trial",
+    concerns: "What is she here for?", budgetInMind: "Budget in mind", continue: "Browse catalogue",
+    packagePrice: "Package price", instalment: "6-mth instalment", included: "What's included", offersApply: "Offers that apply",
+    compare: "Compare", addToQuote: "Add to quote", compareHint: "Swipe across, then tap Choose to load that tier into the quote.",
+    choose: "Choose", budget: "Budget", total: "quoted total", trimToFit: "Trim to fit her budget", quoteLines: "Quote",
+    addons: "Add-ons & PWP", subtotal: "List price", promoOff: "Monthly promo", pwpSaving: "PWP saving", foc: "FOC voucher value",
+    payable: "Payable today", monthly: "or 6 × ", sendQuote: "Send quote", sent: "Quote sent", add: "Add", added: "Added ✓",
+    fits: "Fits budget", over: "Over budget", left: "left", overBy: "over", saves: "Saves ", applied: "Applied", apply: "Apply",
+    budgetHint: "Tier first, then trim. Pick the tier she reacts to and shave line items until the number works.",
+    perSession: "/session", sessions: " sessions", fitOnly: "Within budget only", results: " items",
+    tabHome: "Promo", tabCatalog: "Catalogue", tabCompare: "Compare", tabQuote: "Quote", tabCust: "Customer",
+    tabsRow: ["All", "Treatments", "Packages", "Bundles", "Products"],
+    cats: ["Facial", "AI Body", "Slimming", "Hair removal", "Cosmetic", "Skincare", "1st trial", "Vouchers"],
+    rFacial: "Facials", rBody: "Body sessions", rRetail: "Retail included", rPerVisit: "Per visit", rInstal: "6-mth plan",
+    roleCust: "Customer", roleStaff: "Staff login", noteCust: "Browsing as customer",
+    noteStaff: "Sarah · Bukit Bintang", openQuote: "Open quote", quoteRunning: "Quote so far",
+    addToCart: "Add to cart", inCart: "In cart ✓", tabCart: "Cart", viewCart: "Your cart",
+    bookNow: "Book this treatment", cartEmpty: "Nothing saved yet. Tap Add on any treatment.", cartTotal: "Cart total",
+    tabAcct: "Account", myVouchers: "My vouchers", upcoming: "Upcoming visit", history: "Past treatments",
+    sessionsLeft: "sessions left", toNextTier: "to Gold", reschedule: "Reschedule", redeem: "Redeem",
+    memberCard: "Member card", points: "points", activePkg: "Active package", viewAll: "View all ›",
+    referHead: "Earn up to 80% OFF vouchers", referSub: "Invite a friend, you both get credit", inviteNow: "Invite now ›",
+    greetName: "Good morning, Michelle", wBalance: "Wallet balance", wStamps: "Visit stamps", wPoints: "Reward points",
+    ourCategories: "Our categories", hotSelling: "Hot selling treatments", hotSub: "What our members book most this month",
+    ambassador: "Our ambassador", eventTitle: "Meet Dato' Sri Vida — skin clinic day",
+    eventWhen: "Saturday, 3 Oct 2026 · 11AM–3PM · Cititel Mid Valley",
+    railGlow: "GLOWING BUNDLES", railGlowSub: "Members save up to 22%",
+    railBody: "BODY & SLIMMING BUNDLES", railBodySub: "AI Body Master courses",
+    railHome: "HOME CARE SETS", railHomeSub: "Keep results between visits", allCat: "All", noMatch: "Nothing in this category yet." },
+  zh: { thisMonth: "九月促销", heroTitle: "TikBeli × Vesson 会员月", flashSale: "限时抢购",
+    pickPromo: "选择要套用的促销", promoBundles: "促销组合", shopAll: "查看全部 ›", vouchers: "优惠券",
+    searchHint: "搜索疗程、套餐或产品", memberSince: "会员自", firstTimer: "首次体验",
+    concerns: "顾客的需求是什么？", budgetInMind: "预算范围", continue: "浏览目录",
+    packagePrice: "套餐价格", instalment: "6期分期", included: "套餐内容", offersApply: "可用优惠",
+    compare: "比较", addToQuote: "加入报价", compareHint: "左右滑动，点「选择」载入报价。",
+    choose: "选择", budget: "预算", total: "报价总额", trimToFit: "调整以符合预算", quoteLines: "报价明细",
+    addons: "加购与 PWP", subtotal: "原价", promoOff: "月度促销", pwpSaving: "PWP 优惠", foc: "赠券价值",
+    payable: "今日应付", monthly: "或 6 × ", sendQuote: "发送报价", sent: "已发送", add: "加入", added: "已加入 ✓",
+    fits: "符合预算", over: "超出预算", left: "剩余", overBy: "超出", saves: "省 ", applied: "已套用", apply: "套用",
+    budgetHint: "先选等级，再逐项删减，直到总额合预算。",
+    perSession: "/次", sessions: " 次", fitOnly: "只看预算内", results: " 项",
+    tabHome: "促销", tabCatalog: "目录", tabCompare: "比较", tabQuote: "报价", tabCust: "顾客",
+    tabsRow: ["全部", "单次疗程", "套餐", "组合", "产品"],
+    cats: ["面部护理", "AI 塑形", "纤体", "脱毛", "美容", "护肤品", "首次体验", "优惠券"],
+    rFacial: "面部护理", rBody: "身体疗程", rRetail: "含产品", rPerVisit: "每次", rInstal: "6期分期",
+    roleCust: "顾客", roleStaff: "员工登录", noteCust: "顾客浏览模式",
+    noteStaff: "Sarah · 武吉免登", openQuote: "打开报价", quoteRunning: "当前报价",
+    addToCart: "加入购物车", inCart: "已加入 ✓", tabCart: "购物车", viewCart: "我的购物车",
+    bookNow: "立即预约", cartEmpty: "购物车是空的，点任意疗程加入。", cartTotal: "购物车总额",
+    tabAcct: "我的", myVouchers: "我的优惠券", upcoming: "即将到访", history: "历史疗程",
+    sessionsLeft: "次数剩余", toNextTier: "升金卡", reschedule: "改期", redeem: "使用",
+    memberCard: "会员卡", points: "积分", activePkg: "当前套餐", viewAll: "查看全部 ›",
+    referHead: "推荐好友，最高享8折券", referSub: "双方都获得奖励金", inviteNow: "立即邀请 ›",
+    greetName: "早安，Michelle", wBalance: "钱包余额", wStamps: "到访印章", wPoints: "奖励积分",
+    ourCategories: "全部分类", hotSelling: "热销疗程", hotSub: "本月会员预约最多",
+    ambassador: "品牌大使", eventTitle: "与品牌大使见面 — 肌肤诊所日",
+    eventWhen: "2026年10月3日 星期六 · 11AM–3PM · Cititel Mid Valley",
+    railGlow: "焕采组合", railGlowSub: "会员最高省 22%",
+    railBody: "身体与纤体组合", railBodySub: "AI Body Master 疗程",
+    railHome: "居家护理套装", railHomeSub: "护理之间维持效果", allCat: "全部", noMatch: "此分类暂无项目。" },
+  ms: { thisMonth: "PROMOSI SEPTEMBER", heroTitle: "TikBeli × Vesson — bulan ahli", flashSale: "JUALAN KILAT",
+    pickPromo: "Pilih promosi untuk digunakan", promoBundles: "Pakej promosi", shopAll: "Lihat semua ›", vouchers: "Vaucar",
+    searchHint: "Cari rawatan, pakej atau produk", memberSince: "Ahli sejak", firstTimer: "Cubaan 1st",
+    concerns: "Apa keperluan beliau?", budgetInMind: "Bajet dalam fikiran", continue: "Lihat katalog",
+    packagePrice: "Harga pakej", instalment: "Ansuran 6 bulan", included: "Termasuk", offersApply: "Tawaran berkenaan",
+    compare: "Banding", addToQuote: "Tambah ke sebut harga", compareHint: "Leret ke sisi, tekan Pilih untuk masukkan.",
+    choose: "Pilih", budget: "Bajet", total: "jumlah sebut harga", trimToFit: "Kurangkan ikut bajet", quoteLines: "Sebut harga",
+    addons: "Tambahan & PWP", subtotal: "Harga senarai", promoOff: "Promosi bulanan", pwpSaving: "Jimat PWP", foc: "Nilai vaucar FOC",
+    payable: "Bayar hari ini", monthly: "atau 6 × ", sendQuote: "Hantar", sent: "Telah dihantar", add: "Tambah", added: "Ditambah ✓",
+    fits: "Muat bajet", over: "Lebih bajet", left: "baki", overBy: "lebih", saves: "Jimat ", applied: "Digunakan", apply: "Guna",
+    budgetHint: "Pilih tahap dahulu, kemudian kurangkan item sampai jumlah muat bajet.",
+    perSession: "/sesi", sessions: " sesi", fitOnly: "Dalam bajet sahaja", results: " item",
+    tabHome: "Promosi", tabCatalog: "Katalog", tabCompare: "Banding", tabQuote: "Sebut harga", tabCust: "Pelanggan",
+    tabsRow: ["Semua", "Rawatan", "Pakej", "Bundle", "Produk"],
+    cats: ["Facial", "AI Body", "Pelangsingan", "Buang bulu", "Kosmetik", "Penjagaan kulit", "Cubaan 1st", "Vaucar"],
+    rFacial: "Facial", rBody: "Sesi badan", rRetail: "Produk disertakan", rPerVisit: "Per sesi", rInstal: "Pelan 6 bulan",
+    roleCust: "Pelanggan", roleStaff: "Log masuk staf", noteCust: "Melayari sebagai pelanggan",
+    noteStaff: "Sarah · Bukit Bintang", openQuote: "Buka sebut harga", quoteRunning: "Sebut harga setakat ini",
+    addToCart: "Masuk troli", inCart: "Dalam troli ✓", tabCart: "Troli", viewCart: "Troli anda",
+    bookNow: "Tempah rawatan ini", cartEmpty: "Belum ada item. Tekan Tambah pada mana-mana rawatan.", cartTotal: "Jumlah troli",
+    tabAcct: "Akaun", myVouchers: "Vaucar saya", upcoming: "Lawatan akan datang", history: "Rawatan lepas",
+    sessionsLeft: "sesi berbaki", toNextTier: "ke Gold", reschedule: "Jadual semula", redeem: "Tebus",
+    memberCard: "Kad ahli", points: "mata", activePkg: "Pakej aktif", viewAll: "Lihat semua ›",
+    referHead: "Dapat vaucar sehingga 80% OFF", referSub: "Jemput kawan, dua-dua dapat kredit", inviteNow: "Jemput ›",
+    greetName: "Selamat pagi, Michelle", wBalance: "Baki dompet", wStamps: "Cop lawatan", wPoints: "Mata ganjaran",
+    ourCategories: "Kategori kami", hotSelling: "Rawatan paling laris", hotSub: "Paling banyak ditempah bulan ini",
+    ambassador: "Duta kami", eventTitle: "Jumpa duta kami — hari klinik kulit",
+    eventWhen: "Sabtu, 3 Okt 2026 · 11AM–3PM · Cititel Mid Valley",
+    railGlow: "BUNDLE GLOWING", railGlowSub: "Ahli jimat sehingga 22%",
+    railBody: "BUNDLE BADAN & PELANGSINGAN", railBodySub: "Kursus AI Body Master",
+    railHome: "SET PENJAGAAN RUMAH", railHomeSub: "Kekalkan hasil antara lawatan", allCat: "Semua", noMatch: "Tiada item dalam kategori ini." }
+};
+
+// tone = thumbnail gradient
+const CAT = [
+  { id: "trial38", type: "treatment", cat: "trial", price: 38, list: 128, sessions: 1, tone: "#CDEBD9,#A9DCC6", badge: "1ST",
+    name: L3("First Trial Deep Cleanse Facial", "首次体验深层清洁护理", "Facial Pembersihan Cubaan 1st"),
+    meta: L3("60 min · one per customer", "60分钟 · 每人限一次", "60 min · satu per pelanggan"),
+    best: L3("Walk-in curiosity. Convert her on the bed, not on the price list.", "首次到店顾客，先体验再谈套餐。", "Pelanggan baharu. Yakinkan melalui pengalaman."),
+    inc: L3(["60-min deep cleansing facial", "Skin analysis and consultation", "Take-home 3-day sample kit"],
+            ["60分钟深层清洁护理", "肌肤分析与咨询", "3日体验装"],
+            ["Facial pembersihan 60 minit", "Analisis kulit dan konsultasi", "Kit sampel 3 hari"]) },
+  { id: "hifu", type: "treatment", cat: "cosmetic", price: 308, list: 588, sessions: 1, tone: "#E2D6F7,#C9B6EE", badge: "HOT",
+    name: L3("5V Nano Soft Hifu Face Lift", "5V 纳米软提拉", "Angkat Muka 5V Nano Hifu"),
+    meta: L3("Single session · V-line lifting", "单次 · V脸提拉", "Sesi tunggal · angkat V-line"),
+    best: L3("Instant lift for an event. Best sold as a 4-session course.", "即时提拉，适合重要场合，建议4次疗程。", "Angkat segera untuk majlis. Terbaik sebagai kursus 4 sesi."),
+    inc: L3(["1 × 5V nano hifu session", "Cooling mask after treatment", "Lifting massage 15 min"],
+            ["1次 5V 纳米超声提拉", "术后冰敷面膜", "15分钟提拉按摩"],
+            ["1 × sesi hifu nano 5V", "Topeng penyejuk selepas rawatan", "Urutan angkat 15 minit"]) },
+  { id: "pearl", type: "treatment", cat: "cosmetic", price: 200, list: 380, sessions: 1, tone: "#F7DCE8,#EEBCD3", badge: "-47%",
+    name: L3("Black Pearl Signature Laser", "黑珍珠激光焕肤", "Laser Signature Black Pearl"),
+    meta: L3("Pigmentation · 45 min", "色斑 · 45分钟", "Pigmentasi · 45 min"),
+    best: L3("For pigmentation and dull tone. Visible after three rounds.", "针对色斑暗沉，三次见效。", "Untuk pigmentasi dan kulit kusam. Nampak selepas tiga kali."),
+    inc: L3(["1 × black pearl laser pass", "Post-laser soothing ampoule", "SPF 50 take-home sachet"],
+            ["1次黑珍珠激光", "术后舒缓安瓶", "SPF50 试用装"],
+            ["1 × laser black pearl", "Ampul penenang selepas laser", "Sachet SPF 50"]) },
+  { id: "bodyai", type: "treatment", cat: "body", price: 180, list: 260, sessions: 1, tone: "#D6E9F7,#B5D5EF", badge: "",
+    name: L3("AI Body Master Contour Session", "AI Body Master 塑形", "Sesi Kontur AI Body Master"),
+    meta: L3("Single session · 50 min", "单次 · 50分钟", "Sesi tunggal · 50 min"),
+    best: L3("Machine-led contouring. Sells well bundled with facials.", "仪器塑形，搭配面部套餐效果佳。", "Kontur berasaskan mesin. Laris digabung dengan facial."),
+    inc: L3(["50-min AI Body Master session", "Body composition scan", "Post-session hydration drink"],
+            ["50分钟 AI Body Master", "身体成分扫描", "术后补水饮品"],
+            ["Sesi AI Body Master 50 minit", "Imbasan komposisi badan", "Minuman hidrasi"]) },
+  { id: "starter", type: "package", cat: "facial", price: 888, list: 1080, sessions: 6, facials: 6, body: 0, retail: "10% off", tier: true, tone: "#E3DDF6,#CFC4EE", badge: "SILVER",
+    name: L3("Glow Starter — 6 facial course", "焕采入门 6次套餐", "Glow Starter — 6 sesi facial"),
+    meta: L3("6 sessions · RM 148/visit", "6次 · 每次 RM148", "6 sesi · RM148/sesi"),
+    best: L3("Her first real commitment. Six visits is enough to show results.", "首个正式套餐，六次护理见效果。", "Komitmen pertama. Enam sesi cukup untuk hasil."),
+    inc: L3(["6 × signature hydrating facial", "Monthly skin log with photos", "10% off retail skincare", "Free reschedule anytime"],
+            ["6次经典保湿护理", "每月拍照记录肌况", "护肤品9折", "免费改期"],
+            ["6 × facial penghidratan", "Log kulit bulanan dengan foto", "10% diskaun penjagaan kulit", "Jadual semula percuma"]) },
+  { id: "signature", type: "package", cat: "facial", price: 2388, list: 2650, sessions: 16, facials: 12, body: 4, retail: "Starter set", tier: true, tone: "#F3E4C4,#E6CE9A", badge: "GOLD",
+    name: L3("Glow Signature — facial + body", "焕采尊享 面部+身体", "Glow Signature — facial + badan"),
+    meta: L3("16 sessions · best seller", "16次 · 最热门", "16 sesi · paling laris"),
+    best: L3("Where most customers land. Facial plus body at one price.", "最热门选择：面部加身体一次搞定。", "Pilihan paling popular. Facial dan badan dalam satu harga."),
+    inc: L3(["12 × signature facial", "4 × AI Body Master session", "Full skincare starter set", "Priority weekend slots", "Upgrade to Gold membership"],
+            ["12次经典护理", "4次 AI Body Master", "完整护肤套装", "周末优先预约", "升级金卡会员"],
+            ["12 × facial signature", "4 × sesi AI Body Master", "Set penjagaan kulit penuh", "Slot hujung minggu keutamaan", "Naik taraf ahli Gold"]) },
+  { id: "transform", type: "bundle", cat: "body", price: 4888, list: 5600, sessions: 32, facials: 20, body: 10, retail: "Full regime ×2", tier: true, tone: "#F7D9E6,#EBB3CE", badge: "PLATINUM",
+    name: L3("Total Transform — 12 month bundle", "全效蜕变 12个月组合", "Total Transform — bundle 12 bulan"),
+    meta: L3("32 sessions · VIP tier", "32次 · VIP 等级", "32 sesi · tahap VIP"),
+    best: L3("Wedding, post-natal, big event. Twelve months of everything.", "婚礼、产后、重要场合：一年全套。", "Majlis besar atau selepas bersalin. Setahun penuh."),
+    inc: L3(["20 × signature facial", "10 × AI Body Master session", "2 × cosmetic touch-up treatment", "Home care regime, restocked twice", "Dedicated consultant on WhatsApp"],
+            ["20次经典护理", "10次 AI Body Master", "2次美容微调疗程", "居家护理两次补货", "专属顾问 WhatsApp"],
+            ["20 × facial signature", "10 × sesi AI Body Master", "2 × rawatan kosmetik", "Regim penjagaan rumah, 2 kali isi semula", "Perunding khas di WhatsApp"]) },
+  { id: "slim8", type: "package", cat: "slimming", price: 1680, list: 2080, sessions: 8, facials: 0, body: 8, retail: "—", tier: true, tone: "#D9EFE4,#B4DCC8", badge: "-19%",
+    name: L3("Slim Sculpt 8 — body course", "纤体雕塑 8次疗程", "Slim Sculpt 8 — kursus badan"),
+    meta: L3("8 body sessions · RM 210/visit", "8次身体疗程 · 每次 RM210", "8 sesi badan · RM210/sesi"),
+    best: L3("Post-natal and waistline goals. Pairs with home care.", "产后与腰腹目标，搭配居家护理。", "Selepas bersalin dan ukur lilit pinggang."),
+    inc: L3(["8 × slimming sculpt session", "Body measurement every 2 weeks", "Diet plan consultation"],
+            ["8次纤体雕塑", "每两周量身", "饮食计划咨询"],
+            ["8 × sesi pelangsingan", "Ukuran badan setiap 2 minggu", "Konsultasi pelan diet"]) },
+  { id: "ipl6", type: "package", cat: "hair", price: 990, list: 1440, sessions: 6, facials: 0, body: 0, retail: "—", tier: true, tone: "#E8E1F8,#D2C6F1", badge: "-31%",
+    name: L3("IPL Hair Removal — 6 areas", "IPL 脱毛 6个部位", "Buang Bulu IPL — 6 kawasan"),
+    meta: L3("6 sessions · underarm + legs", "6次 · 腋下+腿部", "6 sesi · ketiak + kaki"),
+    best: L3("Easy yes for first-timers who fear needles.", "怕针的顾客最容易接受。", "Mudah diterima pelanggan baharu."),
+    inc: L3(["6 × IPL session, 2 areas each", "Cooling gel and aftercare", "Free patch test"],
+            ["6次 IPL，每次2个部位", "冰凝胶与术后护理", "免费斑贴测试"],
+            ["6 × sesi IPL, 2 kawasan", "Gel penyejuk dan penjagaan", "Ujian tampalan percuma"]) },
+  { id: "serum", type: "product", cat: "skincare", price: 199, list: 199, pwp: 59, tone: "#F7E6D6,#EED0B4", badge: "PWP",
+    name: L3("Hydra Boost Serum 30ml", "水润精华 30ml", "Serum Hydra Boost 30ml"),
+    meta: L3("PWP RM 59 with any package", "购套餐加购价 RM59", "PWP RM59 dengan pakej") },
+  { id: "amp", type: "product", cat: "skincare", price: 320, list: 320, pwp: 149, tone: "#EDE2F8,#D8C7F0", badge: "PWP",
+    name: L3("Collagen Ampoule Set (7 vials)", "胶原安瓶套装 7支", "Set Ampul Kolagen (7 vial)"),
+    meta: L3("PWP RM 149 with any package", "购套餐加购价 RM149", "PWP RM149 dengan pakej") },
+  { id: "led", type: "product", cat: "cosmetic", price: 450, list: 450, pwp: 299, tone: "#DCE9F7,#BAD2EE", badge: "PWP",
+    name: L3("Take-home LED Therapy Mask", "家用 LED 光疗面罩", "Topeng Terapi LED Rumah"),
+    meta: L3("PWP RM 299 with any package", "购套餐加购价 RM299", "PWP RM299 dengan pakej") }
+];
+
+const SUB = {
+  trial38: L3("Facial trial", "面部体验", "Cubaan facial"),
+  hifu: L3("Lifting", "提拉紧致", "Angkat muka"),
+  pearl: L3("Laser", "激光焕肤", "Laser"),
+  led: L3("Home device", "家用仪器", "Alat rumah"),
+  bodyai: L3("Contouring", "身体塑形", "Kontur"),
+  starter: L3("Hydrating", "保湿护理", "Penghidratan"),
+  signature: L3("Signature", "经典套餐", "Signature"),
+  transform: L3("Total care", "全效护理", "Rawatan penuh"),
+  slim8: L3("Sculpting", "纤体雕塑", "Pelangsingan"),
+  ipl6: L3("IPL", "IPL 脱毛", "IPL"),
+  serum: L3("Serum", "精华", "Serum"),
+  amp: L3("Ampoule", "安瓶", "Ampul")
+};
+
+// customer-facing descriptions — staff see the `best` sales note instead
+const DESC = {
+  trial38: L3("A full 60-minute deep cleanse with skin analysis, so you know exactly what your skin needs before committing to anything.",
+    "60分钟深层清洁配合肌肤分析，先了解肌况，再决定后续护理。",
+    "Pembersihan mendalam 60 minit dengan analisis kulit, supaya anda tahu keperluan kulit sebelum memilih pakej."),
+  hifu: L3("Non-surgical lifting along the jaw and cheeks. Most people see definition the same day, with results building over a course.",
+    "非手术提拉，紧致下颚与双颊。当天即见轮廓，疗程累积效果更佳。",
+    "Angkat tanpa pembedahan pada rahang dan pipi. Kebanyakan nampak hasil hari yang sama."),
+  pearl: L3("Gentle laser for pigmentation, sun spots and uneven tone. Comes with a soothing ampoule and SPF to protect the result.",
+    "温和激光改善色斑与肤色不均，附舒缓安瓶与防晒。",
+    "Laser lembut untuk pigmentasi dan warna kulit tidak sekata, dengan ampul penenang dan SPF."),
+  bodyai: L3("A 50-minute guided contouring session with a body composition scan before and after, so progress is measured not guessed.",
+    "50分钟智能塑形，前后进行身体成分扫描，进度看得见。",
+    "Sesi kontur 50 minit dengan imbasan komposisi badan sebelum dan selepas."),
+  starter: L3("Six hydrating facials across three months, with a photo skin log each visit so you can see the change.",
+    "三个月内六次保湿护理，每次拍照记录，变化一目了然。",
+    "Enam facial penghidratan dalam tiga bulan, dengan log kulit berfoto setiap lawatan."),
+  signature: L3("Twelve facials and four body sessions in one plan, with a full skincare set and priority weekend booking.",
+    "12次面部护理加4次身体疗程，附完整护肤套装与周末优先预约。",
+    "Dua belas facial dan empat sesi badan, dengan set penjagaan kulit penuh dan tempahan keutamaan."),
+  transform: L3("A full year of facial, body and cosmetic care with home products restocked twice and a consultant you can message directly.",
+    "为期一年的面部、身体与美容护理，居家产品两次补货，专属顾问随时联系。",
+    "Setahun penuh rawatan muka, badan dan kosmetik dengan produk rumah diisi semula dua kali."),
+  slim8: L3("Eight sculpting sessions with measurements every two weeks and a diet plan consultation included.",
+    "八次纤体雕塑，每两周量身，包含饮食计划咨询。",
+    "Lapan sesi pelangsingan dengan ukuran setiap dua minggu dan konsultasi pelan diet."),
+  ipl6: L3("Six IPL sessions covering two areas each, with cooling gel and aftercare. A free patch test comes first.",
+    "六次 IPL，每次两个部位，含冰凝胶与术后护理，先做免费斑贴测试。",
+    "Enam sesi IPL, dua kawasan setiap satu, dengan gel penyejuk dan ujian tampalan percuma.")
+};
+
+const PROMOS = [
+  { id: "sept10", kind: "PROMO", icon: "％", tone: "#EFE7FF|#6E5BC4",
+    title: L3("September 10% off", "九月全单9折", "10% diskaun September"),
+    detail: L3("Any package RM 2,388 and above", "凡购 RM2,388 以上套餐", "Pakej RM2,388 ke atas"),
+    window: L3("1–30 Sept", "9月1–30日", "1–30 Sept") },
+  { id: "pwp", kind: "PWP", icon: "＋", tone: "#FFE8F1|#B34F7C",
+    title: L3("Purchase with purchase — up to 70% off retail", "加购价 — 产品低至3折", "Beli dengan beli — sehingga 70% off"),
+    detail: L3("Unlocks when a package RM 888+ is in the quote", "报价含 RM888 以上套餐即解锁", "Dibuka bila pakej RM888+ dalam sebut harga"),
+    window: L3("Max 2 items", "每单限2件", "Maks 2 item") },
+  { id: "foc200", kind: "FOC", icon: "★", tone: "#DFF1E6|#2F6B47",
+    title: L3("RM 200 treatment voucher free", "免费 RM200 疗程券", "Vaucar rawatan RM200 percuma"),
+    detail: L3("When payable total reaches RM 2,000", "应付总额满 RM2,000", "Bila jumlah bayar cecah RM2,000"),
+    window: L3("90-day validity", "90天有效", "Sah 90 hari") },
+  { id: "refer", kind: "REFER", icon: "♡", tone: "#FDF0D6|#8A6B2A",
+    title: L3("Bring a friend — RM 100 credit each", "带朋友 — 双方各得 RM100", "Bawa kawan — kredit RM100"),
+    detail: L3("Applied on her next visit, not this quote", "下次到访使用，不计入本报价", "Digunakan lawatan seterusnya"),
+    window: L3("Both must be members", "双方须为会员", "Kedua-dua perlu ahli") }
+];
+
+const CONCERNS = {
+  en: ["Dullness", "Acne & pores", "Pigmentation", "Firming", "Body contouring", "Bridal prep"],
+  zh: ["暗沉", "痘痘毛孔", "色斑", "紧致", "身体塑形", "婚前护理"],
+  ms: ["Kulit kusam", "Jerawat & pori", "Pigmentasi", "Kekencangan", "Kontur badan", "Persiapan pengantin"]
+};
+
+const CLAY = "background:#fff;border-radius:24px;box-shadow:0 6px 0 rgba(139,121,224,.16),0 10px 22px rgba(110,91,196,.12)";
+const thumb = (tone, h) => "position:relative;height:" + h + "px;background:linear-gradient(145deg," + tone + ");border-radius:18px;cursor:pointer;display:flex;align-items:center;justify-content:center";
+const HINT = "padding:5px 9px;border-radius:9px;background:#fff;font-family:ui-monospace,Menlo,monospace;font-size:8.5px;font-weight:500;color:#6E5BC4;letter-spacing:.2px";
+
+class Component extends DCLogic {
+  state = { recVisit: 0, recSaved: false,
+    photos: { v0: { before: true, after: false }, v1: { before: true, after: true }, v2: { before: true, after: true } },
+    behav: { v0: { price: true, whatsapp: true, staff: true }, v1: { staff: true, soft: true }, v2: { price: true, soft: true } },
+    carry: { v0: { hifu: true }, v1: { serum: true }, v2: {} },
+    role: "customer", screen: "home", lang: "en", budget: 2000, tier: "signature", detail: "signature",
+    addons: { serum: 1 }, tab: 0, hotTab: 0, cat: null, sub: null, fitOnly: false, promos: { sept10: true, pwp: true, foc200: true },
+    concerns: { 0: true, 3: true }, firstTimer: false, sent: false };
+
+  L() { return STR[this.state.lang]; }
+  item(id) { return CAT.find(x => x.id === id) || CAT[5]; }
+  go(s) { this.setState({ screen: s, sent: false }); }
+  setRole(r) {
+    const staffOnly = ["intake", "compare", "record"], custOnly = ["account"];
+    if (r === "staff" && custOnly.indexOf(this.state.screen) >= 0) return this.setState({ role: r, screen: "home", sent: false });
+    const screen = r === "customer" && staffOnly.indexOf(this.state.screen) >= 0 ? "home" : this.state.screen;
+    this.setState({ role: r, screen, sent: false });
+  }
+
+  calc() {
+    const s = this.state, tier = this.item(s.tier);
+    const addons = Object.entries(s.addons).filter(([, q]) => q > 0);
+    const pwpOn = s.promos.pwp && tier.price >= 888;
+    let listTotal = tier.list, pwpSaving = 0, payable = tier.price;
+    addons.forEach(([id, q]) => {
+      const a = this.item(id), unit = pwpOn && a.pwp ? a.pwp : a.price;
+      listTotal += a.list * q; payable += unit * q; pwpSaving += (a.list - unit) * q;
+    });
+    const promoOff = s.promos.sept10 && tier.price >= 2388 ? Math.round(tier.price * 0.1) : 0;
+    payable -= promoOff;
+    const foc = s.promos.foc200 && payable >= 2000 ? 200 : 0;
+    return { tier, addons, listTotal, pwpSaving, promoOff, foc, payable, saved: listTotal - payable + foc, pwpOn };
+  }
+
+  trimOptions(c) {
+    const lang = this.state.lang, out = [];
+    const tiers = CAT.filter(x => x.tier);
+    const verb = { en: "Drop ", zh: "移除 ", ms: "Buang " }[lang];
+    const down = { en: "Step down to ", zh: "降级至 ", ms: "Turun ke " }[lang];
+    const split = { en: "Keep it, split into 6 payments of ", zh: "保留套餐，分6期每期 ", ms: "Kekalkan, 6 ansuran " }[lang];
+    const sorted = c.addons.map(([id, q]) => ({ a: this.item(id), q }))
+      .sort((x, y) => (y.a.pwp || y.a.price) * y.q - (x.a.pwp || x.a.price) * x.q);
+    if (sorted.length) {
+      const top = sorted[0], unit = c.pwpOn && top.a.pwp ? top.a.pwp : top.a.price;
+      out.push({ label: verb + top.a.name[lang], saves: "−" + money(unit * top.q),
+        apply: () => this.setState(s => ({ addons: { ...s.addons, [top.a.id]: 0 } })) });
+    }
+    const lower = tiers.filter(x => x.price < c.tier.price).sort((a, b) => b.price - a.price)[0];
+    if (lower) out.push({ label: down + lower.name[lang], saves: "−" + money(c.tier.price - lower.price),
+      apply: () => this.setState({ tier: lower.id, detail: lower.id }) });
+    out.push({ label: split + money(c.payable / 6), saves: money(c.payable / 6) + "/mo",
+      apply: () => this.setState({ budget: Math.min(6000, Math.ceil(c.payable / 100) * 100) }) });
+    return out;
+  }
+
+  renderVals() {
+    const t = this.L(), lang = this.state.lang, s = this.state, c = this.calc();
+    const staff = s.role === "staff";
+    const over = staff && c.payable > s.budget;
+    const pct = Math.max(4, Math.min(100, (c.payable / s.budget) * 100));
+    const pill = (tone) => { const [bg, fg] = tone.split("|");
+      return "flex-shrink:0;padding:4px 10px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:.7px;background:" + bg + ";color:" + fg; };
+    const chip = (on) => "padding:9px 14px;border-radius:99px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+      (on ? "background:#8B79E0;color:#fff;box-shadow:0 4px 0 #6E5BC4" : "background:#fff;color:#6E5BC4;box-shadow:0 4px 0 rgba(139,121,224,.2)");
+
+    const catKeys = ["facial", "body", "slimming", "hair", "cosmetic", "skincare", "trial"];
+    const catIdx = s.cat ? catKeys.indexOf(s.cat) : -1;
+    const activeCat = catIdx >= 0 ? t.cats[catIdx] : null;
+
+    const titles = { home: "TIKBEVI", catalog: t.tabCatalog, intake: "Michelle Tan", account: t.tabAcct,
+      record: L3("Treatment record", "疗程纪录", "Rekod rawatan")[lang],
+      detail: this.item(s.detail).name[lang], compare: t.tabCompare, quote: t.tabQuote };
+    const subs = { record: "Michelle Tan · TB-0098231",
+      home: t.thisMonth, catalog: staff ? t.budget + " " + money(s.budget) : (activeCat || t.tabsRow[s.tab]), intake: t.concerns,
+      detail: this.item(s.detail).meta ? this.item(s.detail).meta[lang] : "", compare: t.budget + " " + money(s.budget),
+      account: t.memberCard,
+      quote: staff ? money(c.payable) + " · " + (over ? t.over : t.fits) : t.cartTotal + " " + money(c.payable) };
+    titles.quote = staff ? t.tabQuote : t.viewCart;
+
+    const dt = this.item(s.detail);
+    const offers = [];
+    if (s.promos.sept10 && dt.price >= 2388) offers.push({ kind: "PROMO", tone: "#EFE7FF|#6E5BC4",
+      title: PROMOS[0].title[lang], detail: PROMOS[0].detail[lang], value: "−" + money(dt.price * 0.1) });
+    if (s.promos.pwp && dt.price >= 888) offers.push({ kind: "PWP", tone: "#FFE8F1|#B34F7C",
+      title: L3("Hydra serum at RM 59", "水润精华加购 RM59", "Serum pada RM 59")[lang],
+      detail: L3("Normally RM 199", "原价 RM199", "Harga biasa RM 199")[lang], value: t.saves + money(140) });
+    if (s.promos.foc200 && dt.price >= 2000) offers.push({ kind: "FOC", tone: "#DFF1E6|#2F6B47",
+      title: PROMOS[2].title[lang], detail: PROMOS[2].detail[lang], value: "FOC" });
+    if (!offers.length) offers.push({ kind: "INFO", tone: "#EEE8FC|#6E5BC4",
+      title: L3("No stacked promo at this price", "此价位无叠加促销", "Tiada promosi bertindih")[lang],
+      detail: L3("Add a package RM 888+ to unlock PWP", "加购 RM888 以上套餐解锁 PWP", "Tambah pakej RM888+ untuk PWP")[lang], value: "—" });
+
+    const lines = [{ name: c.tier.name[lang], meta: (c.tier.badge || "") + " · " + c.tier.sessions + t.sessions,
+      price: money(c.tier.price), stepper: false,
+      priceStyle: "font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;min-width:64px;text-align:right" }];
+    c.addons.forEach(([id, q]) => {
+      const a = this.item(id), unit = c.pwpOn && a.pwp ? a.pwp : a.price;
+      lines.push({ name: a.name[lang], meta: (c.pwpOn && a.pwp ? "PWP " : "") + money(unit) + " × " + q,
+        price: money(unit * q), stepper: true, qty: q,
+        inc: () => this.setState(st => ({ addons: { ...st.addons, [id]: q + 1 } })),
+        dec: () => this.setState(st => ({ addons: { ...st.addons, [id]: Math.max(0, q - 1) } })),
+        priceStyle: "font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;min-width:64px;text-align:right" });
+    });
+    if (c.foc) lines.push({ name: PROMOS[2].title[lang], meta: "FOC", price: "FREE", stepper: false,
+      priceStyle: "font-size:12px;font-weight:800;color:#2F6B47;min-width:64px;text-align:right" });
+
+    const kS = "font-size:11.5px;font-weight:700;color:#6B6385";
+    const vS = "font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums";
+    const totalsRows = [{ k: t.subtotal, v: money(c.listTotal), kStyle: kS, vStyle: vS }];
+    if (c.promoOff) totalsRows.push({ k: t.promoOff, v: "−" + money(c.promoOff), kStyle: kS, vStyle: vS + ";color:#2F6B47" });
+    if (c.pwpSaving) totalsRows.push({ k: t.pwpSaving, v: "−" + money(c.pwpSaving), kStyle: kS, vStyle: vS + ";color:#2F6B47" });
+    if (c.foc) totalsRows.push({ k: t.foc, v: money(c.foc), kStyle: kS, vStyle: vS + ";color:#2F6B47" });
+    totalsRows.push({ k: t.payable, v: money(c.payable), kStyle: "font-size:13.5px;font-weight:800",
+      vStyle: "font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.6px" });
+    totalsRows.push({ k: t.monthly + money(c.payable / 6), v: "", kStyle: "font-size:11px;font-weight:700;color:#6B6385", vStyle: "" });
+
+    const mkCard = (x, width) => {
+      const inQuote = x.tier ? s.tier === x.id : (s.addons[x.id] || 0) > 0;
+      const showWas = x.list > x.price || !!x.pwp;
+      return { name: x.name[lang], meta: x.meta ? x.meta[lang] : "",
+        price: money(x.pwp && c.pwpOn ? x.pwp : x.price),
+        was: showWas ? money(x.list) : "",
+        priceStyle: "font-size:16.5px;font-weight:800;font-variant-numeric:tabular-nums;color:" + (showWas ? "#E04A72" : "#3A2F55"),
+        wasStyle: showWas ? "font-size:10.5px;font-weight:600;color:#7C7399;text-decoration:line-through" : "display:none",
+        badge: x.badge,
+        badgeStyle: x.badge ? "position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:9px;background:#E04A72;color:#fff;font-size:9px;font-weight:800;letter-spacing:.5px" : "display:none",
+        hint: "drop " + x.id + " photo", hintStyle: HINT,
+        cardStyle: CLAY + ";overflow:hidden" + (width ? ";flex:none;width:" + width + "px" : "") +
+          (inQuote ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+        thumbStyle: thumb(x.tone, 108) + ";border-radius:0",
+        open: () => this.setState({ detail: x.id, screen: "detail" }),
+        btn: inQuote ? (staff ? t.added : t.inCart) : (staff ? t.add : t.addToCart),
+        btnStyle: "margin-top:9px;border-radius:99px;padding:9px;text-align:center;font-size:11.5px;font-weight:800;cursor:pointer;" +
+          (inQuote ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 4px 0 rgba(47,107,71,.3)" : "background:#8B79E0;color:#fff;box-shadow:0 4px 0 #6E5BC4"),
+        add: (e) => { e.stopPropagation();
+          if (x.tier) this.setState({ tier: x.id, detail: x.id });
+          else this.setState(st => ({ addons: { ...st.addons, [x.id]: (st.addons[x.id] || 0) > 0 ? 0 : 1 } })); } };
+    };
+    const byId = (ids, w) => ids.map(id => mkCard(this.item(id), w));
+
+    const typeFilter = ["all", "treatment", "package", "bundle", "product"][s.tab];
+    const inScope = CAT
+      .filter(x => typeFilter === "all" || x.type === typeFilter)
+      .filter(x => !s.cat || x.cat === s.cat);
+    const subLabels = [];
+    inScope.forEach(x => { const l = SUB[x.id] && SUB[x.id][lang]; if (l && subLabels.indexOf(l) < 0) subLabels.push(l); });
+    const catalogItems = inScope
+      .filter(x => !s.sub || (SUB[x.id] && SUB[x.id][lang] === s.sub))
+      .filter(x => !s.fitOnly || x.price <= s.budget)
+      .map(x => {
+        const inQuote = x.tier ? s.tier === x.id : (s.addons[x.id] || 0) > 0;
+        const showWas = x.list > x.price || !!x.pwp;
+        return { name: x.name[lang], meta: x.meta ? x.meta[lang] : "",
+          price: money(x.pwp && c.pwpOn ? x.pwp : x.price),
+          was: showWas ? money(x.list) : "",
+          priceStyle: "font-size:16.5px;font-weight:800;font-variant-numeric:tabular-nums;color:" + (showWas ? "#E04A72" : "#3A2F55"),
+          wasStyle: showWas ? "font-size:10.5px;font-weight:600;color:#7C7399;text-decoration:line-through" : "display:none",
+          badge: x.badge, badgeStyle: x.badge ? "position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:9px;background:#E04A72;color:#fff;font-size:9px;font-weight:800;letter-spacing:.5px" : "display:none",
+          cardStyle: CLAY + ";overflow:hidden" + (inQuote ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+          thumbStyle: thumb(x.tone, 108) + ";border-radius:0",
+          hint: "drop " + x.id + " photo", hintStyle: HINT,
+          open: () => this.setState({ detail: x.id, screen: "detail" }),
+          btn: inQuote ? (staff ? t.added : t.inCart) : (staff ? t.add : t.addToCart),
+          btnStyle: "margin-top:9px;border-radius:99px;padding:9px;text-align:center;font-size:11.5px;font-weight:800;cursor:pointer;" +
+            (inQuote ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 4px 0 rgba(47,107,71,.3)" : "background:#8B79E0;color:#fff;box-shadow:0 4px 0 #6E5BC4"),
+          add: (e) => { e.stopPropagation();
+            if (x.tier) this.setState({ tier: x.id, detail: x.id });
+            else this.setState(st => ({ addons: { ...st.addons, [x.id]: (st.addons[x.id] || 0) > 0 ? 0 : 1 } })); } };
+      });
+
+    const rec = {
+      entryTitle: L3("Treatment record", "疗程纪录", "Rekod rawatan")[lang],
+      entrySub: L3("Photos, remarks, what we proposed", "照片、备注、已提议项目", "Foto, catatan, cadangan lepas")[lang],
+      photos: L3("Before & after", "疗程前后", "Sebelum & selepas")[lang],
+      photosHint: L3("The consultant on duty uploads both photos before the visit can be closed. Customer sees these; internal remarks below stay hidden.",
+        "当值顾问须在结束此次到访前上传两张照片。客户可见照片；以下内部备注不对客户显示。",
+        "Perunding bertugas memuat naik kedua-dua foto sebelum lawatan ditutup. Pelanggan nampak foto; catatan dalaman di bawah kekal tersembunyi.")[lang],
+      photoPenalty: L3("RM 30 off your KPI bonus for every visit closed without both photos. No waiver.",
+        "每有一次到访未上传完整照片，KPI 奖金扣 RM 30，不可豁免。",
+        "RM 30 ditolak daripada bonus KPI anda bagi setiap lawatan tanpa kedua-dua foto. Tiada pengecualian.")[lang],
+      internal: L3("Internal remarks", "内部备注", "Catatan dalaman")[lang],
+      internalWho: L3("HQ AND CONSULTANT ONLY · NEVER SHOWN TO CUSTOMER", "仅总部与顾问可见 · 不对客户显示", "IBU PEJABAT & PERUNDING SAHAJA · TIDAK DIPAPAR")[lang],
+      consultantNote: L3("Behaviour note this visit", "此次到访行为备注", "Catatan tingkah laku lawatan ini")[lang],
+      proposeNext: L3("What to sell next", "下次建议销售", "Apa untuk dijual seterusnya")[lang],
+      proposeNextHint: L3("Proposed this visit. Anything carried forward shows on the consultant's screen at her next visit.",
+        "此次到访已提议。标记为延续的项目会在她下次到访时显示给顾问。",
+        "Dicadangkan lawatan ini. Item yang dibawa ke hadapan muncul pada skrin perunding lawatan seterusnya.")[lang],
+      carry: L3("Carry to next visit", "延续至下次", "Bawa ke lawatan seterusnya")[lang],
+      proposedBefore: L3("Already proposed", "过往提议紀錄", "Sudah dicadangkan")[lang],
+      proposedBeforeHint: L3("Every past proposal and how she answered, so nobody pitches the same thing twice.",
+        "历次提议与她的反应，避免重复推销同一项目。",
+        "Setiap cadangan lepas dan jawapannya, supaya tiada pitching berulang.")[lang]
+    };
+
+    const VISITS = [
+      { k: "v0", chip: L3("Today · in progress", "今天 · 进行中", "Hari ini · berjalan")[lang], open: true,
+        treatment: this.item("signature").name[lang],
+        when: L3("21 Sept 2026 · 2:30 PM · Bukit Bintang · Room 3", "2026年9月21日 · 下午2:30 · Bukit Bintang · 3号房", "21 Sept 2026 · 2:30 PTG · Bukit Bintang · Bilik 3")[lang],
+        consultant: "Sarah Lim", therapist: "Joyce Wong", duration: L3("75 min", "75 分钟", "75 min")[lang], outlet: "Bukit Bintang",
+        note: L3("Asked about HIFU pricing twice, hesitated at the RM 2,880 mark. Responds well when the payment plan is shown first. Mentioned a wedding in March, wants visible results by February.",
+          "两次询问 HIFU 价格，在 RM 2,880 处犹豫。先展示分期方案时反应较好。提到三月有婚礼，希望二月前见效。",
+          "Tanya harga HIFU dua kali, teragak-agak pada RM 2,880. Bertindak balas baik bila pelan bayaran ditunjuk dahulu. Sebut majlis kahwin pada Mac, mahu hasil menjelang Februari.")[lang],
+        noteBy: L3("Sarah Lim · today 3:41 PM", "Sarah Lim · 今天下午3:41", "Sarah Lim · hari ini 3:41 PTG")[lang] },
+      { k: "v1", chip: L3("12 Sept 2026", "2026年9月12日", "12 Sept 2026")[lang],
+        treatment: this.item("signature").name[lang],
+        when: L3("12 Sept 2026 · 3:00 PM · Bukit Bintang · Room 1", "2026年9月12日 · 下午3:00 · Bukit Bintang · 1号房", "12 Sept 2026 · 3:00 PTG · Bukit Bintang · Bilik 1")[lang],
+        consultant: "Sarah Lim", therapist: "Sarah Lim", duration: L3("60 min", "60 分钟", "60 min")[lang], outlet: "Bukit Bintang",
+        note: L3("Came in tired, kept the session quiet. Declined add-ons politely but took the serum sample. Prefers Sarah and will wait rather than switch therapist.",
+          "到店时疲惫，全程安静。礼貌拒绝加购，但接受了精华试用装。指定 Sarah，宁可等候也不换美疗师。",
+          "Datang penat, sesi senyap. Tolak add-on dengan sopan tetapi ambil sampel serum. Pilih Sarah dan sanggup tunggu.")[lang],
+        noteBy: L3("Sarah Lim · 12 Sept 2026", "Sarah Lim · 2026年9月12日", "Sarah Lim · 12 Sept 2026")[lang] },
+      { k: "v2", chip: L3("28 Aug 2026", "2026年8月28日", "28 Ogos 2026")[lang],
+        treatment: this.item("pearl").name[lang],
+        when: L3("28 Aug 2026 · 11:00 AM · OUG · Room 2", "2026年8月28日 · 上午11:00 · OUG · 2号房", "28 Ogos 2026 · 11:00 PG · OUG · Bilik 2")[lang],
+        consultant: "Amira Yusof", therapist: "Joyce Wong", duration: L3("45 min", "45 分钟", "45 min")[lang], outlet: "OUG",
+        note: L3("Walked in on a voucher. Price sensitive but asked unprompted about packages, so there is intent. Reacts badly to hard closing; give her a night to think.",
+          "持券到店。价格敏感，但主动询问套餐，有购买意向。不接受强势逼单，需给她一晚考虑。",
+          "Masuk dengan vaucar. Sensitif harga tetapi tanya sendiri tentang pakej, jadi ada niat. Tidak suka closing keras; beri masa semalam.")[lang],
+        noteBy: L3("Amira Yusof · 28 Aug 2026", "Amira Yusof · 2026年8月28日", "Amira Yusof · 28 Ogos 2026")[lang] }
+    ];
+    const visitIdx = Math.min(s.recVisit, VISITS.length - 1);
+    const V = VISITS[visitIdx];
+    const shots = s.photos[V.k] || { before: false, after: false };
+    const missing = !shots.before || !shots.after;
+    const vBehav = s.behav[V.k] || {}, vCarry = s.carry[V.k] || {};
+    const closedOn = { v1: L3("12 Sept 2026", "2026年9月12日", "12 Sept 2026")[lang],
+      v2: L3("28 Aug 2026", "2026年8月28日", "28 Ogos 2026")[lang] }[V.k] || "";
+
+    const PROPOSE = [
+      { id: "hifu", why: L3("Wedding in March. HIFU lifts before then, and it answers the price question she raised twice.",
+          "三月婚礼。HIFU 可在此前提升轮廓，也回应她两次提出的价格疑问。",
+          "Majlis kahwin Mac. HIFU mengangkat sebelum itu dan menjawab soalan harga yang ditanya dua kali.")[lang] },
+      { id: "serum", why: L3("She took the sample last visit. Ask how her skin reacted before pitching the full size.",
+          "上次已取试用装。先询问皮肤反应，再推正装。",
+          "Dia ambil sampel lawatan lepas. Tanya reaksi kulit sebelum tawar saiz penuh.")[lang] },
+      { id: "transform", why: L3("Only if the HIFU lands. Do not stack two big-ticket items in one visit with her.",
+          "仅在 HIFU 成交后提出。切勿在同一次到访连推两个高价项目。",
+          "Hanya jika HIFU berjaya. Jangan tawar dua item mahal dalam satu lawatan.")[lang] }
+    ];
+
+    const OUTCOME = {
+      bought: [L3("Bought", "已成交", "Dibeli")[lang], "#D7F0E2|#1F4F36"],
+      considering: [L3("Considering", "考虑中", "Sedang fikir")[lang], "#FCEBD2|#8A5A14"],
+      declined: [L3("Declined", "已婉拒", "Ditolak")[lang], "#F7DDE6|#96355C"]
+    };
+    const PAST = [
+      { id: "hifu", visit: L3("12 Sept 2026 · Sarah Lim", "2026年9月12日 · Sarah Lim", "12 Sept 2026 · Sarah Lim")[lang], outcome: "considering",
+        reason: L3("Wants to see the March wedding timeline before committing. Asked for a payment plan.",
+          "希望先确认三月婚礼时间表再决定，并要求分期方案。",
+          "Mahu lihat garis masa majlis Mac dahulu. Minta pelan bayaran.")[lang] },
+      { id: "serum", visit: L3("12 Sept 2026 · Sarah Lim", "2026年9月12日 · Sarah Lim", "12 Sept 2026 · Sarah Lim")[lang], outcome: "declined",
+        reason: L3("Took a sample instead. Said she finishes her current bottle first.",
+          "改为索取试用装，表示先用完手上的一瓶。",
+          "Ambil sampel sebaliknya. Kata habiskan botol semasa dahulu.")[lang] },
+      { id: "signature", visit: L3("28 Aug 2026 · Amira Yusof", "2026年8月28日 · Amira Yusof", "28 Ogos 2026 · Amira Yusof")[lang], outcome: "bought",
+        reason: L3("Closed after the voucher was applied. Paid by card, 16-session package.",
+          "使用现金券后成交，信用卡付款，16 次套餐。",
+          "Ditutup selepas vaucar digunakan. Bayar dengan kad, pakej 16 sesi.")[lang] },
+      { id: "pearl", visit: L3("28 Aug 2026 · Amira Yusof", "2026年8月28日 · Amira Yusof", "28 Ogos 2026 · Amira Yusof")[lang], outcome: "declined",
+        reason: L3("Felt it overlapped with the facial she already books. Do not re-pitch.",
+          "认为与已预约的护理重叠，勿重复推销。",
+          "Rasa bertindih dengan facial sedia ada. Jangan tawar semula.")[lang] }
+    ];
+
+    return {
+      rec,
+      isRecord: s.screen === "record" && staff,
+      toRecord: () => this.go("record"),
+      recordEntryStyle: "display:flex;align-items:center;gap:11px;margin-top:13px;padding-top:13px;border-top:1px solid #EFEAF9;cursor:pointer",
+      visitChips: VISITS.map((v, i) => ({ label: v.chip, pick: () => this.setState({ recVisit: i, recSaved: false }),
+        style: "flex-shrink:0;padding:9px 14px;border-radius:99px;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+          (i === visitIdx ? "background:#3A2F55;color:#fff;box-shadow:0 4px 0 rgba(30,22,52,.4)" : "background:#fff;color:#6B6385;box-shadow:0 4px 0 rgba(139,121,224,.16)") })),
+      visit: {
+        treatment: V.treatment, when: V.when, note: V.note, noteBy: V.noteBy,
+        status: V.open ? L3("IN PROGRESS", "进行中", "SEDANG BERJALAN")[lang] : L3("CLOSED", "已完成", "SELESAI")[lang],
+        statusStyle: "display:inline-block;padding:5px 11px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:.8px;" +
+          (V.open ? "background:#FCEBD2;color:#8A5A14" : "background:#E7E2F5;color:#5A5080"),
+        people: [
+          { role: L3("Consultant", "顾问", "Perunding")[lang], name: V.consultant },
+          { role: L3("Therapist", "美疗师", "Juruterapi")[lang], name: V.therapist },
+          { role: L3("Outlet", "门店", "Cawangan")[lang], name: V.outlet },
+          { role: L3("Duration", "时长", "Tempoh")[lang], name: V.duration }
+        ]
+      },
+      photoReq: missing ? L3("Upload required", "必须上传", "Wajib dimuat naik")[lang] : L3("Complete", "已完成", "Lengkap")[lang],
+      photoReqStyle: "padding:5px 10px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:.4px;" +
+        (missing ? "background:#F7DDE6;color:#96355C" : "background:#D7F0E2;color:#1F4F36"),
+      photoSlots: [
+        ["before", L3("Before", "疗程前", "Sebelum")[lang]],
+        ["after", L3("After", "疗程后", "Selepas")[lang]]
+      ].map(([k, label]) => {
+        const on = !!shots[k];
+        return { label,
+          hint: on ? "" : "drop " + k + " photo",
+          hintStyle: on ? "display:none" : HINT,
+          tickStyle: on ? "width:34px;height:34px;border-radius:99px;background:rgba(255,255,255,.9);color:#1F4F36;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800" : "display:none",
+          slotStyle: "position:relative;height:132px;border-radius:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg," +
+            (on ? "#A7D9BF,#7FC3A4" : "#E6DFF7,#D6CCF0") + ");box-shadow:0 5px 0 rgba(122,98,196,.2)" + (on ? "" : ";outline:2px dashed #B7A9E2;outline-offset:-7px"),
+          stamp: on ? L3("Uploaded · Joyce Wong", "已上传 · Joyce Wong", "Dimuat naik · Joyce Wong")[lang] : L3("Required", "待上传", "Diperlukan")[lang],
+          stampColor: on ? "#2F6B47" : "#B34F7C",
+          toggle: () => this.setState(st => ({ recSaved: false,
+            photos: { ...st.photos, [V.k]: { ...(st.photos[V.k] || {}), [k]: !on } } })) };
+      }),
+      behaviourTags: [
+        ["price", L3("Price sensitive", "价格敏感", "Sensitif harga")[lang]],
+        ["whatsapp", L3("Replies on WhatsApp", "WhatsApp 回覆快", "Balas di WhatsApp")[lang]],
+        ["staff", L3("Prefers Sarah", "指定 Sarah", "Pilih Sarah")[lang]],
+        ["soft", L3("No hard closing", "勿强势逼单", "Tiada closing keras")[lang]],
+        ["late", L3("Often 10 min late", "常迟到10分钟", "Selalu lewat 10 min")[lang]]
+      ].map(([k, label]) => {
+        const on = !!vBehav[k];
+        return { label, toggle: () => this.setState(st => ({ recSaved: false,
+            behav: { ...st.behav, [V.k]: { ...(st.behav[V.k] || {}), [k]: !on } } })),
+          style: "padding:8px 13px;border-radius:99px;font-size:11px;font-weight:800;cursor:pointer;" +
+            (on ? "background:#F5D98C;color:#4A3A12" : "background:rgba(255,255,255,.12);color:#C9BEE8") };
+      }),
+      proposals: PROPOSE.map(p => {
+        const x = this.item(p.id), on = !!vCarry[p.id];
+        return { name: x.name[lang], why: p.why, price: money(x.price),
+          cardStyle: CLAY + ";padding:15px" + (on ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+          thumbStyle: "width:44px;height:44px;border-radius:15px;flex-shrink:0;background:linear-gradient(145deg," + x.tone + ")",
+          carryLabel: on ? L3("Carried ✓", "已延续 ✓", "Dibawa ✓")[lang] : L3("Carry", "延续", "Bawa")[lang],
+          carryStyle: "flex-shrink:0;padding:8px 14px;border-radius:99px;font-size:11px;font-weight:800;cursor:pointer;" +
+            (on ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 3px 0 rgba(47,107,71,.3)" : "background:#EEE8FC;color:#6E5BC4"),
+          flip: () => this.setState(st => ({ recSaved: false,
+            carry: { ...st.carry, [V.k]: { ...(st.carry[V.k] || {}), [p.id]: !on } } })) };
+      }),
+      pastProposals: PAST.map(h => {
+        const x = this.item(h.id), o = OUTCOME[h.outcome], tone = o[1].split("|");
+        return { name: x.name[lang], meta: h.visit, reason: h.reason, outcome: o[0],
+          outcomeStyle: "flex-shrink:0;padding:6px 11px;border-radius:99px;font-size:10px;font-weight:800;background:" + tone[0] + ";color:" + tone[1] };
+      }),
+      saveRecord: () => { if (V.open) this.setState({ recSaved: true }); },
+      saveRecordLabel: !V.open
+        ? L3("Visit closed · ", "到访已结束 · ", "Lawatan ditutup · ")[lang] + closedOn
+        : s.recSaved
+          ? L3("Record saved ✓", "纪录已保存 ✓", "Rekod disimpan ✓")[lang]
+          : (missing ? L3("Upload both photos to close visit", "上传两张照片以结束到访", "Muat naik kedua-dua foto")[lang]
+                     : L3("Save and close visit", "保存并结束到访", "Simpan dan tutup lawatan")[lang]),
+      saveRecordStyle: "border-radius:99px;padding:16px;text-align:center;font-size:14.5px;font-weight:800;" +
+        (!V.open ? "background:#EFEAF9;color:#7C7399;box-shadow:inset 0 2px 5px rgba(96,76,166,.12);cursor:default"
+          : s.recSaved ? "color:#fff;background:#4F9A6E;box-shadow:0 7px 0 #3C7A56;cursor:pointer"
+          : missing ? "color:#fff;background:#C6BDE0;box-shadow:0 7px 0 #A99EC9;cursor:not-allowed"
+                    : "color:#fff;background:#8B79E0;box-shadow:0 7px 0 #6E5BC4,0 12px 22px rgba(110,91,196,.3);cursor:pointer"),
+
+      t, budget: s.budget, budgetLabel: money(s.budget),
+      isHome: s.screen === "home" && staff, isCustHome: s.screen === "home" && !staff,
+      isCatalog: s.screen === "catalog", isIntake: s.screen === "intake",
+      wallet: [{ k: t.wBalance, v: "RM 0.00" }, { k: t.wStamps, v: "6 / 10" }, { k: t.wPoints, v: "1,240" }],
+      eventHintStyle: HINT,
+      rails: [
+        { title: t.railGlow, sub: t.railGlowSub, g: "#5A48A8,#6E5BC4", ids: ["signature", "starter", "hifu", "pearl"] },
+        { title: t.railBody, sub: t.railBodySub, g: "#2A5545,#3E7A64", ids: ["slim8", "transform", "bodyai"] },
+        { title: t.railHome, sub: t.railHomeSub, g: "#7A3757,#94456A", ids: ["serum", "amp", "led"] }
+      ].map(r => ({ title: r.title, sub: r.sub, items: byId(r.ids, 150),
+        headStyle: "display:flex;align-items:center;gap:11px;margin:0 14px;padding:15px;border-radius:22px;background:linear-gradient(135deg," + r.g + ");box-shadow:0 6px 0 rgba(58,47,85,.22)",
+        shopAll: () => this.go("catalog") })),
+      hotTabs: [t.tabsRow[1], t.tabsRow[2], t.tabsRow[4]].map((label, i) => ({ label,
+        pick: () => this.setState({ hotTab: i }),
+        style: "flex-shrink:0;font-size:12.5px;font-weight:800;cursor:pointer;padding-bottom:6px;color:" + (s.hotTab === i ? "#3A2F55" : "#7C7399"),
+        barStyle: "height:3.5px;border-radius:99px;margin-top:6px;background:" + (s.hotTab === i ? "#8B79E0" : "transparent") })),
+      hotItems: CAT.filter(x => x.type === ["treatment", "package", "product"][s.hotTab]).map(x => mkCard(x)),
+      isDetail: s.screen === "detail", isCompare: s.screen === "compare", isQuote: s.screen === "quote",
+      isAccount: s.screen === "account",
+      activeCardStyle: CLAY + ";padding:14px",
+      activePkgName: this.item("signature").name[lang],
+      upcomingName: this.item("bodyai").name[lang],
+      myVouchers: [
+        { amount: "200", unit: "RINGGIT", title: L3("Treatment voucher", "疗程现金券", "Vaucar rawatan")[lang],
+          cond: L3("Expires 18 Dec 2026", "2026年12月18日到期", "Tamat 18 Dis 2026")[lang], g: "#48387F,#5A48A8" },
+        { amount: "15", unit: "% OFF", title: L3("Birthday month treat", "生日月优惠", "Hadiah bulan lahir")[lang],
+          cond: L3("Any single treatment", "任意单次疗程", "Mana-mana rawatan tunggal")[lang], g: "#8A2F50,#A83D63" }
+      ].map(v => ({ ...v, cardStyle: "flex:none;width:236px;display:flex;border-radius:20px;overflow:hidden;background:linear-gradient(135deg," + v.g + ");box-shadow:0 6px 0 rgba(122,98,196,.22)" })),
+      historyRows: [
+        { id: "signature", date: L3("12 Sept 2026", "2026年9月12日", "12 Sept 2026")[lang], price: money(0), free: true },
+        { id: "pearl", date: L3("28 Aug 2026", "2026年8月28日", "28 Ogos 2026")[lang], price: money(200) },
+        { id: "trial38", date: L3("3 Mar 2024", "2024年3月3日", "3 Mac 2024")[lang], price: money(38) }
+      ].map(h => { const x = this.item(h.id);
+        return { name: x.name[lang], date: h.date, price: h.free ? L3("Package", "套餐内", "Pakej")[lang] : h.price,
+          dotStyle: "width:38px;height:38px;border-radius:13px;flex-shrink:0;background:linear-gradient(145deg," + x.tone + ")" }; }),
+      headerTitle: titles[s.screen], headerSub: subs[s.screen],
+      goBack: () => this.go({ home: "home", catalog: "home", intake: "home", account: "home", record: "intake", detail: "catalog", compare: "catalog", quote: "catalog" }[s.screen]),
+      toCatalog: () => this.go("catalog"), toCompare: () => this.go("compare"), toQuote: () => this.go("quote"),
+      addToQuoteLabel: staff ? t.addToQuote : t.addToCart,
+      addToQuote: () => { const x = this.item(s.detail);
+        if (x.tier) this.setState({ tier: x.id, screen: "quote", sent: false });
+        else this.setState(st => ({ addons: { ...st.addons, [x.id]: (st.addons[x.id] || 0) + 1 }, screen: "quote", sent: false })); },
+      sendQuote: () => this.setState({ sent: true }),
+      sendLabel: s.sent ? t.sent + " ✓" : (staff ? t.sendQuote : t.bookNow),
+      compareBtnStyle: staff
+        ? "flex:1;background:#fff;color:#6E5BC4;border-radius:99px;padding:15px;text-align:center;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 6px 0 rgba(139,121,224,.22)"
+        : "display:none",
+      sendStyle: "flex:1.4;border-radius:99px;padding:15px;text-align:center;font-size:14px;font-weight:800;cursor:pointer;color:#fff;" +
+        (s.sent ? "background:#4F9A6E;box-shadow:0 7px 0 #3C7A56" : "background:#8B79E0;box-shadow:0 7px 0 #6E5BC4,0 12px 20px rgba(110,91,196,.28)"),
+
+      roles: [["customer", t.roleCust], ["staff", t.roleStaff]].map(([k, label]) => ({
+        label, pick: () => this.setRole(k),
+        style: "padding:7px 13px;border-radius:10px;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+          (s.role === k ? (k === "staff" ? "background:#3A2F55;color:#fff;box-shadow:0 2px 0 rgba(30,22,52,.5)" : "background:#8B79E0;color:#fff;box-shadow:0 2px 0 #6E5BC4") : "color:#6B6385") })),
+      roleNote: staff ? t.noteStaff : t.noteCust,
+      roleNoteStyle: "font-size:10px;font-weight:800;padding:6px 11px;border-radius:99px;white-space:nowrap;" +
+        (staff ? "background:#3A2F55;color:#F5D98C" : "background:#EEE8FC;color:#6B6385"),
+
+      showQuoteBar: staff && s.screen !== "quote",
+      quoteBarLabel: t.quoteRunning + " · " + t.budget + " " + money(s.budget),
+      quoteBarStyle: "flex-shrink:0;display:flex;align-items:center;gap:12px;margin:0 12px 8px;padding:13px 14px;border-radius:22px;cursor:pointer;background:" +
+        (over ? "linear-gradient(135deg,#D9698F,#B34F7C)" : "linear-gradient(135deg,#8B79E0,#6E5BC4)") +
+        ";box-shadow:0 6px 0 rgba(58,47,85,.3),0 10px 22px rgba(110,91,196,.28)",
+      quoteBarFillStyle: "height:100%;width:" + pct + "%;border-radius:99px;background:#fff;transition:width .35s cubic-bezier(.4,1.4,.5,1)",
+
+      cartCount: String(1 + c.addons.length),
+      cartStyle: "display:flex;align-items:center;gap:5px;flex-shrink:0;padding:8px 11px;border-radius:13px;cursor:pointer;font-size:11.5px;font-weight:800;color:#6E5BC4;background:#fff;box-shadow:0 4px 0 rgba(139,121,224,.22)",
+
+      langs: [["en", "EN"], ["zh", "中"], ["ms", "BM"]].map(([k, label]) => ({
+        label, pick: () => this.setState({ lang: k }),
+        style: "padding:5px 7px;border-radius:9px;font-size:10.5px;font-weight:800;cursor:pointer;" +
+          (s.lang === k ? "background:#8B79E0;color:#fff;box-shadow:0 2px 0 #6E5BC4" : "color:#6B6385") })),
+
+      tabs: (staff
+        ? [["home", t.tabHome], ["catalog", t.tabCatalog], ["intake", t.tabCust], ["compare", t.tabCompare], ["quote", t.tabQuote]]
+        : [["home", t.tabHome], ["catalog", t.tabCatalog], ["quote", t.tabCart], ["account", t.tabAcct]]).map(([k, label]) => ({
+        label, pick: () => this.go(k),
+        style: "flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;font-size:10px;font-weight:800;cursor:pointer;color:" + (s.screen === k ? "#6E5BC4" : "#7C7399"),
+        dotStyle: "width:10px;height:10px;border-radius:99px;" + (s.screen === k ? "background:#8B79E0;box-shadow:0 2px 0 #6E5BC4" : "background:#DFD8F2") })),
+
+      flashPillStyle: "padding:6px 12px;border-radius:99px;background:linear-gradient(135deg,#C22F55,#B04E1E);color:#fff;font-size:10px;font-weight:800;letter-spacing:1px",
+      countdown: [{ k: "DAYS", v: "10" }, { k: "HRS", v: "11" }, { k: "MIN", v: "44" }, { k: "SEC", v: "07" }],
+      flashItems: CAT.filter(x => ["hifu", "pearl", "trial38", "ipl6"].indexOf(x.id) >= 0).map(x => ({
+        name: x.name[lang], price: money(x.price), was: money(x.list), badge: x.badge || "HOT",
+        thumbStyle: thumb(x.tone, 96), hint: "drop " + x.id + " photo", hintStyle: HINT,
+        open: () => this.setState({ detail: x.id, screen: "detail" }) })),
+
+      promoList: PROMOS.map(p => {
+        const on = !!s.promos[p.id];
+        return { kind: p.kind, icon: p.icon, title: p.title[lang], detail: p.detail[lang], window: p.window[lang],
+          pillStyle: pill(p.tone),
+          iconStyle: "width:42px;height:42px;flex-shrink:0;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;background:" + p.tone.split("|")[0] + ";color:" + p.tone.split("|")[1] + ";box-shadow:0 4px 0 rgba(122,98,196,.16)",
+          cardStyle: "display:flex;align-items:center;gap:12px;padding:13px;cursor:pointer;" + CLAY +
+            (on ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+          check: on ? "✓" : "",
+          checkStyle: "width:28px;height:28px;flex-shrink:0;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;" +
+            (on ? "background:#8B79E0;color:#fff;box-shadow:0 3px 0 #6E5BC4" : "background:#F1EDFB;box-shadow:inset 0 2px 4px rgba(96,76,166,.14)"),
+          toggle: () => this.setState(st => ({ promos: { ...st.promos, [p.id]: !st.promos[p.id] } })) };
+      }),
+
+      promoBundles: CAT.filter(x => ["signature", "transform", "slim8", "starter"].indexOf(x.id) >= 0).map(x => ({
+        name: x.name[lang], price: money(x.price), was: money(x.list), badge: x.badge,
+        cardStyle: CLAY + ";overflow:hidden;cursor:pointer" + (s.tier === x.id ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+        thumbStyle: thumb(x.tone, 100) + ";border-radius:0",
+        hint: "drop " + x.id + " photo", hintStyle: HINT,
+        open: () => this.setState({ detail: x.id, screen: "detail" }),
+        btn: s.tier === x.id ? (staff ? t.added : t.inCart) : (staff ? t.add : t.addToCart),
+        btnStyle: "margin-top:9px;border-radius:99px;padding:9px;text-align:center;font-size:11.5px;font-weight:800;" +
+          (s.tier === x.id ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 4px 0 rgba(47,107,71,.3)" : "background:#3A2F55;color:#fff;box-shadow:0 4px 0 rgba(58,47,85,.4)") })),
+
+      vouchers: [
+        { amount: "200", unit: "RINGGIT", title: L3("Treatment voucher", "疗程现金券", "Vaucar rawatan")[lang],
+          cond: L3("Free when quote hits RM 2,000", "报价满 RM2,000 免费赠送", "Percuma bila cecah RM2,000")[lang], g: "#48387F,#5A48A8" },
+        { amount: "30", unit: "% OFF", title: L3("Member upgrade voucher", "会员升级券", "Vaucar naik taraf ahli")[lang],
+          cond: L3("Silver to Gold, this month only", "银卡升金卡，限本月", "Silver ke Gold, bulan ini sahaja")[lang], g: "#8A2F50,#A83D63" },
+        { amount: "100", unit: "RINGGIT", title: L3("Referral credit", "推荐奖励金", "Kredit rujukan")[lang],
+          cond: L3("Both parties, next visit", "双方下次到访使用", "Kedua-dua pihak, lawatan akan datang")[lang], g: "#2A5545,#356A56" }
+      ].map(v => ({ ...v, cardStyle: "flex:none;width:236px;display:flex;border-radius:20px;overflow:hidden;background:linear-gradient(135deg," + v.g + ");box-shadow:0 6px 0 rgba(122,98,196,.22)" })),
+
+      tabsRow: t.tabsRow.map((label, i) => ({ label, pick: () => this.setState({ tab: i, sub: null }),
+        style: "flex-shrink:0;font-size:13px;font-weight:800;cursor:pointer;padding-bottom:7px;color:" + (s.tab === i ? "#3A2F55" : "#7C7399"),
+        barStyle: "height:3.5px;border-radius:99px;margin-top:6px;background:" + (s.tab === i ? "#8B79E0" : "transparent") })),
+
+      catIcons: t.cats.map((label, i) => {
+        const key = ["facial", "body", "slimming", "hair", "cosmetic", "skincare", "trial", null][i];
+        const on = s.cat === key && key !== null;
+        const tones = ["#F7DCE8", "#D6E9F7", "#D9EFE4", "#E8E1F8", "#E2D6F7", "#F7E6D6", "#CDEBD9", "#FDF0D6"];
+        const glyphs = ["✿", "◉", "◐", "✦", "❖", "◇", "☘", "◈"];
+        return { label, icon: glyphs[i],
+          iconStyle: "width:48px;height:48px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:20px;background:" + tones[i] +
+            ";box-shadow:0 4px 0 rgba(122,98,196,.15)" + (on ? ";outline:2.5px solid #8B79E0;outline-offset:2px" : ""),
+          labelStyle: "font-size:9.5px;font-weight:700;text-align:center;line-height:1.2;color:" + (on ? "#6E5BC4" : "#6C6489"),
+          pick: () => key === null
+            ? this.setState({ screen: staff ? "home" : "account" })
+            : this.setState({ cat: s.cat === key && s.screen === "catalog" ? null : key, sub: null, tab: 0, screen: "catalog" }) };
+      }),
+
+      fitOnlyLabel: t.fitOnly,
+      fitOnlyStyle: staff ? chip(s.fitOnly).replace("padding:9px 14px", "padding:8px 13px") : "display:none",
+      toggleFitOnly: () => this.setState({ fitOnly: !s.fitOnly }),
+      resultCount: catalogItems.length + t.results,
+      catalogItems,
+      emptyStyle: catalogItems.length ? "display:none" : "padding:26px 10px;text-align:center;font-size:12px;font-weight:600;color:#6B6385",
+
+      railCats: [[null, t.allCat]].concat(catKeys.map((k, i) => [k, t.cats[i]])).map(([k, label]) => {
+        const on = s.cat === k;
+        return { label, pick: () => this.setState({ cat: k, sub: null }),
+          style: "position:relative;padding:13px 7px 13px 11px;font-size:10.5px;font-weight:800;line-height:1.25;cursor:pointer;text-align:left;" +
+            (on ? "background:#F7F4FA;color:#5A48A8" : "color:#6B6385"),
+          markStyle: on ? "position:absolute;left:0;top:11px;bottom:11px;width:3.5px;border-radius:99px;background:#8B79E0" : "display:none" };
+      }),
+
+      subChips: [{ label: t.allCat, key: null }].concat(subLabels.map(l => ({ label: l, key: l }))).map(o => ({
+        label: o.label, pick: () => this.setState({ sub: o.key }),
+        style: "padding:9px 8px;border-radius:12px;font-size:10.5px;font-weight:700;cursor:pointer;text-align:center;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" +
+          (s.sub === o.key ? "background:#EFE7FF;color:#5A48A8;box-shadow:inset 0 0 0 1.5px #8B79E0" : "background:#fff;color:#3A2F55;box-shadow:0 2px 0 rgba(139,121,224,.16)") })),
+
+      firstTimerPill: "flex-shrink:0;padding:8px 12px;border-radius:99px;font-size:10.5px;font-weight:800;cursor:pointer;" +
+        (s.firstTimer ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 4px 0 rgba(47,107,71,.35)" : "background:#EEE8FC;color:#6B6385"),
+      toggleFirstTimer: () => this.setState({ firstTimer: !s.firstTimer }),
+      concernChips: CONCERNS[lang].map((label, i) => ({ label, style: chip(!!s.concerns[i]),
+        toggle: () => this.setState(st => ({ concerns: { ...st.concerns, [i]: !st.concerns[i] } })) })),
+      setBudget: (e) => this.setState({ budget: Number(e.target.value) }),
+      budgetChips: [600, 1500, 2500, 5000].map(v => ({ label: money(v).replace("RM ", "RM"), pick: () => this.setState({ budget: v }),
+        style: "flex:1;text-align:center;padding:9px 0;border-radius:14px;font-size:11.5px;font-weight:800;cursor:pointer;" +
+          (s.budget === v ? "background:#8B79E0;color:#fff;box-shadow:0 4px 0 #6E5BC4" : "background:#F3EFFD;color:#6E5BC4") })),
+
+      detail: { name: dt.name[lang], tag: dt.badge || dt.type.toUpperCase(),
+        tagStyle: "display:inline-block;padding:5px 11px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:1px;background:" + dt.tone.split(",")[0] + ";color:#4A3C70",
+        heroStyle: "margin:14px 16px 0;height:158px;border-radius:26px;position:relative;overflow:hidden;background:linear-gradient(145deg," + dt.tone + ");box-shadow:inset 0 3px 10px rgba(96,76,166,.14)",
+        photoHint: "drop " + dt.id + " photo here",
+        bestFor: staff
+          ? (dt.best ? dt.best[lang] : (dt.meta ? dt.meta[lang] : ""))
+          : (DESC[dt.id] ? DESC[dt.id][lang] : (dt.meta ? dt.meta[lang] : "")),
+        priceLabel: money(dt.pwp && c.pwpOn ? dt.pwp : dt.price), instalLabel: money(dt.price / 6) + " × 6",
+        includes: dt.inc ? dt.inc[lang] : [dt.meta[lang]],
+        offers: offers.map(o => ({ ...o, rowStyle: "display:flex;align-items:center;gap:11px;background:#fff;border-radius:20px;padding:13px 14px;box-shadow:0 5px 0 rgba(139,121,224,.15)",
+          pillStyle: pill(o.tone) })) },
+
+      compareCols: CAT.filter(x => x.tier && x.price >= 888).map(x => ({
+        name: x.name[lang], tag: x.badge,
+        tagStyle: "display:inline-block;padding:5px 11px;border-radius:99px;font-size:9.5px;font-weight:800;letter-spacing:1px;background:" + x.tone.split(",")[0] + ";color:#4A3C70",
+        priceLabel: money(x.price),
+        colStyle: "flex:none;width:188px;background:#fff;border-radius:26px;padding:17px;box-shadow:0 6px 0 rgba(139,121,224,.18),0 10px 22px rgba(110,91,196,.13)" +
+          (x.id === s.tier ? ";outline:2.5px solid #8B79E0;outline-offset:-2.5px" : ""),
+        rows: [
+          { k: t.rFacial, v: x.facials ? String(x.facials) : "—" },
+          { k: t.rBody, v: x.body ? String(x.body) : "—" },
+          { k: t.rRetail, v: x.retail },
+          { k: t.rPerVisit, v: money(x.price / x.sessions) },
+          { k: t.rInstal, v: money(x.price / 6) + "/mo" },
+          { k: t.promoOff, v: x.price >= 2388 ? "−" + money(x.price * 0.1) : "—" },
+          { k: t.foc, v: x.price >= 2000 ? money(200) : "—" }
+        ].map(r => ({ ...r, vStyle: "font-size:13.5px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums" })),
+        choose: () => this.setState({ tier: x.id, detail: x.id, screen: "quote", sent: false }),
+        btnStyle: "margin-top:6px;border-radius:99px;padding:13px;text-align:center;font-size:13px;font-weight:800;cursor:pointer;" +
+          (x.id === s.tier ? "background:#8B79E0;color:#fff;box-shadow:0 5px 0 #6E5BC4" : "background:#F3EFFD;color:#6E5BC4;box-shadow:0 5px 0 rgba(139,121,224,.2)") })),
+
+      totalLabel: money(c.payable),
+      budgetCardStyle: !staff ? "display:none" : "background:#fff;border-radius:28px;padding:19px 18px;box-shadow:0 6px 0 " +
+        (over ? "rgba(216,124,162,.24)" : "rgba(139,121,224,.18)") + ",0 10px 22px rgba(110,91,196,.13)",
+      fitBadgeStyle: "padding:6px 12px;border-radius:99px;font-size:10.5px;font-weight:800;" +
+        (over ? "background:#FFE0EB;color:#B34F7C" : "background:#DFF1E6;color:#2F6B47"),
+      fitLabel: over ? t.over : t.fits,
+      barStyle: "height:100%;width:" + pct + "%;border-radius:99px;transition:width .35s cubic-bezier(.4,1.4,.5,1);background:" +
+        (over ? "linear-gradient(90deg,#F2A9C6,#D9698F)" : "linear-gradient(90deg,#A594EC,#8FD6B4)"),
+      savingsLabel: c.saved > 0 ? t.saves + money(c.saved) : "",
+      gapLabel: over ? money(c.payable - s.budget) + " " + t.overBy : money(s.budget - c.payable) + " " + t.left,
+      showTrim: staff && over, trims: this.trimOptions(c),
+      trimHint: L3("Three ways to land on her number.", "三种方式回到她的预算。", "Tiga cara untuk muat bajetnya.")[lang],
+      linesHeading: staff ? t.quoteLines : t.viewCart,
+      lines, totalsRows,
+
+      addonRows: CAT.filter(x => x.type === "product").map(a => {
+        const on = (s.addons[a.id] || 0) > 0, unit = c.pwpOn && a.pwp ? a.pwp : a.price;
+        return { name: a.name[lang], pill: c.pwpOn && a.pwp ? "PWP" : "",
+          pillStyle: c.pwpOn && a.pwp ? pill("#FFE8F1|#B34F7C") : "display:none",
+          meta: c.pwpOn && a.pwp ? money(unit) + "  ·  " + L3("was ", "原价 ", "asalnya ")[lang] + money(a.list) : money(unit),
+          btn: on ? t.added : t.add,
+          btnStyle: "flex-shrink:0;padding:10px 15px;border-radius:99px;font-size:12px;font-weight:800;" +
+            (on ? "background:#8FD6B4;color:#1F4F36;box-shadow:0 4px 0 rgba(47,107,71,.3)" : "background:#F3EFFD;color:#6E5BC4;box-shadow:0 4px 0 rgba(139,121,224,.2)"),
+          rowStyle: "display:flex;align-items:center;gap:12px;background:#fff;border-radius:20px;padding:13px 14px;cursor:pointer;box-shadow:0 5px 0 rgba(139,121,224,.15)",
+          toggle: () => this.setState(st => ({ addons: { ...st.addons, [a.id]: on ? 0 : 1 } })) };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

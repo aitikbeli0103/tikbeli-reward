@@ -1,0 +1,35 @@
+﻿Referral scheme settings,,,,,,
+Fill the 'Your value' column only. Leave blank to keep current.,,,,,,
+,,,,,,
+Level,Setting,Key,Current value,Unit,Your value,Notes
+Level 1 - direct referral,Customer reward,l1_customer_reward,100,RM,,Paid after friend's first treatment
+Level 1 - direct referral,Customer PV,l1_customer_pv,100,PV,,Counts toward member tier
+Level 1 - direct referral,Consultant bonus,l1_consultant_bonus,50,RM,,Paid to consultant named on account
+Level 1 - direct referral,Consultant KPI,l1_consultant_kpi,1,KPI,,New-customer KPI credit
+Level 2 - chain referral,Customer reward,l2_customer_reward,30,RM,,Paid to the original referrer
+Level 2 - chain referral,Customer PV,l2_customer_pv,30,PV,,Level two PV credit
+Level 2 - chain referral,Consultant bonus,l2_consultant_bonus,20,RM,,"Same consultant, level two"
+Level 2 - chain referral,Consultant KPI,l2_consultant_kpi,0.5,KPI,,Half credit by default
+,,,,,,
+Reward ladder,Setting,Key,Current value,Unit,Your value,Notes
+Ladder,1 friend,ladder_1,RM 100 beauty credit,,,Prize description
+Ladder,3 friends,ladder_3,Free signature facial,,,
+Ladder,5 friends,ladder_5,Gold tier upgrade,,,
+Ladder,10 friends,ladder_10,"RM 1,000 treatment voucher",,,
+,,,,,,
+Payout options,Setting,Key,Current value,Unit,Your value,Notes
+Payout,E-wallet credit enabled,payout_ewallet,Yes,Yes/No,,
+Payout,Cash voucher enabled,payout_voucher,Yes,Yes/No,,
+Payout,Free products enabled,payout_product,Yes,Yes/No,,
+Payout,PV points enabled,payout_pv,Yes,Yes/No,,
+Payout,Product conversion rate,payout_product_rate,RM 100 = 1 serum,,,
+Payout,PV conversion rate,payout_pv_rate,RM 1 = 1 PV,,,
+,,,,,,
+Rules,Setting,Key,Current value,Unit,Your value,Notes
+Rule,Reward triggers on,rule_trigger,First treatment completed,,,Booking or first treatment
+Rule,Referral levels paid,rule_levels,2,levels,,Max depth of the chain
+Rule,Referrals per customer cap,rule_cap,Unlimited,,,
+Rule,Ladder reset,rule_ladder_reset,Each calendar year,,,
+Rule,Reward expiry,rule_expiry,No expiry while member,,,
+Rule,New-customer trial price,rule_trial_price,19,RM,,Price quoted in WhatsApp scripts
+Rule,Photo compliance deduction,rule_photo_deduction,30,RM,,Per visit closed without before/after

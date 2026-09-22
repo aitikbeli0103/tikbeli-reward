@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<style>
+body{margin:0;color:#28174F;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;background:radial-gradient(circle at 10% 5%,rgba(255,232,245,.95),transparent 30%),radial-gradient(circle at 94% 17%,rgba(217,191,255,.7),transparent 29%),linear-gradient(135deg,#fcf6fc 0%,#f1e6ff 48%,#fff7f4 100%)}
+a{color:#7137E8}a:hover{color:#5E2BC4}
+*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+.sq::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div style="display:flex;gap:24px;padding:28px;min-height:100vh;width:min(100%,1480px);margin:0 auto;align-items:flex-start;flex-wrap:wrap">
+
+<div style="flex:1 1 282px;max-width:282px;min-width:238px;position:sticky;top:24px;padding:28px 20px 22px;overflow:hidden;border:3px solid rgba(246,239,255,.92);border-radius:58px;background:radial-gradient(circle at 50% 4%,rgba(255,255,255,.66),transparent 18%),linear-gradient(100deg,#bca8f5 0%,#d9c8ff 13%,#c5aff7 48%,#d9c7ff 86%,#b49bea 100%);box-shadow:18px 26px 38px rgba(100,64,157,.28),-9px -8px 24px rgba(255,255,255,.94),inset 5px 4px 7px rgba(255,255,255,.67),inset -8px -7px 12px rgba(104,68,170,.22),inset 0 0 0 5px rgba(219,204,255,.54)">
+
+<div style="display:flex;flex-direction:column;align-items:center">
+<img src="brand/tikbeli-reward-mark.png" alt="BEVi" style="display:block;width:126px;height:126px;object-fit:contain;filter:drop-shadow(6px 9px 12px rgba(96,60,150,.32))">
+<div style="font-size:21px;font-weight:800;margin:0;letter-spacing:-1px;color:#17113f;text-shadow:0 2px 2px rgba(255,255,255,.7)">TikBeli <span style="color:#f14f9a">Rewards</span></div>
+<div style="position:relative;width:100%;max-width:178px;aspect-ratio:1;margin-top:18px;overflow:hidden;border:8px solid #eee5ff;border-radius:50%;background:#f4e8ff;box-shadow:10px 14px 20px rgba(86,48,144,.28),-6px -6px 14px rgba(255,255,255,.85)">
+<img src="brand/login-mascot-only.png" alt="Hana waving" style="width:100%;height:100%;object-fit:cover;object-position:60% 24%">
+</div>
+<div style="font-size:20px;font-weight:800;color:#fff;margin-top:14px;text-shadow:0 3px 5px rgba(87,49,145,.47)">Hi, Hana! <span>👋</span></div>
+<div style="min-width:112px;margin-top:8px;padding:7px 18px;border-radius:99px;text-align:center;background:linear-gradient(145deg,#fdf9ff,#efe3ff);font-size:15px;font-weight:800;color:#7140df;box-shadow:4px 6px 10px rgba(93,55,152,.22),inset 1px 1px 2px #fff;cursor:pointer">{{ roleLabel }}</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:11px;margin-top:20px">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="12">
+<div onClick="{{ n.pick }}" style="{{ n.style }}">
+<i class="{{ n.iconClass }}" style="{{ n.iconStyle }}"></i>
+{{ n.label }}
+</div>
+</sc-for>
+</div>
+
+<div style="margin-top:18px;border-radius:26px;padding:20px 18px;background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(248,240,255,.92));box-shadow:9px 13px 18px rgba(78,42,133,.28),-4px -4px 9px rgba(255,255,255,.72),inset 2px 2px 3px #fff,inset -2px -3px 4px rgba(113,70,162,.1)">
+<div style="display:flex;align-items:center;gap:9px">
+<i class="ph-fill ph-clipboard-text" style="font-size:26px;line-height:1;color:#8f5deb"></i>
+<div style="font-size:16px;font-weight:800">{{ t.todaySummary }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px;margin-top:10px">
+<sc-for list="{{ summary }}" as="s" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:15px 1px 10px;border-bottom:1px solid rgba(121,79,167,.15)">
+<div style="font-size:13px;font-weight:600;color:#7d6d90">{{ s.label }}</div>
+<div style="{{ s.valueStyle }}">{{ s.value }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:18px">
+
+<sc-if value="{{ isAppointments }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:18px">
+
+<div style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">
+<div style="flex:1;min-width:220px">
+<div style="font-size:13px;font-weight:700;color:#5B4A7E">{{ t.salonCalendar }}</div>
+<div style="font-size:38px;font-weight:800;letter-spacing:-1.2px;margin-top:4px">{{ t.nAppointments }}</div>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<div style="padding:13px 20px;border-radius:14px;background:linear-gradient(135deg,#8B5CF6,#7C3AED);color:#fff;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:0 5px 14px rgba(124,58,237,.3);white-space:nowrap"><i class="ph-bold ph-user-plus" style="font-size:19px"></i>{{ t.bookReferral }}</div>
+<div style="padding:13px 20px;border-radius:14px;background:#fff;color:#44336E;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(124,58,237,.1);white-space:nowrap"><i class="ph-bold ph-list-checks" style="font-size:19px"></i>{{ t.openWaiting }}</div>
+<div onClick="{{ goDashboard }}" style="padding:13px 20px;border-radius:14px;background:#7C3AED;color:#fff;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap">{{ t.nDashboard }}</div>
+</div>
+</div>
+
+<div style="background:#fff;border-radius:20px;padding:16px;;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap">
+<div style="display:flex;gap:9px;flex-wrap:wrap">
+<div onClick="{{ prevDay }}" style="padding:12px 18px;border-radius:13px;background:#FAF7FE;font-size:13px;font-weight:800;color:#44336E;cursor:pointer;white-space:nowrap">← {{ t.prevDay }}</div>
+<div onClick="{{ setToday }}" style="{{ todayBtnStyle }}">{{ t.todayBtn }}</div>
+<div onClick="{{ nextDay }}" style="padding:12px 18px;border-radius:13px;background:#FAF7FE;font-size:13px;font-weight:800;color:#44336E;cursor:pointer;white-space:nowrap">{{ t.nextDay }} →</div>
+</div>
+<div style="flex:1;min-width:14px"></div>
+<sc-for list="{{ apptFilters }}" as="f" hint-placeholder-count="3">
+<div style="min-width:130px">
+<div style="font-size:10.5px;font-weight:800;letter-spacing:.8px;color:#5B4A7E;text-transform:uppercase">{{ f.label }}</div>
+<div onClick="{{ f.cycle }}" style="margin-top:7px;padding:12px 13px;border-radius:12px;border:1px solid #E9DFF8;background:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer">
+<div style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ f.value }}</div>
+<i class="{{ f.caretClass }}" style="font-size:17px;color:#8B7BAE"></i>
+</div>
+</div>
+</sc-for>
+<div style="padding:10px 14px;border-radius:12px;border:1px solid #E9DFF8;text-align:center">
+<div style="font-size:14px;font-weight:800;color:#7C3AED">1</div>
+<div style="font-size:10px;font-weight:700;color:#5B4A7E;margin-top:2px">{{ t.shown }}</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px">
+<sc-for list="{{ apptStats }}" as="x" hint-placeholder-count="6">
+<div style="{{ x.cardStyle }}">
+<div style="{{ x.labelStyle }}"><i class="{{ x.iconClass }}" style="font-size:38px;line-height:1;display:block;margin-bottom:8px"></i>{{ x.label }}</div>
+<div style="{{ x.valueStyle }}">{{ x.value }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+<div style="flex:1;min-width:150px">
+<div style="font-size:10.5px;font-weight:800;letter-spacing:.8px;color:#5B4A7E;text-transform:uppercase">{{ t.dayView }}</div>
+<div style="font-size:22px;font-weight:800;letter-spacing:-.5px;margin-top:3px">{{ apptDate }}</div>
+</div>
+<div style="display:flex;align-items:center;gap:11px;background:#FAF7FE;border-radius:99px;padding:6px 8px">
+<div style="width:30px;height:30px;border-radius:99px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#7C3AED;cursor:pointer">‹</div>
+<div style="font-size:13px;font-weight:800;white-space:nowrap">3 {{ t.staffColumns }}</div>
+<div style="width:30px;height:30px;border-radius:99px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#7C3AED;cursor:pointer">›</div>
+</div>
+<div style="padding:9px 15px;border-radius:99px;background:#F3EBFE;font-size:12.5px;font-weight:800;color:#6D28D9;white-space:nowrap"><i class="ph-fill ph-clock" style="font-size:17px"></i> 10:00 AM–8:00 PM</div>
+</div>
+
+<div class="sq" style="margin-top:16px;border:1px solid #EFE8F8;border-radius:16px;overflow:auto">
+<div style="display:grid;grid-template-columns:70px minmax(300px,1.1fr) 92px minmax(300px,1fr) 92px;min-width:900px">
+
+<div style="padding:16px 10px;background:#FAF7FE;border-bottom:1px solid #EFE8F8;font-size:11.5px;font-weight:800;color:#5B4A7E;text-align:center">MYT</div>
+<div style="padding:14px 16px;background:#FAF7FE;border-bottom:1px solid #EFE8F8;border-left:1px solid #EFE8F8;display:flex;align-items:center;gap:10px">
+<div style="width:30px;height:30px;border-radius:99px;background:#EDE9FE;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph-duotone ph-user-focus" style="font-size:19px;color:#7137e8"></i></div>
+<div style="min-width:0">
+<div style="font-size:16px;font-weight:800">{{ t.unassigned }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:2px">{{ t.awaitingAssign }}</div>
+</div>
+</div>
+<div style="padding:14px 8px;background:#FAF7FE;border-bottom:1px solid #EFE8F8;border-left:1px solid #EFE8F8;display:flex;align-items:center;justify-content:center;gap:7px">
+<div style="width:26px;height:26px;border-radius:8px;border:1.5px solid #C4B5FD;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#7C3AED">0</div>
+<div style="font-size:10px;font-weight:800;color:#5B4A7E">{{ t.waiting }}</div>
+</div>
+<div style="padding:14px 16px;background:#FAF7FE;border-bottom:1px solid #EFE8F8;border-left:1px solid #EFE8F8;display:flex;align-items:center;gap:10px">
+<div style="width:30px;height:30px;border-radius:99px;background:#F1EDF9;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph-duotone ph-user-focus" style="font-size:19px;color:#A396C0"></i></div>
+<div style="min-width:0">
+<div style="font-size:16px;font-weight:800;color:#8B7BAE">{{ t.awaitingStaff }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#8B7BAE;margin-top:2px">{{ t.staffColumn }}</div>
+</div>
+</div>
+<div style="padding:14px 8px;background:#FAF7FE;border-bottom:1px solid #EFE8F8;border-left:1px solid #EFE8F8;display:flex;align-items:center;justify-content:center;gap:7px">
+<div style="width:26px;height:26px;border-radius:8px;border:1.5px solid #C4B5FD;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#7C3AED">0</div>
+<div style="font-size:10px;font-weight:800;color:#5B4A7E">{{ t.waiting }}</div>
+</div>
+
+<div style="grid-column:1;padding:14px 10px;font-size:12px;font-weight:700;color:#5B4A7E;text-align:center;border-bottom:1px solid #F4EFFB">10:00 AM</div>
+<div style="grid-column:2;grid-row:span 4;padding:10px;border-left:1px solid #EFE8F8;border-bottom:1px solid #F4EFFB">
+<div style="border:2px solid #5EEAD4;border-radius:14px;padding:14px;background:#fff">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+<div style="font-size:15px;font-weight:800;color:#0F766E">10:00 am–11:00 am</div>
+<div style="flex:1"></div>
+<div style="padding:5px 11px;border-radius:8px;border:1.5px solid #5EEAD4;font-size:11px;font-weight:800;color:#0F766E;white-space:nowrap">{{ t.checkedIn }}</div>
+</div>
+<div style="font-size:22px;font-weight:800;margin-top:11px">fiona</div>
+<div style="display:flex;align-items:center;gap:9px;margin-top:9px;flex-wrap:wrap">
+<div style="font-size:14px;font-weight:800;color:#44336E">OUG-QA-REF-002</div>
+<div style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:#EDE9FE">
+<i class="ph-bold ph-user-plus" style="font-size:15px;color:#6D28D9"></i>
+<div style="font-size:12.5px;font-weight:800;color:#6D28D9">{{ t.nReferral }}</div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:9px">
+<i class="ph-fill ph-whatsapp-logo" style="font-size:19px;color:#25D366"></i>
+<div style="font-size:14px;font-weight:800;color:#44336E">+601123937687</div>
+</div>
+<div style="font-size:13.5px;font-weight:800;color:#6D28D9;margin-top:8px">{{ t.consultant }}: [QA] OUG Consultant</div>
+<div style="display:flex;gap:16px;margin-top:13px;padding-top:13px;border-top:1px solid #F0EAF9;flex-wrap:wrap">
+<div style="flex:1;min-width:150px">
+<div style="font-size:14px;font-weight:800;line-height:1.3">NAD+ Skin Energy Facial</div>
+<div style="display:flex;gap:8px;margin-top:11px">
+<div style="display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:8px;background:#F97316;color:#fff;font-size:11.5px;font-weight:800"><i class="ph-fill ph-clock" style="font-size:14px"></i>1</div>
+<div style="display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:8px;background:#9F1239;color:#fff;font-size:11.5px;font-weight:800"><i class="ph-fill ph-airplane-tilt" style="font-size:14px"></i>1</div>
+</div>
+</div>
+<div style="flex:none;min-width:135px">
+<sc-for list="{{ apptConfirm }}" as="c" hint-placeholder-count="5">
+<div style="display:flex;align-items:center;gap:7px;padding:2px 0">
+<i class="{{ c.iconClass }}" style="{{ c.iconStyle }}"></i>
+<div style="flex:1;min-width:0;font-size:12.5px;font-weight:700;color:#166534">{{ c.label }}</div>
+<div style="font-size:12px;font-weight:800;color:#16A34A">{{ c.tick }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+<div style="grid-column:3;grid-row:span 4;border-left:1px solid #EFE8F8;border-bottom:1px solid #F4EFFB"></div>
+<div style="grid-column:4;grid-row:span 4;padding:16px;border-left:1px solid #EFE8F8;border-bottom:1px solid #F4EFFB;background:repeating-linear-gradient(45deg,#FBF9FE,#FBF9FE 9px,#F4EFFB 9px,#F4EFFB 18px)">
+<div style="border:2px dashed #E2D8F3;border-radius:14px;padding:26px 16px;text-align:center;background:rgba(255,255,255,.7)">
+<i class="ph-duotone ph-user-focus" style="font-size:28px;color:#A396C0"></i>
+<div style="font-size:12.5px;font-weight:700;color:#8B7BAE;margin-top:8px">{{ t.noStaffYet }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#A396C0;margin-top:5px;line-height:1.4">{{ t.reservedFuture }}</div>
+</div>
+</div>
+<div style="grid-column:5;grid-row:span 4;border-left:1px solid #EFE8F8;border-bottom:1px solid #F4EFFB"></div>
+
+<sc-for list="{{ apptTimes }}" as="x" hint-placeholder-count="3">
+<div style="grid-column:1;padding:26px 10px;font-size:12px;font-weight:700;color:#5B4A7E;text-align:center;border-bottom:1px solid #F4EFFB">{{ x }}</div>
+</sc-for>
+
+</div>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);;padding:24px;">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:20px">
+<div style="font-size:26px;font-weight:800;letter-spacing:-.6px">{{ t.remarksLegend }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E">{{ t.legendNote }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border-top:1px solid #EFE8F8">
+<sc-for list="{{ legend }}" as="g" hint-placeholder-count="6">
+<div style="{{ g.cellStyle }}">
+<div style="font-size:14.5px;font-weight:800;color:#6D28D9;margin-bottom:13px">{{ g.title }}</div>
+<div style="{{ g.gridStyle }}">
+<sc-for list="{{ g.items }}" as="i" hint-placeholder-count="4">
+<div style="display:flex;align-items:flex-start;gap:8px">
+<i class="{{ i.iconClass }}" style="font-size:19px;flex-shrink:0;line-height:1.2;color:#7137e8"></i>
+<div style="font-size:12.5px;font-weight:700;line-height:1.35;min-width:0">{{ i.label }}</div>
+</div>
+</sc-for>
+</div>
+<div style="{{ g.noteStyle }}">{{ g.note }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isReferral }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:18px">
+
+<div style="border-radius:26px;overflow:hidden;background:linear-gradient(105deg,#F5E7F5 0%,#EFDCEF 40%,#E8CFE4 100%);display:flex;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 8px 24px rgba(124,58,237,.12)">
+<div style="flex:1;min-width:0;padding:32px 10px 32px 34px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#9D3F6B">{{ t.beautyClub }}</div>
+<div style="font-family:Georgia,'Times New Roman',serif;font-size:40px;font-weight:700;line-height:1.12;letter-spacing:-.6px;margin-top:11px;color:#3B1D4E">{{ t.shareBeauty }}<br>{{ t.earnRewards }}</div>
+<div style="font-size:14.5px;font-weight:700;color:#5B3A62;margin-top:14px;line-height:1.5;max-width:420px">{{ t.sendGiftLine }}</div>
+</div>
+<img src="brand/referral-hero.png" alt="" style="flex:1 1 300px;min-width:220px;max-width:420px;height:210px;object-fit:cover;display:block">
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:19px 20px 17px">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#9D3F6B">{{ t.member }}</div>
+<div style="font-size:18px;font-weight:800;margin-top:5px">Fiona Test Admin</div>
+<div style="display:flex;gap:14px;margin-top:16px;flex-wrap:wrap;align-items:stretch">
+<div style="flex:1 1 190px;min-width:180px;border:1px solid #EFE8F8;border-radius:16px;padding:14px 16px">
+<div style="font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9D3F6B">{{ t.memberId }}</div>
+<div style="font-size:16px;font-weight:800;margin-top:6px">BEAUTY-FIONATES</div>
+<div style="font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9D3F6B;margin-top:14px">{{ t.primaryMobile }}</div>
+<div style="font-size:16px;font-weight:800;margin-top:6px">+60 12-345 6789</div>
+</div>
+<div style="flex:1 1 250px;min-width:230px;border:1px solid #EFE8F8;border-radius:16px;padding:14px 16px">
+<div style="font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9D3F6B">{{ t.myReferralCode }}</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+<i class="ph-bold ph-link-simple" style="font-size:20px;color:#8B7BAE"></i>
+<div style="font-size:16px;font-weight:800">BEAUTY-FIONATES</div>
+</div>
+<a href="#" style="display:block;font-size:13.5px;font-weight:700;margin-top:10px;word-break:break-all">https://tikbeli.example/refer/BEAUTY-FIONATES</a>
+</div>
+<div style="flex:1 1 210px;display:flex;flex-direction:column;gap:11px;justify-content:center;min-width:200px">
+<div onClick="{{ toHqDashboard }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:16px;background:linear-gradient(145deg,#fffdff,#f3ebff);border:1px solid #EFE8F8;color:#44336E;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap"><i class="ph-bold ph-chart-line-up" style="font-size:20px"></i>{{ t.hqDashboard }}</div>
+<div onClick="{{ copyLink }}" style="{{ copyStyle }}"><i class="ph-bold ph-copy" style="font-size:19px"></i>{{ copyLabel }}</div>
+<div onClick="{{ openSheet }}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:16px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;font-size:13.5px;font-weight:800;cursor:pointer;box-shadow:9px 13px 18px rgba(81,35,174,.35);white-space:nowrap"><i class="ph-fill ph-gift" style="font-size:20px"></i>{{ t.sendGiftBtn }}</div>
+</div>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:19px 20px 17px">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#9D3F6B">{{ t.memberProgress }}</div>
+<div style="font-size:19px;font-weight:800;margin-top:5px">{{ t.myMemberStats }}</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:17px">
+<sc-for list="{{ referralStats }}" as="r" hint-placeholder-count="3">
+<div style="border-radius:18px;background:#FDFAFE;border:1px solid #F1E9FA;padding:22px 16px;text-align:center">
+<div style="{{ r.iconStyle }}"><i class="{{ r.iconClass }}"></i></div>
+<div style="{{ r.valueStyle }}">{{ r.value }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#5B4A7E;margin-top:5px">{{ r.label }}</div>
+</div>
+</sc-for>
+</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;line-height:1.55;margin-top:14px">{{ t.statsFootnote }}</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:19px 20px 17px">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#9D3F6B">{{ t.threeSteps }}</div>
+<div style="font-size:19px;font-weight:800;margin-top:5px">{{ t.howItWorks }}</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:17px">
+<sc-for list="{{ steps }}" as="x" hint-placeholder-count="3">
+<div style="position:relative;border-radius:18px;background:#FDFAFE;border:1px solid #F1E9FA;padding:20px 18px">
+<div style="position:absolute;right:14px;top:14px;width:26px;height:26px;border-radius:99px;background:#7C3AED;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800">{{ x.n }}</div>
+<div style="{{ x.iconStyle }}"><i class="{{ x.iconClass }}"></i></div>
+<div style="font-size:14.5px;font-weight:800;margin-top:14px;line-height:1.3">{{ x.title }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;margin-top:7px;line-height:1.5">{{ x.desc }}</div>
+</div>
+</sc-for>
+</div>
+
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:19px 20px 17px">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#9D3F6B">{{ t.activeGifts }}</div>
+<div style="font-size:19px;font-weight:800;margin-top:5px">{{ t.giftTemplates }}</div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:17px;margin-top:17px">
+<sc-for list="{{ templates }}" as="x" hint-placeholder-count="4">
+<div style="border-radius:18px;border:1px solid #F1E9FA;overflow:hidden;background:#fff">
+<div style="{{ x.posterStyle }}">
+<div style="{{ x.badgeStyle }}">{{ x.badge }}</div>
+</div>
+<div style="padding:16px">
+<div style="display:flex;align-items:center;gap:8px">
+<div style="font-size:14px">🎁</div>
+<div style="font-size:15px;font-weight:800">{{ x.title }}</div>
+</div>
+<div style="display:flex;align-items:flex-end;gap:12px;margin-top:9px">
+<div style="flex:1;min-width:0;font-size:12.5px;font-weight:600;color:#5B4A7E;line-height:1.5">{{ x.body }}</div>
+<div style="flex-shrink:0;width:32px;height:32px;border-radius:99px;background:#F3EBFE;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#7C3AED;cursor:pointer">→</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+
+<sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:60;background:rgba(40,23,79,.48);display:flex;align-items:center;justify-content:center;padding:24px">
+<div style="width:min(100%,560px);max-height:86vh;overflow:auto;border-radius:34px;background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(255,249,253,.96));box-shadow:18px 26px 48px rgba(60,30,110,.4)">
+
+<div style="display:flex;align-items:flex-start;gap:14px;padding:22px 22px 0">
+<div style="flex:1;min-width:0">
+<div style="font-size:11.5px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:#9D3F6B">{{ t.sendGiftBtn }}</div>
+<div style="font-size:23px;font-weight:800;letter-spacing:-.5px;margin-top:4px">{{ t.pickMessage }}</div>
+</div>
+<div onClick="{{ closeSheet }}" style="flex-shrink:0;width:40px;height:40px;border-radius:99px;background:#F3EBFE;display:flex;align-items:center;justify-content:center;cursor:pointer">
+<i class="ph-bold ph-x" style="font-size:20px;color:#6D28D9"></i>
+</div>
+</div>
+
+<div style="display:flex;gap:9px;overflow-x:auto;padding:16px 22px 4px" class="sq">
+<sc-for list="{{ sheetTemplates }}" as="x" hint-placeholder-count="4">
+<div onClick="{{ x.pick }}" style="{{ x.chipStyle }}">{{ x.title }}</div>
+</sc-for>
+</div>
+
+<div style="margin:16px 22px 0;border-radius:24px;border:1px solid #EFE8F8;background:#FBF8FE;padding:18px">
+<div style="display:flex;align-items:center;gap:9px">
+<i class="ph-fill ph-whatsapp-logo" style="font-size:30px;color:#25D366"></i>
+<div style="font-size:15px;font-weight:800">{{ t.whatsappPreview }}</div>
+</div>
+<div style="font-size:13.5px;font-weight:600;color:#3D2A63;line-height:1.6;margin-top:12px">{{ selected.message }}</div>
+<div style="{{ selected.campaignStyle }}">{{ selected.campaignLine }}</div>
+<div style="{{ selected.urlStyle }}">{{ selected.urlLine }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#7D6D90;line-height:1.55;margin-top:11px">{{ t.shareDisclosure }}</div>
+<div style="{{ selected.posterStyle }}"></div>
+</div>
+
+<div style="display:flex;gap:11px;padding:18px 22px 22px">
+<div onClick="{{ closeSheet }}" style="flex:1;padding:15px;border-radius:16px;text-align:center;font-size:13.5px;font-weight:800;background:linear-gradient(145deg,#fffdff,#f3ebff);border:1px solid #EFE8F8;color:#44336E;cursor:pointer">{{ t.cancel }}</div>
+<div onClick="{{ sendGift }}" style="{{ sendBtnStyle }}"><i class="ph-fill ph-whatsapp-logo" style="font-size:22px"></i>{{ sendBtnLabel }}</div>
+</div>
+
+</div>
+</div>
+</sc-if>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:18px">
+
+<div style="position:relative;width:100%;aspect-ratio:1693/929;min-height:0;overflow:hidden;isolation:isolate;border-radius:26px;background:linear-gradient(115deg,#EFC9E4 0%,#C9A0EC 38%,#9B6FE0 72%,#8B5CF6 100%);box-shadow:0 12px 30px rgba(124,58,237,.2)">
+<img src="brand/dashboard-hero-mia-workstation.png" alt="Mia working at a desktop workstation" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;z-index:0">
+<div style="position:absolute;top:49%;left:53%;z-index:1;width:31%;transform:translateY(-50%);color:#fff;text-shadow:0 3px 8px rgba(67,32,121,.34)">
+<div style="margin:0 0 3.2%;font-size:clamp(1.75rem,4.1vw,4rem);font-weight:800;line-height:.96;letter-spacing:-.065em">{{ t.goodMorning1 }}<br>{{ t.goodMorning2 }}</div>
+<div style="display:block;max-width:100%;font-size:clamp(.92rem,1.45vw,1.45rem);font-weight:800;line-height:1.25">{{ t.readyShine }}</div>
+<div style="display:block;max-width:100%;margin-top:4.7%;font-size:clamp(.75rem,1.1vw,1.1rem);font-weight:700;line-height:1.35">{{ t.apptsToday1 }}<br>{{ t.apptsToday2 }}</div>
+<div onClick="{{ startDay }}" style="{{ startDayStyle }}"><i class="ph-fill ph-play" style="font-size:1em"></i>{{ startDayLabel }}</div>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:22px;padding:8px 5px 16px">
+<sc-for list="{{ kpiCards }}" as="k" hint-placeholder-count="4">
+<div style="position:relative;min-height:292px;padding:29px 27px 25px;overflow:hidden;border-radius:38px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08)">
+<div style="{{ k.iconStyle }}"><i class="{{ k.iconClass }}"></i></div>
+<div style="{{ k.labelStyle }}">{{ k.label }}</div>
+<div style="{{ k.valueStyle }}">{{ k.value }}</div>
+<div style="{{ k.metaStyle }}">{{ k.meta }}</div>
+<div style="{{ k.subWrapStyle }}">
+<i style="{{ k.dotStyle }}"></i>
+<div style="{{ k.subStyle }}">{{ k.sub }}</div>
+<div style="{{ k.sub2Style }}">{{ k.sub2 }}</div>
+</div>
+<div style="{{ k.barWrapStyle }}">
+<div style="{{ k.barStyle }}"></div>
+</div>
+<div style="{{ k.footStyle }}">{{ k.foot }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:17px">
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="font-size:16px;font-weight:800">{{ t.apptStatus }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px">
+<div style="display:flex;align-items:center;gap:6px">
+<div style="width:7px;height:7px;border-radius:99px;background:#8B5CF6"></div>
+<div style="font-size:11.5px;font-weight:700;color:#5B4A7E">{{ t.thisMonth }}</div>
+</div>
+<div style="font-size:11.5px;font-weight:800;color:#6D28D9;background:#F3EBFE;padding:5px 11px;border-radius:99px">{{ t.thisMonth }}</div>
+</div>
+<div style="display:flex;gap:12px;margin-top:16px">
+<div style="flex:none;width:22px;display:flex;flex-direction:column;justify-content:space-between;height:176px;padding-bottom:2px;font-size:11px;font-weight:700;color:#8B7BAE;text-align:right">
+<div>15</div><div>12</div><div>9</div><div>6</div><div>3</div><div>0</div>
+</div>
+<div style="flex:1;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:end;height:176px;border-bottom:1px solid #EFE8F8">
+<sc-for list="{{ statusBars }}" as="b" hint-placeholder-count="5">
+<div style="min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:7px">
+<div style="font-size:12.5px;font-weight:800;color:#2E1065">{{ b.n }}</div>
+<div style="{{ b.barStyle }}"></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;gap:12px;margin-top:9px">
+<div style="flex:none;width:22px"></div>
+<div style="flex:1;min-width:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px">
+<sc-for list="{{ statusBars }}" as="b" hint-placeholder-count="5">
+<div style="min-width:0;text-align:center;font-size:11px;font-weight:700;color:#5B4A7E;line-height:1.2;overflow-wrap:anywhere">{{ b.label }}</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+<div style="font-size:16px;font-weight:800">{{ t.behaviour }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:11px;margin-top:15px">
+<sc-for list="{{ behaviour }}" as="b" hint-placeholder-count="6">
+<div style="border-radius:14px;background:#FAF7FE;padding:13px 12px">
+<div style="font-size:10.5px;font-weight:700;color:#5B4A7E;line-height:1.25;height:26px;overflow:hidden">{{ b.label }}</div>
+<div style="display:flex;align-items:baseline;gap:6px;margin-top:4px">
+<div style="font-size:21px;font-weight:800;letter-spacing:-.5px;white-space:nowrap">{{ b.value }}</div>
+<div style="{{ b.pctStyle }}">{{ b.pct }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-top:17px">
+<div>
+<div style="font-size:12.5px;font-weight:800;margin-bottom:9px">{{ t.cancelBreakdown }}</div>
+<sc-for list="{{ cancels }}" as="c" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;padding:5px 0">
+<div style="{{ c.dotStyle }}"></div>
+<div style="flex:1;min-width:0;font-size:11.5px;font-weight:600;color:#5B4A7E">{{ c.label }}</div>
+<div style="font-size:11.5px;font-weight:800;white-space:nowrap">{{ c.value }}</div>
+</div>
+</sc-for>
+</div>
+<div>
+<div style="font-size:12.5px;font-weight:800;margin-bottom:9px">{{ t.blocked }}</div>
+<sc-for list="{{ blocked }}" as="b" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:8px;padding:5px 0">
+<div style="flex:1;min-width:0;font-size:11.5px;font-weight:600;color:#5B4A7E">{{ b.label }}</div>
+<div style="font-size:11.5px;font-weight:800">{{ b.value }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:17px">
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+<div style="font-size:16px;font-weight:800">{{ t.birthdays }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{ birthdays }}" as="b" hint-placeholder-count="2">
+<div style="display:flex;align-items:center;gap:11px">
+<img src="brand/mascot-phone.png" alt="" style="{{ b.avatarStyle }}">
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800">{{ b.name }}</div>
+<div style="{{ b.tierStyle }}">{{ b.tier }}</div>
+</div>
+<div style="display:flex;gap:7px;flex-shrink:0">
+<div style="width:32px;height:32px;border-radius:10px;background:#FDF2F8;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer">🎂</div>
+<div style="width:32px;height:32px;border-radius:10px;background:#F3EBFE;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer">🎁</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px">
+<div style="font-size:16px;font-weight:800">{{ t.balanceCollect }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:12px">
+<div style="width:30px;height:30px;border-radius:99px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">❗</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:15px;font-weight:800;line-height:1.3">{{ t.remainingAfter }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;margin-top:5px">{{ t.custWithBalance }}</div>
+<div style="font-size:13.5px;font-weight:800;color:#DC2626;margin-top:9px">{{ t.dueToday }}</div>
+</div>
+</div>
+</div>
+
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:17px">
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+<div style="font-size:16px;font-weight:800">{{ t.topServices }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ topServices }}" as="x" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F4EFFB">
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800">{{ x.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ t.bookingsMonth }}</div>
+</div>
+<div style="font-size:14px;font-weight:800;color:#7C3AED;white-space:nowrap">{{ x.count }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+<div style="font-size:16px;font-weight:800">{{ t.lowStock }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ lowStock }}" as="x" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #F4EFFB">
+<div style="width:32px;height:32px;border-radius:10px;background:#FDF2F8;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">📦</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800">{{ x.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ x.left }}</div>
+</div>
+<div style="font-size:12.5px;font-weight:800;color:#DC2626;white-space:nowrap">{{ t.low }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:17px">
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px">
+<div style="font-size:16px;font-weight:800">{{ t.staffPerf }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ staffPerf }}" as="p" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:13px">
+<div style="flex:none;width:92px;font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+<div style="flex:1;min-width:0;height:11px;border-radius:99px;background:#F1EAFB;overflow:hidden">
+<div style="{{ p.barStyle }}"></div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+<div style="font-size:16px;font-weight:800">{{ t.upcoming }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ upcoming }}" as="u" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid #F4EFFB">
+<div style="flex:none;width:72px;font-size:12.5px;font-weight:800;color:#6D28D9;white-space:nowrap">{{ u.time }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800">{{ u.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ u.service }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px">
+<div style="font-size:16px;font-weight:800">{{ t.todayAppts }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#7C3AED;cursor:pointer">{{ t.viewAll }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<sc-for list="{{ todayAppts }}" as="a" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #F4EFFB">
+<div style="flex:none;width:76px;font-size:12.5px;font-weight:800;color:#6D28D9;white-space:nowrap">{{ a.time }}</div>
+<img src="brand/mascot-phone.png" alt="" style="{{ a.avatarStyle }}">
+<div style="flex:1;min-width:0">
+<div style="font-size:13.5px;font-weight:800">{{ a.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ a.service }}</div>
+</div>
+<div style="{{ a.statusStyle }}">{{ a.status }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);padding:18px 20px 22px">
+<div style="font-size:16px;font-weight:800;margin-bottom:18px">{{ t.quickActions }}</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:14px;padding-top:16px">
+<sc-for list="{{ quickActions }}" as="q" hint-placeholder-count="7">
+<div onClick="{{ q.go }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;padding:4px 2px">
+<div style="{{ q.iconStyle }}"><i class="{{ q.iconClass }}"></i></div>
+<div style="font-size:11.5px;font-weight:700;text-align:center;line-height:1.25">{{ q.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isPlaceholder }}" hint-placeholder-val="{{ false }}">
+<div style="min-width:0;overflow:hidden;border-radius:28px;background:linear-gradient(145deg,#fffefd 0%,#fffafd 55%,#fdf7ff 100%);border:1px solid rgba(255,255,255,.96);box-shadow:13px 17px 27px rgba(119,75,166,.16),-7px -8px 18px rgba(255,255,255,.96),inset 2px 2px 3px rgba(255,255,255,.98),inset -2px -3px 4px rgba(167,125,203,.08);;padding:60px 30px;text-align:center;">
+<div style="font-size:40px">{{ placeholderIcon }}</div>
+<div style="font-size:24px;font-weight:800;margin-top:14px">{{ placeholderTitle }}</div>
+<div style="font-size:13.5px;font-weight:600;color:#5B4A7E;margin-top:9px;line-height:1.5">{{ t.notBuiltYet }}</div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1520,&quot;height&quot;:1900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#7C3AED&quot;,&quot;#EC4899&quot;,&quot;#0EA5E9&quot;,&quot;#10B981&quot;],&quot;default&quot;:&quot;#7C3AED&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+const T = {
+  en: { role: "Admin", todaySummary: "Today's Summary", appointments: "Appointments", walkIns: "Walk-ins", revenue: "Revenue",
+    goodMorning1: "Good Morning,", goodMorning2: "Hana!", readyShine: "Ready to make your clients shine?",
+    apptsToday1: "You have 2 appointments", apptsToday2: "scheduled today", startDay: "Start Day", dayStarted: "Day started",
+    monthSales: "This Month Total Sales", achieved: "% Achieved", target: "Target: RM 30,000",
+    apptsMonth: "Appointments This Month", vsLast: "vs last month", activeMembers: "Active Members",
+    commission: "Commission", paid: "Paid",
+    apptStatus: "Appointment Status", viewAll: "View all →", thisMonth: "This month",
+    confirmed: "Confirmed", inService: "In service", pending: "Pending", completed: "Completed", noShow: "No show",
+    behaviour: "Customer Behaviour Analysis", totalAppts: "Total Appointments", firstVisit: "First Visit",
+    repeatCust: "Repeat Customers", returningRate: "Returning Rate", cancelRate: "Cancellation Rate", noShowRate: "No-show Rate",
+    cancelBreakdown: "Cancellation breakdown", blocked: "Blocked customers",
+    cancelNotice: "Cancelled (with notice)", cancelNoNotice: "Cancelled (no notice)", cancelSameDay: "Same-day cancellation",
+    days30: "30 days", days90: "90 days", days180: "180 days",
+    birthdays: "Today's Birthdays", goldMember: "Gold Member", silverMember: "Silver Member",
+    balanceCollect: "Balance to Collect", remainingAfter: "RM 4,860 remaining after deposits",
+    custWithBalance: "12 customers with balance", dueToday: "RM 1,240 due today",
+    topServices: "Top Services", bookingsMonth: "Bookings this month",
+    lowStock: "Low Stock Alerts", low: "Low", left: " left",
+    staffPerf: "Staff Performance", upcoming: "Upcoming Appointments", todayAppts: "Today's Appointments",
+    quickActions: "Quick Actions", newAppt: "New Appointment", walkIn: "Walk In", addMember: "Add Member",
+    pos: "POS", topUp: "Top Up", giftCard: "Gift Card", packages: "Packages",
+    nDashboard: "Dashboard", nAppointments: "Appointments", nPos: "POS", nSales: "Sales", nMembers: "Members",
+    nInventory: "Inventory", nCampaigns: "Campaigns", nReferral: "Referral", nStaff: "Staff",
+    nReports: "Reports", nFinance: "Finance", nSettings: "Settings",
+    sFaceSerum: "Face Serum", sMassageOil: "Massage Oil", sHairTreatment: "Hair Treatment",
+    svAntiAging: "Anti-Aging Facial", svFullBody: "Full Body Massage", svHydrating: "Hydrating Facial",
+    aDeepCleansing: "Deep Cleansing Facial", aFullBody: "Full Body Massage", aHairColoring: "Hair Coloring", aHydrating: "Hydrating Facial",
+    salonCalendar: "Salon Day Calendar · Malaysia local time (MYT)", bookReferral: "Book Referral", openWaiting: "Open Waiting List Page",
+    prevDay: "Previous day", todayBtn: "Today", nextDay: "Next day", date: "Date", outlet: "Outlet", status: "Status",
+    allStatuses: "All statuses", shown: "shown", dayView: "Day view", staffColumns: "Staff Columns",
+    unassigned: "Unassigned", awaitingAssign: "Awaiting assignment", waiting: "WAITING",
+    awaitingStaff: "Awaiting staff data", staffColumn: "Staff column", noStaffYet: "No staff data yet",
+    reservedFuture: "This column is reserved for future staff schedules.",
+    checkedIn: "CHECKED IN", consultant: "Consultant", turnedUp: "Turned up / Checked in", late: "Late",
+    cancelled: "Cancelled", totalAppointments: "Total appointments",
+    viaWhatsapp: "via WhatsApp", viaPhone: "via Phone Call", initial: "Initial", day: "day",
+    remarksLegend: "Remarks / Legend", legendNote: "Operational meanings stay here at the bottom.",
+    lgStatus: "Appointment Status", lgConfirm: "Confirmation & Follow Up", lgSource: "Customer Source / Media",
+    lgWarning: "Warning / Risk Indicators", lgWaiting: "Waiting List / Waiting Shadow", lgOutcomes: "End of Day Outcomes",
+    booked: "Booked", needFollowUp: "Need Follow Up", checkedInTurned: "Checked In / Turned Up",
+    reminders: "Initial, 3-day, 1-day reminders", notReplied: "Not Replied / Need Follow Up", notifiedOnce: "Notified Once / Twice",
+    existingCust: "Existing Customer", walkInSrc: "Walk-In", signage: "Signage", voucher: "Voucher", inviteCard: "Invitation Card", other: "Other",
+    outstandingBal: "Outstanding Balance", lateHistory: "Late History (last 12 months)", noShowHistory: "No Show History (last 12 months)",
+    complaintCust: "Complaint Customer (last 12 months)", lowTreatments: "Low Treatments Remaining (5 or fewer)", blockedCust: "Blocked Customer",
+    warningNote: "Indicators appear only when relevant; late, no-show and complaint history uses the last 12 months.",
+    anyStaff: "AS = Any Staff — customer can accept any staff", designatedStaff: "DS = Designated Staff — customer wants specific staff",
+    waitingNote: "Waiting shadow = customer requested this time range. Waiting customers are not appointments until staff confirms the booking.",
+    notConfirmed: "Not Confirmed / Pending",
+    beautyClub: "Beauty Rewards Club", shareBeauty: "Share Beauty", earnRewards: "Earn Rewards",
+    sendGiftLine: "Send a beauty gift to someone you love and unlock exclusive member rewards.",
+    member: "Member", memberId: "Member ID", myInviteLink: "My Invitation Link",
+    copyLink: "Copy Link", copied: "Copied", sendGiftBtn: "Send A Beauty Gift",
+    primaryMobile: "Primary mobile", myReferralCode: "My Referral Code", hqDashboard: "HQ Referral Dashboard",
+    unavailable: "Not available", statsFootnote: "Live all-time counts. Friends Invited counts identifiable friends who claimed a referral. Rewards are not available in Phase 1.",
+    activeGifts: "Active gifts and template previews", previewOnly: "Preview only",
+    badgeFreeTrial: "Free Trial", badgePaidTrial: "Paid Trial", badgeBeautyCredit: "Beauty Credit", badgeCustom: "Custom",
+    pickMessage: "Pick a message", whatsappPreview: "WhatsApp Preview",
+    activeCampaign: "Active campaign:", previewNoCampaign: "Template preview only — no active campaign.",
+    sharingUnavailable: "Sharing is unavailable for this template.",
+    shareDisclosure: "Only your sharing action is recorded. WhatsApp delivery and read receipts are not tracked.",
+    cancel: "Cancel", sendViaWhatsapp: "Send Gift via WhatsApp", preparingShare: "Preparing Share…",
+    memberProgress: "Member Progress", myMemberStats: "My Member Stats",
+    giftsShared: "Gifts Shared", friendsInvited: "Friends Invited", rewardsEarned: "Beauty Rewards Earned",
+    threeSteps: "Three Simple Steps", howItWorks: "How It Works",
+    step1: "Share A Beauty Gift", step1d: "Send a beauty experience to someone you care about.",
+    step2: "Friend Enjoys The Experience", step2d: "Your friend claims the gift and visits the salon.",
+    step3: "Both Receive Rewards", step3d: "Your friend enjoys beauty benefits and you earn Beauty Rewards.",
+    readyMessages: "Ready-To-Share Messages", giftTemplates: "Beauty Gift Templates",
+    tplFree: "FREE Facial Trial", tplFreeBody: "I would love to send you a FREE facial trial from TikBeli Beauty. Enjoy a little beauty time on me!",
+    tplPaid: "RM19 Trial Facial", tplPaidBody: "Here is a special RM19 trial facial invitation from TikBeli Beauty. I thought you might enjoy it!",
+    tplCredit: "RM100 Beauty Credit", tplCreditBody: "A beauty gift for you: enjoy RM100 Beauty Credit with TikBeli Beauty through my personal invitation.",
+    tplCustom: "Custom Message", tplCustomBody: "I am sharing my personal TikBeli Beauty invitation with you. Choose a beauty experience you will love!",
+    notBuiltYet: "This module is next in line. Tell me and I'll design it." },
+  zh: { role: "管理员", todaySummary: "今日概览", appointments: "预约", walkIns: "散客", revenue: "营业额",
+    goodMorning1: "早安，", goodMorning2: "Hana！", readyShine: "准备好让顾客焕发光彩了吗？",
+    apptsToday1: "今天有 2 个", apptsToday2: "预约", startDay: "开始营业", dayStarted: "已开始营业",
+    monthSales: "本月总营业额", achieved: "达成率", target: "目标：RM 30,000",
+    apptsMonth: "本月预约数", vsLast: "较上月", activeMembers: "活跃会员",
+    commission: "佣金", paid: "已发放",
+    apptStatus: "预约状态", viewAll: "查看全部 →", thisMonth: "本月",
+    confirmed: "已确认", inService: "护理中", pending: "待确认", completed: "已完成", noShow: "未到",
+    behaviour: "顾客行为分析", totalAppts: "预约总数", firstVisit: "首次到访",
+    repeatCust: "回头客", returningRate: "回访率", cancelRate: "取消率", noShowRate: "未到率",
+    cancelBreakdown: "取消明细", blocked: "受限顾客",
+    cancelNotice: "提前通知取消", cancelNoNotice: "未通知取消", cancelSameDay: "当日取消",
+    days30: "30 天", days90: "90 天", days180: "180 天",
+    birthdays: "今日生日", goldMember: "金卡会员", silverMember: "银卡会员",
+    balanceCollect: "待收款项", remainingAfter: "订金后尚欠 RM 4,860",
+    custWithBalance: "12 位顾客有未结款", dueToday: "今日到期 RM 1,240",
+    topServices: "热门服务", bookingsMonth: "本月预约数",
+    lowStock: "低库存提醒", low: "偏低", left: " 件",
+    staffPerf: "员工业绩", upcoming: "即将到来的预约", todayAppts: "今日预约",
+    quickActions: "快捷操作", newAppt: "新建预约", walkIn: "散客登记", addMember: "新增会员",
+    pos: "收银", topUp: "储值", giftCard: "礼品卡", packages: "套餐",
+    nDashboard: "主页", nAppointments: "预约", nPos: "收银", nSales: "业绩", nMembers: "会员",
+    nInventory: "库存", nCampaigns: "活动", nReferral: "推荐", nStaff: "员工",
+    nReports: "报表", nFinance: "财务", nSettings: "设置",
+    sFaceSerum: "面部精华", sMassageOil: "按摩油", sHairTreatment: "头发护理",
+    svAntiAging: "抗衰面部护理", svFullBody: "全身按摩", svHydrating: "补水面部护理",
+    aDeepCleansing: "深层清洁护理", aFullBody: "全身按摩", aHairColoring: "染发", aHydrating: "补水护理",
+    salonCalendar: "沙龙日历 · 马来西亚时间 (MYT)", bookReferral: "推荐预约", openWaiting: "打开候补名单",
+    prevDay: "前一天", todayBtn: "今天", nextDay: "后一天", date: "日期", outlet: "分店", status: "状态",
+    allStatuses: "全部状态", shown: "已筛选", dayView: "日视图", staffColumns: "员工栏",
+    unassigned: "未分配", awaitingAssign: "等待分配", waiting: "候补",
+    awaitingStaff: "等待员工数据", staffColumn: "员工栏位", noStaffYet: "暂无员工数据",
+    reservedFuture: "此栏位预留给未来的员工排班。",
+    checkedIn: "已到店", consultant: "顾问", turnedUp: "已到店 / 签到", late: "迟到",
+    cancelled: "已取消", totalAppointments: "预约总数",
+    viaWhatsapp: "经 WhatsApp", viaPhone: "经电话", initial: "首次通知", day: "天",
+    remarksLegend: "备注 / 图例", legendNote: "操作说明统一放在页面底部。",
+    lgStatus: "预约状态", lgConfirm: "确认与跟进", lgSource: "顾客来源 / 媒体",
+    lgWarning: "警示 / 风险标记", lgWaiting: "候补名单 / 候补影子", lgOutcomes: "当日结果",
+    booked: "已预订", needFollowUp: "需跟进", checkedInTurned: "已签到 / 已到店",
+    reminders: "首次、3天、1天提醒", notReplied: "未回复 / 需跟进", notifiedOnce: "已通知 1 次 / 2 次",
+    existingCust: "现有顾客", walkInSrc: "散客", signage: "店面广告", voucher: "礼券", inviteCard: "邀请卡", other: "其他",
+    outstandingBal: "未结余额", lateHistory: "迟到记录（近12个月）", noShowHistory: "未到记录（近12个月）",
+    complaintCust: "投诉顾客（近12个月）", lowTreatments: "剩余疗程偏少（5次或以下）", blockedCust: "受限顾客",
+    warningNote: "标记仅在相关时显示；迟到、未到与投诉记录取自近12个月。",
+    anyStaff: "AS = 任意员工 — 顾客可接受任何员工", designatedStaff: "DS = 指定员工 — 顾客要求特定员工",
+    waitingNote: "候补影子 = 顾客要求的时间范围。员工确认前，候补顾客不算正式预约。",
+    notConfirmed: "未确认 / 待定",
+    beautyClub: "美丽奖励俱乐部", shareBeauty: "分享美丽", earnRewards: "赚取奖励",
+    sendGiftLine: "把美丽礼遇送给你在乎的人，解锁专属会员奖励。",
+    member: "会员", memberId: "会员编号", myInviteLink: "我的邀请链接",
+    copyLink: "复制链接", copied: "已复制", sendGiftBtn: "赠送美丽礼遇",
+    primaryMobile: "主要电话", myReferralCode: "我的推荐码", hqDashboard: "总部推荐看板",
+    unavailable: "暂不提供", statsFootnote: "实时累计数据。「已邀请好友」仅计已领取推荐的可识别好友。奖励功能在第一阶段尚未开放。",
+    activeGifts: "进行中的礼遇与模板预览", previewOnly: "仅预览",
+    badgeFreeTrial: "免费体验", badgePaidTrial: "付费体验", badgeBeautyCredit: "美丽奖励金", badgeCustom: "自定义",
+    pickMessage: "选择文案", whatsappPreview: "WhatsApp 预览",
+    activeCampaign: "进行中活动：", previewNoCampaign: "仅为模板预览 — 暂无进行中的活动。",
+    sharingUnavailable: "此模板暂无法分享。",
+    shareDisclosure: "系统只记录你的分享动作，不追踪 WhatsApp 的送达与已读状态。",
+    cancel: "取消", sendViaWhatsapp: "透过 WhatsApp 发送", preparingShare: "准备中…",
+    memberProgress: "会员进度", myMemberStats: "我的会员数据",
+    giftsShared: "已送礼遇", friendsInvited: "已邀请好友", rewardsEarned: "已赚奖励金",
+    threeSteps: "三个简单步骤", howItWorks: "如何运作",
+    step1: "分享美丽礼遇", step1d: "把美丽体验送给你在乎的人。",
+    step2: "好友享用体验", step2d: "好友领取礼遇并到店体验。",
+    step3: "双方获得奖励", step3d: "好友享有优惠，你获得美丽奖励金。",
+    readyMessages: "现成分享文案", giftTemplates: "礼遇文案模板",
+    tplFree: "免费面部体验", tplFreeBody: "我想送你一次 TikBeli 免费面部体验，好好享受属于你的美丽时光！",
+    tplPaid: "RM19 体验护理", tplPaidBody: "这是 TikBeli 的 RM19 体验护理邀请，相信你会喜欢！",
+    tplCredit: "RM100 美丽奖励金", tplCreditBody: "送你一份美丽礼遇：透过我的邀请，享有 TikBeli RM100 美丽奖励金。",
+    tplCustom: "自定义文案", tplCustomBody: "我把 TikBeli 的专属邀请分享给你，挑一个你喜欢的美丽体验吧！",
+    notBuiltYet: "这个模块还没设计，告诉我就开始。" },
+  ms: { role: "Admin", todaySummary: "Ringkasan Hari Ini", appointments: "Temujanji", walkIns: "Walk-in", revenue: "Hasil",
+    goodMorning1: "Selamat Pagi,", goodMorning2: "Hana!", readyShine: "Sedia buat pelanggan anda berseri?",
+    apptsToday1: "Anda ada 2 temujanji", apptsToday2: "hari ini", startDay: "Mula Hari", dayStarted: "Hari bermula",
+    monthSales: "Jumlah Jualan Bulan Ini", achieved: "% Dicapai", target: "Sasaran: RM 30,000",
+    apptsMonth: "Temujanji Bulan Ini", vsLast: "vs bulan lepas", activeMembers: "Ahli Aktif",
+    commission: "Komisen", paid: "Dibayar",
+    apptStatus: "Status Temujanji", viewAll: "Lihat semua →", thisMonth: "Bulan ini",
+    confirmed: "Disahkan", inService: "Dalam servis", pending: "Menunggu", completed: "Selesai", noShow: "Tidak hadir",
+    behaviour: "Analisis Kelakuan Pelanggan", totalAppts: "Jumlah Temujanji", firstVisit: "Lawatan Pertama",
+    repeatCust: "Pelanggan Berulang", returningRate: "Kadar Kembali", cancelRate: "Kadar Batal", noShowRate: "Kadar Tidak Hadir",
+    cancelBreakdown: "Pecahan pembatalan", blocked: "Pelanggan disekat",
+    cancelNotice: "Batal (dengan notis)", cancelNoNotice: "Batal (tiada notis)", cancelSameDay: "Batal hari sama",
+    days30: "30 hari", days90: "90 hari", days180: "180 hari",
+    birthdays: "Hari Jadi Hari Ini", goldMember: "Ahli Gold", silverMember: "Ahli Silver",
+    balanceCollect: "Baki Untuk Dikutip", remainingAfter: "RM 4,860 baki selepas deposit",
+    custWithBalance: "12 pelanggan ada baki", dueToday: "RM 1,240 perlu dibayar hari ini",
+    topServices: "Servis Popular", bookingsMonth: "Tempahan bulan ini",
+    lowStock: "Amaran Stok Rendah", low: "Rendah", left: " tinggal",
+    staffPerf: "Prestasi Staf", upcoming: "Temujanji Akan Datang", todayAppts: "Temujanji Hari Ini",
+    quickActions: "Tindakan Pantas", newAppt: "Temujanji Baharu", walkIn: "Walk In", addMember: "Tambah Ahli",
+    pos: "POS", topUp: "Tambah Nilai", giftCard: "Kad Hadiah", packages: "Pakej",
+    nDashboard: "Dashboard", nAppointments: "Temujanji", nPos: "POS", nSales: "Jualan", nMembers: "Ahli",
+    nInventory: "Inventori", nCampaigns: "Kempen", nReferral: "Rujukan", nStaff: "Staf",
+    nReports: "Laporan", nFinance: "Kewangan", nSettings: "Tetapan",
+    sFaceSerum: "Serum Muka", sMassageOil: "Minyak Urut", sHairTreatment: "Rawatan Rambut",
+    svAntiAging: "Facial Anti-Penuaan", svFullBody: "Urutan Seluruh Badan", svHydrating: "Facial Penghidratan",
+    aDeepCleansing: "Facial Pembersihan", aFullBody: "Urutan Seluruh Badan", aHairColoring: "Pewarnaan Rambut", aHydrating: "Facial Penghidratan",
+    salonCalendar: "Kalendar Harian Salun · Waktu Malaysia (MYT)", bookReferral: "Tempah Rujukan", openWaiting: "Buka Senarai Menunggu",
+    prevDay: "Hari sebelum", todayBtn: "Hari ini", nextDay: "Hari seterusnya", date: "Tarikh", outlet: "Cawangan", status: "Status",
+    allStatuses: "Semua status", shown: "ditunjuk", dayView: "Paparan hari", staffColumns: "Lajur Staf",
+    unassigned: "Belum ditugaskan", awaitingAssign: "Menunggu penugasan", waiting: "MENUNGGU",
+    awaitingStaff: "Menunggu data staf", staffColumn: "Lajur staf", noStaffYet: "Tiada data staf lagi",
+    reservedFuture: "Lajur ini disimpan untuk jadual staf akan datang.",
+    checkedIn: "DAFTAR MASUK", consultant: "Perunding", turnedUp: "Hadir / Daftar masuk", late: "Lewat",
+    cancelled: "Dibatalkan", totalAppointments: "Jumlah temujanji",
+    viaWhatsapp: "via WhatsApp", viaPhone: "via Panggilan", initial: "Awal", day: "hari",
+    remarksLegend: "Nota / Legenda", legendNote: "Maksud operasi kekal di bahagian bawah.",
+    lgStatus: "Status Temujanji", lgConfirm: "Pengesahan & Susulan", lgSource: "Sumber Pelanggan / Media",
+    lgWarning: "Petunjuk Amaran / Risiko", lgWaiting: "Senarai Menunggu", lgOutcomes: "Hasil Akhir Hari",
+    booked: "Ditempah", needFollowUp: "Perlu Susulan", checkedInTurned: "Daftar Masuk / Hadir",
+    reminders: "Peringatan awal, 3-hari, 1-hari", notReplied: "Tiada Balasan / Perlu Susulan", notifiedOnce: "Dimaklum Sekali / Dua Kali",
+    existingCust: "Pelanggan Sedia Ada", walkInSrc: "Walk-In", signage: "Papan Tanda", voucher: "Vaucar", inviteCard: "Kad Jemputan", other: "Lain-lain",
+    outstandingBal: "Baki Tertunggak", lateHistory: "Sejarah Lewat (12 bulan)", noShowHistory: "Sejarah Tidak Hadir (12 bulan)",
+    complaintCust: "Pelanggan Aduan (12 bulan)", lowTreatments: "Baki Rawatan Rendah (5 atau kurang)", blockedCust: "Pelanggan Disekat",
+    warningNote: "Petunjuk muncul apabila relevan sahaja; sejarah lewat, tidak hadir dan aduan menggunakan 12 bulan lepas.",
+    anyStaff: "AS = Mana-mana Staf — pelanggan terima mana-mana staf", designatedStaff: "DS = Staf Ditetapkan — pelanggan mahu staf tertentu",
+    waitingNote: "Bayang menunggu = pelanggan minta julat masa ini. Pelanggan menunggu bukan temujanji sehingga staf mengesahkan.",
+    notConfirmed: "Belum Disahkan / Menunggu",
+    beautyClub: "Beauty Rewards Club", shareBeauty: "Kongsi Kecantikan", earnRewards: "Dapat Ganjaran",
+    sendGiftLine: "Hantar hadiah kecantikan kepada orang tersayang dan buka ganjaran ahli eksklusif.",
+    member: "Ahli", memberId: "ID Ahli", myInviteLink: "Pautan Jemputan Saya",
+    copyLink: "Salin Pautan", copied: "Disalin", sendGiftBtn: "Hantar Hadiah Kecantikan",
+    primaryMobile: "Telefon utama", myReferralCode: "Kod Rujukan Saya", hqDashboard: "Dashboard Rujukan HQ",
+    unavailable: "Tiada", statsFootnote: "Kiraan sepanjang masa secara langsung. Rakan Dijemput mengira rakan yang menuntut rujukan. Ganjaran tiada dalam Fasa 1.",
+    activeGifts: "Hadiah aktif dan pratonton templat", previewOnly: "Pratonton sahaja",
+    badgeFreeTrial: "Cubaan Percuma", badgePaidTrial: "Cubaan Berbayar", badgeBeautyCredit: "Kredit Kecantikan", badgeCustom: "Tersuai",
+    pickMessage: "Pilih mesej", whatsappPreview: "Pratonton WhatsApp",
+    activeCampaign: "Kempen aktif:", previewNoCampaign: "Pratonton templat sahaja — tiada kempen aktif.",
+    sharingUnavailable: "Perkongsian tidak tersedia untuk templat ini.",
+    shareDisclosure: "Hanya tindakan perkongsian anda direkodkan. Penghantaran dan resit baca WhatsApp tidak dijejaki.",
+    cancel: "Batal", sendViaWhatsapp: "Hantar Hadiah via WhatsApp", preparingShare: "Menyediakan…",
+    memberProgress: "Kemajuan Ahli", myMemberStats: "Statistik Ahli Saya",
+    giftsShared: "Hadiah Dikongsi", friendsInvited: "Rakan Dijemput", rewardsEarned: "Ganjaran Diperoleh",
+    threeSteps: "Tiga Langkah Mudah", howItWorks: "Cara Ia Berfungsi",
+    step1: "Kongsi Hadiah Kecantikan", step1d: "Hantar pengalaman kecantikan kepada orang yang anda sayangi.",
+    step2: "Rakan Nikmati Pengalaman", step2d: "Rakan anda tuntut hadiah dan melawat salun.",
+    step3: "Kedua-dua Dapat Ganjaran", step3d: "Rakan anda dapat manfaat, anda dapat Ganjaran Kecantikan.",
+    readyMessages: "Mesej Sedia Kongsi", giftTemplates: "Templat Hadiah Kecantikan",
+    tplFree: "Cubaan Facial PERCUMA", tplFreeBody: "Saya ingin hantar cubaan facial PERCUMA dari TikBeli Beauty. Nikmati masa kecantikan anda!",
+    tplPaid: "Facial Cubaan RM19", tplPaidBody: "Ini jemputan facial cubaan RM19 istimewa dari TikBeli Beauty. Saya rasa anda akan sukakannya!",
+    tplCredit: "Kredit Kecantikan RM100", tplCreditBody: "Hadiah untuk anda: nikmati Kredit Kecantikan RM100 dengan TikBeli Beauty melalui jemputan peribadi saya.",
+    tplCustom: "Mesej Tersuai", tplCustomBody: "Saya kongsi jemputan peribadi TikBeli Beauty dengan anda. Pilih pengalaman kecantikan yang anda suka!",
+    notBuiltYet: "Modul ini seterusnya. Beritahu saya dan saya akan reka." }
+};
+
+class Component extends DCLogic {
+  state = { lang: "en", nav: 0, started: false, copied: false, outlet: 0, status: 0, dayOffset: 0, sheetOpen: false, tpl: 0, sharing: false };
+
+  renderVals() {
+    const s = this.state, lang = s.lang, t = T[lang];
+    const accent = this.props.accent ?? "#7C3AED";
+
+    const navItems = [
+      [t.nDashboard, "house"], [t.nAppointments, "calendar-check"], [t.nPos, "cash-register"], [t.nSales, "chart-line-up"],
+      [t.nMembers, "users-three"], [t.nInventory, "package"], [t.nCampaigns, "megaphone-simple"], [t.nReferral, "gift"],
+      [t.nStaff, "user-list"], [t.nReports, "chart-bar"], [t.nFinance, "wallet"], [t.nSettings, "gear-six"]
+    ];
+
+    const avatar = () => "width:42px;height:42px;flex-shrink:0;object-fit:cover;object-position:50% 35%;border-radius:50%;box-shadow:2px 3px 5px rgba(91,52,142,.16)";
+
+    const TONE = {
+      lavender: "linear-gradient(145deg,#b384ff,#6d3ce5)",
+      mint: "linear-gradient(145deg,#70e5a2,#27a86f)",
+      pink: "linear-gradient(145deg,#ff7fbd,#ec378c)",
+      peach: "linear-gradient(145deg,#ffc362,#f6802b)"
+    };
+    const TPL = [
+      { k: "tplFree", badge: "badgeFreeTrial", src: "brand/free-facial-trial.png", active: true },
+      { k: "tplPaid", badge: "badgePaidTrial", src: "brand/rm19-trial-facial.png", active: true },
+      { k: "tplCredit", badge: "badgeBeautyCredit", src: "brand/rm100-beauty-credit.png", active: true },
+      { k: "tplCustom", badge: "badgeCustom", src: "brand/custom-message.png", active: false }
+    ];
+    const OUTLETS = ["OUG", "Bukit Bintang", "Mid Valley", "All outlets"];
+    const STATUSES = [t.allStatuses, t.confirmed, t.pending, t.completed, t.noShow];
+    const dayN = 29 + s.dayOffset;
+    const apptDate = String(dayN).padStart(2, "0") + "/08/2026";
+
+    const legendCell = () => "padding:18px;border-bottom:1px solid #EFE8F8;border-left:1px solid #EFE8F8";
+
+    return {
+      t, roleLabel: t.role,
+      isDashboard: s.nav === 0, isAppointments: s.nav === 1, isReferral: s.nav === 7,
+      isPlaceholder: s.nav !== 0 && s.nav !== 1 && s.nav !== 7,
+      placeholderTitle: navItems[s.nav] ? navItems[s.nav][0] : "",
+      placeholderIcon: navItems[s.nav] ? navItems[s.nav][1] : "",
+      goDashboard: () => this.setState({ nav: 0 }),
+
+      apptDate,
+      prevDay: () => this.setState({ dayOffset: s.dayOffset - 1 }),
+      nextDay: () => this.setState({ dayOffset: s.dayOffset + 1 }),
+      setToday: () => this.setState({ dayOffset: 0 }),
+      todayBtnStyle: "padding:12px 20px;border-radius:13px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+        (s.dayOffset === 0 ? "background:linear-gradient(135deg,#8B5CF6,#7C3AED);color:#fff;box-shadow:0 4px 12px rgba(124,58,237,.3)" : "background:#FAF7FE;color:#44336E"),
+
+      apptFilters: [
+        { label: t.date, value: apptDate, caretClass: "ph-bold ph-calendar-blank", cycle: () => this.setState({ dayOffset: 0 }) },
+        { label: t.outlet, value: OUTLETS[s.outlet], caretClass: "ph-bold ph-caret-down", cycle: () => this.setState({ outlet: (s.outlet + 1) % OUTLETS.length }) },
+        { label: t.status, value: STATUSES[s.status], caretClass: "ph-bold ph-caret-down", cycle: () => this.setState({ status: (s.status + 1) % STATUSES.length }) }
+      ],
+
+      apptStats: [
+        { icon: "user-focus", label: t.turnedUp, value: "1", c: "#16A34A" },
+        { icon: "user-focus", label: t.completed, value: "0", c: "#2563EB" },
+        { icon: "clock", label: t.late, value: "0", c: "#EA580C" },
+        { icon: "calendar-x", label: t.cancelled, value: "0", c: "#DC2626" },
+        { icon: "airplane-tilt", label: t.noShow, value: "0", c: "#BE123C" }
+      ].map(x => ({ iconClass: "ph-duotone ph-" + x.icon, label: x.label, value: x.value,
+        cardStyle: "background:#fff;border:2px solid " + x.c + ";border-radius:16px;padding:14px 13px",
+        labelStyle: "font-size:11.5px;font-weight:800;letter-spacing:.4px;line-height:1.3;text-transform:uppercase;color:" + x.c,
+        valueStyle: "font-size:28px;font-weight:800;letter-spacing:-.8px;margin-top:7px;color:" + x.c })),
+
+      apptTimes: ["10:30 AM", "11:00 AM", "11:30 AM", "12:00 PM"],
+      apptConfirm: [
+        { label: t.viaWhatsapp, icon: "ph-fill ph-whatsapp-logo", tick: "" },
+        { label: t.confirmed, tick: "✓" },
+        { label: t.initial, tick: "✓" },
+        { label: "3-" + t.day, tick: "✓" },
+        { label: "1-" + t.day, tick: "✓" }
+      ].map(c => ({ ...c,
+        iconClass: c.icon || "",
+        iconStyle: c.icon ? "font-size:16px;color:#25D366;flex-shrink:0" : "display:none" })),
+
+      legend: [
+        { title: "1. " + t.lgStatus, items: [
+          ["calendar-check", t.booked], ["check-circle", t.confirmed], ["chat-circle-dots", t.needFollowUp],
+          ["user-focus", t.checkedInTurned], ["hourglass-medium", t.inService], ["list-checks", t.completed],
+          ["clock", t.late], ["calendar-x", t.cancelled], ["airplane-tilt", t.noShow]] },
+        { title: "2. " + t.lgConfirm, items: [
+          ["whatsapp-logo", t.viaWhatsapp], ["phone-call", t.viaPhone], ["check-fat", t.reminders],
+          ["chat-circle-dots", t.notReplied], ["hourglass-medium", t.notifiedOnce]] },
+        { title: "3. " + t.lgSource, items: [
+          ["identification-card", t.existingCust], ["person-simple-walk", t.walkInSrc], ["user-plus", t.nReferral],
+          ["signpost", t.signage], ["facebook-logo", "Facebook"], ["instagram-logo", "Instagram"],
+          ["tiktok-logo", "TikTok"], ["book-open-text", "RedNote"], ["number-eight", "Lemon8"],
+          ["google-logo", "Google"], ["airplane-tilt", "AirAsia"], ["currency-circle-dollar", "Money-X"],
+          ["ticket", t.voucher], ["envelope-open", t.inviteCard], ["dots-three-circle", t.other]] },
+        { title: "4. " + t.lgWarning, items: [
+          ["currency-circle-dollar", t.outstandingBal], ["clock", t.lateHistory], ["airplane-tilt", t.noShowHistory],
+          ["warning-circle", t.complaintCust], ["list-checks", t.lowTreatments], ["lock-key", t.blockedCust]],
+          note: t.warningNote },
+        { title: "5. " + t.lgWaiting, items: [
+          ["square", t.anyStaff], ["square", t.designatedStaff]], note: t.waitingNote },
+        { title: "6. " + t.lgOutcomes, items: [
+          ["user-focus", t.turnedUp], ["list-checks", t.completed], ["clock", t.late],
+          ["calendar-x", t.cancelled], ["airplane-tilt", t.noShow], ["hourglass-medium", t.notConfirmed]] }
+      ].map((g) => ({ title: g.title,
+        items: g.items.map(([icon, label]) => ({ iconClass: "ph-duotone ph-" + icon, label })),
+        cellStyle: legendCell(),
+        gridStyle: "display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px 14px",
+        note: g.note || "",
+        noteStyle: g.note ? "font-size:11.5px;font-weight:600;color:#5B4A7E;line-height:1.5;margin-top:13px" : "display:none" })),
+
+      sheetOpen: s.sheetOpen,
+      openSheet: () => this.setState({ sheetOpen: true, sharing: false }),
+      closeSheet: () => this.setState({ sheetOpen: false, sharing: false }),
+      toHqDashboard: () => this.setState({ nav: 7 }),
+      sheetTemplates: TPL.map((x, i) => ({
+        title: t[x.k], pick: () => this.setState({ tpl: i }),
+        chipStyle: "flex:none;padding:11px 16px;border-radius:14px;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+          (s.tpl === i ? "background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff" : "background:#F3EBFE;color:#44336E") })),
+      selected: (() => {
+        const x = TPL[s.tpl];
+        return { message: t[x.k + "Body"],
+          campaignLine: x.active ? t.activeCampaign + " " + t[x.k] : t.previewNoCampaign,
+          campaignStyle: "font-size:12.5px;font-weight:800;margin-top:11px;color:" + (x.active ? "#166534" : "#9A6B2F"),
+          urlLine: x.active ? "https://tikbeli.example/refer/BEAUTY-FIONATES" : t.sharingUnavailable,
+          urlStyle: "font-size:12.5px;font-weight:700;margin-top:7px;word-break:break-all;color:" + (x.active ? "#7137e8" : "#7D6D90"),
+          posterStyle: "height:150px;border-radius:18px;margin-top:14px;background-image:url('" + x.src + "');background-size:cover;background-position:center" +
+            (x.active ? "" : ";filter:saturate(.45)") };
+      })(),
+      sendBtnLabel: s.sharing ? t.preparingShare : t.sendViaWhatsapp,
+      sendBtnStyle: "flex:1.5;display:flex;align-items:center;justify-content:center;gap:9px;padding:15px;border-radius:16px;text-align:center;font-size:13.5px;font-weight:800;color:#fff;" +
+        (TPL[s.tpl].active ? "background:#25D366;cursor:pointer;box-shadow:8px 11px 16px rgba(20,120,60,.3)" : "background:#C4B5D6;cursor:not-allowed"),
+      sendGift: () => { if (TPL[s.tpl].active) this.setState({ sharing: true }); },
+
+      copyLabel: s.copied ? t.copied : t.copyLink,
+      copyLink: () => this.setState({ copied: true }),
+      copyStyle: "display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:16px;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+        (s.copied ? "background:#DCFCE7;color:#166534" : "background:linear-gradient(145deg,#fffdff,#f3ebff);border:1px solid #EFE8F8;color:#44336E"),
+
+      referralStats: [
+        { value: "12", label: t.giftsShared, icon: "gift", bg: "#EDE9FE" },
+        { value: "7", label: t.friendsInvited, icon: "users-three", bg: "#FCE7F3" },
+        { value: t.unavailable, label: t.rewardsEarned, icon: "sparkle", bg: "#FEF3C7", na: true }
+      ].map(r => ({ value: r.value, label: r.label,
+        iconClass: "ph-duotone ph-" + r.icon,
+        iconStyle: "width:52px;height:52px;border-radius:17px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:34px;color:#7137e8;background:" + r.bg,
+        valueStyle: "font-weight:800;letter-spacing:-.7px;margin-top:11px;white-space:nowrap;" +
+          (r.na ? "font-size:15px;color:#7D6D90" : "font-size:26px") })),
+
+      steps: [
+        { n: "1", icon: "gift", title: t.step1, desc: t.step1d },
+        { n: "2", icon: "heart", title: t.step2, desc: t.step2d },
+        { n: "3", icon: "sparkle", title: t.step3, desc: t.step3d }
+      ].map(x => ({ n: x.n, title: x.title, desc: x.desc,
+        iconClass: "ph-duotone ph-" + x.icon,
+        iconStyle: "width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:38px;color:#7137e8;background:#FCE7F3" })),
+
+      templates: TPL.map((x, i) => ({
+        title: t[x.k], body: t[x.k + "Body"],
+        badge: x.active ? t[x.badge] : t.previewOnly,
+        badgeStyle: "position:absolute;left:12px;top:12px;padding:5px 12px;border-radius:9px;font-size:11px;font-weight:800;letter-spacing:.4px;" +
+          (x.active ? "background:#fff;color:#6D28D9" : "background:rgba(61,42,99,.82);color:#fff"),
+        posterStyle: "position:relative;height:158px;background-image:url('" + x.src + "');background-size:cover;background-position:center" +
+          (x.active ? "" : ";filter:saturate(.45)") })),
+
+      startDayLabel: s.started ? t.dayStarted : t.startDay,
+      startDay: () => this.setState({ started: !s.started }),
+      startDayStyle: "display:inline-flex;align-items:center;gap:8px;margin-top:7.2%;padding:.74em 1.42em;border:1px solid rgba(255,255,255,.96);border-radius:99px;font-size:clamp(.82rem,1.16vw,1.1rem);font-weight:800;white-space:nowrap;cursor:pointer;text-shadow:none;box-shadow:5px 8px 13px rgba(69,31,133,.25),inset 1px 1px 1px #fff;" +
+        (s.started ? "background:linear-gradient(145deg,#e6ffe9,#d3f7dc);color:#166534" : "background:linear-gradient(145deg,#fff,#f8ecff);color:#6030be"),
+
+      nav: navItems.map(([label, icon], i) => {
+        const on = s.nav === i;
+        return { label, icon, pick: () => this.setState({ nav: i }),
+          style: "display:flex;align-items:center;gap:12px;min-height:52px;padding:12px 16px;border-radius:22px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;" +
+            (on ? "color:#fff;background:linear-gradient(135deg,#7137e8,#a54bf0);box-shadow:9px 13px 18px rgba(81,35,174,.43),-3px -3px 7px rgba(238,220,255,.56),inset 3px 3px 5px rgba(255,255,255,.25)"
+                : "color:#3D2A63;background:linear-gradient(145deg,#fffdff,#f3ebff);box-shadow:6px 9px 14px rgba(91,55,137,.16),-4px -4px 9px rgba(255,255,255,.9),inset 1px 1px 1px #fff"),
+          iconClass: (on ? "ph-fill ph-" : "ph-duotone ph-") + icon,
+          iconStyle: "font-size:29px;width:30px;line-height:1;text-align:center;flex-shrink:0;filter:drop-shadow(2px 3px 2px rgba(54,23,109,.22));color:" + (on ? "#fff" : "#8b5df0") };
+      }),
+
+      summary: [
+        { label: t.appointments, value: "18", pink: false },
+        { label: t.walkIns, value: "3", pink: false },
+        { label: t.revenue, value: "RM 2,380", pink: true }
+      ].map(x => ({ ...x, valueStyle: "font-size:17px;font-weight:800;white-space:nowrap;color:" + (x.pink ? "#ed4f9e" : "#8550ea") })),
+
+      kpiCards: [
+        { icon: "wallet", tone: "pink", label: t.monthSales, value: "RM 23,680",
+          sub: t.achieved, sub2: "78%", bar: 78, foot: t.target },
+        { icon: "calendar-check", tone: "lavender", label: t.appointments, value: "18", meta: t.thisMonth,
+          sub: t.vsLast, sub2: "↗ 12%", up: true },
+        { icon: "users-three", tone: "mint", label: t.activeMembers, value: "96", meta: t.thisMonth,
+          sub: t.vsLast, sub2: "↗ 8%", up: true },
+        { icon: "percent", tone: "peach", label: t.commission, value: "RM 0.00",
+          sub: "", sub2: t.paid, dot: true }
+      ].map(k => ({
+        label: k.label, value: k.value, sub: k.sub, sub2: k.sub2, foot: k.foot || "",
+        iconClass: "ph-fill ph-" + k.icon,
+        iconStyle: "position:relative;z-index:1;display:grid;width:70px;height:70px;place-items:center;border-radius:23px;color:#fff;font-size:42px;background:" +
+          TONE[k.tone] + ";box-shadow:8px 11px 15px rgba(66,37,111,.28),inset 3px 3px 5px rgba(255,255,255,.62),inset -4px -5px 7px rgba(40,18,92,.2)",
+        labelStyle: "position:relative;z-index:1;margin:" + (k.bar ? "18px" : "13px") + " 0 0;font-size:18px;font-weight:800;line-height:1.2;color:#17111f",
+        valueStyle: "position:relative;z-index:1;display:block;margin-top:" + (k.bar ? "9px" : "22px") +
+          ";color:#111015;font-size:34px;font-weight:800;letter-spacing:-1.5px;line-height:1.02;white-space:nowrap",
+        meta: k.meta || "",
+        metaStyle: k.meta ? "position:relative;z-index:1;display:block;margin-top:5px;color:#32263b;font-size:16px;font-weight:800" : "display:none",
+        subWrapStyle: k.bar
+          ? "position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:22px;color:#30243d;font-size:16px;font-weight:800"
+          : "position:relative;z-index:1;display:flex;align-items:center;gap:11px;margin-top:" + (k.dot ? "55px" : "29px"),
+        dotStyle: k.dot
+          ? "display:block;flex-shrink:0;width:14px;height:14px;border-radius:50%;background:linear-gradient(145deg,#52db8c,#19af61);box-shadow:0 3px 6px rgba(26,151,79,.3),inset 1px 1px 2px rgba(255,255,255,.65)"
+          : "display:none",
+        subStyle: k.sub ? (k.bar ? "font-size:16px;font-weight:800;flex:1;min-width:0"
+          : "color:#55485e;font-size:15px;font-weight:700;flex:1;min-width:0") : "display:none",
+        sub2Style: "display:flex;align-items:center;gap:5px;white-space:nowrap;font-weight:800;" +
+          (k.bar ? "color:#25b96c;font-size:25px" : k.dot ? "color:#26202a;font-size:18px;font-weight:800" : "color:#23b96b;font-size:23px"),
+        barWrapStyle: k.bar
+          ? "position:relative;z-index:1;height:11px;margin-top:12px;overflow:hidden;border-radius:99px;background:#eee7f3;box-shadow:inset 3px 3px 5px rgba(84,44,128,.15),1px 1px 1px #fff"
+          : "display:none",
+        barStyle: "display:block;width:" + (k.bar || 0) + "%;height:100%;border-radius:inherit;background:linear-gradient(180deg,#55dc91,#21b866);box-shadow:0 3px 7px rgba(20,125,65,.3),inset 0 2px 2px rgba(255,255,255,.42)",
+        footStyle: k.foot ? "position:relative;z-index:1;display:block;margin-top:14px;color:#34283f;font-size:15px;font-weight:800" : "display:none"
+      })),
+
+      statusBars: [
+        { label: t.confirmed, n: 9, h: 78, c: "#8B5CF6" },
+        { label: t.inService, n: 6, h: 58, c: "#34D399" },
+        { label: t.pending, n: 5, h: 42, c: "#FBBF24" },
+        { label: t.completed, n: 7, h: 64, c: "#60A5FA" },
+        { label: t.noShow, n: 3, h: 27, c: "#F472B6" }
+      ].map(b => ({ label: b.label, n: String(b.n),
+        barStyle: "width:100%;max-width:34px;height:" + b.h + "%;border-radius:9px 9px 4px 4px;background:" + b.c })),
+
+      behaviour: [
+        { label: t.totalAppts, value: "60", pct: "" },
+        { label: t.firstVisit, value: "18", pct: "30%" },
+        { label: t.repeatCust, value: "42", pct: "70%" },
+        { label: t.returningRate, value: "68%", pct: "" },
+        { label: t.cancelRate, value: "8%", pct: "" },
+        { label: t.noShowRate, value: "2%", pct: "" }
+      ].map(b => ({ ...b, pctStyle: b.pct ? "font-size:11.5px;font-weight:800;color:#7C3AED" : "display:none" })),
+
+      cancels: [
+        { label: t.cancelNotice, value: "24 (33%)", c: "#34D399" },
+        { label: t.cancelNoNotice, value: "12 (17%)", c: "#8B5CF6" },
+        { label: t.cancelSameDay, value: "18 (25%)", c: "#FBBF24" }
+      ].map(c => ({ ...c, dotStyle: "width:8px;height:8px;border-radius:99px;flex-shrink:0;background:" + c.c })),
+
+      blocked: [{ label: t.days30, value: "5" }, { label: t.days90, value: "2" }, { label: t.days180, value: "1" }],
+
+      birthdays: [
+        { initials: "JW", name: "Jessica Wong", tier: t.goldMember, gold: true, bg: "linear-gradient(135deg,#F9A8D4,#EC4899)" },
+        { initials: "AL", name: "Amanda Lee", tier: t.silverMember, gold: false, bg: "linear-gradient(135deg,#C4B5FD,#8B5CF6)" }
+      ].map(b => ({ ...b, avatarStyle: avatar(),
+        tierStyle: "font-size:11.5px;font-weight:800;margin-top:3px;color:" + (b.gold ? "#B45309" : "#6B7280") })),
+
+      topServices: [
+        { name: t.svAntiAging, count: "215" },
+        { name: t.svFullBody, count: "183" },
+        { name: t.svHydrating, count: "155" }
+      ],
+
+      lowStock: [
+        { name: t.sFaceSerum, left: "5" + t.left },
+        { name: t.sMassageOil, left: "3" + t.left },
+        { name: t.sHairTreatment, left: "4" + t.left }
+      ],
+
+      staffPerf: [
+        { name: "Mia Tan", pct: 88 }, { name: "Sarah Lim", pct: 71 }, { name: "Jessica Wong", pct: 63 }
+      ].map(p => ({ name: p.name,
+        barStyle: "height:100%;width:" + p.pct + "%;border-radius:99px;background:linear-gradient(90deg,#A78BFA,#7C3AED)" })),
+
+      upcoming: [
+        { time: "10:00 AM", name: "Sarah Lim", service: t.aDeepCleansing },
+        { time: "12:00 PM", name: "Michelle Tan", service: t.aFullBody },
+        { time: "2:00 PM", name: "Amanda Lee", service: t.aHairColoring }
+      ],
+
+      todayAppts: [
+        { time: "10:00 AM", initials: "SL", name: "Sarah Lim", service: t.aDeepCleansing, st: "confirmed", bg: "linear-gradient(135deg,#C4B5FD,#8B5CF6)" },
+        { time: "12:00 PM", initials: "MT", name: "Michelle Tan", service: t.aFullBody, st: "confirmed", bg: "linear-gradient(135deg,#F9A8D4,#EC4899)" },
+        { time: "2:00 PM", initials: "AL", name: "Amanda Lee", service: t.aHairColoring, st: "inService", bg: "linear-gradient(135deg,#6EE7B7,#10B981)" },
+        { time: "4:00 PM", initials: "JW", name: "Jessica Wong", service: t.aHydrating, st: "pending", bg: "linear-gradient(135deg,#FCD34D,#F59E0B)" }
+      ].map(a => {
+        const tone = { confirmed: "#EDE9FE|#5B21B6", inService: "#D1FAE5|#065F46", pending: "#FEF3C7|#92400E" }[a.st].split("|");
+        return { time: a.time, initials: a.initials, name: a.name, service: a.service, status: t[a.st],
+          avatarStyle: avatar(),
+          statusStyle: "flex-shrink:0;padding:6px 13px;border-radius:9px;font-size:11.5px;font-weight:800;background:" + tone[0] + ";color:" + tone[1] };
+      }),
+
+      quickActions: [
+        [t.newAppt, "calendar-check", "linear-gradient(135deg,#F472B6,#EC4899)"],
+        [t.walkIn, "user-plus", "linear-gradient(135deg,#A78BFA,#7C3AED)"],
+        [t.addMember, "users-three", "linear-gradient(135deg,#6EE7B7,#10B981)"],
+        [t.pos, "cash-register", "linear-gradient(135deg,#FBBF24,#F59E0B)"],
+        [t.topUp, "wallet", "linear-gradient(135deg,#60A5FA,#3B82F6)"],
+        [t.giftCard, "gift", "linear-gradient(135deg,#F9A8D4,#EC4899)"],
+        [t.packages, "package", "linear-gradient(135deg,#C4B5FD,#7C3AED)"]
+      ].map(([label, icon, grad]) => ({ label, iconClass: "ph-fill ph-" + icon,
+        iconStyle: "width:58px;height:58px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;background:" + grad + ";box-shadow:8px 11px 16px rgba(124,58,237,.24),inset 1px 1px 2px rgba(255,255,255,.5)",
+        go: () => this.setState({ nav: 0 }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
