@@ -8,129 +8,172 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 <style>
-body{margin:0;background:#F6F3FF}
-a{color:#6E5BC4;text-decoration:none}a:hover{color:#4C3C96}
+body{margin:0;background:#EFE7FA;color:#28174F;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 </style>
 </helmet>
+<div style="max-width:480px;margin:0 auto;min-height:100vh;background:#FBF8FE;padding-bottom:28px">
 
-<div style="font-family:Manrope,system-ui,sans-serif;color:#2B2340;max-width:1100px;margin:0 auto;padding:28px 18px 60px;display:flex;flex-direction:column;gap:20px">
-
-<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
-<div>
-<div style="font-size:11px;font-weight:800;letter-spacing:.18em;color:#8B79E0">IMPORTED FROM TIKBELI.COM</div>
-<div style="font-family:'Baloo 2',Manrope,sans-serif;font-size:32px;font-weight:700;line-height:1.15;margin-top:6px">Treatment catalogue</div>
-<div style="font-size:13.5px;font-weight:600;color:#6B6385;margin-top:6px">{{ countLabel }}</div>
+<div style="position:sticky;top:0;z-index:5;background:linear-gradient(135deg,#7137E8,#9B4DE0);padding:14px 16px 0">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="flex:1;display:flex;align-items:center;gap:8px;padding:0 14px;height:42px;border-radius:99px;background:#fff">
+<i class="ph-bold ph-magnifying-glass" style="font-size:18px;color:#7137E8"></i>
+<input value="{{ query }}" onInput="{{ onSearch }}" placeholder="Search treatments & products" style="flex:1;min-width:0;border:0;outline:0;font:600 14px Manrope,sans-serif;color:#28174F;background:transparent">
 </div>
-<input value="{{ query }}" onInput="{{ onSearch }}" placeholder="Search treatments" style="flex:1;min-width:220px;max-width:320px;padding:13px 16px;border-radius:99px;border:none;outline:none;font-family:inherit;font-size:13.5px;font-weight:700;color:#2B2340;background:#fff;box-shadow:0 4px 0 rgba(139,121,224,.15)">
+<a href="https://wa.me/" target="_blank" style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-chats-circle" style="font-size:22px;color:#fff"></i></a>
+</div>
+<div style="display:flex;gap:26px;padding:14px 4px 0">
+<sc-for list="{{ tops }}" as="t" hint-placeholder-count="2">
+<div onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</div>
+</sc-for>
+</div>
 </div>
 
-<div style="display:flex;flex-wrap:wrap;gap:8px">
-<sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
-<div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div>
+<sc-if value="{{ isTreat }}" hint-placeholder-val="{{ true }}">
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 6px;padding:18px 12px 6px">
+<sc-for list="{{ cats }}" as="c" hint-placeholder-count="8">
+<div onClick="{{ c.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer">
+<div style="{{ c.tile }}"><i class="{{ c.icon }}" style="{{ c.iconStyle }}"></i></div>
+<div style="{{ c.labelStyle }}">{{ c.label }}</div>
+</div>
 </sc-for>
 </div>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(226px,1fr));gap:16px">
-<sc-for list="{{ items }}" as="t" hint-placeholder-count="8">
-<a href="{{ t.url }}" target="_blank" rel="noopener" style="{{ t.cardStyle }}">
-<div style="position:relative;aspect-ratio:1;background:#EDE7FB;overflow:hidden">
-<sc-if value="{{ t.hasImg }}" hint-placeholder-val="{{ false }}">
-<img src="{{ t.img }}" alt="{{ t.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
-</sc-if>
-<sc-if value="{{ t.hasVideo }}" hint-placeholder-val="{{ false }}">
-<video src="{{ t.video }}" muted="{{ true }}" loop="{{ true }}" autoPlay="{{ true }}" playsInline="{{ true }}" style="width:100%;height:100%;object-fit:cover;display:block"></video>
-</sc-if>
-<div style="{{ t.tagStyle }}">{{ t.tag }}</div>
+<sc-if value="{{ hasSubs }}" hint-placeholder-val="{{ false }}">
+<div style="margin:12px 16px 0;padding:12px;border-radius:14px;background:#F3ECFD">
+<div style="font-size:12px;font-weight:800;color:#7D6D90;margin-bottom:9px">{{ catTitle }}</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+<sc-for list="{{ subs }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</div>
+</sc-for>
 </div>
-<div style="padding:13px 14px 15px;display:flex;flex-direction:column;gap:6px;flex:1">
-<div style="font-size:10px;font-weight:800;letter-spacing:.1em;color:#8B79E0">{{ t.cat }}</div>
-<div style="font-size:14px;font-weight:800;line-height:1.35;text-wrap:pretty">{{ t.name }}</div>
-<div style="margin-top:auto;display:flex;align-items:baseline;gap:8px;padding-top:6px">
-<div style="font-size:16px;font-weight:800;color:#3A2F55">{{ t.price }}</div>
-<div style="{{ t.wasStyle }}">{{ t.was }}</div>
+</div>
+</sc-if>
+
+<div style="display:flex;align-items:baseline;justify-content:space-between;padding:20px 16px 10px">
+<div style="font-size:16px;font-weight:800">{{ listTitle }}</div>
+<div style="font-size:12px;font-weight:700;color:#9A8CB0">{{ countLabel }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 16px">
+<sc-for list="{{ items }}" as="p" hint-placeholder-count="6">
+<a href="{{ p.url }}" target="_blank" rel="noopener" style="display:block;border-radius:14px;overflow:hidden;background:#fff;border:1px solid #EDE4F8">
+<div style="position:relative;aspect-ratio:1;background:linear-gradient(150deg,#EDE7FB,#DCD2F7)">
+<sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="display:block;width:100%;height:100%;object-fit:cover"></sc-if>
+<sc-if value="{{ p.hasVideo }}" hint-placeholder-val="{{ false }}"><video src="{{ p.video }}" muted="{{ true }}" loop="{{ true }}" autoPlay="{{ true }}" playsInline="{{ true }}" style="display:block;width:100%;height:100%;object-fit:cover"></video></sc-if>
+<sc-if value="{{ p.noMedia }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;font-size:14px;font-weight:800;color:#7137E8;line-height:1.3">{{ p.name }}</div></sc-if>
+<div style="position:absolute;left:8px;top:8px;padding:4px 8px;border-radius:99px;background:rgba(40,23,79,.7);color:#fff;font-size:10px;font-weight:800">{{ p.sub }}</div>
+</div>
+<div style="padding:9px 10px 11px">
+<div style="font-size:12.5px;font-weight:700;color:#28174F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+<div style="display:flex;align-items:baseline;gap:6px;margin-top:4px">
+<div style="font-size:14px;font-weight:800;color:#E0327F">{{ p.price }}</div>
+<div style="font-size:11px;font-weight:600;color:#A79FBE;text-decoration:line-through">{{ p.was }}</div>
 </div>
 </div>
 </a>
 </sc-for>
 </div>
+<sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+<div style="padding:30px 16px;text-align:center;font-size:13px;font-weight:600;color:#9A8CB0">No treatments match your search.</div>
+</sc-if>
+</sc-if>
 
-<div style="font-size:12px;font-weight:600;color:#8A83A0;line-height:1.6;text-wrap:pretty">Media is served live from tikbeli.com, so anything updated there updates here. Items still showing a plain tile have no image on their product page yet — send me the ones you want and I will pull them in.</div>
+<sc-if value="{{ isProd }}" hint-placeholder-val="{{ false }}">
+<div style="padding:18px 16px 10px;font-size:16px;font-weight:800">Shop by brand</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:0 16px">
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/drnano-labcel.png" alt="DrNano Labcel" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">DrNano Labcel</div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/ava-clinic.png" alt="AVA Clinic" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">AVA Clinic</div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/ava-skin.png" alt="AVA Skin" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">AVA Skin</div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/h2g.png" alt="H2g" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">H2g</div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/body-master-ai.png" alt="Ai Body Master" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">Ai Body Master</div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/deau-mist.png" alt="Deau Mist" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">Deau Mist</div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/tikbevi.png" alt="TikBeVi" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">TikBeVi</div></div>
+</div>
+<div style="margin:22px 16px 0;padding:18px;border-radius:14px;background:#F3ECFD;text-align:center;font-size:13px;font-weight:600;color:#7D6D90;line-height:1.5">Product list coming soon.</div>
+</sc-if>
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{}">
+<script type="text/x-dc" data-dc-script>
 const D = [
-  ["1st Trial facial /Body Massage treatments","1st Trial",98,448,"1stTrialfacialBodyMassagetreatments/01386bd6d8e091c2ab4c7c7de644d37b","uploads/348/edebce4ba8c5a16c23ab9da97da5a8c6.jpg",""],
-  ["Ai Body Master Therapy","Slimming / Fitness",0,0,"AiBodyMasterTherapy/13f9896df61279c928f19721878fac41","","uploads/346/a0a77cd9387cbdb22be5ec83b1c60fce.mp4"],
-  ["AHT massage Therapy","Massage & Wellness",0,0,"AHTmassageTherapy/d81f9c1be2e08964bf9f24b15f0e4900","","uploads/345/6eacc75dbab20a9c38275c6e6c2d8aa7.mp4"],
-  ["OXY mesotherapy","Facial Treatment",0,0,"OXYmesotherapy/b3967a0e938dc2a6340e258630febd5a","uploads/344/42cfd46f544ed20a97e0abcd9a28f9c1.jpg",""],
-  ["Cryo Mesotherapy","Facial Treatment",197,447,"CryoMesotherapy/3ad7c2ebb96fcba7cda0cf54a2e802f5","uploads/343/f72fc1a4ad744db69e4c891608ce2018.jpg",""],
-  ["1 year unlimited anti aging","Anti - Aging",6800,18200,"1yearunlimitedantiaging/819f46e52c25763a55cc642422644317","uploads/338/e211662a6c78317957a0c1a4f5c8bd8d.jpg",""],
-  ["Cool Sculping Slimming Trt","Slimming / Fitness",0,0,"CoolSculpingSlimmingTrt/f90f2aca5c640289d0a29417bcb63a37","uploads/290/6c5add82b6ec698db92fc05fa020ed44.jpg",""],
-  ["1st Trial Whitening Drip RM148","1st Trial",148,0,"1stTrialWhiteningDripRM148/d395771085aab05244a4fb8fd91bf4ee","uploads/279/fa9b4dca9df408e0b18b97ea1aa8779a.jpg",""],
-  ["Lumicell Skin Revival BUY 5 FOC 1","Skin Care / Body Care",983,0,"LumicellSkinRevivalBUY5FOC1/20f07591c6fcb220ffe637cda29bb3f6","uploads/277/612b2f15128ff2493137c29a80b666e1.jpg",""],
-  ["ZQII 童颜水凝 (1st trial)","1st Trial",898,5998,"ZQII1sttrial/db8e1af0cb3aca1ae2d0018624204529","uploads/276/46ec32f285ba78908b8f573ba41e547c.jpg",""],
-  ["Lumicell Peeling : Skin Revival","Skin Care / Body Care",500,0,"LumicellPeelingSkinRevival/63923f49e5241343aa7acb6a06a751e7","",""],
-  ["Double Eyelids 双眼皮微創","Eye Treatments",4987,6800,"DoubleEyelids/7f100b7b36092fb9b06dfb4fac360931","","uploads/271/4c03678551897140937473a7a64c9c38.mp4"],
-  ["Eyelid Stitching 埋线双眼皮","Eye Treatments",3987,6987,"EyelidStitching/a4f23670e1833f3fdb077ca70bbd5d66","",""],
-  ["Eyelid Fat Removal","Eye Treatments",1500,2000,"EyelidFatRemoval/c24cd76e1ce41366a4bbe8a49b02a028","",""],
-  ["Eyebrow & Eyelids Lifting","Eye Treatments",6800,0,"EyebrowEyelidsLifting/c81e728d9d4c2f636f067f89cc14862c","","uploads/2/69249746d67b80434089c78b74d3d457.mp4"],
-  ["Absolute Pico Laser","Facial Treatment",680,1800,"AbsolutePicoLaser/b1a59b315fc9a3002ce38bbe070ec3f5","","uploads/261/00117278f2ccc74f91fc8577597f76ed.mp4"],
-  ["CO2 Laser Peeling","Facial Treatment",197,0,"CO2LaserPeeling/d96409bf894217686ba124d7356686c9","","uploads/257/a3b31770549941c858cf721e7e8ca662.mp4"],
-  ["CO2 Laser Resurfacing","Facial Treatment",10,0,"CO2LaserResurfacing/f718499c1c8cef6730f9fd03c8125cab","","uploads/256/f535c1fd83b602f570620424f868040f.mp4"],
-  ["3 Laser - Premium Diode Peeling，Rejuvenation，Pico","Facial Treatment",0,0,"3Laser-PremiumDiodePeelingRejuvenationPico/03c6b06952c750899bb03d998e631860","","uploads/252/d50af47261b718eb679c86eeae60010e.mp4"],
-  ["Snow White - Face or Body (Whitening + Rejuvenation)","Skin Care / Body Care",687,987,"SnowWhite-FaceorBodyWhiteningRejuvenation/19f3cd308f1455b3fa09a282e0d496f4","","uploads/251/d0098f900d86db2e76e74de2c7cfbd2d.mp4"],
-  ["Snow White - Face or Body (Whitening + Rejuvenation)","Skin Care / Body Care",687,988,"SnowWhite-FaceorBodyWhiteningRejuvenation/6c9882bbac1c7093bd25041881277658","","uploads/250/8ed3d8fd339c352e4532b5ad48127405.mp4"],
-  ["Hifu Treatment Face","Facial Treatment",1800,0,"HifuTreatmentFace/069059b7ef840f0c74a814ec9237b6ec","uploads/126/8ceecb89e5d3ae028cc579dc8cb3182b.jpg","uploads/126/938f90906ade25999adc8de9973f416f.mp4"],
-  ["Testimonial - Treatments","Collaboration",50,100,"Testimonial-Treatments/496e05e1aea0a9c4655800e8a7b9ea28","",""],
-  ["Cash Voucher For Treatments & Products","Voucher",1,10,"CashVoucherForTreatmentsProducts/53c3bce66e43be4f209556518c2fcb54","",""]
+  ["1st Trial facial /Body Massage treatments","1st Trial","Facial & Massage",98,448,"1stTrialfacialBodyMassagetreatments/01386bd6d8e091c2ab4c7c7de644d37b","uploads/348/edebce4ba8c5a16c23ab9da97da5a8c6.jpg",""],
+  ["Ai Body Master Therapy","Slimming / Fitness","AI Body Master",0,0,"AiBodyMasterTherapy/13f9896df61279c928f19721878fac41","","uploads/346/a0a77cd9387cbdb22be5ec83b1c60fce.mp4"],
+  ["AHT massage Therapy","Massage & Wellness","AHT Therapy",0,0,"AHTmassageTherapy/d81f9c1be2e08964bf9f24b15f0e4900","","uploads/345/6eacc75dbab20a9c38275c6e6c2d8aa7.mp4"],
+  ["OXY mesotherapy","Facial Treatment","Mesotherapy",0,0,"OXYmesotherapy/b3967a0e938dc2a6340e258630febd5a","uploads/344/42cfd46f544ed20a97e0abcd9a28f9c1.jpg",""],
+  ["Cryo Mesotherapy","Facial Treatment","Mesotherapy",197,447,"CryoMesotherapy/3ad7c2ebb96fcba7cda0cf54a2e802f5","uploads/343/f72fc1a4ad744db69e4c891608ce2018.jpg",""],
+  ["1 year unlimited anti aging","Anti - Aging","Packages",6800,18200,"1yearunlimitedantiaging/819f46e52c25763a55cc642422644317","uploads/338/e211662a6c78317957a0c1a4f5c8bd8d.jpg",""],
+  ["Cool Sculping Slimming Trt","Slimming / Fitness","Cool Sculpting",0,0,"CoolSculpingSlimmingTrt/f90f2aca5c640289d0a29417bcb63a37","uploads/290/6c5add82b6ec698db92fc05fa020ed44.jpg",""],
+  ["1st Trial Whitening Drip RM148","1st Trial","Whitening Drip",148,0,"1stTrialWhiteningDripRM148/d395771085aab05244a4fb8fd91bf4ee","uploads/279/fa9b4dca9df408e0b18b97ea1aa8779a.jpg",""],
+  ["Lumicell Skin Revival BUY 5 FOC 1","Skin Care / Body Care","Lumicell",983,0,"LumicellSkinRevivalBUY5FOC1/20f07591c6fcb220ffe637cda29bb3f6","uploads/277/612b2f15128ff2493137c29a80b666e1.jpg",""],
+  ["ZQII 童颜水凝 (1st trial)","1st Trial","ZQII",898,5998,"ZQII1sttrial/db8e1af0cb3aca1ae2d0018624204529","uploads/276/46ec32f285ba78908b8f573ba41e547c.jpg",""],
+  ["Lumicell Peeling : Skin Revival","Skin Care / Body Care","Lumicell",500,0,"LumicellPeelingSkinRevival/63923f49e5241343aa7acb6a06a751e7","",""],
+  ["Double Eyelids 双眼皮微創","Eye Treatments","Double Eyelid",4987,6800,"DoubleEyelids/7f100b7b36092fb9b06dfb4fac360931","","uploads/271/4c03678551897140937473a7a64c9c38.mp4"],
+  ["Eyelid Stitching 埋线双眼皮","Eye Treatments","Double Eyelid",3987,6987,"EyelidStitching/a4f23670e1833f3fdb077ca70bbd5d66","",""],
+  ["Eyelid Fat Removal","Eye Treatments","Fat Removal",1500,2000,"EyelidFatRemoval/c24cd76e1ce41366a4bbe8a49b02a028","",""],
+  ["Eyebrow & Eyelids Lifting","Eye Treatments","Lifting",6800,0,"EyebrowEyelidsLifting/c81e728d9d4c2f636f067f89cc14862c","","uploads/2/69249746d67b80434089c78b74d3d457.mp4"],
+  ["Absolute Pico Laser","Facial Treatment","Laser",680,1800,"AbsolutePicoLaser/b1a59b315fc9a3002ce38bbe070ec3f5","","uploads/261/00117278f2ccc74f91fc8577597f76ed.mp4"],
+  ["CO2 Laser Peeling","Facial Treatment","Laser",197,0,"CO2LaserPeeling/d96409bf894217686ba124d7356686c9","","uploads/257/a3b31770549941c858cf721e7e8ca662.mp4"],
+  ["CO2 Laser Resurfacing","Facial Treatment","Laser",10,0,"CO2LaserResurfacing/f718499c1c8cef6730f9fd03c8125cab","","uploads/256/f535c1fd83b602f570620424f868040f.mp4"],
+  ["3 Laser - Premium Diode Peeling，Rejuvenation，Pico","Facial Treatment","Laser",0,0,"3Laser-PremiumDiodePeelingRejuvenationPico/03c6b06952c750899bb03d998e631860","","uploads/252/d50af47261b718eb679c86eeae60010e.mp4"],
+  ["Snow White - Face or Body (Whitening + Rejuvenation)","Skin Care / Body Care","Whitening",687,987,"SnowWhite-FaceorBodyWhiteningRejuvenation/19f3cd308f1455b3fa09a282e0d496f4","","uploads/251/d0098f900d86db2e76e74de2c7cfbd2d.mp4"],
+  ["Snow White - Face or Body (Whitening + Rejuvenation)","Skin Care / Body Care","Whitening",687,988,"SnowWhite-FaceorBodyWhiteningRejuvenation/6c9882bbac1c7093bd25041881277658","","uploads/250/8ed3d8fd339c352e4532b5ad48127405.mp4"],
+  ["Hifu Treatment Face","Facial Treatment","Lifting",1800,0,"HifuTreatmentFace/069059b7ef840f0c74a814ec9237b6ec","uploads/126/8ceecb89e5d3ae028cc579dc8cb3182b.jpg",""],
+  ["Testimonial - Treatments","Collaboration","Testimonial",50,100,"Testimonial-Treatments/496e05e1aea0a9c4655800e8a7b9ea28","",""],
+  ["Cash Voucher For Treatments & Products","Voucher","Cash Voucher",1,10,"CashVoucherForTreatmentsProducts/53c3bce66e43be4f209556518c2fcb54","",""]
 ];
+const CATS = [
+  ["All", "All", "squares-four"], ["1st Trial", "1st Trial", "sparkle"], ["Slimming / Fitness", "Slimming", "person-simple-run"],
+  ["Massage & Wellness", "Massage", "hand-heart"], ["Facial Treatment", "Facial", "smiley"], ["Anti - Aging", "Anti-Aging", "hourglass-medium"],
+  ["Skin Care / Body Care", "Skin & Body", "drop"], ["Eye Treatments", "Eye", "eye"], ["Collaboration", "Collab", "handshake"], ["Voucher", "Voucher", "ticket"]
+];
+const TONES = [["#EDE4FF", "#7137E8"], ["#FFE4F0", "#E0327F"], ["#FFF0D9", "#E07A1F"], ["#DDF6EA", "#1F9A63"]];
+const BRANDS = [["drnano-labcel", "DrNano Labcel"], ["ava-clinic", "AVA Clinic"], ["ava-skin", "AVA Skin"], ["h2g", "H2g"],
+  ["body-master-ai", "Ai Body Master"], ["deau-mist", "Deau Mist"], ["tikbevi", "TikBeVi"]];
 
 class Component extends DCLogic {
-  state = { cat: "All", q: "" };
-
+  state = { top: 0, cat: "All", sub: "All", q: "" };
   renderVals() {
     const s = this.state, BASE = "https://www.tikbeli.com/";
-    const rm = (n) => n ? "RM " + n.toLocaleString("en-US", { minimumFractionDigits: 2 }) : "Ask consultant";
-
-    const all = D.map(([name, cat, price, was, slug, img, video]) => ({ name, cat, price, was, slug, img, video }));
-    const catList = ["All", ...Array.from(new Set(all.map(t => t.cat)))];
+    const rm = (n) => n ? "RM " + n.toLocaleString("en-US") : "Ask consultant";
+    const all = D.map(([name, cat, sub, price, was, slug, img, video]) => ({ name, cat, sub, price, was, slug, img, video }));
+    const inCat = all.filter(t => s.cat === "All" || t.cat === s.cat);
+    const subNames = s.cat === "All" ? [] : Array.from(new Set(inCat.map(t => t.sub)));
     const q = s.q.trim().toLowerCase();
-    const shown = all.filter(t => (s.cat === "All" || t.cat === s.cat) && (!q || t.name.toLowerCase().includes(q)));
-
+    const shown = inCat.filter(t => (s.sub === "All" || t.sub === s.sub) && (!q || t.name.toLowerCase().includes(q)));
+    const catLabel = (CATS.find(c => c[0] === s.cat) || CATS[0])[1];
     return {
       query: s.q,
       onSearch: (e) => this.setState({ q: e.target.value }),
-      countLabel: shown.length + " of " + all.length + " treatments · live prices and media from the shop",
-
-      cats: catList.map(c => ({
-        label: c === "All" ? "All treatments" : c,
-        pick: () => this.setState({ cat: c }),
-        style: "padding:9px 15px;border-radius:99px;font-size:12.5px;font-weight:800;cursor:pointer;user-select:none;" +
-          (s.cat === c ? "background:#8B79E0;color:#fff;box-shadow:0 3px 0 #6E5BC4" : "background:#fff;color:#6B6385;box-shadow:0 3px 0 rgba(139,121,224,.15)")
-      })),
-
-      items: shown.map(t => {
-        const hasVideo = !!t.video, hasImg = !!t.img;
-        return {
-          name: t.name, cat: t.cat.toUpperCase(),
-          price: rm(t.price), was: t.was ? rm(t.was) : "",
-          wasStyle: t.was ? "font-size:12px;font-weight:700;color:#A79FBE;text-decoration:line-through" : "display:none",
-          url: BASE + "Details/" + t.slug,
-          hasImg, hasVideo: hasVideo && !hasImg,
-          img: hasImg ? BASE + t.img : "",
-          video: hasVideo ? BASE + t.video : "",
-          tag: hasImg ? "PHOTO" : hasVideo ? "VIDEO" : t.name,
-          tagStyle: (hasImg || hasVideo)
-            ? "position:absolute;left:10px;top:10px;padding:5px 9px;border-radius:99px;background:rgba(43,35,64,.62);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.1em"
-            : "position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:22px;text-align:center;font-family:'Baloo 2',Manrope,sans-serif;font-size:17px;font-weight:700;color:#6E5BC4;background:linear-gradient(150deg,#EDE7FB,#DCD2F7);line-height:1.3",
-          cardStyle: "display:flex;flex-direction:column;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 5px 0 rgba(139,121,224,.15);color:inherit"
-        };
-      })
+      tops: ["TREATMENTS", "PRODUCTS"].map((label, i) => ({ label, pick: () => this.setState({ top: i }),
+        style: "font-size:13px;font-weight:800;letter-spacing:1.5px;cursor:pointer;padding-bottom:10px;color:" +
+          (s.top === i ? "#fff;border-bottom:3px solid #fff" : "rgba(255,255,255,.65);border-bottom:3px solid transparent") })),
+      isTreat: s.top === 0, isProd: s.top === 1,
+      cats: CATS.map(([key, label, icon], i) => { const [bg, fg] = TONES[i % 4], on = s.cat === key;
+        return { label, icon: "ph-fill ph-" + icon, pick: () => this.setState({ cat: key, sub: "All" }),
+          tile: "width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:" + bg +
+            (on ? ";box-shadow:0 0 0 2px #fff,0 0 0 4px " + fg : ""),
+          iconStyle: "font-size:27px;color:" + fg,
+          labelStyle: "font-size:12px;font-weight:" + (on ? "800;color:#7137E8" : "700;color:#3D2A63") + ";text-align:center;line-height:1.2" }; }),
+      hasSubs: subNames.length > 1,
+      catTitle: catLabel,
+      subs: ["All", ...subNames].map(label => { const on = s.sub === label;
+        return { label, pick: () => this.setState({ sub: label }),
+          style: "height:36px;padding:0 4px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" +
+            (on ? "background:#fff;color:#7137E8;border:1.5px solid #7137E8" : "background:#fff;color:#5A4A75;border:1.5px solid #E6DCF5") }; }),
+      listTitle: s.sub !== "All" ? s.sub : s.cat === "All" ? "All treatments" : catLabel,
+      countLabel: shown.length + " items",
+      empty: shown.length === 0,
+      items: shown.map(t => ({ name: t.name, sub: t.sub, price: rm(t.price), was: t.was ? rm(t.was) : "",
+        url: BASE + "Details/" + t.slug,
+        hasImg: !!t.img, hasVideo: !t.img && !!t.video, noMedia: !t.img && !t.video,
+        img: t.img ? BASE + t.img : "", video: t.video ? BASE + t.video : "" })),
+      brands: BRANDS.map(([f, name]) => ({ src: "assets/brands/" + f + ".png", name }))
     };
   }
 }
