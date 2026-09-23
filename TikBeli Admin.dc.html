@@ -62,6 +62,9 @@ a{color:#7137E8}a:hover{color:#5E2BC4}
 </div>
 
 <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:18px">
+<sc-if value="{{ frameOn }}" hint-placeholder-val="{{ false }}">
+<iframe src="{{ frameSrc }}" title="{{ frameTitle }}" style="width:100%;height:calc(100vh - 56px);border:0;border-radius:28px;background:#fff;box-shadow:13px 17px 27px rgba(100,64,157,.16)"></iframe>
+</sc-if>
 
 <sc-if value="{{ isAppointments }}" hint-placeholder-val="{{ false }}">
 <div style="display:flex;flex-direction:column;gap:18px">
@@ -653,7 +656,7 @@ a{color:#7137E8}a:hover{color:#5E2BC4}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1520,&quot;height&quot;:1900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#7C3AED&quot;,&quot;#EC4899&quot;,&quot;#0EA5E9&quot;,&quot;#10B981&quot;],&quot;default&quot;:&quot;#7C3AED&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
 const T = {
-  en: { role: "Admin", todaySummary: "Today's Summary", appointments: "Appointments", walkIns: "Walk-ins", revenue: "Revenue",
+  en: { role: "HQ Admin", todaySummary: "Today's Summary", appointments: "Appointments", walkIns: "Walk-ins", revenue: "Revenue",
     goodMorning1: "Good Morning,", goodMorning2: "Hana!", readyShine: "Ready to make your clients shine?",
     apptsToday1: "You have 2 appointments", apptsToday2: "scheduled today", startDay: "Start Day", dayStarted: "Day started",
     monthSales: "This Month Total Sales", achieved: "% Achieved", target: "Target: RM 30,000",
@@ -677,6 +680,7 @@ const T = {
     nDashboard: "Dashboard", nAppointments: "Appointments", nPos: "POS", nSales: "Sales", nMembers: "Members",
     nInventory: "Inventory", nCampaigns: "Campaigns", nReferral: "Referral", nStaff: "Staff",
     nReports: "Reports", nFinance: "Finance", nSettings: "Settings",
+    nQuote: "Quote & Treatment", nReferralSettings: "Referral Settings", nSignOut: "Sign out", roleStaff: "Staff",
     sFaceSerum: "Face Serum", sMassageOil: "Massage Oil", sHairTreatment: "Hair Treatment",
     svAntiAging: "Anti-Aging Facial", svFullBody: "Full Body Massage", svHydrating: "Hydrating Facial",
     aDeepCleansing: "Deep Cleansing Facial", aFullBody: "Full Body Massage", aHairColoring: "Hair Coloring", aHydrating: "Hydrating Facial",
@@ -750,6 +754,7 @@ const T = {
     nDashboard: "主页", nAppointments: "预约", nPos: "收银", nSales: "业绩", nMembers: "会员",
     nInventory: "库存", nCampaigns: "活动", nReferral: "推荐", nStaff: "员工",
     nReports: "报表", nFinance: "财务", nSettings: "设置",
+    nQuote: "报价与疗程记录", nReferralSettings: "推荐设置", nSignOut: "登出", roleStaff: "员工",
     sFaceSerum: "面部精华", sMassageOil: "按摩油", sHairTreatment: "头发护理",
     svAntiAging: "抗衰面部护理", svFullBody: "全身按摩", svHydrating: "补水面部护理",
     aDeepCleansing: "深层清洁护理", aFullBody: "全身按摩", aHairColoring: "染发", aHydrating: "补水护理",
@@ -799,7 +804,7 @@ const T = {
     tplCredit: "RM100 美丽奖励金", tplCreditBody: "送你一份美丽礼遇：透过我的邀请，享有 TikBeli RM100 美丽奖励金。",
     tplCustom: "自定义文案", tplCustomBody: "我把 TikBeli 的专属邀请分享给你，挑一个你喜欢的美丽体验吧！",
     notBuiltYet: "这个模块还没设计，告诉我就开始。" },
-  ms: { role: "Admin", todaySummary: "Ringkasan Hari Ini", appointments: "Temujanji", walkIns: "Walk-in", revenue: "Hasil",
+  ms: { role: "HQ Admin", todaySummary: "Ringkasan Hari Ini", appointments: "Temujanji", walkIns: "Walk-in", revenue: "Hasil",
     goodMorning1: "Selamat Pagi,", goodMorning2: "Hana!", readyShine: "Sedia buat pelanggan anda berseri?",
     apptsToday1: "Anda ada 2 temujanji", apptsToday2: "hari ini", startDay: "Mula Hari", dayStarted: "Hari bermula",
     monthSales: "Jumlah Jualan Bulan Ini", achieved: "% Dicapai", target: "Sasaran: RM 30,000",
@@ -823,6 +828,7 @@ const T = {
     nDashboard: "Dashboard", nAppointments: "Temujanji", nPos: "POS", nSales: "Jualan", nMembers: "Ahli",
     nInventory: "Inventori", nCampaigns: "Kempen", nReferral: "Rujukan", nStaff: "Staf",
     nReports: "Laporan", nFinance: "Kewangan", nSettings: "Tetapan",
+    nQuote: "Sebut Harga & Rawatan", nReferralSettings: "Tetapan Rujukan", nSignOut: "Log keluar", roleStaff: "Staf",
     sFaceSerum: "Serum Muka", sMassageOil: "Minyak Urut", sHairTreatment: "Rawatan Rambut",
     svAntiAging: "Facial Anti-Penuaan", svFullBody: "Urutan Seluruh Badan", svHydrating: "Facial Penghidratan",
     aDeepCleansing: "Facial Pembersihan", aFullBody: "Urutan Seluruh Badan", aHairColoring: "Pewarnaan Rambut", aHydrating: "Facial Penghidratan",
@@ -875,7 +881,7 @@ const T = {
 };
 
 class Component extends DCLogic {
-  state = { lang: "en", nav: 0, started: false, copied: false, outlet: 0, status: 0, dayOffset: 0, sheetOpen: false, tpl: 0, sharing: false };
+  state = { lang: "en", nav: 0, role: (() => { try { const q = new URLSearchParams(location.search).get("role"); return q || localStorage.getItem("tikbeli_role") || "hq"; } catch (e) { return "hq"; } })(), started: false, copied: false, outlet: 0, status: 0, dayOffset: 0, sheetOpen: false, tpl: 0, sharing: false };
 
   renderVals() {
     const s = this.state, lang = s.lang, t = T[lang];
@@ -886,6 +892,14 @@ class Component extends DCLogic {
       [t.nMembers, "users-three"], [t.nInventory, "package"], [t.nCampaigns, "megaphone-simple"], [t.nReferral, "gift"],
       [t.nStaff, "user-list"], [t.nReports, "chart-bar"], [t.nFinance, "wallet"], [t.nSettings, "gear-six"]
     ];
+    const isStaff = s.role === "staff";
+    const LINKS = [
+      { label: t.nQuote, icon: "note-pencil", href: "Consultant%20Quote%20App.dc.html" },
+      ...(isStaff ? [] : [{ label: t.nReferralSettings, icon: "sliders-horizontal", href: "Referral%20Hub.dc.html" }]),
+      { label: t.nSignOut, icon: "sign-out", href: "Login.dc.html", signOut: true }
+    ];
+    const STAFF_IDS = [0, 1, 2, 4, 7];
+    const visibleIds = navItems.map((_, i) => i).filter(i => !isStaff || STAFF_IDS.includes(i));
 
     const avatar = () => "width:42px;height:42px;flex-shrink:0;object-fit:cover;object-position:50% 35%;border-radius:50%;box-shadow:2px 3px 5px rgba(91,52,142,.16)";
 
@@ -909,12 +923,13 @@ class Component extends DCLogic {
     const legendCell = () => "padding:18px;border-bottom:1px solid #EFE8F8;border-left:1px solid #EFE8F8";
 
     return {
-      t, roleLabel: t.role,
-      isDashboard: s.nav === 0, isAppointments: s.nav === 1, isReferral: s.nav === 7,
-      isPlaceholder: s.nav !== 0 && s.nav !== 1 && s.nav !== 7,
+      t, roleLabel: isStaff ? t.roleStaff : t.role,
+      isDashboard: !s.frame && s.nav === 0, isAppointments: !s.frame && s.nav === 1, isReferral: !s.frame && s.nav === 7,
+      isPlaceholder: !s.frame && s.nav !== 0 && s.nav !== 1 && s.nav !== 7,
+      frameOn: !!s.frame, frameSrc: s.frame ? s.frame + "?embed=1&role=" + s.role : "", frameTitle: s.frame || "",
       placeholderTitle: navItems[s.nav] ? navItems[s.nav][0] : "",
       placeholderIcon: navItems[s.nav] ? navItems[s.nav][1] : "",
-      goDashboard: () => this.setState({ nav: 0 }),
+      goDashboard: () => this.setState({ nav: 0, frame: null }),
 
       apptDate,
       prevDay: () => this.setState({ dayOffset: s.dayOffset - 1 }),
@@ -984,7 +999,7 @@ class Component extends DCLogic {
       sheetOpen: s.sheetOpen,
       openSheet: () => this.setState({ sheetOpen: true, sharing: false }),
       closeSheet: () => this.setState({ sheetOpen: false, sharing: false }),
-      toHqDashboard: () => this.setState({ nav: 7 }),
+      toHqDashboard: () => this.setState({ nav: 7, frame: null }),
       sheetTemplates: TPL.map((x, i) => ({
         title: t[x.k], pick: () => this.setState({ tpl: i }),
         chipStyle: "flex:none;padding:11px 16px;border-radius:14px;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
@@ -1040,9 +1055,13 @@ class Component extends DCLogic {
       startDayStyle: "display:inline-flex;align-items:center;gap:8px;margin-top:7.2%;padding:.74em 1.42em;border:1px solid rgba(255,255,255,.96);border-radius:99px;font-size:clamp(.82rem,1.16vw,1.1rem);font-weight:800;white-space:nowrap;cursor:pointer;text-shadow:none;box-shadow:5px 8px 13px rgba(69,31,133,.25),inset 1px 1px 1px #fff;" +
         (s.started ? "background:linear-gradient(145deg,#e6ffe9,#d3f7dc);color:#166534" : "background:linear-gradient(145deg,#fff,#f8ecff);color:#6030be"),
 
-      nav: navItems.map(([label, icon], i) => {
-        const on = s.nav === i;
-        return { label, icon, pick: () => this.setState({ nav: i }),
+      nav: [...visibleIds.map(i => ({ label: navItems[i][0], icon: navItems[i][1], id: i })), ...LINKS].map((it) => {
+        const on = it.href ? s.frame === it.href : (!s.frame && s.nav === it.id);
+        const label = it.label, icon = it.icon;
+        return { label, icon,
+          pick: it.href
+            ? () => { if (it.signOut) { try { localStorage.removeItem("tikbeli_role"); } catch (e) {} location.href = it.href; } else this.setState({ frame: it.href }); }
+            : () => this.setState({ nav: it.id, frame: null }),
           style: "display:flex;align-items:center;gap:12px;min-height:52px;padding:12px 16px;border-radius:22px;font-size:15px;font-weight:800;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;" +
             (on ? "color:#fff;background:linear-gradient(135deg,#7137e8,#a54bf0);box-shadow:9px 13px 18px rgba(81,35,174,.43),-3px -3px 7px rgba(238,220,255,.56),inset 3px 3px 5px rgba(255,255,255,.25)"
                 : "color:#3D2A63;background:linear-gradient(145deg,#fffdff,#f3ebff);box-shadow:6px 9px 14px rgba(91,55,137,.16),-4px -4px 9px rgba(255,255,255,.9),inset 1px 1px 1px #fff"),

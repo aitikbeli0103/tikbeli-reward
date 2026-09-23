@@ -199,47 +199,45 @@ function IOSList({ header, children, dark = false }) {
 // ─────────────────────────────────────────────────────────────
 // Device frame
 // ─────────────────────────────────────────────────────────────
-function IOSDevice({
-  children, width = 402, height = 874, dark = false,
-  title, keyboard = false,
-}) {
-  return (
-    // data-om-starter: inert presence marker — Claude Design's starter-usage
-    // probe reads it; it renders nothing. Keep it on this root element.
-    <div data-om-starter="ios-frame" style={{
-      width, height, borderRadius: 48, overflow: 'hidden',
-      position: 'relative', background: dark ? '#000' : '#F2F2F7',
-      boxShadow: '0 40px 80px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.12)',
-      fontFamily: '-apple-system, system-ui, sans-serif',
-      WebkitFontSmoothing: 'antialiased',
+function useCompactViewport(minWidth = 480) {
+  const [compact, setCompact] = React.useState(
+    typeof window !== 'undefined' && window.innerWidth < minWidth
+  );
+  React.useEffect(() => {
+    const mq = window.matchMedia('(max-width: ' + (minWidth - 1) + 'px)');
+    const on = () => setCompact(mq.matches);
+    on();
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, [minWidth]);
+  return compact;
+}
+
+function IOSDevice({ children, dark = false, title, keyboard = false }) {
+  const [wide, setWide] = React.useState(typeof window !== 'undefined' && window.innerWidth >= 600);
+  React.useEffect(() => {
+    const on = () => setWide(window.innerWidth >= 600);
+    window.addEventListener('resize', on);
+    return () => window.removeEventListener('resize', on);
+  }, []);
+  const app = (
+    <div style={{
+      width: '100%', maxWidth: wide ? 460 : 'none', height: '100%',
+      display: 'flex', flexDirection: 'column', overflow: 'hidden',
+      background: dark ? '#000' : '#fff',
+      boxShadow: wide ? '0 0 0 1px rgba(45,38,64,0.06), 0 20px 60px rgba(45,38,64,0.12)' : 'none',
     }}>
-      {/* dynamic island */}
-      <div style={{
-        position: 'absolute', top: 11, left: '50%', transform: 'translateX(-50%)',
-        width: 126, height: 37, borderRadius: 24, background: '#000', zIndex: 50,
-      }} />
-      {/* status bar (absolute) */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10 }}>
-        <IOSStatusBar dark={dark} />
-      </div>
-      {/* nav + content */}
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {title !== undefined && <IOSNavBar title={title} dark={dark} />}
-        <div style={{ flex: 1, overflow: 'auto' }}>{children}</div>
-        {keyboard && <IOSKeyboard dark={dark} />}
-      </div>
-      {/* home indicator — always on top */}
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 60,
-        height: 34, display: 'flex', justifyContent: 'center', alignItems: 'flex-end',
-        paddingBottom: 8, pointerEvents: 'none',
-      }}>
-        <div style={{
-          width: 139, height: 5, borderRadius: 100,
-          background: dark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.25)',
-        }} />
-      </div>
+      {title !== undefined && <IOSNavBar title={title} dark={dark} />}
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>{children}</div>
+      {keyboard && <IOSKeyboard dark={dark} />}
     </div>
+  );
+  return (
+    <div data-om-starter="ios-frame" style={{
+      position: 'fixed', inset: 0, display: 'flex', justifyContent: 'center',
+      background: wide ? '#EFE9F7' : (dark ? '#000' : '#fff'),
+      fontFamily: '-apple-system, system-ui, sans-serif', WebkitFontSmoothing: 'antialiased',
+    }}>{app}</div>
   );
 }
 
