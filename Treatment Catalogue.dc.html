@@ -24,7 +24,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <div style="display:flex;align-items:center;gap:10px">
 <div style="flex:1;display:flex;align-items:center;gap:8px;padding:0 14px;height:42px;border-radius:99px;background:#fff">
 <i class="ph-bold ph-magnifying-glass" style="font-size:18px;color:#7137E8"></i>
-<input value="{{ query }}" onInput="{{ onSearch }}" placeholder="Search treatments & products" style="flex:1;min-width:0;border:0;outline:0;font:600 14px Manrope,sans-serif;color:#28174F;background:transparent">
+<input value="{{ query }}" onInput="{{ onSearch }}" placeholder="{{ tx.search }}" style="flex:1;min-width:0;border:0;outline:0;font:600 14px Manrope,sans-serif;color:#28174F;background:transparent">
 </div>
 <a href="https://wa.me/" target="_blank" style="width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center"><i class="ph-bold ph-chats-circle" style="font-size:22px;color:#fff"></i></a>
 </div>
@@ -80,7 +80,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </sc-for>
 </div>
 <sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
-<div style="padding:30px 16px;text-align:center;font-size:13px;font-weight:600;color:#9A8CB0">No treatments match your search.</div>
+<div style="padding:30px 16px;text-align:center;font-size:13px;font-weight:600;color:#9A8CB0">{{ tx.noT }}</div>
 </sc-if>
 </sc-if>
 
@@ -88,20 +88,20 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <div style="display:flex;align-items:flex-start;min-height:calc(100vh - 110px)">
 <div style="position:sticky;top:104px;flex:0 0 84px;align-self:stretch;background:#F3ECFD">
 <sc-for list="{{ pcats }}" as="c" hint-placeholder-count="5">
-<div onClick="{{ c.pick }}" style="{{ c.style }}"><div>{{ c.en }}</div><div style="font-size:11px;font-weight:600;margin-top:2px">{{ c.zh }}</div></div>
+<div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div>
 </sc-for>
 </div>
 <div style="flex:1;min-width:0;padding:12px 10px 0">
 <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
 <sc-for list="{{ psubs }}" as="b" hint-placeholder-count="4">
-<div onClick="{{ b.pick }}" style="{{ b.style }}"><div style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ b.en }}</div><div style="font-size:9.5px;font-weight:600;opacity:.8">{{ b.zh }}</div></div>
+<div onClick="{{ b.pick }}" style="{{ b.style }}">{{ b.label }}</div>
 </sc-for>
 </div>
-<sc-if value="{{ pEmpty }}" hint-placeholder-val="{{ false }}"><div style="margin-top:16px;padding:20px 12px;border-radius:12px;background:#F3ECFD;text-align:center;font-size:12.5px;font-weight:600;color:#7D6D90">No products here yet.</div></sc-if>
 <div style="display:flex;align-items:baseline;justify-content:space-between;padding:16px 2px 8px">
 <div style="font-size:14px;font-weight:800">{{ pTitle }}</div>
 <div style="font-size:11.5px;font-weight:700;color:#9A8CB0">{{ pCount }}</div>
 </div>
+<sc-if value="{{ pEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:20px 12px;border-radius:12px;background:#F3ECFD;text-align:center;font-size:12.5px;font-weight:600;color:#7D6D90">{{ tx.noP }}</div></sc-if>
 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
 <sc-for list="{{ prods }}" as="p" hint-placeholder-count="4">
 <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:block;border-radius:12px;overflow:hidden;background:#fff;border:1px solid #EDE4F8">
@@ -123,7 +123,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </div>
 </div>
 </div>
-<div style="padding:24px 16px 10px;font-size:16px;font-weight:800">Shop by brand</div>
+<div style="padding:24px 16px 10px;font-size:16px;font-weight:800">{{ tx.brand }}</div>
 <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:0 16px">
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/drnano-labcel.png" alt="DrNano Labcel" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">DrNano Labcel</div></div>
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/ava-clinic.png" alt="AVA Clinic" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">AVA Clinic</div></div>
@@ -209,32 +209,60 @@ const PIMG = {
   e4da3b7fbbce2345d7772b0674a318d5: "uploads/5/644cb684873b96ea3533398c74b662dd.jpg"
 };
 
+const MS = { skin: "Penjagaan Kulit", makeup: "Solekan", body: "Penjagaan Badan", health: "Kesihatan", gift: "Hadiah & Baucar",
+  cleanser: "Pencuci Muka", scrub: "Skrub", serum: "Serum", eye: "Penjagaan Mata", primer: "Tone Up", foundation: "Asas Solekan",
+  powder: "Bedak Tabur", remover: "Penanggal Solekan", bodyserum: "Serum Badan", bodyscrub: "Skrub Badan", coffee: "Kopi",
+  supp: "Suplemen", hamper: "Hamper", voucher: "Baucar", All: "Semua" };
+const TC = { All: ["全部", "Semua"], "1st Trial": ["首次体验", "Percubaan"], "Slimming / Fitness": ["纤体", "Pelangsingan"],
+  "Massage & Wellness": ["按摩", "Urutan"], "Facial Treatment": ["面部护理", "Muka"], "Anti - Aging": ["抗衰老", "Anti-Penuaan"],
+  "Skin Care / Body Care": ["皮肤身体", "Kulit & Badan"], "Eye Treatments": ["眼部", "Mata"], Collaboration: ["合作", "Kolaborasi"], Voucher: ["礼券", "Baucar"] };
+const UI = {
+  en: { treat: "TREATMENTS", prod: "PRODUCTS", search: "Search treatments & products", items: " items", allT: "All treatments", all: "All",
+    brand: "Shop by brand", noP: "No products here yet.", noT: "No treatments match your search.", ask: "Ask consultant" },
+  zh: { treat: "疗程", prod: "产品", search: "搜索疗程和产品", items: " 件", allT: "全部疗程", all: "全部",
+    brand: "品牌", noP: "暂无产品。", noT: "没有符合的疗程。", ask: "咨询顾问" },
+  ms: { treat: "RAWATAN", prod: "PRODUK", search: "Cari rawatan & produk", items: " item", allT: "Semua rawatan", all: "Semua",
+    brand: "Beli ikut jenama", noP: "Tiada produk lagi.", noT: "Tiada rawatan sepadan.", ask: "Tanya perunding" }
+};
+
 class Component extends DCLogic {
-  state = { top: 0, cat: "All", sub: "All", q: "", pcat: "skin", psub: "All" };
+  componentDidMount() {
+    let lang = "en"; try { lang = localStorage.getItem("tikbeli_lang") || "en"; } catch (e) {}
+    if (UI[lang]) this.setState({ lang });
+    this.onStore = (e) => { if (e.key === "tikbeli_lang" && UI[e.newValue]) this.setState({ lang: e.newValue }); };
+    window.addEventListener("storage", this.onStore);
+  }
+  componentWillUnmount() { window.removeEventListener("storage", this.onStore); }
+  state = { lang: "en", top: 0, cat: "All", sub: "All", q: "", pcat: "skin", psub: "All" };
   renderVals() {
     const s = this.state, BASE = "https://www.tikbeli.com/";
-    const rm = (n) => n ? "RM " + n.toLocaleString("en-US") : "Ask consultant";
+    const L = s.lang, tx = UI[L] || UI.en, li = L === "zh" ? 0 : 1;
+    const tr = (k, en, zh) => L === "zh" ? zh : L === "ms" ? (MS[k] || en) : en;
+    const tc = (k, en) => L === "en" || !TC[k] ? en : TC[k][li];
+    const rm = (n) => n ? "RM " + n.toLocaleString("en-US") : tx.ask;
     const all = D.map(([name, cat, sub, price, was, slug, img, video]) => ({ name, cat, sub, price, was, slug, img, video }));
     const inCat = all.filter(t => s.cat === "All" || t.cat === s.cat);
     const subNames = s.cat === "All" ? [] : Array.from(new Set(inCat.map(t => t.sub)));
     const q = s.q.trim().toLowerCase();
     const shown = inCat.filter(t => (s.sub === "All" || t.sub === s.sub) && (!q || t.name.toLowerCase().includes(q)));
-    const catLabel = (CATS.find(c => c[0] === s.cat) || CATS[0])[1];
-    const rm2 = (n) => n ? "RM " + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0 }) : "Ask consultant";
+    const catLabel = tc(s.cat, (CATS.find(c => c[0] === s.cat) || CATS[0])[1]);
+    const rm2 = (n) => n ? "RM " + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0 }) : tx.ask;
     const pc = PCATS.find(c => c[0] === s.pcat) || PCATS[0];
     const pShown = PRODS.filter(p => p[2] === pc[0] && (s.psub === "All" || p[3] === s.psub) && (!q || p[0].toLowerCase().includes(q)));
-    const psubLabel = (pc[4].find(x => x[0] === s.psub) || [0, "All " + pc[1]])[1];
+    const ps = pc[4].find(x => x[0] === s.psub);
+    const psubLabel = ps ? tr(ps[0], ps[1], ps[2]) : tr(pc[0], pc[1], pc[2]);
     return {
+      tx,
       pcats: PCATS.map(([key, en, zh]) => { const on = s.pcat === key;
-        return { en, zh, pick: () => this.setState({ pcat: key, psub: "All" }),
+        return { label: tr(key, en, zh), pick: () => this.setState({ pcat: key, psub: "All" }),
           style: "padding:16px 8px;text-align:center;font-size:12.5px;font-weight:800;line-height:1.25;cursor:pointer;" +
             (on ? "background:#FBF8FE;color:#7137E8;box-shadow:inset 3px 0 0 #7137E8" : "color:#5A4A75") }; }),
       psubs: [["All", "All", "全部"], ...pc[4]].map(([key, en, zh]) => { const on = s.psub === key;
-        return { en, zh, pick: () => this.setState({ psub: key }),
+        return { label: tr(key, en, zh), pick: () => this.setState({ psub: key }),
           style: "min-height:42px;padding:4px 3px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:700;line-height:1.2;cursor:pointer;background:#fff;" +
             (on ? "color:#7137E8;border:1.5px solid #7137E8" : "color:#5A4A75;border:1.5px solid #E6DCF5") }; }),
       pTitle: psubLabel,
-      pCount: pShown.length + " items",
+      pCount: pShown.length + tx.items,
       pEmpty: pShown.length === 0,
       prods: pShown.map(([name, brand, , , price, was, slug]) => ({ name, brand, price: rm2(price), was: was ? rm2(was) : "",
         url: P + slug, icon: "ph-fill ph-" + pc[3],
@@ -242,12 +270,12 @@ class Component extends DCLogic {
         hasImg: !!PIMG[slug.split("/").pop()], noImg: !PIMG[slug.split("/").pop()] })),
       query: s.q,
       onSearch: (e) => this.setState({ q: e.target.value }),
-      tops: ["TREATMENTS", "PRODUCTS"].map((label, i) => ({ label, pick: () => this.setState({ top: i }),
+      tops: [tx.treat, tx.prod].map((label, i) => ({ label, pick: () => this.setState({ top: i }),
         style: "font-size:13px;font-weight:800;letter-spacing:1.5px;cursor:pointer;padding-bottom:10px;color:" +
           (s.top === i ? "#fff;border-bottom:3px solid #fff" : "rgba(255,255,255,.65);border-bottom:3px solid transparent") })),
       isTreat: s.top === 0, isProd: s.top === 1,
       cats: CATS.map(([key, label, icon], i) => { const [bg, fg] = TONES[i % 4], on = s.cat === key;
-        return { label, icon: "ph-fill ph-" + icon, pick: () => this.setState({ cat: key, sub: "All" }),
+        return { label: tc(key, label), icon: "ph-fill ph-" + icon, pick: () => this.setState({ cat: key, sub: "All" }),
           tile: "width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:" + bg +
             (on ? ";box-shadow:0 0 0 2px #fff,0 0 0 4px " + fg : ""),
           iconStyle: "font-size:27px;color:" + fg,
@@ -258,8 +286,8 @@ class Component extends DCLogic {
         return { label, pick: () => this.setState({ sub: label }),
           style: "height:36px;padding:0 4px;border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" +
             (on ? "background:#fff;color:#7137E8;border:1.5px solid #7137E8" : "background:#fff;color:#5A4A75;border:1.5px solid #E6DCF5") }; }),
-      listTitle: s.sub !== "All" ? s.sub : s.cat === "All" ? "All treatments" : catLabel,
-      countLabel: shown.length + " items",
+      listTitle: s.sub !== "All" ? s.sub : s.cat === "All" ? tx.allT : catLabel,
+      countLabel: shown.length + tx.items,
       empty: shown.length === 0,
       items: shown.map(t => ({ name: t.name, sub: t.sub, price: rm(t.price), was: t.was ? rm(t.was) : "",
         url: BASE + "Details/" + t.slug,
