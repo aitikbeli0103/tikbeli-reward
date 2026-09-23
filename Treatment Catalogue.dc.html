@@ -97,6 +97,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <div onClick="{{ b.pick }}" style="{{ b.style }}"><div style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ b.en }}</div><div style="font-size:9.5px;font-weight:600;opacity:.8">{{ b.zh }}</div></div>
 </sc-for>
 </div>
+<sc-if value="{{ pEmpty }}" hint-placeholder-val="{{ false }}"><div style="margin-top:16px;padding:20px 12px;border-radius:12px;background:#F3ECFD;text-align:center;font-size:12.5px;font-weight:600;color:#7D6D90">No products here yet.</div></sc-if>
 <div style="display:flex;align-items:baseline;justify-content:space-between;padding:16px 2px 8px">
 <div style="font-size:14px;font-weight:800">{{ pTitle }}</div>
 <div style="font-size:11.5px;font-weight:700;color:#9A8CB0">{{ pCount }}</div>
@@ -105,8 +106,9 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <sc-for list="{{ prods }}" as="p" hint-placeholder-count="4">
 <a href="{{ p.url }}" target="_blank" rel="noopener" style="display:block;border-radius:12px;overflow:hidden;background:#fff;border:1px solid #EDE4F8">
 <div style="position:relative;aspect-ratio:1;background:linear-gradient(150deg,#FFE9F2,#EDE4FF);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;text-align:center">
-<i class="{{ p.icon }}" style="font-size:30px;color:#B48BF0"></i>
-<div style="font-size:12px;font-weight:800;color:#7137E8;line-height:1.25">{{ p.name }}</div>
+<sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}"><img src="{{ p.img }}" alt="{{ p.name }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></sc-if>
+<sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}"><i class="{{ p.icon }}" style="font-size:30px;color:#B48BF0"></i>
+<div style="font-size:12px;font-weight:800;color:#7137E8;line-height:1.25">{{ p.name }}</div></sc-if>
 <div style="position:absolute;left:6px;top:6px;padding:3px 7px;border-radius:99px;background:rgba(40,23,79,.7);color:#fff;font-size:9.5px;font-weight:800">{{ p.brand }}</div>
 </div>
 <div style="padding:8px 8px 10px">
@@ -174,7 +176,7 @@ const BRANDS = [["drnano-labcel", "DrNano Labcel"], ["ava-clinic", "AVA Clinic"]
 const P = "https://www.tikbeli.com/Details/";
 const PCATS = [
   ["skin", "Skin Care", "护肤", "drop", [["cleanser", "Cleanser", "洁面"], ["scrub", "Scrub", "磨砂"], ["serum", "Serum", "精华"], ["eye", "Eye Care", "眼部护理"]]],
-  ["makeup", "Makeup", "彩妆", "paint-brush", [["primer", "Tone Up", "隔离/妆前乳"], ["foundation", "Foundation", "粉底"], ["powder", "Loose Powder", "蜜粉/散粉"]]],
+  ["makeup", "Makeup", "彩妆", "paint-brush", [["primer", "Tone Up", "隔离/妆前乳"], ["foundation", "Foundation", "粉底"], ["powder", "Loose Powder", "蜜粉/散粉"], ["remover", "Makeup Remover", "卸妆水"]]],
   ["body", "Body Care", "身体护理", "hand-heart", [["bodyserum", "Body Serum", "身体乳"], ["bodyscrub", "Body Scrub", "身体磨砂"]]],
   ["health", "Wellness", "保健", "coffee", [["coffee", "Coffee", "咖啡"], ["supp", "Supplement", "营养品"]]],
   ["gift", "Gifts & Vouchers", "礼品", "gift", [["hamper", "Hampers", "礼篮"], ["voucher", "Vouchers", "现金券"]]]
@@ -198,6 +200,14 @@ const PRODS = [
   ["Hampers CNY 2025", "TikBeli", "gift", "hamper", 1987, 0, "HampersCNY2025/8c19f571e251e61cb8dd3612f26d5ecf"],
   ["RM1 Cash Voucher For Products & Treatments", "TikBeli", "gift", "voucher", 1, 10, "RM1%20Cash%20Voucher%20For%20Products%20&%20Treatments/918317b57931b6b7a7d29490fe5ec9f9"]
 ];
+
+const PIMG = {
+  fe73f687e5bc5280214e0486b273a5f9: "uploads/330/809fbfb85b7dd51e2c011520d8eadd2d.jpg",
+  "6da37dd3139aa4d9aa55b8d237ec5d4a": "uploads/331/68ce0d3de042c809e19de4240aa7417c.jpg",
+  "3dd48ab31d016ffcbf3314df2b3cb9ce": "uploads/341/ebb33883c7805e37073cfac6513c20e6.jpg",
+  "34173cb38f07f89ddbebc2ac9128303f": "uploads/30/fc9cf473d1690d8d0afc2225e1c10f6a.jpg",
+  e4da3b7fbbce2345d7772b0674a318d5: "uploads/5/644cb684873b96ea3533398c74b662dd.jpg"
+};
 
 class Component extends DCLogic {
   state = { top: 0, cat: "All", sub: "All", q: "", pcat: "skin", psub: "All" };
@@ -225,8 +235,11 @@ class Component extends DCLogic {
             (on ? "color:#7137E8;border:1.5px solid #7137E8" : "color:#5A4A75;border:1.5px solid #E6DCF5") }; }),
       pTitle: psubLabel,
       pCount: pShown.length + " items",
+      pEmpty: pShown.length === 0,
       prods: pShown.map(([name, brand, , , price, was, slug]) => ({ name, brand, price: rm2(price), was: was ? rm2(was) : "",
-        url: P + slug, icon: "ph-fill ph-" + pc[3] })),
+        url: P + slug, icon: "ph-fill ph-" + pc[3],
+        img: PIMG[slug.split("/").pop()] ? "https://www.tikbeli.com/" + PIMG[slug.split("/").pop()] : "",
+        hasImg: !!PIMG[slug.split("/").pop()], noImg: !PIMG[slug.split("/").pop()] })),
       query: s.q,
       onSearch: (e) => this.setState({ q: e.target.value }),
       tops: ["TREATMENTS", "PRODUCTS"].map((label, i) => ({ label, pick: () => this.setState({ top: i }),
