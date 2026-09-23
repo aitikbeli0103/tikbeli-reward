@@ -26,6 +26,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <div style="position:relative">
 <img src="assets/banners/refer-earn-hero.jpg" alt="Refer and Earn" style="display:block;width:100%;aspect-ratio:640/285;object-fit:cover">
 <div style="position:absolute;top:12px;right:12px;display:flex;gap:8px">
+<div onClick="{{ cycleLang }}" style="height:38px;padding:0 14px;border-radius:99px;background:rgba(255,255,255,.92);display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.18);font-size:12.5px;font-weight:800;color:#28174F;cursor:pointer"><i class="ph-bold ph-translate" style="font-size:16px"></i>{{ langLabel }}</div>
 <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18)"><i class="ph-bold ph-bell" style="font-size:19px;color:#28174F"></i></div>
 </div>
 </div>
@@ -33,15 +34,15 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <a href="Referral%20Hub.dc.html" style="display:flex;align-items:center;gap:12px;margin:-18px 16px 0;position:relative;padding:12px 16px;border-radius:16px;background:linear-gradient(100deg,#FFE9F2,#FFF3E6);box-shadow:0 6px 18px rgba(241,79,154,.18)">
 <i class="ph-fill ph-gift" style="font-size:28px;color:#F14F9A"></i>
 <div style="flex:1;min-width:0">
-<div style="font-size:14px;font-weight:700;color:#5B2A4A">Earn up to <span style="font-weight:800;color:#E0327F">RM100 Beauty Credit</span></div>
-<div style="font-size:13px;font-weight:800;color:#28174F;margin-top:2px">Invite Friends Now</div>
+<div style="font-size:14px;font-weight:700;color:#5B2A4A">{{ t.earn }} <span style="font-weight:800;color:#E0327F">{{ t.credit }}</span></div>
+<div style="font-size:13px;font-weight:800;color:#28174F;margin-top:2px">{{ t.invite }}</div>
 </div>
 <i class="ph-bold ph-caret-right" style="font-size:18px;color:#E0327F"></i>
 </a>
 
 <div style="padding:22px 16px 0">
 <div style="font-size:19px;font-weight:800;letter-spacing:-.3px">{{ greeting }}, Fiona Gan!</div>
-<div style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:4px 10px;border-radius:99px;background:#28174F;color:#FFD86E;font-size:11px;font-weight:800;letter-spacing:.4px;white-space:nowrap"><i class="ph-fill ph-crown" style="font-size:13px"></i>GOLD MEMBER · 20% OFF</div>
+<div style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:4px 10px;border-radius:99px;background:#28174F;color:#FFD86E;font-size:11px;font-weight:800;letter-spacing:.4px;white-space:nowrap"><i class="ph-fill ph-crown" style="font-size:13px"></i>{{ t.gold }}</div>
 </div>
 
 <div class="hs" style="display:flex;gap:10px;overflow-x:auto;padding:14px 16px 4px;scroll-snap-type:x mandatory">
@@ -59,7 +60,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:26px 16px 12px">
 <div>
-<div style="font-size:17px;font-weight:800;letter-spacing:-.2px">Flash Sales</div>
+<div style="font-size:17px;font-weight:800;letter-spacing:-.2px">{{ t.flash }}</div>
 <div style="display:flex;gap:6px;margin-top:8px">
 <sc-for list="{{ countdown }}" as="c" hint-placeholder-count="4">
 <div style="display:flex;flex-direction:column;align-items:center;min-width:40px;padding:5px 6px;border-radius:9px;background:#28174F">
@@ -69,7 +70,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </sc-for>
 </div>
 </div>
-<a href="Treatment%20Catalogue.dc.html" style="font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:4px">See all<i class="ph-bold ph-arrow-right"></i></a>
+<a href="Treatment%20Catalogue.dc.html" style="font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:4px">{{ t.seeAll }}<i class="ph-bold ph-arrow-right"></i></a>
 </div>
 <div class="hs" style="display:flex;gap:12px;overflow-x:auto;padding:0 16px 4px;scroll-snap-type:x mandatory">
 <sc-for list="{{ flash }}" as="p" hint-placeholder-count="3">
@@ -88,7 +89,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </div>
 
 <div style="display:flex;align-items:center;justify-content:space-between;padding:28px 16px 12px">
-<div style="font-size:17px;font-weight:800;letter-spacing:-.2px">New Arrivals</div>
+<div style="font-size:17px;font-weight:800;letter-spacing:-.2px">{{ t.newArr }}</div>
 <i class="ph-bold ph-arrow-right" style="font-size:18px;color:#7137E8"></i>
 </div>
 <div class="hs" style="display:flex;gap:12px;overflow-x:auto;padding:0 16px 4px;scroll-snap-type:x mandatory">
@@ -98,7 +99,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </div>
 
 <div style="padding:30px 16px 12px">
-<div style="display:inline-block;padding:7px 16px;border-radius:10px;background:#F4E7D8;font-size:14px;font-weight:800;letter-spacing:3px;color:#28174F">BEAUTIFUL DEAL</div>
+<div style="display:inline-block;padding:7px 16px;border-radius:10px;background:#F4E7D8;font-size:14px;font-weight:800;letter-spacing:3px;color:#28174F">{{ t.deal }}</div>
 </div>
 <div class="hs" style="display:flex;gap:12px;overflow-x:auto;padding:0 16px 4px;scroll-snap-type:x mandatory">
 <sc-for list="{{ deals }}" as="p" hint-placeholder-count="3">
@@ -113,8 +114,8 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </div>
 
 <div style="display:flex;align-items:center;justify-content:space-between;padding:30px 16px 12px">
-<div style="font-size:22px;font-weight:800;letter-spacing:1px">VOUCHER</div>
-<a href="Rewards%20Club.dc.html" style="font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:4px">My vouchers<i class="ph-bold ph-arrow-right"></i></a>
+<div style="font-size:22px;font-weight:800;letter-spacing:1px">{{ t.voucher }}</div>
+<a href="Rewards%20Club.dc.html" style="font-size:12.5px;font-weight:800;display:flex;align-items:center;gap:4px">{{ t.myV }}<i class="ph-bold ph-arrow-right"></i></a>
 </div>
 <div class="hs" style="display:flex;gap:12px;overflow-x:auto;padding:0 16px 4px;scroll-snap-type:x mandatory">
 <sc-for list="{{ vouchers }}" as="v" hint-placeholder-count="3">
@@ -125,15 +126,15 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </div>
 
 <div style="padding:30px 16px 12px;display:flex;align-items:center;justify-content:space-between">
-<div style="display:inline-block;padding:7px 16px;border-radius:10px;background:#F4E7D8;font-size:14px;font-weight:800;letter-spacing:3px;color:#28174F">OUR AMBASSADOR</div>
+<div style="display:inline-block;padding:7px 16px;border-radius:10px;background:#F4E7D8;font-size:14px;font-weight:800;letter-spacing:3px;color:#28174F">{{ t.amb }}</div>
 <i class="ph-bold ph-arrow-right" style="font-size:18px;color:#7137E8"></i>
 </div>
 <div style="margin:0 16px;aspect-ratio:16/9;border-radius:16px;border:2px dashed #D9CCEB;background:#F5EFFB;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#9A8CB0">
 <i class="ph-bold ph-image" style="font-size:28px"></i>
-<div style="font-size:12.5px;font-weight:700">Ambassador event photo</div>
+<div style="font-size:12.5px;font-weight:700">{{ t.ambPh }}</div>
 </div>
 
-<div style="padding:30px 16px 14px;font-size:17px;font-weight:800;letter-spacing:-.2px">Our Categories</div>
+<div style="padding:30px 16px 14px;font-size:17px;font-weight:800;letter-spacing:-.2px">{{ t.cats }}</div>
 <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 8px;padding:0 16px">
 <sc-for list="{{ categories }}" as="c" hint-placeholder-count="8">
 <a href="{{ c.href }}" style="display:flex;flex-direction:column;align-items:center;gap:7px">
@@ -144,14 +145,14 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </div>
 
 <div style="padding:32px 16px 4px">
-<div style="display:inline-block;padding:7px 16px;border-radius:10px;background:#F4E7D8;font-size:14px;font-weight:800;letter-spacing:3px;color:#28174F">HOT SELLING TREATMENT</div>
-<div style="font-size:12.5px;font-weight:600;color:#7D6D90;margin-top:8px">Explore TikBeli treatments now, online!</div>
+<div style="display:inline-block;padding:7px 16px;border-radius:10px;background:#F4E7D8;font-size:14px;font-weight:800;letter-spacing:3px;color:#28174F">{{ t.hot }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#7D6D90;margin-top:8px">{{ t.explore }}</div>
 </div>
 <div style="display:flex;align-items:center;gap:18px;padding:12px 16px 12px">
 <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
 <div onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</div>
 </sc-for>
-<a href="Treatment%20Catalogue.dc.html" style="margin-left:auto;font-size:12px;font-weight:800">Shop All ›</a>
+<a href="Treatment%20Catalogue.dc.html" style="margin-left:auto;font-size:12px;font-weight:800">{{ t.shopAll }}</a>
 </div>
 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:0 16px">
 <sc-for list="{{ hot }}" as="p" hint-placeholder-count="4">
@@ -168,7 +169,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </sc-for>
 </div>
 
-<div style="padding:32px 16px 12px;font-size:17px;font-weight:800;letter-spacing:-.2px">Our Brands</div>
+<div style="padding:32px 16px 12px;font-size:17px;font-weight:800;letter-spacing:-.2px">{{ t.brands }}</div>
 <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:0 16px">
 <sc-for list="{{ brands }}" as="b" hint-placeholder-count="7">
 <div style="aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px">
@@ -179,7 +180,7 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 
 <div style="margin:32px 16px 0;padding:18px;border-radius:16px;background:#28174F;color:#D9CCEB;display:flex;align-items:center;gap:14px">
 <img src="assets/brands/tikbevi.png" alt="TikBeVi" style="width:52px;height:52px;border-radius:50%;background:#fff;object-fit:contain;padding:4px;flex-shrink:0">
-<div style="font-size:12px;font-weight:600;line-height:1.55">Questions about a treatment? Chat with your consultant on WhatsApp.</div>
+<div style="font-size:12px;font-weight:600;line-height:1.55">{{ t.wa }}</div>
 <a href="https://wa.me/" target="_blank" style="margin-left:auto;flex-shrink:0;width:42px;height:42px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center"><i class="ph-fill ph-whatsapp-logo" style="font-size:23px;color:#fff"></i></a>
 </div>
 
@@ -212,14 +213,45 @@ const T = {
   lumi: ["Lumicell Skin Revival Buy 5 FOC 1", 983, 0, "LumicellSkinRevivalBUY5FOC1/20f07591c6fcb220ffe637cda29bb3f6", "uploads/277/612b2f15128ff2493137c29a80b666e1.jpg"],
   hifu: ["Hifu Treatment Face", 1800, 0, "HifuTreatmentFace/069059b7ef840f0c74a814ec9237b6ec", "uploads/126/8ceecb89e5d3ae028cc579dc8cb3182b.jpg"]
 };
-const rm = (n) => n ? "RM " + n.toLocaleString("en-US") : "Ask consultant";
+const TX = {
+  en: { earn: "Earn up to", credit: "RM100 Beauty Credit", invite: "Invite Friends Now", gold: "GOLD MEMBER · 20% OFF", flash: "Flash Sales", seeAll: "See all",
+    newArr: "New Arrivals", deal: "BEAUTIFUL DEAL", voucher: "VOUCHER", myV: "My vouchers", amb: "OUR AMBASSADOR", ambPh: "Ambassador event photo",
+    cats: "Our Categories", hot: "HOT SELLING TREATMENT", explore: "Explore TikBeli treatments now, online!", shopAll: "Shop All ›", brands: "Our Brands",
+    wa: "Questions about a treatment? Chat with your consultant on WhatsApp.", ask: "Ask consultant",
+    greet: ["Good Morning", "Good Afternoon", "Good Evening"], cd: ["DAYS", "HRS", "MIN", "SEC"],
+    bal: [["Beauty Credit", "Use on any treatment"], ["Package", "Hifu sessions left"], ["Points", "= RM 12.80"], ["Member Tier", "RM 820 to Platinum"], ["Vouchers", "1 expires this week"]],
+    tier: "Gold", catL: ["Invite", "Referral", "Voucher", "Sets", "Trial", "Promo", "Consult", "Giveaway"], tabs: ["TREATMENTS", "PACKAGES"],
+    nav: ["Home", "Shop", "Gift Card", "Rewards", "Account"] },
+  zh: { earn: "最高可赚", credit: "RM100 美容积分", invite: "立即邀请好友", gold: "黄金会员 · 8折", flash: "限时抢购", seeAll: "查看全部",
+    newArr: "新品上市", deal: "美丽优惠", voucher: "优惠券", myV: "我的优惠券", amb: "品牌大使", ambPh: "大使活动照片",
+    cats: "分类", hot: "热卖疗程", explore: "立即在线探索 TikBeli 疗程！", shopAll: "全部商品 ›", brands: "合作品牌",
+    wa: "对疗程有疑问？通过 WhatsApp 联系您的顾问。", ask: "咨询顾问",
+    greet: ["早上好", "下午好", "晚上好"], cd: ["天", "时", "分", "秒"],
+    bal: [["美容积分", "可用于任何疗程"], ["配套", "Hifu 剩余次数"], ["积分", "= RM 12.80"], ["会员等级", "再消费 RM 820 升白金"], ["优惠券", "1 张本周到期"]],
+    tier: "黄金", catL: ["邀请", "推荐", "优惠券", "套装", "体验", "促销", "咨询", "赠品"], tabs: ["疗程", "配套"],
+    nav: ["首页", "商城", "礼品卡", "奖励", "我的"] },
+  ms: { earn: "Dapatkan sehingga", credit: "Kredit Kecantikan RM100", invite: "Jemput Rakan Sekarang", gold: "AHLI EMAS · DISKAUN 20%", flash: "Jualan Kilat", seeAll: "Lihat semua",
+    newArr: "Ketibaan Baru", deal: "TAWARAN CANTIK", voucher: "BAUCAR", myV: "Baucar saya", amb: "DUTA KAMI", ambPh: "Foto acara duta",
+    cats: "Kategori Kami", hot: "RAWATAN TERLARIS", explore: "Terokai rawatan TikBeli dalam talian sekarang!", shopAll: "Beli Semua ›", brands: "Jenama Kami",
+    wa: "Ada soalan tentang rawatan? Berbual dengan perunding anda di WhatsApp.", ask: "Tanya perunding",
+    greet: ["Selamat Pagi", "Selamat Petang", "Selamat Malam"], cd: ["HARI", "JAM", "MIN", "SAAT"],
+    bal: [["Kredit Kecantikan", "Guna untuk mana-mana rawatan"], ["Pakej", "Sesi Hifu berbaki"], ["Mata", "= RM 12.80"], ["Tahap Ahli", "RM 820 lagi ke Platinum"], ["Baucar", "1 tamat minggu ini"]],
+    tier: "Emas", catL: ["Jemput", "Rujukan", "Baucar", "Set", "Percubaan", "Promosi", "Rundingan", "Hadiah"], tabs: ["RAWATAN", "PAKEJ"],
+    nav: ["Utama", "Kedai", "Kad Hadiah", "Ganjaran", "Akaun"] }
+};
+let ASK = "Ask consultant";
+const rm = (n) => n ? "RM " + n.toLocaleString("en-US") : ASK;
 const item = (k) => { const [name, price, was, slug, img] = T[k];
   return { name, price: rm(price), was: was ? rm(was) : "", off: was ? Math.round((1 - price / was) * 100) : 0, url: BASE + "Details/" + slug, img: BASE + img }; };
 const pad = (n) => String(n).padStart(2, "0");
 
 class Component extends DCLogic {
-  state = { now: Date.now(), tab: 0, screen: null };
+  state = { now: Date.now(), tab: 0, screen: null, lang: "en" };
   componentDidMount() {
+    let lang = "en"; try { lang = localStorage.getItem("tikbeli_lang") || "en"; } catch (e) {}
+    if (TX[lang]) this.setState({ lang });
+    this.onStore = (e) => { if (e.key === "tikbeli_lang" && TX[e.newValue]) this.setState({ lang: e.newValue }); };
+    window.addEventListener("storage", this.onStore);
     this.timer = setInterval(() => this.setState({ now: Date.now() }), 1000);
     this.onClick = (e) => {
       const a = e.target.closest && e.target.closest("a[href]");
@@ -232,10 +264,10 @@ class Component extends DCLogic {
     };
     document.addEventListener("click", this.onClick);
   }
-  componentWillUnmount() { clearInterval(this.timer); document.removeEventListener("click", this.onClick); }
+  componentWillUnmount() { clearInterval(this.timer); document.removeEventListener("click", this.onClick); window.removeEventListener("storage", this.onStore); }
 
   renderVals() {
-    const s = this.state, d = new Date(s.now);
+    const s = this.state, d = new Date(s.now), t = TX[s.lang] || TX.en; ASK = t.ask;
     const h = d.getHours();
     const end = new Date(d.getFullYear(), d.getMonth() + 1, 1).getTime();
     let left = Math.max(0, Math.floor((end - s.now) / 1000));
@@ -254,15 +286,16 @@ class Component extends DCLogic {
       ["Gift Card", "gift", "Rewards%20Club.dc.html"], ["Rewards", "crown", "Referral%20Hub.dc.html"], ["Account", "user-circle", "Customer%20App.dc.html"]];
 
     return {
-      greeting: h < 12 ? "Good Morning" : h < 18 ? "Good Afternoon" : "Good Evening",
-      balances: [
-        { label: "Beauty Credit", value: "RM 100.00", sub: "Use on any treatment", icon: "ph-fill ph-wallet" },
-        { label: "Package", value: "4 / 10", sub: "Hifu sessions left", icon: "ph-fill ph-package" },
-        { label: "Points", value: "1,280", sub: "= RM 12.80", icon: "ph-fill ph-coins" },
-        { label: "Member Tier", value: "Gold", sub: "RM 820 to Platinum", icon: "ph-fill ph-crown" },
-        { label: "Vouchers", value: "3", sub: "1 expires this week", icon: "ph-fill ph-ticket" }
-      ],
-      countdown: [[pad(days), "DAYS"], [pad(hrs), "HRS"], [pad(Math.floor(left / 60)), "MIN"], [pad(left % 60), "SEC"]].map(([v, l]) => ({ v, l })),
+      t,
+      langLabel: { en: "EN", zh: "中文", ms: "BM" }[s.lang] || "EN",
+      cycleLang: () => { const nx = { en: "zh", zh: "ms", ms: "en" }[s.lang] || "en";
+        try { localStorage.setItem("tikbeli_lang", nx); } catch (e) {}
+        this.setState({ lang: nx });
+        const f = document.querySelector("iframe"); if (f && f.contentWindow) f.contentWindow.location.reload(); },
+      greeting: t.greet[h < 12 ? 0 : h < 18 ? 1 : 2],
+      balances: [["RM 100.00", "wallet"], ["4 / 10", "package"], ["1,280", "coins"], [t.tier, "crown"], ["3", "ticket"]]
+        .map(([value, ic], i) => ({ label: t.bal[i][0], sub: t.bal[i][1], value, icon: "ph-fill ph-" + ic })),
+      countdown: [pad(days), pad(hrs), pad(Math.floor(left / 60)), pad(left % 60)].map((v, i) => ({ v, l: t.cd[i] })),
       flash: ["cryo", "zqii", "anti", "trial"].map(item),
       arrivals: [["share-friends-3", "Share with friends"], ["choose-package", "Choose your package"], ["free-delivery", "Free delivery"], ["refer-earn-steps", "Refer and earn steps"]]
         .map(([f, alt]) => ({ src: "assets/banners/" + f + ".jpg", alt })),
@@ -270,10 +303,10 @@ class Component extends DCLogic {
       vouchers: [["rm100-beauty-credit", "RM100 Beauty Credit"], ["free-facial-trial", "Free facial trial"], ["rm19-trial-facial", "RM19 trial facial"]]
         .map(([f, alt]) => ({ src: "brand/" + f + ".png", alt })),
       categories: cats.map(([label, icon, href], i) => { const [bg, fg] = tones[i % 4];
-        return { label, href, icon: "ph-fill ph-" + icon,
+        return { label: t.catL[i], href, icon: "ph-fill ph-" + icon,
           tile: "width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;background:" + bg,
           iconStyle: "font-size:27px;color:" + fg }; }),
-      tabs: TABS.map(([label], i) => ({ label, pick: () => this.setState({ tab: i }),
+      tabs: TABS.map(([label], i) => ({ label: t.tabs[i], pick: () => this.setState({ tab: i }),
         style: "font-size:12px;font-weight:800;letter-spacing:1.5px;cursor:pointer;padding-bottom:5px;border-bottom:2px solid " +
           (s.tab === i ? "#7137E8;color:#7137E8" : "transparent;color:#9A8CB0") })),
       hot: TABS[s.tab][1].map(item),
@@ -284,7 +317,7 @@ class Component extends DCLogic {
       frameSrc: s.screen ? s.screen + (s.screen.includes("?") ? "&" : "?") + "embed=1" : "",
       frameTitle: s.screen ? decodeURIComponent(s.screen).replace(".dc.html", "") : "",
       nav: NAV.map(([label, icon, href], i) => { const on = i === 0 ? !s.screen : s.screen === href;
-        return { label, href,
+        return { label: t.nav[i], href,
         icon: (on ? "ph-fill ph-" : "ph-bold ph-") + icon,
         iconStyle: "font-size:23px;color:" + (on ? "#7137E8" : "#9A8CB0"),
         labelStyle: "white-space:nowrap;font-size:10.5px;font-weight:" + (on ? "800;color:#7137E8" : "700;color:#9A8CB0") }; })
