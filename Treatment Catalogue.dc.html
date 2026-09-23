@@ -85,7 +85,43 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 </sc-if>
 
 <sc-if value="{{ isProd }}" hint-placeholder-val="{{ false }}">
-<div style="padding:18px 16px 10px;font-size:16px;font-weight:800">Shop by brand</div>
+<div style="display:flex;align-items:flex-start;min-height:calc(100vh - 110px)">
+<div style="position:sticky;top:104px;flex:0 0 84px;align-self:stretch;background:#F3ECFD">
+<sc-for list="{{ pcats }}" as="c" hint-placeholder-count="5">
+<div onClick="{{ c.pick }}" style="{{ c.style }}"><div>{{ c.en }}</div><div style="font-size:11px;font-weight:600;margin-top:2px">{{ c.zh }}</div></div>
+</sc-for>
+</div>
+<div style="flex:1;min-width:0;padding:12px 10px 0">
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
+<sc-for list="{{ psubs }}" as="b" hint-placeholder-count="4">
+<div onClick="{{ b.pick }}" style="{{ b.style }}"><div style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ b.en }}</div><div style="font-size:9.5px;font-weight:600;opacity:.8">{{ b.zh }}</div></div>
+</sc-for>
+</div>
+<div style="display:flex;align-items:baseline;justify-content:space-between;padding:16px 2px 8px">
+<div style="font-size:14px;font-weight:800">{{ pTitle }}</div>
+<div style="font-size:11.5px;font-weight:700;color:#9A8CB0">{{ pCount }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+<sc-for list="{{ prods }}" as="p" hint-placeholder-count="4">
+<a href="{{ p.url }}" target="_blank" rel="noopener" style="display:block;border-radius:12px;overflow:hidden;background:#fff;border:1px solid #EDE4F8">
+<div style="position:relative;aspect-ratio:1;background:linear-gradient(150deg,#FFE9F2,#EDE4FF);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;text-align:center">
+<i class="{{ p.icon }}" style="font-size:30px;color:#B48BF0"></i>
+<div style="font-size:12px;font-weight:800;color:#7137E8;line-height:1.25">{{ p.name }}</div>
+<div style="position:absolute;left:6px;top:6px;padding:3px 7px;border-radius:99px;background:rgba(40,23,79,.7);color:#fff;font-size:9.5px;font-weight:800">{{ p.brand }}</div>
+</div>
+<div style="padding:8px 8px 10px">
+<div style="font-size:12px;font-weight:700;color:#28174F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</div>
+<div style="display:flex;align-items:baseline;gap:5px;margin-top:3px;flex-wrap:wrap">
+<div style="font-size:13.5px;font-weight:800;color:#E0327F">{{ p.price }}</div>
+<div style="font-size:10.5px;font-weight:600;color:#A79FBE;text-decoration:line-through">{{ p.was }}</div>
+</div>
+</div>
+</a>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="padding:24px 16px 10px;font-size:16px;font-weight:800">Shop by brand</div>
 <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:0 16px">
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/drnano-labcel.png" alt="DrNano Labcel" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">DrNano Labcel</div></div>
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/ava-clinic.png" alt="AVA Clinic" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">AVA Clinic</div></div>
@@ -95,7 +131,6 @@ a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/deau-mist.png" alt="Deau Mist" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">Deau Mist</div></div>
 <div style="display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;aspect-ratio:1;border-radius:14px;background:#fff;border:1px solid #EDE4F8;display:flex;align-items:center;justify-content:center;padding:8px"><img src="assets/brands/tikbevi.png" alt="TikBeVi" style="max-width:100%;max-height:100%;object-fit:contain"></div><div style="font-size:11px;font-weight:700;color:#3D2A63;text-align:center">TikBeVi</div></div>
 </div>
-<div style="margin:22px 16px 0;padding:18px;border-radius:14px;background:#F3ECFD;text-align:center;font-size:13px;font-weight:600;color:#7D6D90;line-height:1.5">Product list coming soon.</div>
 </sc-if>
 
 </div>
@@ -136,8 +171,36 @@ const TONES = [["#EDE4FF", "#7137E8"], ["#FFE4F0", "#E0327F"], ["#FFF0D9", "#E07
 const BRANDS = [["drnano-labcel", "DrNano Labcel"], ["ava-clinic", "AVA Clinic"], ["ava-skin", "AVA Skin"], ["h2g", "H2g"],
   ["body-master-ai", "Ai Body Master"], ["deau-mist", "Deau Mist"], ["tikbevi", "TikBeVi"]];
 
+const P = "https://www.tikbeli.com/Details/";
+const PCATS = [
+  ["skin", "Skin Care", "护肤", "drop", [["cleanser", "Cleanser", "洁面"], ["scrub", "Scrub", "磨砂"], ["serum", "Serum", "精华"], ["eye", "Eye Care", "眼部护理"]]],
+  ["makeup", "Makeup", "彩妆", "paint-brush", [["primer", "Tone Up", "隔离/妆前乳"], ["foundation", "Foundation", "粉底"], ["powder", "Loose Powder", "蜜粉/散粉"]]],
+  ["body", "Body Care", "身体护理", "hand-heart", [["bodyserum", "Body Serum", "身体乳"], ["bodyscrub", "Body Scrub", "身体磨砂"]]],
+  ["health", "Wellness", "保健", "coffee", [["coffee", "Coffee", "咖啡"], ["supp", "Supplement", "营养品"]]],
+  ["gift", "Gifts & Vouchers", "礼品", "gift", [["hamper", "Hampers", "礼篮"], ["voucher", "Vouchers", "现金券"]]]
+];
+const PRODS = [
+  ["Deau Mist Pearl Silk Bubble Foam (Comb)", "Deau Mist", "skin", "cleanser", 91.67, 0, "Deau%20Mist%20Pearl%20Silk%20Bubble%20Foam%20%28Comb%29/ac627ab1ccbdb62ec96e702f07f6425b"],
+  ["Deau Mist Diamond Scrub", "Deau Mist", "skin", "scrub", 316.67, 0, "Deau%20Mist%20Diamond%20Scrub/c9e1074f5b3f9fc8ea15d152add07294"],
+  ["Deau Mist Diamond Scrub", "Deau Mist", "skin", "scrub", 158.33, 0, "Deau%20Mist%20Diamond%20Scrub/65b9eea6e1cc6bb9f0cd2a47751a186f"],
+  ["Magic Scrub", "TikBeli", "skin", "scrub", 0, 0, "MagicScrub/40008b9a5380fcacce3976bf7c08af5b"],
+  ["Deau Mist Hyaluronic Acid", "Deau Mist", "skin", "serum", 280, 0, "Deau%20Mist%20Hyaluronic%20Acid/a97da629b098b75c294dffdc3e463904"],
+  ["Deau Mist 24K Gold Essence", "Deau Mist", "skin", "serum", 316.67, 0, "Deau%20Mist%2024K%20Gold%20Essence/2723d092b63885e0d7c260cc007e8b9d"],
+  ["Solon Booster", "TikBeli", "skin", "serum", 0, 0, "SolonBooster/58238e9ae2dd305d79c2ebc8c1883422"],
+  ["Deau Mist Eye Gel", "Deau Mist", "skin", "eye", 230, 0, "Deau%20Mist%20Eye%20Gel/f0935e4cd5920aa6c7c996a5ee53a70f"],
+  ["AVA+ 3-In-1 Tone Up Cream", "AVA+", "makeup", "primer", 58, 0, "AVA3-In-1ToneUpCream/34173cb38f07f89ddbebc2ac9128303f"],
+  ["Cushion Foundation", "TikBeli", "makeup", "foundation", 98, 187, "CushionFoundation/fe73f687e5bc5280214e0486b273a5f9"],
+  ["Loose Powder", "TikBeli", "makeup", "powder", 98, 187, "LoosePowder/6da37dd3139aa4d9aa55b8d237ec5d4a"],
+  ["Body Serum", "TikBeli", "body", "bodyserum", 98, 128, "BodySerum/3dd48ab31d016ffcbf3314df2b3cb9ce"],
+  ["Magic Face & Body Scrub", "TikBeli", "body", "bodyscrub", 38, 64, "MagicFaceBodyScrub/a8c88a0055f636e4a163a5e3d16adab7"],
+  ["Arte Coffee - Keto Blend", "Arte", "health", "coffee", 187, 0, "ArteCoffee-KetoBlend/c4ca4238a0b923820dcc509a6f75849b"],
+  ["Sugar B", "Sugar B", "health", "supp", 150, 200, "SugarB/e4da3b7fbbce2345d7772b0674a318d5"],
+  ["Hampers CNY 2025", "TikBeli", "gift", "hamper", 1987, 0, "HampersCNY2025/8c19f571e251e61cb8dd3612f26d5ecf"],
+  ["RM1 Cash Voucher For Products & Treatments", "TikBeli", "gift", "voucher", 1, 10, "RM1%20Cash%20Voucher%20For%20Products%20&%20Treatments/918317b57931b6b7a7d29490fe5ec9f9"]
+];
+
 class Component extends DCLogic {
-  state = { top: 0, cat: "All", sub: "All", q: "" };
+  state = { top: 0, cat: "All", sub: "All", q: "", pcat: "skin", psub: "All" };
   renderVals() {
     const s = this.state, BASE = "https://www.tikbeli.com/";
     const rm = (n) => n ? "RM " + n.toLocaleString("en-US") : "Ask consultant";
@@ -147,7 +210,23 @@ class Component extends DCLogic {
     const q = s.q.trim().toLowerCase();
     const shown = inCat.filter(t => (s.sub === "All" || t.sub === s.sub) && (!q || t.name.toLowerCase().includes(q)));
     const catLabel = (CATS.find(c => c[0] === s.cat) || CATS[0])[1];
+    const rm2 = (n) => n ? "RM " + n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0 }) : "Ask consultant";
+    const pc = PCATS.find(c => c[0] === s.pcat) || PCATS[0];
+    const pShown = PRODS.filter(p => p[2] === pc[0] && (s.psub === "All" || p[3] === s.psub) && (!q || p[0].toLowerCase().includes(q)));
+    const psubLabel = (pc[4].find(x => x[0] === s.psub) || [0, "All " + pc[1]])[1];
     return {
+      pcats: PCATS.map(([key, en, zh]) => { const on = s.pcat === key;
+        return { en, zh, pick: () => this.setState({ pcat: key, psub: "All" }),
+          style: "padding:16px 8px;text-align:center;font-size:12.5px;font-weight:800;line-height:1.25;cursor:pointer;" +
+            (on ? "background:#FBF8FE;color:#7137E8;box-shadow:inset 3px 0 0 #7137E8" : "color:#5A4A75") }; }),
+      psubs: [["All", "All", "全部"], ...pc[4]].map(([key, en, zh]) => { const on = s.psub === key;
+        return { en, zh, pick: () => this.setState({ psub: key }),
+          style: "min-height:42px;padding:4px 3px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:11px;font-weight:700;line-height:1.2;cursor:pointer;background:#fff;" +
+            (on ? "color:#7137E8;border:1.5px solid #7137E8" : "color:#5A4A75;border:1.5px solid #E6DCF5") }; }),
+      pTitle: psubLabel,
+      pCount: pShown.length + " items",
+      prods: pShown.map(([name, brand, , , price, was, slug]) => ({ name, brand, price: rm2(price), was: was ? rm2(was) : "",
+        url: P + slug, icon: "ph-fill ph-" + pc[3] })),
       query: s.q,
       onSearch: (e) => this.setState({ q: e.target.value }),
       tops: ["TREATMENTS", "PRODUCTS"].map((label, i) => ({ label, pick: () => this.setState({ top: i }),
