@@ -43,8 +43,11 @@ a{color:#7135d6}a:hover{color:#5c2bb0}
 </div>
 </div>
 </div>
-<div style="position:fixed;left:50%;bottom:12px;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;max-width:calc(100% - 24px);padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.88);box-shadow:0 2px 10px rgba(91,51,208,.12);font:600 12px Arial,sans-serif;color:#5b3d86;z-index:5">
-<span>Demo: HQ 0100000001</span><span>Staff 0100000002</span><span>Customer: any other number</span>
+<div style="position:fixed;left:50%;bottom:12px;transform:translateX(-50%);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:calc(100% - 24px);padding:7px 8px 7px 16px;border-radius:99px;background:rgba(255,255,255,.94);box-shadow:0 2px 10px rgba(91,51,208,.15);font:700 13px Arial,sans-serif;color:#5b3d86;z-index:5">
+<span>Quick enter (test):</span>
+<a href="TikBeli%20Admin.dc.html?role=hq" onClick="{{ asHq }}" style="padding:8px 16px;border-radius:99px;background:#5B33D0;color:#fff;text-decoration:none">HQ</a>
+<a href="TikBeli%20Admin.dc.html?role=staff" onClick="{{ asStaff }}" style="padding:8px 16px;border-radius:99px;background:#7C4DE8;color:#fff;text-decoration:none">Staff</a>
+<a href="Customer%20Home.dc.html" onClick="{{ asCustomer }}" style="padding:8px 16px;border-radius:99px;background:#E0327F;color:#fff;text-decoration:none">Customer</a>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:800},&quot;errorMessage&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Page state&quot;}}">
@@ -63,6 +66,9 @@ class Component extends DCLogic {
       pwType: s.showPw ? "text" : "password",
       toggleLabel: s.showPw ? "Hide password" : "Show password",
       togglePw: () => this.setState({ showPw: !s.showPw }),
+      asHq: () => { try { localStorage.setItem("tikbeli_role", "hq"); } catch (e) {} },
+      asStaff: () => { try { localStorage.setItem("tikbeli_role", "staff"); } catch (e) {} },
+      asCustomer: () => { try { localStorage.setItem("tikbeli_role", "customer"); } catch (e) {} },
       submit: () => {
         if (!s.email.trim() || !s.pw.trim()) {
           this.setState({ error: "Enter your mobile number and password." });
