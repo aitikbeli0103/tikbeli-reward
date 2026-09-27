@@ -81,16 +81,17 @@ class Component extends DCLogic {
       pwType: s.showPw ? "text" : "password",
       toggleLabel: s.showPw ? "Hide password" : "Show password",
       togglePw: () => this.setState({ showPw: !s.showPw }),
-      asHq: () => { try { localStorage.setItem("tikbeli_role", "hq"); } catch (e) {} },
-      asStaff: () => { try { localStorage.setItem("tikbeli_role", "staff"); } catch (e) {} },
-      asCustomer: () => { try { localStorage.setItem("tikbeli_role", "customer"); } catch (e) {} },
+      asHq: () => { try { localStorage.setItem("tikbeli_role", "hq"); localStorage.removeItem("tikbeli_staff"); } catch (e) {} },
+      asStaff: () => { try { localStorage.setItem("tikbeli_role", "staff"); localStorage.setItem("tikbeli_staff", "S01"); } catch (e) {} },
+      asCustomer: () => { try { localStorage.setItem("tikbeli_role", "customer"); localStorage.removeItem("tikbeli_staff"); } catch (e) {} },
       submit: () => {
         if (!s.email.trim() || !s.pw.trim()) {
           this.setState({ error: "Enter your mobile number and password." });
         } else {
           const id = s.email.replace(/\D/g, "");
-          const role = id === "0100000001" ? "hq" : id === "0100000002" ? "staff" : "customer";
-          try { localStorage.setItem("tikbeli_role", role); } catch (e) {}
+          const STAFF = { "0100000002": "S01", "0100000003": "S02", "0100000004": "S03" };
+          const role = id === "0100000001" ? "hq" : STAFF[id] ? "staff" : "customer";
+          try { localStorage.setItem("tikbeli_role", role); if (STAFF[id]) localStorage.setItem("tikbeli_staff", STAFF[id]); else localStorage.removeItem("tikbeli_staff"); } catch (e) {}
           this.setState({ error: "" });
           location.href = role === "customer" ? "Customer%20Home.dc.html" : "TikBeli%20Admin.dc.html?role=" + role;
         }

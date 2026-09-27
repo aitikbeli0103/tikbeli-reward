@@ -12,8 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /*mfit*/html,body{width:100%;max-width:100%;overflow-x:hidden;overflow-x:clip}
-body{margin:0;background:#0A0C0D;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#F3F5F4}
-a{color:#9BDBB5}a:hover{color:#B9EDCB}
+body{margin:0;background:#EFE7FA;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;color:#28174F}
+a{color:#7C3AED}a:hover{color:#6D28D9}
 *{-webkit-tap-highlight-color:transparent}
 .sq::-webkit-scrollbar{width:0;height:0}
 </style>
@@ -22,14 +22,22 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 <div style="min-height:100vh">
 <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="100%,100%">
 
-<div style="height:100%;display:flex;flex-direction:column;background:#101315;overflow:hidden">
+<div style="position:relative;height:100%;display:flex;flex-direction:column;background:#FBF8FE;overflow:hidden">
+<sc-if value="{{ locked }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:30;background:#FBF8FE;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px;text-align:center">
+<div style="width:64px;height:64px;border-radius:20px;background:#F3EBFE;border:1px solid #EFE8F8;display:flex;align-items:center;justify-content:center;font-size:28px;color:#7C3AED">🔒</div>
+<div style="font-size:20px;font-weight:800">{{ lockTitle }}</div>
+<div style="font-size:14px;font-weight:600;color:#5B4A7E;line-height:1.5;max-width:280px">{{ lockBody }}</div>
+<a href="Login.dc.html" target="_top" style="margin-top:6px;padding:14px 26px;border-radius:14px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;font-size:14px;font-weight:800;text-decoration:none">{{ lockBtn }}</a>
+</div>
+</sc-if>
 
-<div style="flex-shrink:0;padding:16px 16px 14px;background:#101315;border-bottom:1px solid #222A2B">
+<div style="flex-shrink:0;padding:16px 16px 14px;background:#FBF8FE;border-bottom:1px solid #EFE8F8">
 <div style="display:flex;align-items:center;gap:11px">
-<div style="width:42px;height:42px;border-radius:14px;background:#1F2626;border:1px solid #2B3334;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#9BDBB5;flex-shrink:0">SL</div>
+<div style="width:42px;height:42px;border-radius:14px;background:#F3EBFE;border:1px solid #EFE8F8;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#7C3AED;flex-shrink:0">{{ me.initials }}</div>
 <div style="flex:1;min-width:0">
-<div style="font-size:16px;font-weight:800;letter-spacing:-.2px">Sarah Lim</div>
-<div style="font-size:12.5px;font-weight:600;color:#AEB9B8;margin-top:2px">{{ t.consultant }} · Bukit Bintang</div>
+<div style="font-size:16px;font-weight:800;letter-spacing:-.2px">{{ me.name }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;margin-top:2px">{{ t.consultant }} · {{ me.outlet }}</div>
 </div>
 <div onClick="{{ toggleClock }}" style="{{ clockStyle }}">
 <div style="{{ clockDotStyle }}"></div>
@@ -44,31 +52,31 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:18px">
 
-<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;overflow:hidden">
+<div style="border-radius:20px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);overflow:hidden">
 <div style="padding:18px 18px 16px">
 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.salaryWallet }}</div>
-<div style="display:flex;align-items:center;gap:5px;background:#1F2A24;border:1px solid #2F4438;border-radius:99px;padding:5px 10px">
-<div style="width:6px;height:6px;border-radius:99px;background:#9BDBB5"></div>
-<div style="font-size:11px;font-weight:800;color:#9BDBB5;letter-spacing:.4px">{{ t.live }}</div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E">{{ t.salaryWallet }}</div>
+<div style="display:flex;align-items:center;gap:5px;background:#EDE9FE;border:1px solid #DDD0FB;border-radius:99px;padding:5px 10px">
+<div style="width:6px;height:6px;border-radius:99px;background:#7C3AED"></div>
+<div style="font-size:11px;font-weight:800;color:#7C3AED;letter-spacing:.4px">{{ t.live }}</div>
 </div>
 </div>
 <div style="display:flex;align-items:flex-end;gap:10px;margin-top:13px">
 <div style="font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">{{ estSalary }}</div>
-<div style="font-size:12px;font-weight:700;color:#AEB9B8;padding-bottom:6px;min-width:0">{{ t.estimated }}</div>
+<div style="font-size:12px;font-weight:700;color:#5B4A7E;padding-bottom:6px;min-width:0">{{ t.estimated }}</div>
 </div>
-<div style="display:flex;align-items:center;gap:7px;margin-top:11px;padding:9px 11px;border-radius:11px;background:#1A2224;border:1px solid #2B3334">
-<div style="font-size:12px;line-height:1.4;font-weight:600;color:#AEB9B8">{{ t.pendingNote }}</div>
+<div style="display:flex;align-items:center;gap:7px;margin-top:11px;padding:9px 11px;border-radius:11px;background:#FAF7FE;border:1px solid #EFE8F8">
+<div style="font-size:12px;line-height:1.4;font-weight:600;color:#5B4A7E">{{ t.pendingNote }}</div>
 </div>
 </div>
 
-<div style="border-top:1px solid #2B3334">
+<div style="border-top:1px solid #EFE8F8">
 <sc-for list="{{ walletRows }}" as="w" hint-placeholder-count="5">
-<div style="display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid #1E2526">
+<div style="display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid #F4EFFB">
 <div style="{{ w.markStyle }}"></div>
 <div style="flex:1;min-width:0">
 <div style="font-size:13px;font-weight:700">{{ w.label }}</div>
-<div style="font-size:12px;font-weight:600;color:#8A9694;margin-top:2px">{{ w.source }}</div>
+<div style="font-size:12px;font-weight:600;color:#8B7BAE;margin-top:2px">{{ w.source }}</div>
 </div>
 <div style="text-align:right;flex-shrink:0">
 <div style="{{ w.valueStyle }}">{{ w.value }}</div>
@@ -76,27 +84,27 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 </div>
 </div>
 </sc-for>
-<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;background:#141A1B">
-<div style="font-size:11.5px;font-weight:700;color:#8A9694;letter-spacing:.4px">{{ t.ruleVersion }}</div>
-<div onClick="{{ toWallet }}" style="font-size:12.5px;font-weight:800;color:#9BDBB5;cursor:pointer">{{ t.howCalc }}</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;background:#FAF7FE">
+<div style="font-size:11.5px;font-weight:700;color:#8B7BAE;letter-spacing:.4px">{{ t.ruleVersion }}</div>
+<div onClick="{{ toWallet }}" style="font-size:12.5px;font-weight:800;color:#7C3AED;cursor:pointer">{{ t.howCalc }}</div>
 </div>
 </div>
 </div>
 
 <div>
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.quickActions }}</div>
-<div onClick="{{ scanQr }}" style="display:flex;align-items:center;gap:13px;border-radius:18px;padding:16px;background:#9BDBB5;cursor:pointer;margin-bottom:10px">
-<div style="width:44px;height:44px;border-radius:14px;background:#102018;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-<svg width="21" height="21" viewBox="0 0 22 22" fill="none"><path d="M3 7.5V4.5A1.5 1.5 0 0 1 4.5 3h3M14.5 3h3A1.5 1.5 0 0 1 19 4.5v3M19 14.5v3a1.5 1.5 0 0 1-1.5 1.5h-3M7.5 19h-3A1.5 1.5 0 0 1 3 17.5v-3" stroke="#9BDBB5" stroke-width="1.9" stroke-linecap="round"></path><path d="M3 11h16" stroke="#9BDBB5" stroke-width="1.9" stroke-linecap="round"></path></svg>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E;margin-bottom:11px">{{ t.quickActions }}</div>
+<div onClick="{{ scanQr }}" style="display:flex;align-items:center;gap:13px;border-radius:18px;padding:16px;background:#7C3AED;cursor:pointer;margin-bottom:10px">
+<div style="width:44px;height:44px;border-radius:14px;background:#EDE9FE;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+<svg width="21" height="21" viewBox="0 0 22 22" fill="none"><path d="M3 7.5V4.5A1.5 1.5 0 0 1 4.5 3h3M14.5 3h3A1.5 1.5 0 0 1 19 4.5v3M19 14.5v3a1.5 1.5 0 0 1-1.5 1.5h-3M7.5 19h-3A1.5 1.5 0 0 1 3 17.5v-3" stroke="#7C3AED" stroke-width="1.9" stroke-linecap="round"></path><path d="M3 11h16" stroke="#7C3AED" stroke-width="1.9" stroke-linecap="round"></path></svg>
 </div>
 <div style="flex:1;min-width:0">
-<div style="font-size:16px;font-weight:800;color:#102018">{{ t.scanQr }}</div>
-<div style="font-size:12.5px;font-weight:700;color:#2C4A39;margin-top:2px">{{ t.scanSub }}</div>
+<div style="font-size:16px;font-weight:800;color:#EDE9FE">{{ t.scanQr }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#DDD0FB;margin-top:2px">{{ t.scanSub }}</div>
 </div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <sc-for list="{{ actions }}" as="a" hint-placeholder-count="6">
-<div onClick="{{ a.go }}" style="display:flex;align-items:center;gap:11px;border-radius:16px;padding:14px 13px;background:#181D1E;border:1px solid #2B3334;cursor:pointer" style-hover="background:#1F2626">
+<div onClick="{{ a.go }}" style="display:flex;align-items:center;gap:11px;border-radius:16px;padding:14px 13px;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);border:1px solid #EFE8F8;cursor:pointer" style-hover="background:#F3EBFE">
 <div style="{{ a.iconStyle }}">{{ a.icon }}</div>
 <div style="font-size:12.5px;font-weight:700;line-height:1.25">{{ a.label }}</div>
 </div>
@@ -106,41 +114,41 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 
 <div>
 <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.monthTarget }}</div>
-<div style="font-size:12.5px;font-weight:700;color:#AEB9B8">{{ t.septMonth }}</div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E">{{ t.monthTarget }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#5B4A7E">{{ t.septMonth }}</div>
 </div>
-<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:18px">
+<div style="border-radius:20px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:18px">
 <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
 <div>
 <div style="font-size:31px;font-weight:800;letter-spacing:-1.2px;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">RM 38,400</div>
-<div style="font-size:12.5px;font-weight:700;color:#AEB9B8;margin-top:6px;white-space:nowrap">{{ t.ofTarget }} RM 50,000</div>
+<div style="font-size:12.5px;font-weight:700;color:#5B4A7E;margin-top:6px;white-space:nowrap">{{ t.ofTarget }} RM 50,000</div>
 </div>
 <div style="text-align:right;flex-shrink:0">
-<div style="font-size:26px;font-weight:800;color:#9BDBB5;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">77%</div>
-<div style="font-size:12px;font-weight:700;color:#AEB9B8;margin-top:5px">{{ t.achieved }}</div>
+<div style="font-size:26px;font-weight:800;color:#7C3AED;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap">77%</div>
+<div style="font-size:12px;font-weight:700;color:#5B4A7E;margin-top:5px">{{ t.achieved }}</div>
 </div>
 </div>
-<div style="height:11px;border-radius:99px;background:#232B2C;margin-top:15px;overflow:hidden">
-<div style="height:100%;width:77%;border-radius:99px;background:linear-gradient(90deg,#5FB88A,#9BDBB5)"></div>
+<div style="height:11px;border-radius:99px;background:#F4EFFB;margin-top:15px;overflow:hidden">
+<div style="height:100%;width:77%;border-radius:99px;background:linear-gradient(90deg,#8B5CF6,#7C3AED)"></div>
 </div>
 <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px;font-weight:700">
-<div style="color:#9BDBB5">{{ t.today }} RM 2,140</div>
-<div style="color:#AEB9B8">RM 11,600 {{ t.toGo }}</div>
+<div style="color:#7C3AED">{{ t.today }} RM 2,140</div>
+<div style="color:#5B4A7E">RM 11,600 {{ t.toGo }}</div>
 </div>
 </div>
 </div>
 
 <div>
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.kpis }}</div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E;margin-bottom:11px">{{ t.kpis }}</div>
 <div style="display:flex;flex-direction:column;gap:9px">
 <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
-<div style="border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:14px 15px">
+<div style="border-radius:16px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:14px 15px">
 <div style="display:flex;align-items:center;gap:10px">
 <div style="flex:1;min-width:0;font-size:13px;font-weight:700">{{ k.label }}</div>
 <div style="{{ k.badgeStyle }}">{{ k.badge }}</div>
 <div style="font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:right;white-space:nowrap;flex-shrink:0">{{ k.value }}</div>
 </div>
-<div style="height:7px;border-radius:99px;background:#232B2C;margin-top:11px;overflow:hidden">
+<div style="height:7px;border-radius:99px;background:#F4EFFB;margin-top:11px;overflow:hidden">
 <div style="{{ k.barStyle }}"></div>
 </div>
 </div>
@@ -149,58 +157,58 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 </div>
 
 <div>
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ ph.title }}</div>
-<div style="border-radius:20px;border:1px solid #4A3226;background:#221A18;padding:17px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E;margin-bottom:11px">{{ ph.title }}</div>
+<div style="border-radius:20px;border:1px solid #FBD5C5;background:#FFF4EE;padding:17px">
 <div style="display:flex;align-items:flex-start;gap:12px">
 <div style="flex:1;min-width:0">
 <div style="font-size:14px;font-weight:800;line-height:1.3">{{ ph.rule }}</div>
-<div style="font-size:12px;font-weight:600;color:#C9A98F;line-height:1.5;margin-top:6px">{{ ph.ruleDetail }}</div>
+<div style="font-size:12px;font-weight:600;color:#9A6B4F;line-height:1.5;margin-top:6px">{{ ph.ruleDetail }}</div>
 </div>
 <div style="text-align:right;flex-shrink:0">
-<div style="font-size:24px;font-weight:800;letter-spacing:-.7px;color:#E8896B;font-variant-numeric:tabular-nums;white-space:nowrap">{{ ph.deduction }}</div>
-<div style="font-size:10.5px;font-weight:800;color:#C9A98F;margin-top:4px">{{ ph.thisMonth }}</div>
+<div style="font-size:24px;font-weight:800;letter-spacing:-.7px;color:#C2410C;font-variant-numeric:tabular-nums;white-space:nowrap">{{ ph.deduction }}</div>
+<div style="font-size:10.5px;font-weight:800;color:#9A6B4F;margin-top:4px">{{ ph.thisMonth }}</div>
 </div>
 </div>
 <div style="display:flex;gap:10px;margin-top:15px">
 <sc-for list="{{ ph.stats }}" as="s" hint-placeholder-count="3">
-<div style="flex:1;min-width:0;border-radius:14px;background:#191312;border:1px solid #3A2A25;padding:12px">
+<div style="flex:1;min-width:0;border-radius:14px;background:#FFF7F2;border:1px solid #FDE3D6;padding:12px">
 <div style="font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap">{{ s.value }}</div>
-<div style="font-size:10.5px;font-weight:700;color:#AEB9B8;margin-top:5px;line-height:1.3">{{ s.label }}</div>
+<div style="font-size:10.5px;font-weight:700;color:#5B4A7E;margin-top:5px;line-height:1.3">{{ s.label }}</div>
 </div>
 </sc-for>
 </div>
-<div style="margin-top:14px;padding-top:14px;border-top:1px solid #3A2A25;display:flex;flex-direction:column;gap:10px">
+<div style="margin-top:14px;padding-top:14px;border-top:1px solid #FDE3D6;display:flex;flex-direction:column;gap:10px">
 <sc-for list="{{ ph.offenders }}" as="o" hint-placeholder-count="3">
 <div style="display:flex;align-items:center;gap:11px">
 <div style="flex:1;min-width:0">
 <div style="font-size:12.5px;font-weight:800">{{ o.name }}</div>
-<div style="font-size:11px;font-weight:600;color:#AEB9B8;margin-top:2px">{{ o.meta }}</div>
+<div style="font-size:11px;font-weight:600;color:#5B4A7E;margin-top:2px">{{ o.meta }}</div>
 </div>
 <div style="{{ o.tagStyle }}">{{ o.tag }}</div>
-<div style="font-size:12.5px;font-weight:800;color:#E8896B;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">{{ o.amount }}</div>
+<div style="font-size:12.5px;font-weight:800;color:#C2410C;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">{{ o.amount }}</div>
 </div>
 </sc-for>
 </div>
-<div style="font-size:11px;font-weight:600;color:#9C8479;line-height:1.5;margin-top:14px">{{ ph.appeal }}</div>
+<div style="font-size:11px;font-weight:600;color:#8A6A5C;line-height:1.5;margin-top:14px">{{ ph.appeal }}</div>
 </div>
 </div>
 
 <div>
 <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.queue }}</div>
-<div style="font-size:12.5px;font-weight:700;color:#AEB9B8">4 {{ t.today }}</div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E">{{ t.queue }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#5B4A7E">4 {{ t.today }}</div>
 </div>
 <div style="display:flex;flex-direction:column;gap:9px">
 <sc-for list="{{ queue }}" as="q" hint-placeholder-count="4">
 <div onClick="{{ q.open }}" style="{{ q.rowStyle }}">
 <div style="width:52px;flex-shrink:0;text-align:center">
 <div style="font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap">{{ q.time }}</div>
-<div style="font-size:11px;font-weight:700;color:#8A9694;margin-top:3px">{{ q.ampm }}</div>
+<div style="font-size:11px;font-weight:700;color:#8B7BAE;margin-top:3px">{{ q.ampm }}</div>
 </div>
-<div style="width:1px;align-self:stretch;background:#2B3334;flex-shrink:0"></div>
+<div style="width:1px;align-self:stretch;background:#EFE8F8;flex-shrink:0"></div>
 <div style="flex:1;min-width:0">
 <div style="font-size:13.5px;font-weight:800;line-height:1.25">{{ q.name }}</div>
-<div style="font-size:12px;font-weight:600;color:#AEB9B8;margin-top:3px">{{ q.service }}</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ q.service }}</div>
 </div>
 <div style="{{ q.statusStyle }}">{{ q.status }}</div>
 </div>
@@ -209,7 +217,7 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 </div>
 
 <div>
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8;margin-bottom:11px">{{ t.reactivation }}</div>
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E;margin-bottom:11px">{{ t.reactivation }}</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
 <sc-for list="{{ reactStats }}" as="r" hint-placeholder-count="4">
 <div style="{{ r.cardStyle }}">
@@ -218,9 +226,9 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 </div>
 </sc-for>
 </div>
-<div onClick="{{ toFollowUps }}" style="margin-top:10px;border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:15px;display:flex;align-items:center;gap:11px;cursor:pointer" style-hover="background:#1F2626">
+<div onClick="{{ toFollowUps }}" style="margin-top:10px;border-radius:16px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:15px;display:flex;align-items:center;gap:11px;cursor:pointer" style-hover="background:#F3EBFE">
 <div style="flex:1;min-width:0;font-size:13px;font-weight:700">{{ t.openFollowUps }}</div>
-<div style="font-size:15px;font-weight:700;color:#9BDBB5">›</div>
+<div style="font-size:15px;font-weight:700;color:#7C3AED">›</div>
 </div>
 </div>
 
@@ -229,21 +237,21 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 
 <sc-if value="{{ isWallet }}" hint-placeholder-val="{{ false }}">
 <div style="padding:16px 16px 26px;display:flex;flex-direction:column;gap:16px">
-<div style="border-radius:20px;border:1px solid #2B3334;background:#181D1E;padding:18px">
-<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#AEB9B8">{{ t.howCalc }}</div>
-<div style="font-size:12.5px;font-weight:600;color:#AEB9B8;line-height:1.55;margin-top:9px">{{ t.walletExplain }}</div>
+<div style="border-radius:20px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:18px">
+<div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5B4A7E">{{ t.howCalc }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;line-height:1.55;margin-top:9px">{{ t.walletExplain }}</div>
 </div>
 <sc-for list="{{ walletDetail }}" as="d" hint-placeholder-count="5">
-<div style="border-radius:18px;border:1px solid #2B3334;background:#181D1E;padding:16px">
+<div style="border-radius:18px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:16px">
 <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
 <div style="font-size:14px;font-weight:800">{{ d.label }}</div>
 <div style="{{ d.valueStyle }}">{{ d.value }}</div>
 </div>
-<div style="font-size:12.5px;font-weight:600;color:#AEB9B8;line-height:1.5;margin-top:7px">{{ d.formula }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;line-height:1.5;margin-top:7px">{{ d.formula }}</div>
 <div style="display:flex;align-items:center;gap:7px;margin-top:11px;flex-wrap:wrap">
-<div style="font-size:11px;font-weight:800;letter-spacing:.4px;padding:5px 9px;border-radius:7px;background:#1F2626;border:1px solid #2B3334;color:#8A9694">{{ d.version }}</div>
+<div style="font-size:11px;font-weight:800;letter-spacing:.4px;padding:5px 9px;border-radius:7px;background:#F3EBFE;border:1px solid #EFE8F8;color:#8B7BAE">{{ d.version }}</div>
 <div style="{{ d.stateStyle }}">{{ d.state }}</div>
-<div style="font-size:12px;font-weight:600;color:#8A9694">{{ d.sources }}</div>
+<div style="font-size:12px;font-weight:600;color:#8B7BAE">{{ d.sources }}</div>
 </div>
 </div>
 </sc-for>
@@ -261,21 +269,21 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 
 <div style="display:flex;flex-direction:column;gap:10px">
 <sc-for list="{{ followUps }}" as="c" hint-placeholder-count="4">
-<div style="border-radius:18px;border:1px solid #2B3334;background:#181D1E;padding:15px">
+<div style="border-radius:18px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:15px">
 <div style="display:flex;align-items:center;gap:12px">
 <div style="{{ c.avatarStyle }}">{{ c.initials }}</div>
 <div style="flex:1;min-width:0">
 <div style="font-size:14px;font-weight:800">{{ c.name }}</div>
-<div style="font-size:12px;font-weight:600;color:#AEB9B8;margin-top:3px">{{ c.meta }}</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ c.meta }}</div>
 </div>
 <div style="{{ c.dueStyle }}">{{ c.due }}</div>
 </div>
-<div style="display:flex;align-items:center;gap:9px;margin-top:13px;padding:11px;border-radius:12px;background:#141A1B;border:1px solid #232B2C">
-<div style="font-size:12px;font-weight:600;color:#AEB9B8;line-height:1.45">{{ c.lastNote }}</div>
+<div style="display:flex;align-items:center;gap:9px;margin-top:13px;padding:11px;border-radius:12px;background:#FAF7FE;border:1px solid #F4EFFB">
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;line-height:1.45">{{ c.lastNote }}</div>
 </div>
 <div style="display:flex;gap:9px;margin-top:12px">
-<div style="flex:1;border-radius:12px;padding:12px;text-align:center;font-size:12.5px;font-weight:800;background:#9BDBB5;color:#102018;cursor:pointer">{{ t.whatsapp }}</div>
-<div style="flex:1;border-radius:12px;padding:12px;text-align:center;font-size:12.5px;font-weight:800;background:#1F2626;border:1px solid #2B3334;color:#F3F5F4;cursor:pointer">{{ t.logOutcome }}</div>
+<div style="flex:1;border-radius:12px;padding:12px;text-align:center;font-size:12.5px;font-weight:800;background:#7C3AED;color:#EDE9FE;cursor:pointer">{{ t.whatsapp }}</div>
+<div style="flex:1;border-radius:12px;padding:12px;text-align:center;font-size:12.5px;font-weight:800;background:#F3EBFE;border:1px solid #EFE8F8;color:#28174F;cursor:pointer">{{ t.logOutcome }}</div>
 </div>
 </div>
 </sc-for>
@@ -286,7 +294,7 @@ a{color:#9BDBB5}a:hover{color:#B9EDCB}
 </div>
 </div>
 
-<div style="flex-shrink:0;display:flex;background:#141A1B;border-top:1px solid #222A2B;padding:11px 6px 32px">
+<div style="flex-shrink:0;display:flex;background:#FAF7FE;border-top:1px solid #EFE8F8;padding:11px 6px 32px">
 <sc-for list="{{ tabs }}" as="b" hint-placeholder-count="4">
 <div onClick="{{ b.pick }}" style="{{ b.style }}">
 <div style="{{ b.dotStyle }}"></div>
@@ -379,7 +387,7 @@ class Component extends DCLogic {
     const L3 = (e, z, m) => ({ en: e, zh: z, ms: m })[lang];
 
     const stateChip = (final) => "font-size:11px;font-weight:800;letter-spacing:.4px;padding:4px 8px;border-radius:7px;margin-top:4px;display:inline-block;" +
-      (final ? "background:#1F2A24;color:#9BDBB5;border:1px solid #2F4438" : "background:#2A2622;color:#E0B978;border:1px solid #453C2C");
+      (final ? "background:#EDE9FE;color:#7C3AED;border:1px solid #DDD0FB" : "background:#FEF3C7;color:#B45309;border:1px solid #FCD9A0");
 
     const wallet = [
       { label: t.basic, value: 2800, final: true, src: L3("Full-time contract", "全职合约", "Kontrak sepenuh masa"),
@@ -395,6 +403,15 @@ class Component extends DCLogic {
       { label: t.referral, value: 200, final: true, src: L3("2 referrals returned", "2位推荐顾客回店", "2 rujukan kembali"),
         formula: L3("RM100 per referred customer who completes a paid treatment.", "每位推荐顾客完成付费疗程 RM100。", "RM100 bagi setiap rujukan yang selesai rawatan berbayar."), ver: "referral.staff v2" }
     ];
+    const ACCOUNTS = { S01: { name: "Sarah Lim", initials: "SL", outlet: "Bukit Bintang", k: 1 },
+      S02: { name: "Amy Tan", initials: "AT", outlet: "Old Klang Road", k: 0.86 },
+      S03: { name: "Mei Ling", initials: "ML", outlet: "Bukit Bintang", k: 1.12 } };
+    let myId = null, myRole = null;
+    try { myId = localStorage.getItem("tikbeli_staff"); myRole = localStorage.getItem("tikbeli_role"); } catch (e) {}
+    const me = myRole === "staff" && ACCOUNTS[myId] ? ACCOUNTS[myId] : null;
+    const locked = !me;
+    if (locked) wallet.length = 0;
+    else wallet.forEach((w, i) => { if (i > 0) w.value = Math.round(w.value * me.k / 10) * 10; });
     const total = wallet.reduce((a, w) => a + w.value, 0);
 
     const titles = { home: t.tabHome, wallet: t.salaryWallet, followups: t.followUp };
@@ -402,7 +419,10 @@ class Component extends DCLogic {
     const zoom = { Standard: 1, Large: 1.08, "Extra Large": 1.18 }[this.props.displaySize ?? "Large"] ?? 1.08;
 
     return {
-      t, estSalary: money(total),
+      t, estSalary: money(total), locked, me: me || { name: "", initials: "", outlet: "" },
+      lockTitle: L3("Staff login required", "需要员工登录", "Log masuk staf diperlukan"),
+      lockBody: L3("Your salary wallet is private. Log in with your own staff account to see it. Other staff cannot view your wallet.", "薪资钱包为个人隐私。请使用您自己的员工账号登录查看，其他员工无法查看。", "Dompet gaji anda adalah peribadi. Log masuk dengan akaun staf anda sendiri. Staf lain tidak boleh melihatnya."),
+      lockBtn: L3("Go to login", "前往登录", "Pergi ke log masuk"),
       zoomStyle: "zoom:" + zoom,
       isHome: s.screen === "home", isWallet: s.screen === "wallet", isFollowUps: s.screen === "followups",
       headerTitle: titles[s.screen],
@@ -413,28 +433,28 @@ class Component extends DCLogic {
       clockLabel: onShift ? t.clockedIn : t.clockIn,
       toggleClock: () => this.setState({ clockedIn: !onShift }),
       clockStyle: "display:flex;align-items:center;gap:7px;flex-shrink:0;padding:9px 13px;border-radius:99px;font-size:12.5px;font-weight:800;cursor:pointer;" +
-        (onShift ? "background:#1F2A24;border:1px solid #2F4438;color:#9BDBB5" : "background:#1F2626;border:1px solid #2B3334;color:#AEB9B8"),
-      clockDotStyle: "width:7px;height:7px;border-radius:99px;background:" + (onShift ? "#9BDBB5" : "#8A9694"),
+        (onShift ? "background:#EDE9FE;border:1px solid #DDD0FB;color:#7C3AED" : "background:#F3EBFE;border:1px solid #EFE8F8;color:#5B4A7E"),
+      clockDotStyle: "width:7px;height:7px;border-radius:99px;background:" + (onShift ? "#7C3AED" : "#8B7BAE"),
 
       walletRows: wallet.map(w => ({
         label: w.label, source: w.src, value: money(w.value),
-        markStyle: "width:4px;height:30px;border-radius:99px;flex-shrink:0;background:" + (splitPending && !w.final ? "#E0B978" : "#9BDBB5"),
+        markStyle: "width:4px;height:30px;border-radius:99px;flex-shrink:0;background:" + (splitPending && !w.final ? "#B45309" : "#7C3AED"),
         valueStyle: "font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0",
         state: splitPending ? (w.final ? t.final : t.pending) : "",
         stateStyle: splitPending ? stateChip(w.final) : "display:none" })),
 
       walletDetail: wallet.map(w => ({
         label: w.label, value: money(w.value),
-        valueStyle: "font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:" + (w.final ? "#9BDBB5" : "#E0B978"),
+        valueStyle: "font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:" + (w.final ? "#7C3AED" : "#B45309"),
         formula: w.formula, version: w.ver, sources: w.src,
         state: w.final ? t.final : t.pending, stateStyle: stateChip(w.final).replace("margin-top:4px;", "") })),
 
       actions: [
-        [t.newSale, "＋", "#9BDBB5"], [t.completeTrt, "✓", "#9BDBB5"],
-        [t.collect, "＄", "#E0B978"], [t.book, "▤", "#8FBEDB"],
-        [t.followUp, "☏", "#C9A7E8"], [t.myPayslip, "▦", "#AEB9B8"]
+        [t.newSale, "＋", "#7C3AED"], [t.completeTrt, "✓", "#7C3AED"],
+        [t.collect, "＄", "#B45309"], [t.book, "▤", "#2563EB"],
+        [t.followUp, "☏", "#A21CAF"], [t.myPayslip, "▦", "#5B4A7E"]
       ].map(([label, icon, color]) => ({ label, icon,
-        iconStyle: "width:36px;height:36px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;background:#1F2626;border:1px solid #2B3334;color:" + color,
+        iconStyle: "width:36px;height:36px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;background:#F3EBFE;border:1px solid #EFE8F8;color:" + color,
         go: () => this.setState({ screen: label === t.followUp ? "followups" : label === t.myPayslip ? "wallet" : "home" }) })),
 
       ph: {
@@ -458,7 +478,7 @@ class Component extends DCLogic {
             tag: L3("No photos", "两张皆缺", "Tiada foto"), amount: "− RM 30" },
           { name: "Jane Lee", meta: L3("2 Sept · First trial facial", "9月2日 · 首次体验护理", "2 Sept · Cubaan facial pertama"),
             tag: L3("No before photo", "缺疗程前", "Tiada foto sebelum"), amount: "− RM 30" }
-        ].map(o => ({ ...o, tagStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:800;background:#3A2A22;color:#E89A6B" })),
+        ].map(o => ({ ...o, tagStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:10px;font-weight:800;background:#FDE3D6;color:#C2410C" })),
         appeal: L3("Photos uploaded late still count if the visit is reopened by a manager within 24 hours. After that the deduction is final and appears on the payslip.",
           "如经经理在24小时内重开该次到访，补传照片仍然有效。逾期扣款即为最终结果，并显示在工资单上。",
           "Foto yang dimuat naik lewat masih dikira jika lawatan dibuka semula oleh pengurus dalam 24 jam. Selepas itu potongan adalah muktamad.")
@@ -474,8 +494,8 @@ class Component extends DCLogic {
       ].map(k => ({ label: k.label, value: k.value,
         badge: k.ok ? "✓" : "!",
         badgeStyle: "width:20px;height:20px;border-radius:99px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;" +
-          (k.ok ? "background:#1F2A24;color:#9BDBB5" : "background:#3A2A22;color:#E89A6B"),
-        barStyle: "height:100%;width:" + k.pct + "%;border-radius:99px;background:" + (k.ok ? "#9BDBB5" : "#E89A6B") })),
+          (k.ok ? "background:#EDE9FE;color:#7C3AED" : "background:#FDE3D6;color:#C2410C"),
+        barStyle: "height:100%;width:" + k.pct + "%;border-radius:99px;background:" + (k.ok ? "#7C3AED" : "#C2410C") })),
 
       queue: [
         { time: "10:30", ampm: "AM", name: "Michelle Tan", service: L3("Glow Signature · session 7 of 12", "焕采尊享 · 第7／12次", "Glow Signature · sesi 7/12"), st: "done" },
@@ -483,10 +503,10 @@ class Component extends DCLogic {
         { time: "2:30", ampm: "PM", name: "Nurul Huda", service: L3("Black Pearl Laser · single", "黑珍珠激光 · 单次", "Laser Black Pearl · tunggal"), st: "waiting" },
         { time: "4:15", ampm: "PM", name: "Jane Lee", service: L3("First trial facial · new customer", "首次体验护理 · 新客", "Cubaan facial pertama · pelanggan baharu"), st: "confirmed" }
       ].map(q => {
-        const tone = { done: "#1F2A24|#9BDBB5", inChair: "#2A2622|#E0B978", waiting: "#1F2626|#AEB9B8", confirmed: "#1F2626|#AEB9B8" }[q.st].split("|");
+        const tone = { done: "#EDE9FE|#7C3AED", inChair: "#FEF3C7|#B45309", waiting: "#F3EBFE|#5B4A7E", confirmed: "#F3EBFE|#5B4A7E" }[q.st].split("|");
         return { time: q.time, ampm: q.ampm, name: q.name, service: q.service, status: t[q.st],
-          rowStyle: "display:flex;align-items:center;gap:12px;border-radius:16px;border:1px solid #2B3334;background:#181D1E;padding:13px 14px;cursor:pointer" +
-            (q.st === "inChair" ? ";border-color:#453C2C" : ""),
+          rowStyle: "display:flex;align-items:center;gap:12px;border-radius:16px;border:1px solid #EFE8F8;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);padding:13px 14px;cursor:pointer" +
+            (q.st === "inChair" ? ";border-color:#FCD9A0" : ""),
           statusStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:.3px;background:" + tone[0] + ";color:" + tone[1],
           open: () => this.setState({ screen: "followups" }) };
       }),
@@ -497,38 +517,38 @@ class Component extends DCLogic {
         { value: "3", label: t.rOverdue, alert: true },
         { value: "5", label: t.rReturned, alert: false }
       ].map(r => ({ value: r.value, label: r.label,
-        cardStyle: "border-radius:16px;padding:15px;background:#181D1E;border:1px solid " + (r.alert ? "#4A322A" : "#2B3334"),
-        labelStyle: "font-size:12px;font-weight:700;margin-top:6px;color:" + (r.alert ? "#E89A6B" : "#AEB9B8") })),
+        cardStyle: "border-radius:16px;padding:15px;background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);border:1px solid " + (r.alert ? "#FBD5C5" : "#EFE8F8"),
+        labelStyle: "font-size:12px;font-weight:700;margin-top:6px;color:" + (r.alert ? "#C2410C" : "#5B4A7E") })),
 
       fuTabs: [t.fuToday, t.fuOverdue, t.fuAll].map((label, i) => ({ label,
         pick: () => this.setState({ fuTab: i }),
         style: "flex:1;text-align:center;padding:11px 8px;border-radius:12px;font-size:12.5px;font-weight:800;cursor:pointer;" +
-          (s.fuTab === i ? "background:#9BDBB5;color:#102018" : "background:#181D1E;border:1px solid #2B3334;color:#AEB9B8") })),
+          (s.fuTab === i ? "background:#7C3AED;color:#EDE9FE" : "background:#FFFFFF;box-shadow:0 4px 14px rgba(124,58,237,.08);border:1px solid #EFE8F8;color:#5B4A7E") })),
 
       followUps: [
-        { initials: "KW", name: "Karen Wong", days: 112, overdue: false, tone: "#2F4438|#9BDBB5",
+        { initials: "KW", name: "Karen Wong", days: 112, overdue: false, tone: "#DDD0FB|#7C3AED",
           note: L3("Asked to be called after Raya. Interested in slimming course.", "要求开斋节后联系，对纤体疗程有兴趣。", "Minta dihubungi selepas Raya. Berminat kursus pelangsingan.") },
-        { initials: "SC", name: "Serena Chan", days: 96, overdue: true, tone: "#4A322A|#E89A6B",
+        { initials: "SC", name: "Serena Chan", days: 96, overdue: true, tone: "#FBD5C5|#C2410C",
           note: L3("No answer twice. Try WhatsApp instead of call.", "两次未接听，改用 WhatsApp。", "Dua kali tiada jawapan. Cuba WhatsApp.") },
-        { initials: "FA", name: "Farah Aziz", days: 134, overdue: true, tone: "#4A322A|#E89A6B",
+        { initials: "FA", name: "Farah Aziz", days: 134, overdue: true, tone: "#FBD5C5|#C2410C",
           note: L3("Package expired in July. Eligible for win-back voucher.", "套餐7月到期，符合回归礼券资格。", "Pakej tamat Julai. Layak vaucar kembali.") },
-        { initials: "LT", name: "Lisa Tan", days: 91, overdue: false, tone: "#2F4438|#9BDBB5",
+        { initials: "LT", name: "Lisa Tan", days: 91, overdue: false, tone: "#DDD0FB|#7C3AED",
           note: L3("Booked for Saturday. Confirm the day before.", "已预约周六，前一天确认。", "Ditempah Sabtu. Sahkan sehari sebelum.") }
       ].map(c => {
         const tone = c.tone.split("|");
         return { initials: c.initials, name: c.name, lastNote: c.note,
           meta: L3("No visit for ", "已 ", "Tiada lawatan ") + c.days + L3(" days", " 天未到店", " hari"),
-          avatarStyle: "width:42px;height:42px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;background:#1F2626;border:1px solid " + tone[0] + ";color:" + tone[1],
+          avatarStyle: "width:42px;height:42px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;background:#F3EBFE;border:1px solid " + tone[0] + ";color:" + tone[1],
           due: c.overdue ? t.fuOverdue : t.fuToday,
-          dueStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:11px;font-weight:800;background:" + (c.overdue ? "#3A2A22;color:#E89A6B" : "#1F2A24;color:#9BDBB5") };
+          dueStyle: "flex-shrink:0;padding:5px 10px;border-radius:99px;font-size:11px;font-weight:800;background:" + (c.overdue ? "#FDE3D6;color:#C2410C" : "#EDE9FE;color:#7C3AED") };
       }),
 
       tabs: [["home", t.tabHome], ["sales", t.tabSales], ["customers", t.tabCustomers], ["me", t.tabMe]].map(([k, label]) => {
         const on = (k === "home" && s.screen === "home") || (k === "customers" && s.screen === "followups") || (k === "me" && s.screen === "wallet");
         return { label,
           pick: () => this.setState({ screen: k === "customers" ? "followups" : k === "me" ? "wallet" : "home" }),
-          style: "flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;font-size:12px;font-weight:800;cursor:pointer;color:" + (on ? "#9BDBB5" : "#8A9694"),
-          dotStyle: "width:9px;height:9px;border-radius:99px;background:" + (on ? "#9BDBB5" : "#2B3334") };
+          style: "flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;font-size:12px;font-weight:800;cursor:pointer;color:" + (on ? "#7C3AED" : "#8B7BAE"),
+          dotStyle: "width:9px;height:9px;border-radius:99px;background:" + (on ? "#7C3AED" : "#EFE8F8") };
       })
     };
   }
