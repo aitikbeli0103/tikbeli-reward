@@ -243,6 +243,36 @@ input{font-family:inherit;font-size:16px}
 </div>
 </sc-if>
 
+<sc-if value="{{ isPkgs }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1000px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:20px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.08)">
+<div style="font-size:18px;font-weight:800;color:#2A1B4F">Package list</div>
+<div style="font-size:13.5px;font-weight:600;line-height:1.5;color:#5B4A7E;text-wrap:pretty">Download the list, edit it in Excel, save as CSV and upload it again. Use <b>normal</b> for everyday packages and <b>promo</b> with a start and end date for monthly promotions. Promos appear in checkout only between their dates.</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<div onClick="{{ exportPkgs }}" style="display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:14px;background:#F3EBFE;color:#5B33D0;font-size:14px;font-weight:800;cursor:pointer"><i class="ph-bold ph-download-simple"></i>Download list (CSV)</div>
+<label style="display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:14px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;font-size:14px;font-weight:800;cursor:pointer"><i class="ph-bold ph-upload-simple"></i>Upload CSV<input type="file" accept=".csv,text/csv" onChange="{{ uploadPkgs }}" style="display:none"></label>
+<div onClick="{{ resetPkgs }}" style="display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:14px;color:#8A2B55;font-size:14px;font-weight:800;cursor:pointer"><i class="ph-bold ph-arrow-counter-clockwise"></i>Reset to built-in</div>
+</div>
+<sc-if value="{{ hasPkgMsg }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 12px;border-radius:12px;background:#F3EBFE;color:#44336E;font-size:13px;font-weight:700">{{ pkgMsg }}</div></sc-if>
+</div>
+<sc-for list="{{ pkgGroups }}" as="g" hint-placeholder-count="2">
+<div style="display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:20px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.08)">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px">
+<div style="font-size:16px;font-weight:800;color:#2A1B4F">{{ g.name }}</div>
+<div style="{{ g.chipStyle }}">{{ g.status }}</div>
+<div style="font-size:12.5px;font-weight:700;color:#5B4A7E">{{ g.dates }}</div>
+</div>
+<sc-for list="{{ g.items }}" as="p" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid #F0E8FB">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><div style="font-size:13.5px;font-weight:800;color:#2A1B4F;text-wrap:pretty">{{ p.name }}</div><div style="font-size:12px;font-weight:600;color:#5B4A7E">{{ p.meta }}</div></div>
+<div style="font-size:15px;font-weight:800;color:#5B33D0;white-space:nowrap">{{ p.price }}</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
 <sc-if value="{{ isClosing }}" hint-placeholder-val="{{ false }}">
 <div style="max-width:1000px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px">
 <sc-if value="{{ closed }}" hint-placeholder-val="{{ false }}">
@@ -549,6 +579,13 @@ const CATALOG = [
   { id: "p2", type: "pkg", name: "Glow Signature · 12 sessions", price: 3600, sessions: 12 },
   { id: "p3", type: "pkg", name: "AI Body Master · 4 sessions", price: 880, sessions: 4 },
   { id: "p4", type: "pkg", name: "Black Pearl Laser · 6 sessions", price: 1980, sessions: 6 },
+  { id: "rc1", type: "pkg", name: "Relief Challenge · Needle-free AI Acupuncture 20 min (1 part) · 5 hrs + 1 hr FREE", price: 502, sessions: 18, np: 1505, validity: "Complete within 1 month" },
+  { id: "rc2", type: "pkg", name: "Relief Challenge · Needle-free AI Acupuncture 60 min · 5 hrs + 1 hr FREE", price: 896, sessions: 6, np: 2688, validity: "Complete within 1 month" },
+  { id: "rc3", type: "pkg", name: "Relief Challenge · Needle-free AI Acupuncture 60 min · 10 hrs + 3 hrs FREE", price: 1672, sessions: 13, np: 5434, validity: "Complete within 1 month" },
+  { id: "rc4", type: "pkg", name: "Relief Challenge · Needle-free AI Acupuncture 60 min · 15 hrs + 6 hrs FREE", price: 2508, sessions: 21, np: 8778, validity: "Complete within 1 month" },
+  { id: "lb1", type: "pkg", name: "Liver Boosters Silver · 6× Entry Care or 5× Core Repair or 4× Intensive Repair", price: 2987, sessions: 6, np: 4872 },
+  { id: "lb2", type: "pkg", name: "Liver Boosters Gold · 14× Entry Care or 12× Core Repair or 10× Intensive Repair", price: 5987, sessions: 14, np: 11136 },
+  { id: "lb3", type: "pkg", name: "Liver Boosters Ruby · 26× Entry Care or 23× Core Repair or 20× Intensive Repair", price: 9987, sessions: 26, np: 24064 },
   { id: "r1", type: "prod", name: "Cushion Foundation", price: 98 },
   { id: "r2", type: "prod", name: "Loose Powder", price: 98 },
   { id: "r3", type: "prod", name: "Body Serum", price: 98 },
@@ -584,7 +621,17 @@ const METHODS = [
 ];
 const MLABEL = Object.fromEntries(METHODS.map(m => [m.k, m]));
 const COMM = { treat: 0.05, pkg: 0.05, prod: 0.05, gift: 0, topup: 0 };
-const KEY = "tikbeli_pos_sales";
+const KEY = "tikbeli_pos_sales", PKEY = "tikbeli_pos_packages";
+const ymd = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+const normDate = (v) => { v = String(v || "").trim(); if (!v) return ""; let m = v.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/); if (m) return m[1] + "-" + m[2].padStart(2, "0") + "-" + m[3].padStart(2, "0");
+  m = v.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{2,4})/); if (m) return (m[3].length === 2 ? "20" + m[3] : m[3]) + "-" + m[2].padStart(2, "0") + "-" + m[1].padStart(2, "0"); return ""; };
+const parseCsv = (t) => { const rows = []; let row = [], f = "", q = false; t = t.replace(/^\ufeff/, "");
+  for (let i = 0; i < t.length; i++) { const ch = t[i];
+    if (q) { if (ch === '"') { if (t[i + 1] === '"') { f += '"'; i++; } else q = false; } else f += ch; }
+    else if (ch === '"') q = true; else if (ch === "," || ch === ";" || ch === "\t") { row.push(f); f = ""; } else if (ch === "\n" || ch === "\r") { if (ch === "\r" && t[i + 1] === "\n") i++; row.push(f); rows.push(row); row = []; f = ""; } else f += ch; }
+  if (f || row.length) { row.push(f); rows.push(row); } return rows.filter(r => r.some(c => c.trim())); };
+const PCOLS = ["kind", "promo_name", "start_date", "end_date", "package_name", "price", "normal_price", "sessions", "validity", "notes"];
+const csvCell = (v) => { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
 
 const seed = () => [
   { outlet: "Bukit Bintang", no: "S-0001", time: "10:42", customer: "Michelle Tan", phone: "016-223 1188", lines: [{ id: "p1", type: "pkg", name: "HIFU Face Lift · 10 sessions", qty: 1, price: 9800, net: 7350, seller: "Sarah Lim", split: null, doneBy: null, claim: "now", remark: "" }],
@@ -604,14 +651,19 @@ class Component extends DCLogic {
       role = new URLSearchParams(location.search).get("role") || localStorage.getItem("tikbeli_role") || "hq";
       staffId = localStorage.getItem("tikbeli_staff");
       sales = JSON.parse(localStorage.getItem(KEY) || "null");
+      var pkgs = JSON.parse(localStorage.getItem(PKEY) || "null");
     } catch (e) {}
     let outlet = OUTLETS[0]; try { outlet = localStorage.getItem("tikbeli_outlet") || outlet; } catch (e) {}
     return { role, staffId, outlet, outletOpen: false, tab: "sell", cat: "treat", q: "", custQuery: "", customer: null, walkIn: false, customers: CUST0,
       cart: [], editUid: null, voucherInput: "", voucher: null, voucherMsg: "", manual: 0, sst: false,
       pin: null, pay: null, saleNo: null, saleIsNew: false, sales: sales || seed(), stock: { ...STOCK0 },
-      cartOpen: false, histFilter: "all", count: "", closed: null, toast: "" };
+      pkgs: typeof pkgs !== "undefined" ? pkgs : null, pkgMsg: "", cartOpen: false, histFilter: "all", count: "", closed: null, toast: "" };
   })();
 
+  allPkgs() { return this.state.pkgs || CATALOG.filter(i => i.type === "pkg").map(i => ({ ...i, kind: i.validity ? "promo" : "normal",
+    promo: /^Relief/.test(i.name) ? "Relief Challenge" : /^Liver/.test(i.name) ? "Liver Boosters" : "", start: "", end: "" })); }
+  catalog() { const t = ymd(new Date()); return CATALOG.filter(i => i.type !== "pkg").concat(this.allPkgs().filter(p => p.kind !== "promo" || ((!p.start || p.start <= t) && (!p.end || p.end >= t)))); }
+  savePkgs(pkgs, msg) { try { pkgs ? localStorage.setItem(PKEY, JSON.stringify(pkgs)) : localStorage.removeItem(PKEY); } catch (e) {} this.setState({ pkgs, pkgMsg: msg }); }
   save(sales) { try { localStorage.setItem(KEY, JSON.stringify(sales)); } catch (e) {} }
   flash(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: "" }), 2400); }
   me() { const s = this.state; return s.role === "staff" ? (ACCOUNTS[s.staffId] || "Sarah Lim") : "Hana"; }
@@ -661,7 +713,7 @@ class Component extends DCLogic {
       const used = tenders.filter(t => t.m === "credit").reduce((a, t) => a + t.amt, 0);
       const usedPts = tenders.filter(t => t.m === "points").reduce((a, t) => a + t.amt, 0) * 100;
       let credit = c.credit - used, tier = c.tier;
-      lines.forEach(l => { const it = CATALOG.find(x => x.id === l.id); if (it && it.type === "topup") { if (it.bonus) credit += (it.price + it.bonus) * l.qty; if (it.tier) tier = it.tier; } });
+      lines.forEach(l => { const it = this.catalog().find(x => x.id === l.id); if (it && it.type === "topup") { if (it.bonus) credit += (it.price + it.bonus) * l.qty; if (it.tier) tier = it.tier; } });
       customer = { ...c, credit: r2(credit), points: Math.round(c.points - usedPts + Math.floor(k.total)), tier };
       customers = s.customers.map(x => x.id === c.id ? customer : x);
     }
@@ -686,9 +738,9 @@ class Component extends DCLogic {
 
     const inCart = (id) => s.cart.filter(l => l.id === id).reduce((a, l) => a + l.qty, 0);
     const qq = s.q.trim().toLowerCase();
-    const items = CATALOG.filter(it => it.type === s.cat && (!qq || it.name.toLowerCase().includes(qq))).map(it => {
+    const items = this.catalog().filter(it => it.type === s.cat && (!qq || it.name.toLowerCase().includes(qq))).map(it => {
       const [, icon, bg, fg] = TYPE[it.type], st = s.stock[it.id], out = it.type === "prod" && st === 0;
-      const sub = it.type === "prod" ? (out ? "Out of stock · can sell, collect later" : st + " in stock") : it.type === "pkg" ? it.sessions + " sessions" :
+      const sub = it.type === "prod" ? (out ? "Out of stock · can sell, collect later" : st + " in stock") : it.type === "pkg" ? [it.sessions + " sessions", it.np ? "NP " + rm(it.np) : "", it.kind === "promo" && it.promo ? it.promo + (it.end ? " · until " + it.end : "") : ""].filter(Boolean).join(" · ") :
         it.type === "topup" ? (it.bonus ? "+ RM" + it.bonus + " bonus credit" : "Upgrade to " + it.tier) : it.type === "gift" ? "Digital gift card" : "Single session";
       return { name: it.name, price: rm(it.price), sub, icon, inCart: inCart(it.id) > 0, qty: inCart(it.id),
         iconStyle: "width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;background:" + bg + ";color:" + fg,
@@ -865,10 +917,38 @@ class Component extends DCLogic {
       todayLabel: new Date().toLocaleDateString("en-MY", { weekday: "short", day: "numeric", month: "short" }),
       backHref: "TikBeli%20Admin.dc.html?role=" + s.role,
       userName: me, userInitials: ini(me), roleLabel: isHq ? "HQ" : s.role === "staff" ? "Staff" : s.role,
-      tabs: [["sell", "Checkout", "ph-bold ph-shopping-cart"], ["history", "Sales history", "ph-bold ph-receipt"], ["closing", "Daily closing", "ph-bold ph-calculator"]].map(([v, lb, ic]) => ({ label: lb, icon: ic,
+      tabs: [["sell", "Checkout", "ph-bold ph-shopping-cart"], ["history", "Sales history", "ph-bold ph-receipt"], ["closing", "Daily closing", "ph-bold ph-calculator"]].concat(isHq ? [["pkgs", "Packages", "ph-bold ph-stack"]] : []).map(([v, lb, ic]) => ({ label: lb, icon: ic,
         style: "display:flex;align-items:center;gap:7px;padding:11px 16px;border-radius:14px 14px 0 0;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
           (s.tab === v ? "background:#F4EEFB;color:#6D28D9" : "color:rgba(255,255,255,.9)"), pick: () => this.setState({ tab: v }) })),
-      isSell: s.tab === "sell", isHistory: s.tab === "history", isClosing: s.tab === "closing",
+      isSell: s.tab === "sell", isHistory: s.tab === "history", isClosing: s.tab === "closing", isPkgs: s.tab === "pkgs" && isHq,
+      hasPkgMsg: !!s.pkgMsg, pkgMsg: s.pkgMsg,
+      pkgGroups: (() => { const t = ymd(new Date()), all = this.allPkgs(), gs = [];
+        const chip = (bg, fg) => "padding:4px 10px;border-radius:99px;font-size:12px;font-weight:800;background:" + bg + ";color:" + fg;
+        const meta = (p) => [p.sessions + " sessions", p.np ? "NP " + rm(p.np) : "", p.validity, p.notes].filter(Boolean).join(" · ");
+        const nor = all.filter(p => p.kind !== "promo");
+        if (nor.length) gs.push({ name: "Normal packages", status: "Always on", chipStyle: chip("#DCFCE7", "#166534"), dates: "", items: nor.map(p => ({ name: p.name, price: rm(p.price), meta: meta(p) })) });
+        const byKey = {}; all.filter(p => p.kind === "promo").forEach(p => { const k = (p.promo || "Promotion") + "|" + p.start + "|" + p.end; (byKey[k] = byKey[k] || []).push(p); });
+        Object.values(byKey).sort((a, b) => (a[0].start || "").localeCompare(b[0].start || "")).forEach(ps => { const p0 = ps[0];
+          const st = p0.end && p0.end < t ? ["Ended", chip("#F1F1F4", "#555")] : p0.start && p0.start > t ? ["Upcoming", chip("#FEF3C7", "#92400E")] : ["Running now", chip("#FCE7F3", "#BE185D")];
+          gs.push({ name: p0.promo || "Promotion", status: st[0], chipStyle: st[1], dates: (p0.start || "…") + " to " + (p0.end || "…"), items: ps.map(p => ({ name: p.name, price: rm(p.price), meta: meta(p) })) }); });
+        return gs; })(),
+      exportPkgs: () => { const rows = [PCOLS.join(",")].concat(this.allPkgs().map(p => [p.kind || "normal", p.promo, p.start, p.end, p.name, p.price, p.np, p.sessions, p.validity, p.notes].map(csvCell).join(",")));
+        const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["\ufeff" + rows.join("\n")], { type: "text/csv" })); a.download = "TikBeli packages.csv"; document.body.appendChild(a); a.click(); a.remove(); },
+      uploadPkgs: (e) => { const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
+        if (!/\.csv$/i.test(f.name)) return this.setState({ pkgMsg: "Please upload a .csv file. In Excel: File › Save As › CSV UTF-8." });
+        const rd = new FileReader(); rd.onload = () => { const rows = parseCsv(String(rd.result)); if (rows.length < 2) return this.setState({ pkgMsg: "The file has no package rows." });
+          const hd = rows[0].map(x => x.trim().toLowerCase().replace(/\s+/g, "_")), col = (r, n) => { const i = hd.indexOf(n); return i < 0 ? "" : (r[i] || "").trim(); };
+          if (hd.indexOf("package_name") < 0 || hd.indexOf("price") < 0) return this.setState({ pkgMsg: "Missing columns. The first row must include package_name and price." });
+          const out = [], bad = [];
+          rows.slice(1).forEach((r, i) => { const name = col(r, "package_name"), price = num(col(r, "price")); if (!name || !price) { bad.push(i + 2); return; }
+            const kind = /promo/i.test(col(r, "kind")) ? "promo" : "normal", promo = col(r, "promo_name");
+            out.push({ id: "k-" + (promo + "-" + name).toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 60), type: "pkg", kind, promo, name, price,
+              np: num(col(r, "normal_price")) || 0, sessions: Math.round(num(col(r, "sessions"))) || 1, start: normDate(col(r, "start_date")), end: normDate(col(r, "end_date")),
+              validity: col(r, "validity"), notes: col(r, "notes") }); });
+          if (!out.length) return this.setState({ pkgMsg: "No valid rows found. Each row needs package_name and price." });
+          this.savePkgs(out, "Uploaded " + out.length + " packages" + (bad.length ? ". Skipped row " + bad.join(", ") + " (missing name or price)." : ".")); };
+        rd.readAsText(f); },
+      resetPkgs: () => this.savePkgs(null, "Back to the built-in package list."),
 
       noCustomer: !c, hasCustomer: !!c, isWalkIn: !c && s.walkIn,
       custQuery: s.custQuery, setCustQuery: (e) => this.setState({ custQuery: e.target.value, walkIn: false }),
