@@ -903,6 +903,7 @@ class Component extends DCLogic {
     ];
     const isStaff = s.role === "staff";
     const LINKS = [
+      { label: "POS", icon: "cash-register", href: "POS.dc.html" },
       { label: t.nQuote, icon: "note-pencil", href: "Consultant%20Quote%20App.dc.html" },
       ...(isStaff ? [{ label: ({ en: "My salary wallet", zh: "我的薪资钱包", ms: "Dompet gaji saya" })[lang] || "My salary wallet", icon: "wallet", href: "Staff%20Dashboard.dc.html" }] : []),
       ...(isStaff ? [] : [{ label: t.nReferralSettings, icon: "sliders-horizontal", href: "Referral%20Hub.dc.html" }]),

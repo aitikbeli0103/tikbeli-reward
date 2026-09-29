@@ -412,6 +412,11 @@ class Component extends DCLogic {
     const locked = !me;
     if (locked) wallet.length = 0;
     else wallet.forEach((w, i) => { if (i > 0) w.value = Math.round(w.value * me.k / 10) * 10; });
+    if (me) { let posC = 0, n = 0;
+      try { JSON.parse(localStorage.getItem("tikbeli_pos_sales") || "[]").forEach(x => (x.comm || []).forEach(c => { if (c.staff === me.name && c.amt) { posC += c.amt; n++; } })); } catch (e) {}
+      if (posC) wallet.push({ label: L3("POS sales commission", "POS 销售佣金", "Komisen jualan POS"), value: Math.round(posC * 100) / 100, final: false,
+        src: L3(n + " POS sale(s)", n + " 笔 POS 销售", n + " jualan POS"),
+        formula: L3("5% of each line you sold at the POS. Split sales count 50/50. Reversed on refund.", "POS 每项销售的 5%，分单各计 50%，退款即扣回。", "5% setiap jualan POS anda. Jualan dikongsi 50/50. Ditarik balik jika bayaran balik."), ver: "commission.pos v1" }); }
     const total = wallet.reduce((a, w) => a + w.value, 0);
 
     const titles = { home: t.tabHome, wallet: t.salaryWallet, followups: t.followUp };
