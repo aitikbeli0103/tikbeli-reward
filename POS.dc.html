@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+html,body{width:100%;max-width:100%;overflow-x:hidden;overflow-x:clip}
+body{margin:0;background:#F4EEFB;color:#28174F;font-family:Manrope,"Noto Sans SC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#7137E8;text-decoration:none}a:hover{color:#5E2BC4}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+input{font-family:inherit;font-size:16px}
+.sq::-webkit-scrollbar{width:0;height:0}
+[data-p=bar],[data-p=bd],[data-p=closex]{display:none}
+@media(max-width:900px){[data-p=wrap]{padding:12px 12px 96px!important}[data-p=cart]{position:fixed!important;left:0;right:0;bottom:0;top:auto!important;width:100%!important;max-width:none!important;max-height:90dvh!important;z-index:50;border-radius:26px 26px 0 0!important;transform:translateY(105%);transition:transform .25s ease}[data-p=cart][data-open=true]{transform:none}[data-p=bar]{display:flex!important}[data-p=bd]{display:block!important}[data-p=closex]{display:flex!important}}
+@media print{[data-p=noprint]{display:none!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh">
+
+<div data-p="noprint" style="position:sticky;top:0;z-index:30;background:linear-gradient(135deg,#7137E8,#9B4DE0);color:#fff;padding:12px 16px 0;box-shadow:0 6px 20px rgba(81,35,174,.25)">
+<div style="max-width:1400px;margin:0 auto">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="width:40px;height:40px;border-radius:13px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph-fill ph-cash-register" style="font-size:22px"></i></div>
+<div style="flex:1;min-width:140px">
+<div style="font-size:18px;font-weight:800;letter-spacing:-.3px">TikBeli POS</div>
+<div onClick="{{ toggleOutlet }}" style="display:inline-flex;align-items:center;gap:5px;margin-top:3px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.18);font-size:12px;font-weight:800;cursor:pointer"><i class="ph-fill ph-storefront" style="font-size:14px"></i>Outlet: {{ outlet }}<i class="ph-bold ph-caret-down" style="font-size:12px"></i><span style="opacity:.8;font-weight:600">· {{ todayLabel }}</span></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;padding:7px 12px 7px 7px;border-radius:99px;background:rgba(255,255,255,.16)">
+<div style="width:28px;height:28px;border-radius:99px;background:#fff;color:#7137E8;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800">{{ userInitials }}</div>
+<div style="font-size:12.5px;font-weight:800;white-space:nowrap">{{ userName }} · {{ roleLabel }}</div>
+</div>
+</div>
+<sc-if value="{{ outletOpen }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;padding:10px;border-radius:16px;background:rgba(255,255,255,.95)">
+<sc-for list="{{ outlets }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</div></sc-for>
+</div>
+</sc-if>
+<div class="sq" style="display:flex;gap:6px;margin-top:12px;overflow-x:auto">
+<sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+<div onClick="{{ tb.pick }}" style="{{ tb.style }}"><i class="{{ tb.icon }}" style="font-size:17px"></i>{{ tb.label }}</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<sc-if value="{{ isSell }}" hint-placeholder-val="{{ true }}">
+<div data-p="wrap" style="display:flex;gap:16px;padding:16px;max-width:1400px;margin:0 auto;align-items:flex-start">
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px">
+
+<div style="background:#fff;border-radius:22px;padding:14px 16px;box-shadow:0 4px 16px rgba(124,58,237,.08)">
+<sc-if value="{{ noCustomer }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+<div style="flex:1 1 220px;display:flex;align-items:center;gap:9px;padding:0 14px;height:48px;border-radius:14px;border:1px solid #E9DFF8;background:#FBF8FE">
+<i class="ph-bold ph-magnifying-glass" style="font-size:18px;color:#8B7BAE"></i>
+<input value="{{ custQuery }}" onChange="{{ setCustQuery }}" placeholder="Customer phone, name or ID" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F">
+</div>
+<div onClick="{{ scanQr }}" style="display:flex;align-items:center;gap:8px;height:48px;padding:0 16px;border-radius:14px;background:#F3EBFE;color:#6D28D9;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap"><i class="ph-bold ph-qr-code" style="font-size:20px"></i>Scan QR</div>
+<div onClick="{{ walkIn }}" style="display:flex;align-items:center;height:48px;padding:0 14px;border-radius:14px;border:1px solid #E9DFF8;color:#5B4A7E;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap">Walk-in</div>
+</div>
+<sc-if value="{{ hasCustResults }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+<sc-for list="{{ custResults }}" as="c" hint-placeholder-count="2">
+<div onClick="{{ c.pick }}" style="display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:14px;background:#FAF7FE;cursor:pointer">
+<div style="width:36px;height:36px;border-radius:99px;background:#EDE9FE;color:#6D28D9;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;flex-shrink:0">{{ c.initials }}</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:800">{{ c.name }}</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E">{{ c.phone }}</div>
+</div>
+<div style="font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px;background:#FEF3C7;color:#92400E;white-space:nowrap">{{ c.tier }}</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{ isWalkIn }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:12.5px;font-weight:700;color:#5B4A7E;margin-top:9px">Walk-in customer · products and single treatments only</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{ hasCustomer }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="width:46px;height:46px;border-radius:99px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0">{{ cust.initials }}</div>
+<div style="flex:1 1 160px;min-width:0">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<div style="font-size:16px;font-weight:800">{{ cust.name }}</div>
+<div style="font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px;background:#FEF3C7;color:#92400E;white-space:nowrap">{{ cust.tierLabel }}</div>
+</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;margin-top:2px">{{ cust.phone }}</div>
+</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<div style="padding:8px 12px;border-radius:12px;background:#FAF7FE"><div style="font-size:10.5px;font-weight:800;color:#8B7BAE;text-transform:uppercase;letter-spacing:.6px">Credit</div><div style="font-size:14px;font-weight:800">{{ cust.creditFmt }}</div></div>
+<div style="padding:8px 12px;border-radius:12px;background:#FAF7FE"><div style="font-size:10.5px;font-weight:800;color:#8B7BAE;text-transform:uppercase;letter-spacing:.6px">Points</div><div style="font-size:14px;font-weight:800">{{ cust.points }}</div></div>
+<div onClick="{{ clearCustomer }}" style="display:flex;align-items:center;padding:0 14px;border-radius:12px;border:1px solid #E9DFF8;font-size:12.5px;font-weight:800;color:#6D28D9;cursor:pointer">Change</div>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div class="sq" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:2px">
+<sc-for list="{{ cats }}" as="ct" hint-placeholder-count="5">
+<div onClick="{{ ct.pick }}" style="{{ ct.style }}"><i class="{{ ct.icon }}" style="font-size:18px"></i>{{ ct.label }}</div>
+</sc-for>
+</div>
+
+<div style="display:flex;align-items:center;gap:9px;padding:0 14px;height:46px;border-radius:14px;background:#fff;box-shadow:0 2px 10px rgba(124,58,237,.06)">
+<i class="ph-bold ph-magnifying-glass" style="font-size:18px;color:#8B7BAE"></i>
+<input value="{{ q }}" onChange="{{ setQ }}" placeholder="Search items" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F">
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px">
+<sc-for list="{{ items }}" as="it" hint-placeholder-count="8">
+<div onClick="{{ it.add }}" style="position:relative;display:flex;flex-direction:column;gap:6px;min-height:132px;padding:14px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.08);cursor:pointer">
+<div style="{{ it.iconStyle }}"><i class="{{ it.icon }}"></i></div>
+<div style="font-size:13.5px;font-weight:800;line-height:1.3;text-wrap:pretty">{{ it.name }}</div>
+<div style="{{ it.subStyle }}">{{ it.sub }}</div>
+<div style="flex:1"></div>
+<div style="display:flex;align-items:baseline;gap:6px">
+<div style="font-size:15px;font-weight:800;color:#6D28D9">{{ it.price }}</div>
+<sc-if value="{{ it.inCart }}" hint-placeholder-val="{{ false }}"><div style="margin-left:auto;min-width:24px;height:24px;padding:0 7px;border-radius:99px;background:#7C3AED;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ it.qty }}</div></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}"><div data-p="bd" onClick="{{ closeCart }}" style="position:fixed;inset:0;z-index:45;background:rgba(40,23,79,.4)"></div></sc-if>
+
+<div data-p="cart" data-open="{{ cartOpenStr }}" style="flex:none;width:390px;max-width:42%;position:sticky;top:112px;max-height:calc(100vh - 128px);display:flex;flex-direction:column;background:#fff;border-radius:24px;box-shadow:0 10px 30px rgba(124,58,237,.14);overflow:hidden">
+<div style="display:flex;align-items:center;gap:10px;padding:16px 18px 10px">
+<div style="flex:1;font-size:17px;font-weight:800">Current sale</div>
+<sc-if value="{{ hasLines }}" hint-placeholder-val="{{ false }}"><div onClick="{{ clearCart }}" style="font-size:12.5px;font-weight:800;color:#B91C1C;cursor:pointer">Clear</div></sc-if>
+<div data-p="closex" onClick="{{ closeCart }}" style="width:36px;height:36px;border-radius:99px;background:#F3EBFE;align-items:center;justify-content:center;cursor:pointer"><i class="ph-bold ph-x" style="font-size:17px;color:#6D28D9"></i></div>
+</div>
+
+<div class="sq" style="flex:1;min-height:0;overflow-y:auto;padding:0 18px">
+<sc-if value="{{ noLines }}" hint-placeholder-val="{{ true }}">
+<div style="padding:36px 10px;text-align:center;color:#8B7BAE">
+<i class="ph-bold ph-shopping-bag" style="font-size:34px"></i>
+<div style="font-size:13.5px;font-weight:700;margin-top:8px">Tap items to add them</div>
+</div>
+</sc-if>
+<sc-for list="{{ lines }}" as="l" hint-placeholder-count="0">
+<div style="padding:12px 0;border-bottom:1px solid #F1EAFB">
+<div style="display:flex;gap:10px;align-items:flex-start">
+<div style="flex:1;min-width:0">
+<div style="font-size:14px;font-weight:800;line-height:1.3">{{ l.name }}</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:3px;line-height:1.45">{{ l.meta }}</div>
+<sc-if value="{{ l.hasFlag }}" hint-placeholder-val="{{ false }}"><div style="{{ l.flagStyle }}">{{ l.flag }}</div></sc-if>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:14px;font-weight:800">{{ l.total }}</div>
+<sc-if value="{{ l.hasWas }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px;font-weight:700;color:#8B7BAE;text-decoration:line-through">{{ l.was }}</div></sc-if>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:9px">
+<div style="display:flex;align-items:center;border-radius:12px;background:#FAF7FE">
+<div onClick="{{ l.dec }}" style="width:38px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6D28D9"><i class="ph-bold ph-minus" style="font-size:15px"></i></div>
+<div style="min-width:22px;text-align:center;font-size:14px;font-weight:800">{{ l.qty }}</div>
+<div onClick="{{ l.inc }}" style="width:38px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6D28D9"><i class="ph-bold ph-plus" style="font-size:15px"></i></div>
+</div>
+<div style="flex:1"></div>
+<div onClick="{{ l.edit }}" style="display:flex;align-items:center;gap:6px;height:36px;padding:0 13px;border-radius:12px;border:1px solid #E9DFF8;font-size:12.5px;font-weight:800;color:#6D28D9;cursor:pointer"><i class="ph-bold ph-sliders-horizontal" style="font-size:15px"></i>Staff & options</div>
+</div>
+</div>
+</sc-for>
+
+<sc-if value="{{ hasLines }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding:14px 0">
+<div style="display:flex;gap:8px">
+<div style="flex:1;display:flex;align-items:center;gap:8px;padding:0 12px;height:44px;border-radius:12px;border:1px solid #E9DFF8">
+<i class="ph-bold ph-ticket" style="font-size:17px;color:#8B7BAE"></i>
+<input value="{{ voucherInput }}" onChange="{{ setVoucherInput }}" placeholder="Voucher / promo code" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F;text-transform:uppercase">
+</div>
+<div onClick="{{ applyVoucher }}" style="display:flex;align-items:center;padding:0 14px;border-radius:12px;background:#F3EBFE;color:#6D28D9;font-size:13px;font-weight:800;cursor:pointer">Apply</div>
+</div>
+<sc-if value="{{ hasVoucherMsg }}" hint-placeholder-val="{{ false }}"><div style="{{ voucherMsgStyle }}">{{ voucherMsg }}</div></sc-if>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<div onClick="{{ openManualDisc }}" style="display:flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:12px;border:1px solid #E9DFF8;font-size:12.5px;font-weight:800;color:#44336E;cursor:pointer"><i class="ph-bold ph-percent" style="font-size:15px"></i>{{ manualBtnLabel }}</div>
+<div onClick="{{ toggleSst }}" style="{{ sstStyle }}"><i class="{{ sstIcon }}" style="font-size:16px"></i>SST 8% on products</div>
+</div>
+</div>
+</sc-if>
+</div>
+
+<div style="padding:12px 18px 16px;border-top:1px solid #F1EAFB;background:#FDFBFF">
+<sc-for list="{{ totals }}" as="tt" hint-placeholder-count="2">
+<div style="display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:13px;font-weight:700">
+<div style="color:#5B4A7E">{{ tt.label }}</div>
+<div style="{{ tt.style }}">{{ tt.value }}</div>
+</div>
+</sc-for>
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:6px">
+<div style="font-size:15px;font-weight:800">Total</div>
+<div style="font-size:24px;font-weight:800;letter-spacing:-.6px">{{ totalFmt }}</div>
+</div>
+<sc-if value="{{ hasBlock }}" hint-placeholder-val="{{ false }}"><div style="margin-top:8px;padding:9px 11px;border-radius:11px;background:#FEF3C7;color:#92400E;font-size:12px;font-weight:700;line-height:1.4">{{ blockMsg }}</div></sc-if>
+<div onClick="{{ openPay }}" style="{{ chargeStyle }}"><i class="ph-fill ph-credit-card" style="font-size:20px"></i>Charge {{ totalFmt }}</div>
+</div>
+</div>
+
+<div data-p="bar" onClick="{{ openCart }}" style="position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:40;align-items:center;gap:12px;padding:12px 14px 12px 18px;border-radius:20px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;box-shadow:0 10px 26px rgba(81,35,174,.4);cursor:pointer">
+<i class="ph-fill ph-shopping-bag" style="font-size:22px"></i>
+<div style="flex:1;min-width:0;font-size:14px;font-weight:800">{{ itemCountLabel }} · {{ totalFmt }}</div>
+<div style="padding:9px 14px;border-radius:12px;background:#fff;color:#6D28D9;font-size:13px;font-weight:800">View sale</div>
+</div>
+
+</div>
+</sc-if>
+
+<sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1000px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div class="sq" style="display:flex;gap:8px;overflow-x:auto">
+<sc-for list="{{ histFilters }}" as="hf" hint-placeholder-count="4">
+<div onClick="{{ hf.pick }}" style="{{ hf.style }}">{{ hf.label }}</div>
+</sc-for>
+</div>
+<sc-if value="{{ histEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:40px;text-align:center;color:#8B7BAE;font-size:14px;font-weight:700;background:#fff;border-radius:20px">No sales here</div></sc-if>
+<sc-for list="{{ history }}" as="h" hint-placeholder-count="3">
+<div onClick="{{ h.open }}" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.07);cursor:pointer">
+<div style="flex:none;width:58px">
+<div style="font-size:13.5px;font-weight:800;color:#6D28D9">{{ h.time }}</div>
+<div style="font-size:11px;font-weight:700;color:#8B7BAE;margin-top:2px">{{ h.no }}</div>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-size:14.5px;font-weight:800">{{ h.customer }}</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.summary }}</div>
+</div>
+<div style="text-align:right;flex-shrink:0">
+<div style="font-size:14.5px;font-weight:800">{{ h.total }}</div>
+<div style="{{ h.statusStyle }}">{{ h.status }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isClosing }}" hint-placeholder-val="{{ false }}">
+<div style="max-width:1000px;margin:0 auto;padding:16px;display:flex;flex-direction:column;gap:14px">
+<sc-if value="{{ closed }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:11px;padding:14px 16px;border-radius:18px;background:#DCFCE7;color:#166534;font-size:13.5px;font-weight:800"><i class="ph-fill ph-lock-key" style="font-size:22px"></i>{{ closedMsg }}</div>
+</sc-if>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+<sc-for list="{{ closeStats }}" as="cs" hint-placeholder-count="4">
+<div style="padding:16px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.07)">
+<div style="font-size:11px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#8B7BAE">{{ cs.label }}</div>
+<div style="{{ cs.style }}">{{ cs.value }}</div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+<div style="padding:18px;border-radius:22px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.07)">
+<div style="font-size:16px;font-weight:800;margin-bottom:8px">Collected by method</div>
+<sc-for list="{{ byMethod }}" as="bm" hint-placeholder-count="4">
+<div style="display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #F4EFFB;font-size:13.5px;font-weight:700">
+<div style="display:flex;align-items:center;gap:9px"><i class="{{ bm.icon }}" style="font-size:18px;color:#7C3AED"></i>{{ bm.label }}</div>
+<div style="font-weight:800">{{ bm.value }}</div>
+</div>
+</sc-for>
+</div>
+<div style="padding:18px;border-radius:22px;background:#fff;box-shadow:0 4px 14px rgba(124,58,237,.07)">
+<div style="font-size:16px;font-weight:800;margin-bottom:8px">Cash drawer</div>
+<sc-for list="{{ drawer }}" as="dr" hint-placeholder-count="4">
+<div style="display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #F4EFFB;font-size:13.5px;font-weight:700">
+<div style="color:#5B4A7E">{{ dr.label }}</div>
+<div style="{{ dr.style }}">{{ dr.value }}</div>
+</div>
+</sc-for>
+<div style="font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:#8B7BAE;margin-top:14px">Counted cash</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:7px;padding:0 14px;height:50px;border-radius:14px;border:1px solid #E9DFF8;background:#FBF8FE">
+<div style="font-size:15px;font-weight:800;color:#5B4A7E">RM</div>
+<input value="{{ countValue }}" onChange="{{ setCount }}" inputmode="decimal" placeholder="0.00" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F;font-size:18px;font-weight:800">
+</div>
+<div style="{{ varianceStyle }}">{{ varianceLabel }}</div>
+<div onClick="{{ submitClosing }}" style="{{ closeBtnStyle }}"><i class="ph-fill ph-lock-key" style="font-size:19px"></i>{{ closeBtnLabel }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ editOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:70;background:rgba(40,23,79,.45);display:flex;align-items:center;justify-content:center;padding:12px">
+<div class="sq" style="width:min(100%,520px);max-height:92dvh;overflow:auto;border-radius:28px;background:#fff;box-shadow:0 20px 50px rgba(60,30,110,.35);padding:20px">
+<div style="display:flex;align-items:flex-start;gap:12px">
+<div style="flex:1;min-width:0">
+<div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#8B7BAE">{{ ed.typeLabel }}</div>
+<div style="font-size:19px;font-weight:800;margin-top:3px;line-height:1.25">{{ ed.name }}</div>
+</div>
+<div onClick="{{ closeEdit }}" style="width:40px;height:40px;border-radius:99px;background:#F3EBFE;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><i class="ph-bold ph-x" style="font-size:18px;color:#6D28D9"></i></div>
+</div>
+
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:18px">Selling consultant</div>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+<sc-for list="{{ ed.sellerChips }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div></sc-for>
+</div>
+
+<div onClick="{{ ed.toggleSplit }}" style="display:flex;align-items:center;gap:10px;margin-top:14px;cursor:pointer">
+<i class="{{ ed.splitIcon }}" style="font-size:22px;color:#7C3AED"></i>
+<div style="font-size:13.5px;font-weight:800">Split credit 50 / 50 with another consultant</div>
+</div>
+<sc-if value="{{ ed.split }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:9px">
+<sc-for list="{{ ed.splitChips }}" as="c" hint-placeholder-count="3"><div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ ed.isService }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:18px">Treatment done by</div>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+<sc-for list="{{ ed.doneChips }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ ed.isProduct }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:18px">Stock</div>
+<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+<sc-for list="{{ ed.claimChips }}" as="c" hint-placeholder-count="2"><div onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</div></sc-for>
+</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;margin-top:7px;line-height:1.45">{{ ed.stockNote }}</div>
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:16px">Photo of product taken · HQ only</div>
+<label style="display:flex;align-items:center;gap:12px;margin-top:8px;padding:10px;border-radius:14px;border:1.5px dashed #C4B5FD;background:#FBF8FE;cursor:pointer">
+<sc-if value="{{ ed.hasPhoto }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="Product taken" style="{{ ed.photoStyle }}"></div></sc-if>
+<sc-if value="{{ ed.noPhoto }}" hint-placeholder-val="{{ true }}"><div style="width:60px;height:60px;border-radius:11px;background:#F3EBFE;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph-bold ph-camera" style="font-size:26px;color:#7C3AED"></i></div></sc-if>
+<div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800;color:#44336E">{{ ed.photoLabel }}</div><div style="font-size:11.5px;font-weight:600;color:#8B7BAE;margin-top:2px">For HQ records. Not shown to the customer.</div></div>
+<input type="file" accept="image/*" capture="environment" onChange="{{ ed.setPhoto }}" style="display:none">
+</label>
+</sc-if>
+
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:18px">Remark</div>
+<input value="{{ ed.remark }}" onChange="{{ ed.setRemark }}" placeholder="e.g. Bundle deal, customer collects next visit" style="width:100%;margin-top:8px;height:46px;padding:0 14px;border-radius:13px;border:1px solid #E9DFF8;background:#FBF8FE;outline:0;color:#28174F">
+
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:18px">Price override</div>
+<div style="display:flex;gap:8px;margin-top:8px">
+<div style="flex:1;display:flex;align-items:center;gap:6px;padding:0 13px;height:46px;border-radius:13px;border:1px solid #E9DFF8;background:#FBF8FE">
+<div style="font-size:14px;font-weight:800;color:#8B7BAE">RM</div>
+<input value="{{ ed.overrideInput }}" onChange="{{ ed.setOverride }}" inputmode="decimal" placeholder="{{ ed.listPrice }}" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F">
+</div>
+<div onClick="{{ ed.requestOverride }}" style="display:flex;align-items:center;padding:0 14px;border-radius:13px;background:#F3EBFE;color:#6D28D9;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap">{{ ed.overrideBtn }}</div>
+</div>
+<sc-if value="{{ ed.hasOverride }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px">
+<div style="{{ ed.overrideStyle }}">{{ ed.overrideStatus }}</div>
+<sc-if value="{{ ed.canDemoApprove }}" hint-placeholder-val="{{ false }}"><div onClick="{{ ed.demoApprove }}" style="font-size:12px;font-weight:800;color:#6D28D9;cursor:pointer;text-decoration:underline">HQ approves (demo)</div></sc-if>
+<div onClick="{{ ed.clearOverride }}" style="font-size:12px;font-weight:800;color:#B91C1C;cursor:pointer">Remove</div>
+</div>
+</sc-if>
+
+<div style="display:flex;gap:10px;margin-top:22px">
+<div onClick="{{ ed.remove }}" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:0 16px;height:50px;border-radius:15px;border:1px solid #FECACA;color:#B91C1C;font-size:13.5px;font-weight:800;cursor:pointer"><i class="ph-bold ph-trash" style="font-size:17px"></i>Remove</div>
+<div onClick="{{ closeEdit }}" style="flex:1;display:flex;align-items:center;justify-content:center;height:50px;border-radius:15px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;font-size:14px;font-weight:800;cursor:pointer">Done</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ pinOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:80;background:rgba(40,23,79,.5);display:flex;align-items:center;justify-content:center;padding:12px">
+<div style="width:min(100%,420px);border-radius:28px;background:#fff;box-shadow:0 20px 50px rgba(60,30,110,.35);padding:22px">
+<div style="display:flex;align-items:center;gap:11px">
+<div style="width:44px;height:44px;border-radius:14px;background:#F3EBFE;display:flex;align-items:center;justify-content:center"><i class="ph-fill ph-shield-check" style="font-size:24px;color:#7C3AED"></i></div>
+<div style="flex:1;min-width:0">
+<div style="font-size:17px;font-weight:800">{{ pin.title }}</div>
+<div style="font-size:12.5px;font-weight:600;color:#5B4A7E;margin-top:2px">{{ pin.sub }}</div>
+</div>
+</div>
+<sc-if value="{{ pin.askAmt }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:16px">Discount amount</div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:7px;padding:0 13px;height:48px;border-radius:13px;border:1px solid #E9DFF8;background:#FBF8FE">
+<div style="font-size:14px;font-weight:800;color:#8B7BAE">RM</div>
+<input value="{{ pin.amt }}" onChange="{{ pin.setAmt }}" inputmode="decimal" placeholder="0.00" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F">
+</div>
+</sc-if>
+<sc-if value="{{ pin.askReason }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:16px">Reason</div>
+<input value="{{ pin.reason }}" onChange="{{ pin.setReason }}" placeholder="Required" style="width:100%;margin-top:7px;height:48px;padding:0 14px;border-radius:13px;border:1px solid #E9DFF8;background:#FBF8FE;outline:0;color:#28174F">
+</sc-if>
+<sc-if value="{{ pin.askPin }}" hint-placeholder-val="{{ true }}">
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;margin-top:16px">Manager PIN</div>
+<input type="password" inputmode="numeric" value="{{ pin.val }}" onChange="{{ pin.setVal }}" placeholder="••••" style="width:100%;margin-top:7px;height:52px;padding:0 14px;border-radius:13px;border:1px solid #E9DFF8;background:#FBF8FE;outline:0;color:#28174F;font-size:22px;letter-spacing:8px;text-align:center">
+<div style="font-size:11.5px;font-weight:600;color:#8B7BAE;margin-top:6px">Demo PIN: 1234</div>
+</sc-if>
+<sc-if value="{{ pin.hasErr }}" hint-placeholder-val="{{ false }}"><div style="margin-top:9px;font-size:12.5px;font-weight:800;color:#B91C1C">{{ pin.err }}</div></sc-if>
+<div style="display:flex;gap:10px;margin-top:18px">
+<div onClick="{{ closePin }}" style="flex:1;display:flex;align-items:center;justify-content:center;height:50px;border-radius:15px;border:1px solid #E9DFF8;color:#44336E;font-size:14px;font-weight:800;cursor:pointer">Cancel</div>
+<div onClick="{{ confirmPin }}" style="flex:1;display:flex;align-items:center;justify-content:center;height:50px;border-radius:15px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;font-size:14px;font-weight:800;cursor:pointer">{{ pin.cta }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ payOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:75;background:rgba(40,23,79,.48);display:flex;align-items:center;justify-content:center;padding:12px">
+<div class="sq" style="width:min(100%,560px);max-height:94dvh;overflow:auto;border-radius:28px;background:#fff;box-shadow:0 20px 50px rgba(60,30,110,.35)">
+<div style="display:flex;align-items:flex-start;gap:12px;padding:20px 20px 0">
+<div style="flex:1;min-width:0">
+<div style="font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#8B7BAE">{{ pay.kicker }}</div>
+<div style="font-size:28px;font-weight:800;letter-spacing:-.8px;margin-top:2px">{{ pay.dueFmt }}</div>
+</div>
+<div onClick="{{ closePay }}" style="width:40px;height:40px;border-radius:99px;background:#F3EBFE;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><i class="ph-bold ph-x" style="font-size:18px;color:#6D28D9"></i></div>
+</div>
+
+<sc-if value="{{ pay.canDeposit }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:8px;padding:16px 20px 0">
+<sc-for list="{{ pay.modes }}" as="m" hint-placeholder-count="2"><div onClick="{{ m.pick }}" style="{{ m.style }}">{{ m.label }}</div></sc-for>
+</div>
+<sc-if value="{{ pay.isDeposit }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 20px 0">
+<div style="flex:1 1 180px;display:flex;align-items:center;gap:6px;padding:0 13px;height:48px;border-radius:13px;border:1px solid #E9DFF8;background:#FBF8FE">
+<div style="font-size:13px;font-weight:800;color:#8B7BAE;white-space:nowrap">Deposit RM</div>
+<input value="{{ pay.depositValue }}" onChange="{{ pay.setDeposit }}" inputmode="decimal" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F;font-weight:800">
+</div>
+<div style="font-size:13px;font-weight:800;color:#B45309">Balance later {{ pay.balanceFmt }}</div>
+</div>
+</sc-if>
+</sc-if>
+
+<div style="font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#5B4A7E;padding:18px 20px 0">Add payment · tap more than one to split</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;padding:9px 20px 0">
+<sc-for list="{{ pay.methods }}" as="pm" hint-placeholder-count="8">
+<div onClick="{{ pm.add }}" style="{{ pm.style }}">
+<i class="{{ pm.icon }}" style="font-size:22px"></i>
+<div style="font-size:12.5px;font-weight:800;line-height:1.2">{{ pm.label }}</div>
+<div style="font-size:10.5px;font-weight:700;opacity:.75">{{ pm.sub }}</div>
+</div>
+</sc-for>
+</div>
+
+<div style="padding:14px 20px 0;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ pay.tenders }}" as="tn" hint-placeholder-count="0">
+<div style="display:flex;align-items:center;gap:10px;padding:8px 8px 8px 14px;border-radius:14px;background:#FAF7FE">
+<i class="{{ tn.icon }}" style="font-size:20px;color:#7C3AED"></i>
+<div style="flex:1;min-width:0;font-size:13.5px;font-weight:800">{{ tn.label }}</div>
+<div style="display:flex;align-items:center;gap:4px;width:130px;padding:0 10px;height:42px;border-radius:11px;background:#fff;border:1px solid #E9DFF8">
+<div style="font-size:12px;font-weight:800;color:#8B7BAE">RM</div>
+<input value="{{ tn.value }}" onChange="{{ tn.setAmt }}" inputmode="decimal" style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:#28174F;font-weight:800;text-align:right">
+</div>
+<div onClick="{{ tn.remove }}" style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#B91C1C"><i class="ph-bold ph-x" style="font-size:16px"></i></div>
+</div>
+</sc-for>
+</div>
+
+<div style="margin:14px 20px 0;padding:12px 14px;border-radius:14px;background:#FDFBFF;border:1px solid #F1EAFB">
+<div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;padding:3px 0"><div style="color:#5B4A7E">Pay now</div><div style="font-weight:800">{{ pay.targetFmt }}</div></div>
+<div style="display:flex;justify-content:space-between;font-size:13.5px;font-weight:700;padding:3px 0"><div style="color:#5B4A7E">Received</div><div style="font-weight:800">{{ pay.paidFmt }}</div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;padding:3px 0"><div>{{ pay.remLabel }}</div><div style="{{ pay.remStyle }}">{{ pay.remFmt }}</div></div>
+</div>
+<sc-if value="{{ pay.hasErr }}" hint-placeholder-val="{{ false }}"><div style="margin:10px 20px 0;font-size:12.5px;font-weight:800;color:#B91C1C">{{ pay.err }}</div></sc-if>
+
+<div style="padding:16px 20px 20px">
+<div onClick="{{ confirmPay }}" style="{{ pay.btnStyle }}"><i class="ph-fill ph-check-circle" style="font-size:21px"></i>Confirm payment</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ saleOpen }}" hint-placeholder-val="{{ false }}">
+<div data-p="noprint" style="position:fixed;inset:0;z-index:72;background:rgba(40,23,79,.48)"></div>
+<div style="position:fixed;inset:0;z-index:73;display:flex;align-items:center;justify-content:center;padding:12px;pointer-events:none">
+<div class="sq" style="pointer-events:auto;width:min(100%,520px);max-height:94dvh;overflow:auto;border-radius:28px;background:#fff;box-shadow:0 20px 50px rgba(60,30,110,.35)">
+<sc-if value="{{ sale.isNew }}" hint-placeholder-val="{{ false }}">
+<div data-p="noprint" style="display:flex;align-items:center;gap:10px;padding:14px 20px;background:#DCFCE7;color:#166534;font-size:14px;font-weight:800"><i class="ph-fill ph-check-circle" style="font-size:22px"></i>Payment received</div>
+</sc-if>
+<div style="padding:18px 20px 0;text-align:center">
+<div style="font-size:17px;font-weight:800">TikBeli · {{ sale.outlet }}</div>
+<div style="font-size:12px;font-weight:600;color:#5B4A7E;margin-top:3px">{{ sale.no }} · {{ sale.when }}</div>
+<div style="font-size:13px;font-weight:800;margin-top:8px">{{ sale.customer }}</div>
+<div style="{{ sale.statusStyle }}">{{ sale.status }}</div>
+</div>
+<div style="padding:12px 20px 0">
+<sc-for list="{{ sale.lines }}" as="sl" hint-placeholder-count="2">
+<div style="padding:10px 0;border-bottom:1px dashed #E9DFF8">
+<div style="display:flex;justify-content:space-between;gap:10px">
+<div style="font-size:13.5px;font-weight:800;min-width:0">{{ sl.qty }} × {{ sl.name }}</div>
+<div style="font-size:13.5px;font-weight:800;white-space:nowrap">{{ sl.total }}</div>
+</div>
+<div style="font-size:11.5px;font-weight:600;color:#5B4A7E;margin-top:3px;line-height:1.45">{{ sl.meta }}</div>
+<sc-if value="{{ sl.showPhoto }}" hint-placeholder-val="{{ false }}"><div data-p="noprint" role="img" aria-label="Product taken" style="{{ sl.photoStyle }}"></div></sc-if>
+<sc-if value="{{ sl.photoHidden }}" hint-placeholder-val="{{ false }}"><div data-p="noprint" style="font-size:11px;font-weight:800;color:#6D28D9;margin-top:5px">Photo on file · HQ only</div></sc-if>
+<sc-if value="{{ sl.canAddPhoto }}" hint-placeholder-val="{{ false }}"><label data-p="noprint" style="display:inline-flex;align-items:center;gap:6px;margin-top:7px;padding:6px 11px;border-radius:10px;border:1.5px dashed #C4B5FD;font-size:12px;font-weight:800;color:#6D28D9;cursor:pointer"><i class="ph-bold ph-camera" style="font-size:15px"></i>Add photo (HQ only)<input type="file" accept="image/*" capture="environment" onChange="{{ sl.setPhoto }}" style="display:none"></label></sc-if>
+<sc-if value="{{ sl.pendingClaim }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
+<div style="font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px;background:#FEF3C7;color:#92400E">To collect later</div>
+<div data-p="noprint" onClick="{{ sl.markClaimed }}" style="font-size:12px;font-weight:800;color:#6D28D9;cursor:pointer;text-decoration:underline">Mark collected</div>
+</div>
+</sc-if>
+<sc-if value="{{ sl.wasClaimed }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;font-weight:800;color:#166534;margin-top:5px">{{ sl.claimedNote }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="padding:10px 20px 0">
+<sc-for list="{{ sale.sums }}" as="ss" hint-placeholder-count="3">
+<div style="display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:13px;font-weight:700"><div style="color:#5B4A7E">{{ ss.label }}</div><div style="{{ ss.style }}">{{ ss.value }}</div></div>
+</sc-for>
+</div>
+<sc-if value="{{ sale.hasNotes }}" hint-placeholder-val="{{ false }}">
+<div data-p="noprint" style="margin:12px 20px 0;padding:12px 14px;border-radius:14px;background:#FAF7FE;display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ sale.notes }}" as="nt" hint-placeholder-count="2">
+<div style="display:flex;gap:8px;font-size:12.5px;font-weight:700;color:#44336E;line-height:1.4"><i class="{{ nt.icon }}" style="font-size:16px;color:#7C3AED;flex-shrink:0;margin-top:1px"></i><div style="min-width:0">{{ nt.text }}</div></div>
+</sc-for>
+</div>
+</sc-if>
+<div data-p="noprint" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;padding:16px 20px 20px">
+<div onClick="{{ sale.whatsapp }}" style="display:flex;align-items:center;justify-content:center;gap:7px;height:48px;border-radius:14px;background:#DCFCE7;color:#166534;font-size:13px;font-weight:800;cursor:pointer"><i class="ph-fill ph-whatsapp-logo" style="font-size:20px"></i>WhatsApp receipt</div>
+<div onClick="{{ printReceipt }}" style="display:flex;align-items:center;justify-content:center;gap:7px;height:48px;border-radius:14px;background:#F3EBFE;color:#6D28D9;font-size:13px;font-weight:800;cursor:pointer"><i class="ph-bold ph-printer" style="font-size:19px"></i>Print</div>
+<sc-if value="{{ sale.canCollect }}" hint-placeholder-val="{{ false }}"><div onClick="{{ sale.collect }}" style="display:flex;align-items:center;justify-content:center;gap:7px;height:48px;border-radius:14px;background:#FEF3C7;color:#92400E;font-size:13px;font-weight:800;cursor:pointer"><i class="ph-bold ph-hand-coins" style="font-size:19px"></i>Collect balance</div></sc-if>
+<sc-if value="{{ sale.canRefund }}" hint-placeholder-val="{{ false }}"><div onClick="{{ sale.refund }}" style="display:flex;align-items:center;justify-content:center;gap:7px;height:48px;border-radius:14px;border:1px solid #FECACA;color:#B91C1C;font-size:13px;font-weight:800;cursor:pointer"><i class="ph-bold ph-arrow-u-up-left" style="font-size:18px"></i>Refund</div></sc-if>
+<div onClick="{{ closeSale }}" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;height:50px;border-radius:14px;background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;font-size:14px;font-weight:800;cursor:pointer">{{ sale.doneLabel }}</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;left:50%;top:128px;transform:translateX(-50%);z-index:90;padding:11px 18px;border-radius:99px;background:#28174F;color:#fff;font-size:13px;font-weight:800;box-shadow:0 10px 24px rgba(40,23,79,.3);max-width:calc(100% - 24px);text-align:center">{{ toast }}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const r2 = (n) => Math.round((+n || 0) * 100) / 100;
+const rm = (n) => (n < 0 ? "− " : "") + "RM " + Math.abs(r2(n)).toLocaleString("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const num = (v) => { const x = parseFloat(String(v).replace(/[^\d.]/g, "")); return isNaN(x) ? 0 : x; };
+const PIN = "1234";
+const readPhoto = (e, cb) => { const f = e.target.files && e.target.files[0]; if (!f) return; const rd = new FileReader();
+  rd.onload = () => { const im = new Image(); im.onload = () => { const k = Math.min(1, 640 / Math.max(im.width, im.height)); const cv = document.createElement("canvas");
+    cv.width = Math.round(im.width * k); cv.height = Math.round(im.height * k); cv.getContext("2d").drawImage(im, 0, 0, cv.width, cv.height); cb(cv.toDataURL("image/jpeg", 0.65)); }; im.src = rd.result; };
+  rd.readAsDataURL(f); e.target.value = ""; };
+const OUTLETS = ["Bukit Bintang", "Old Klang Road", "OUG"];
+const STAFF = ["Sarah Lim", "Amy Tan", "Mei Ling", "Hana"];
+const ACCOUNTS = { S01: "Sarah Lim", S02: "Amy Tan", S03: "Mei Ling" };
+const CATALOG = [
+  { id: "t1", type: "treat", name: "Cryo Mesotherapy", price: 197 },
+  { id: "t2", type: "treat", name: "ZOII Hydra Facial (1st trial)", price: 898 },
+  { id: "t3", type: "treat", name: "OXY Mesotherapy", price: 288 },
+  { id: "t4", type: "treat", name: "HIFU Face Lift", price: 1280 },
+  { id: "t5", type: "treat", name: "Black Pearl Laser", price: 380 },
+  { id: "t6", type: "treat", name: "AI Body Master", price: 260 },
+  { id: "t7", type: "treat", name: "NAD+ Skin Energy Facial", price: 328 },
+  { id: "t8", type: "treat", name: "Cool Sculpting Slim", price: 1500 },
+  { id: "p1", type: "pkg", name: "HIFU Face Lift · 10 sessions", price: 9800, sessions: 10 },
+  { id: "p2", type: "pkg", name: "Glow Signature · 12 sessions", price: 3600, sessions: 12 },
+  { id: "p3", type: "pkg", name: "AI Body Master · 4 sessions", price: 880, sessions: 4 },
+  { id: "p4", type: "pkg", name: "Black Pearl Laser · 6 sessions", price: 1980, sessions: 6 },
+  { id: "r1", type: "prod", name: "Cushion Foundation", price: 98 },
+  { id: "r2", type: "prod", name: "Loose Powder", price: 98 },
+  { id: "r3", type: "prod", name: "Body Serum", price: 98 },
+  { id: "r4", type: "prod", name: "Deau Mist Hyaluronic Acid", price: 280 },
+  { id: "r5", type: "prod", name: "Deau Mist 24K Gold Essence", price: 316.67 },
+  { id: "r6", type: "prod", name: "Deau Mist Eye Gel", price: 230 },
+  { id: "r7", type: "prod", name: "AVA+ 3-In-1 Tone Up Cream", price: 58 },
+  { id: "r8", type: "prod", name: "Magic Face & Body Scrub", price: 38 },
+  { id: "r9", type: "prod", name: "Arte Coffee · Keto Blend", price: 187 },
+  { id: "r10", type: "prod", name: "Sugar B", price: 150 },
+  { id: "g1", type: "gift", name: "Gift card RM100", price: 100 },
+  { id: "g2", type: "gift", name: "Gift card RM300", price: 300 },
+  { id: "g3", type: "gift", name: "Gift card RM500", price: 500 },
+  { id: "u1", type: "topup", name: "Beauty Credit top-up RM500", price: 500, bonus: 50 },
+  { id: "u2", type: "topup", name: "Beauty Credit top-up RM1,000", price: 1000, bonus: 150 },
+  { id: "u3", type: "topup", name: "Gold membership (1 year)", price: 300, tier: "Gold" }
+];
+const STOCK0 = { r1: 12, r2: 0, r3: 5, r4: 3, r5: 0, r6: 8, r7: 20, r8: 2, r9: 6, r10: 4 };
+const TIERS = { Platinum: 0.25, Gold: 0.2, Silver: 0.1, New: 0 };
+const CUST0 = [
+  { id: "c1", cid: "TB-100231", name: "Fiona Gan", phone: "012-393 7687", tier: "Gold", credit: 100, points: 1280 },
+  { id: "c2", cid: "TB-100087", name: "Michelle Tan", phone: "016-223 1188", tier: "Platinum", credit: 450, points: 5200 },
+  { id: "c3", cid: "TB-100412", name: "Amy Wong", phone: "017-881 2034", tier: "Silver", credit: 0, points: 320 },
+  { id: "c4", cid: "TB-100519", name: "Jane Lee", phone: "011-556 6778", tier: "New", credit: 0, points: 0 }
+];
+const TYPE = { treat: ["Treatments", "ph-bold ph-sparkle", "#EDE9FE", "#6D28D9"], pkg: ["Packages", "ph-bold ph-stack", "#FCE7F3", "#BE185D"],
+  prod: ["Products", "ph-bold ph-drop", "#E0F2FE", "#0369A1"], gift: ["Gift cards", "ph-bold ph-gift", "#FEF3C7", "#B45309"], topup: ["Credit & membership", "ph-bold ph-wallet", "#DCFCE7", "#15803D"] };
+const METHODS = [
+  { k: "cash", label: "Cash", icon: "ph-bold ph-money" }, { k: "card", label: "Card", icon: "ph-bold ph-credit-card" },
+  { k: "duitnow", label: "DuitNow QR", icon: "ph-bold ph-qr-code" }, { k: "tng", label: "Touch 'n Go", icon: "ph-bold ph-device-mobile" },
+  { k: "grab", label: "GrabPay", icon: "ph-bold ph-device-mobile-camera" }, { k: "bank", label: "Bank transfer", icon: "ph-bold ph-bank" },
+  { k: "credit", label: "Beauty Credit", icon: "ph-bold ph-wallet" }, { k: "points", label: "Points", icon: "ph-bold ph-star" }
+];
+const MLABEL = Object.fromEntries(METHODS.map(m => [m.k, m]));
+const COMM = { treat: 0.05, pkg: 0.05, prod: 0.05, gift: 0, topup: 0 };
+const KEY = "tikbeli_pos_sales";
+
+const seed = () => [
+  { outlet: "Bukit Bintang", no: "S-0001", time: "10:42", customer: "Michelle Tan", phone: "016-223 1188", lines: [{ id: "p1", type: "pkg", name: "HIFU Face Lift · 10 sessions", qty: 1, price: 9800, net: 7350, seller: "Sarah Lim", split: null, doneBy: null, claim: "now", remark: "" }],
+    subtotal: 9800, memberDisc: 2450, voucher: 0, manual: 0, sst: 0, total: 7350, paid: 3000, balance: 4350, tenders: [{ m: "card", amt: 3000 }], status: "deposit", comm: [{ staff: "Sarah Lim", amt: 367.5 }] },
+  { outlet: "Bukit Bintang", no: "S-0002", time: "11:15", customer: "Walk-in", phone: "", lines: [
+      { id: "r1", type: "prod", name: "Cushion Foundation", qty: 2, price: 98, net: 196, seller: "Amy Tan", split: null, doneBy: null, claim: "now", remark: "" },
+      { id: "r2", type: "prod", name: "Loose Powder", qty: 1, price: 98, net: 98, seller: "Amy Tan", split: null, doneBy: null, claim: "later", remark: "Out of stock, customer collects next visit", claimed: false }],
+    subtotal: 294, memberDisc: 0, voucher: 0, manual: 0, sst: 0, total: 294, paid: 294, balance: 0, tenders: [{ m: "cash", amt: 294 }], status: "paid", comm: [{ staff: "Amy Tan", amt: 14.7 }] },
+  { outlet: "Bukit Bintang", no: "S-0003", time: "12:30", customer: "Amy Wong", phone: "017-881 2034", lines: [{ id: "t5", type: "treat", name: "Black Pearl Laser", qty: 1, price: 380, net: 342, seller: "Mei Ling", split: "Sarah Lim", doneBy: "Mei Ling", claim: "now", remark: "" }],
+    subtotal: 380, memberDisc: 38, voucher: 0, manual: 0, sst: 0, total: 342, paid: 342, balance: 0, tenders: [{ m: "duitnow", amt: 342 }], status: "paid", comm: [{ staff: "Mei Ling", amt: 8.55 }, { staff: "Sarah Lim", amt: 8.55 }] }
+];
+
+class Component extends DCLogic {
+  state = (() => {
+    let role = "hq", staffId = null, sales = null;
+    try {
+      role = new URLSearchParams(location.search).get("role") || localStorage.getItem("tikbeli_role") || "hq";
+      staffId = localStorage.getItem("tikbeli_staff");
+      sales = JSON.parse(localStorage.getItem(KEY) || "null");
+    } catch (e) {}
+    let outlet = OUTLETS[0]; try { outlet = localStorage.getItem("tikbeli_outlet") || outlet; } catch (e) {}
+    return { role, staffId, outlet, outletOpen: false, tab: "sell", cat: "treat", q: "", custQuery: "", customer: null, walkIn: false, customers: CUST0,
+      cart: [], editUid: null, voucherInput: "", voucher: null, voucherMsg: "", manual: 0, sst: false,
+      pin: null, pay: null, saleNo: null, saleIsNew: false, sales: sales || seed(), stock: { ...STOCK0 },
+      cartOpen: false, histFilter: "all", count: "", closed: null, toast: "" };
+  })();
+
+  save(sales) { try { localStorage.setItem(KEY, JSON.stringify(sales)); } catch (e) {} }
+  flash(msg) { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: "" }), 2400); }
+  me() { const s = this.state; return s.role === "staff" ? (ACCOUNTS[s.staffId] || "Sarah Lim") : "Hana"; }
+  upd(uid, patch) { this.setState(st => ({ cart: st.cart.map(l => l.uid === uid ? { ...l, ...(typeof patch === "function" ? patch(l) : patch) } : l) })); }
+
+  calc() {
+    const s = this.state, c = s.customer, pct = c ? TIERS[c.tier] || 0 : 0;
+    const lines = s.cart.map(l => {
+      const ov = l.override && l.override.status === "approved" ? l.override.price : null;
+      const unit = ov != null ? ov : l.price, gross = unit * l.qty;
+      const tier = ov == null && (l.type === "treat" || l.type === "pkg") ? r2(gross * pct) : 0;
+      return { ...l, unit, gross, tier, after: gross - tier };
+    });
+    const subtotal = lines.reduce((a, l) => a + l.gross, 0), memberDisc = lines.reduce((a, l) => a + l.tier, 0);
+    const after = subtotal - memberDisc;
+    const voucher = !s.voucher ? 0 : s.voucher.kind === "fix" ? Math.min(s.voucher.v, after) : r2(after * s.voucher.v);
+    const manual = Math.min(s.manual, after - voucher);
+    const net = Math.max(0, after - voucher - manual), ratio = after > 0 ? net / after : 0;
+    const prodAfter = lines.filter(l => l.type === "prod").reduce((a, l) => a + l.after, 0);
+    const sst = s.sst ? r2(prodAfter * ratio * 0.08) : 0;
+    lines.forEach(l => { l.net = r2(l.after * ratio); });
+    return { lines, subtotal, memberDisc, voucher, manual, sst, total: r2(net + sst) };
+  }
+
+  commFor(lines) {
+    const m = {};
+    lines.forEach(l => { const c = l.net * (COMM[l.type] || 0); if (!c) return;
+      const parts = l.split ? [[l.seller, c / 2], [l.split, c / 2]] : [[l.seller, c]];
+      parts.forEach(([k, v]) => { m[k] = (m[k] || 0) + v; }); });
+    return Object.entries(m).map(([staff, amt]) => ({ staff, amt: r2(amt) }));
+  }
+
+  finishSale(tenders, paid) {
+    const s = this.state, k = this.calc(), c = s.customer;
+    const no = "S-" + String(s.sales.length + 1).padStart(4, "0");
+    const now = new Date(), time = now.toTimeString().slice(0, 5);
+    const lines = k.lines.map(l => ({ id: l.id, type: l.type, name: l.name, qty: l.qty, price: l.unit, net: l.net, seller: l.seller, split: l.split, doneBy: l.doneBy,
+      claim: l.type === "prod" ? l.claim : "now", remark: l.remark, photo: l.photo || "", claimed: false, sessions: l.sessions ? l.sessions * l.qty : 0, overridden: !!l.override }));
+    const balance = r2(k.total - paid);
+    const sale = { no, time, outlet: s.outlet, customer: c ? c.name : "Walk-in", phone: c ? c.phone : "", lines, subtotal: k.subtotal, memberDisc: k.memberDisc,
+      voucher: k.voucher, voucherCode: s.voucher ? s.voucher.code : "", manual: k.manual, sst: k.sst, total: k.total, paid, balance: Math.max(0, balance),
+      tenders, status: balance > 0.004 ? "deposit" : "paid", comm: this.commFor(k.lines) };
+    const stock = { ...s.stock };
+    lines.forEach(l => { if (l.type === "prod" && l.claim === "now") stock[l.id] = Math.max(0, (stock[l.id] || 0) - l.qty); });
+    let customers = s.customers, customer = c;
+    if (c) {
+      const used = tenders.filter(t => t.m === "credit").reduce((a, t) => a + t.amt, 0);
+      const usedPts = tenders.filter(t => t.m === "points").reduce((a, t) => a + t.amt, 0) * 100;
+      let credit = c.credit - used, tier = c.tier;
+      lines.forEach(l => { const it = CATALOG.find(x => x.id === l.id); if (it && it.type === "topup") { if (it.bonus) credit += (it.price + it.bonus) * l.qty; if (it.tier) tier = it.tier; } });
+      customer = { ...c, credit: r2(credit), points: Math.round(c.points - usedPts + Math.floor(k.total)), tier };
+      customers = s.customers.map(x => x.id === c.id ? customer : x);
+    }
+    const sales = [...s.sales, sale];
+    this.save(sales);
+    this.setState({ sales, stock, customers, customer: null, walkIn: false, cart: [], voucher: null, voucherInput: "", voucherMsg: "", manual: 0, pay: null, saleNo: no, saleIsNew: true, cartOpen: false });
+  }
+
+  renderVals() {
+    const s = this.state, k = this.calc(), me = this.me(), isHq = s.role === "hq";
+    const chip = (on) => "display:flex;align-items:center;min-height:40px;padding:0 14px;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+      (on ? "background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff" : "background:#F3EBFE;color:#44336E");
+    const c = s.customer;
+    const blockers = [];
+    if (k.lines.some(l => l.override && l.override.status === "pending")) blockers.push("Price override waiting for HQ approval.");
+    if (!c && k.lines.some(l => l.type === "pkg" || l.type === "topup" || l.type === "gift")) blockers.push("Select a customer for packages, gift cards and credit top-ups.");
+    const canCharge = k.lines.length > 0 && !blockers.length;
+
+    const cq = s.custQuery.trim().toLowerCase().replace(/[\s-]/g, "");
+    const custResults = cq.length >= 2 ? s.customers.filter(x => x.name.toLowerCase().replace(/\s/g, "").includes(cq) || x.phone.replace(/[\s-]/g, "").includes(cq) || x.cid.toLowerCase().replace(/-/g, "").includes(cq.replace(/-/g, ""))) : [];
+    const ini = (n) => n.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+
+    const inCart = (id) => s.cart.filter(l => l.id === id).reduce((a, l) => a + l.qty, 0);
+    const qq = s.q.trim().toLowerCase();
+    const items = CATALOG.filter(it => it.type === s.cat && (!qq || it.name.toLowerCase().includes(qq))).map(it => {
+      const [, icon, bg, fg] = TYPE[it.type], st = s.stock[it.id], out = it.type === "prod" && st === 0;
+      const sub = it.type === "prod" ? (out ? "Out of stock · can sell, collect later" : st + " in stock") : it.type === "pkg" ? it.sessions + " sessions" :
+        it.type === "topup" ? (it.bonus ? "+ RM" + it.bonus + " bonus credit" : "Upgrade to " + it.tier) : it.type === "gift" ? "Digital gift card" : "Single session";
+      return { name: it.name, price: rm(it.price), sub, icon, inCart: inCart(it.id) > 0, qty: inCart(it.id),
+        iconStyle: "width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;background:" + bg + ";color:" + fg,
+        subStyle: "font-size:11.5px;font-weight:700;line-height:1.35;color:" + (out ? "#C2410C" : "#5B4A7E"),
+        add: () => this.setState(st2 => {
+          const ex = st2.cart.find(l => l.id === it.id && !l.override);
+          if (ex) return { cart: st2.cart.map(l => l === ex ? { ...l, qty: l.qty + 1 } : l) };
+          return { cart: [...st2.cart, { uid: Date.now() + Math.random(), id: it.id, type: it.type, name: it.name, price: it.price, sessions: it.sessions || 0, qty: 1,
+            seller: this.me(), split: null, doneBy: it.type === "treat" ? this.me() : null, claim: out ? "later" : "now", remark: out ? "Out of stock, collect when available" : "", override: null }] };
+        }) };
+    });
+
+    const lines = k.lines.map(l => {
+      const meta = ["Sold by " + l.seller + (l.split ? " + " + l.split + " (50/50)" : "")];
+      if (l.doneBy) meta.push("Done by " + l.doneBy);
+      if (l.type === "prod") meta.push(l.claim === "later" ? "Collect later" : "Taken now");
+      if (l.remark) meta.push("“" + l.remark + "”");
+      if (l.type === "prod") meta.push(l.photo ? "Photo ✓" : "No photo yet");
+      const ovp = l.override && l.override.status === "pending";
+      return { name: l.name, qty: l.qty, total: rm(l.after), meta: meta.join(" · "),
+        hasWas: l.after < l.price * l.qty - 0.004, was: rm(l.price * l.qty),
+        hasFlag: ovp || (l.override && l.override.status === "approved") || l.tier > 0,
+        flag: ovp ? "Override " + rm(l.override.price) + " · waiting for HQ" : l.override ? "Override approved by HQ" : "Member " + Math.round((TIERS[c && c.tier] || 0) * 100) + "% off",
+        flagStyle: "display:inline-block;margin-top:6px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:800;" + (ovp ? "background:#FEF3C7;color:#92400E" : "background:#EDE9FE;color:#6D28D9"),
+        inc: () => this.upd(l.uid, x => ({ qty: x.qty + 1 })),
+        dec: () => l.qty <= 1 ? this.setState(st => ({ cart: st.cart.filter(x => x.uid !== l.uid) })) : this.upd(l.uid, x => ({ qty: x.qty - 1 })),
+        edit: () => this.setState({ editUid: l.uid, ovInput: l.override ? String(l.override.price) : "" }) };
+    });
+
+    const totals = [{ label: "Subtotal", value: rm(k.subtotal), style: "font-weight:800" }];
+    if (k.memberDisc) totals.push({ label: "Member discount (" + c.tier + ")", value: rm(-k.memberDisc), style: "font-weight:800;color:#15803D" });
+    if (k.voucher) totals.push({ label: "Voucher " + s.voucher.code, value: rm(-k.voucher), style: "font-weight:800;color:#15803D" });
+    if (k.manual) totals.push({ label: "Manual discount", value: rm(-k.manual), style: "font-weight:800;color:#15803D" });
+    if (s.sst) totals.push({ label: "SST 8% (products)", value: rm(k.sst), style: "font-weight:800" });
+
+    const el = s.cart.find(l => l.uid === s.editUid);
+    const staffChips = (cur, set, excl) => STAFF.filter(n => n !== excl).map(n => ({ label: n, style: chip(cur === n), pick: () => set(n) }));
+    const ed = el ? (() => {
+      const st = s.stock[el.id], out = el.type === "prod" && st === 0, ov = el.override;
+      return { name: el.name, typeLabel: TYPE[el.type][0], split: !!el.split, isService: el.type === "treat" || el.type === "pkg", isProduct: el.type === "prod",
+        splitIcon: el.split ? "ph-fill ph-toggle-right" : "ph-bold ph-toggle-left",
+        sellerChips: staffChips(el.seller, n => this.upd(el.uid, { seller: n, split: el.split === n ? null : el.split })),
+        toggleSplit: () => this.upd(el.uid, { split: el.split ? null : STAFF.find(n => n !== el.seller) }),
+        splitChips: staffChips(el.split, n => this.upd(el.uid, { split: n }), el.seller),
+        doneChips: staffChips(el.doneBy, n => this.upd(el.uid, { doneBy: n })),
+        claimChips: [["now", "Customer takes now"], ["later", "Customer collects later"]].map(([v, lb]) => ({ label: lb, style: chip(el.claim === v) + (out && v === "now" ? ";opacity:.4" : ""),
+          pick: () => { if (out && v === "now") return this.flash("Out of stock. Record as collect later."); this.upd(el.uid, { claim: v }); } })),
+        stockNote: out ? "Out of stock. The sale is recorded and stock is deducted when the customer collects." :
+          el.claim === "later" ? "Paid now, kept at the outlet. Useful for bundle deals. Stock is deducted when collected." : st + " in stock. Deducted when payment is confirmed.",
+        hasPhoto: !!el.photo, noPhoto: !el.photo, photo: el.photo || "", photoStyle: "width:60px;height:60px;border-radius:11px;flex-shrink:0;background:#F3EBFE center/cover no-repeat url(" + (el.photo || "") + ")", photoLabel: el.photo ? "Photo added · tap to retake" : "Upload or take photo",
+        setPhoto: (e) => readPhoto(e, (d) => this.upd(el.uid, { photo: d })),
+        remark: el.remark, setRemark: (e) => this.upd(el.uid, { remark: e.target.value }),
+        listPrice: String(el.price), overrideInput: s.ovInput, setOverride: (e) => this.setState({ ovInput: e.target.value }),
+        overrideBtn: isHq ? "Apply" : "Ask HQ",
+        requestOverride: () => { const p = num(s.ovInput); if (!s.ovInput || p === el.price) return this.flash("Enter a new price first");
+          this.upd(el.uid, { override: { price: p, status: isHq ? "approved" : "pending" } }); this.flash(isHq ? "Price override applied" : "Sent to HQ for approval"); },
+        hasOverride: !!ov, overrideStatus: ov ? (ov.status === "pending" ? "Waiting for HQ · " + rm(ov.price) : "Approved · " + rm(ov.price)) : "",
+        overrideStyle: "padding:5px 11px;border-radius:99px;font-size:12px;font-weight:800;" + (ov && ov.status === "pending" ? "background:#FEF3C7;color:#92400E" : "background:#DCFCE7;color:#166534"),
+        canDemoApprove: !!ov && ov.status === "pending",
+        demoApprove: () => this.upd(el.uid, { override: { ...ov, status: "approved" } }),
+        clearOverride: () => { this.upd(el.uid, { override: null }); this.setState({ ovInput: "" }); },
+        remove: () => this.setState(st2 => ({ cart: st2.cart.filter(x => x.uid !== el.uid), editUid: null })) };
+    })() : {};
+
+    const P = s.pin;
+    const pin = P ? {
+      title: { disc: "Manual discount", refund: "Refund " + P.no, closing: "Submit daily closing" }[P.kind],
+      sub: { disc: isHq ? "HQ can apply without PIN" : "Needs outlet manager approval", refund: "Full refund of " + rm(P.amt0 || 0) + ". Needs manager PIN.", closing: "Locks today's figures" }[P.kind],
+      askAmt: P.kind === "disc", askReason: P.kind === "refund", askPin: !isHq, amt: P.amt, reason: P.reason, val: P.val,
+      hasErr: !!P.err, err: P.err, cta: P.kind === "refund" ? "Refund" : "Confirm",
+      setAmt: (e) => this.setState({ pin: { ...P, amt: e.target.value, err: "" } }), setReason: (e) => this.setState({ pin: { ...P, reason: e.target.value, err: "" } }),
+      setVal: (e) => this.setState({ pin: { ...P, val: e.target.value.replace(/\D/g, "").slice(0, 6), err: "" } })
+    } : {};
+
+    const Y = s.pay;
+    let pay = {};
+    if (Y) {
+      const due = Y.forSale ? Y.due : k.total;
+      const target = Y.forSale ? due : Y.mode === "deposit" ? Math.min(due, num(Y.deposit)) : due;
+      const paid = r2(Y.tenders.reduce((a, t) => a + num(t.amt), 0));
+      const cashIn = Y.tenders.filter(t => t.m === "cash").reduce((a, t) => a + num(t.amt), 0);
+      const rem = r2(target - paid), change = rem < 0 && cashIn >= -rem ? -rem : 0;
+      const cc = Y.forSale ? s.customers.find(x => x.name === Y.custName) : c;
+      const credit = cc ? cc.credit : 0, ptsRM = cc ? r2(cc.points / 100) : 0;
+      const usedCredit = Y.tenders.filter(t => t.m === "credit").reduce((a, t) => a + num(t.amt), 0);
+      const usedPts = Y.tenders.filter(t => t.m === "points").reduce((a, t) => a + num(t.amt), 0);
+      let err = "";
+      if (usedCredit > credit + 0.004) err = "Beauty Credit balance is only " + rm(credit);
+      else if (usedPts > ptsRM + 0.004) err = "Points are worth only " + rm(ptsRM);
+      else if (rem < -0.004 && !change) err = "Only cash can be over-paid (for change).";
+      else if (Y.mode === "deposit" && !Y.forSale && (target <= 0 || target >= due)) err = "Deposit must be more than 0 and less than the total.";
+      const ok = !err && Math.abs(rem) < 0.005 || (!err && change > 0);
+      pay = { kicker: Y.forSale ? "Collect balance · " + Y.forSale : "Amount due", dueFmt: rm(due), canDeposit: !Y.forSale, isDeposit: Y.mode === "deposit",
+        modes: [["full", "Pay in full"], ["deposit", "Deposit + balance later"]].map(([v, lb]) => ({ label: lb, style: chip(Y.mode === v) + ";flex:1;justify-content:center", pick: () => this.setState({ pay: { ...Y, mode: v, tenders: [] } }) })),
+        depositValue: Y.deposit, setDeposit: (e) => this.setState({ pay: { ...Y, deposit: e.target.value } }), balanceFmt: rm(Math.max(0, due - target)),
+        methods: METHODS.map(m => {
+          const dis = (m.k === "credit" && credit <= 0) || (m.k === "points" && ptsRM <= 0);
+          return { label: m.label, icon: m.icon, sub: m.k === "credit" ? (cc ? "Bal " + rm(credit) : "Needs customer") : m.k === "points" ? (cc ? cc.points + " pts = " + rm(ptsRM) : "Needs customer") : "",
+            style: "display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:76px;padding:11px 12px;border-radius:14px;cursor:pointer;border:1px solid #E9DFF8;background:#fff;color:#44336E" + (dis ? ";opacity:.4;pointer-events:none" : ""),
+            add: () => { const left = Math.max(0, r2(target - paid)); let amt = left;
+              if (m.k === "credit") amt = Math.min(left, credit - usedCredit); if (m.k === "points") amt = Math.min(left, ptsRM - usedPts);
+              this.setState({ pay: { ...Y, tenders: [...Y.tenders, { m: m.k, amt: String(r2(Math.max(0, amt))) }] } }); } };
+        }),
+        tenders: Y.tenders.map((t, i) => ({ label: MLABEL[t.m].label, icon: MLABEL[t.m].icon, value: t.amt,
+          setAmt: (e) => this.setState({ pay: { ...Y, tenders: Y.tenders.map((x, j) => j === i ? { ...x, amt: e.target.value } : x) } }),
+          remove: () => this.setState({ pay: { ...Y, tenders: Y.tenders.filter((_, j) => j !== i) } }) })),
+        targetFmt: rm(target), paidFmt: rm(paid), remLabel: change ? "Change" : "Remaining", remFmt: rm(change || Math.max(0, rem)),
+        remStyle: "font-weight:800;color:" + (change ? "#15803D" : rem > 0.004 ? "#B45309" : "#15803D"),
+        hasErr: !!err, err,
+        btnStyle: "display:flex;align-items:center;justify-content:center;gap:8px;height:56px;border-radius:17px;font-size:15px;font-weight:800;cursor:pointer;" +
+          (ok ? "background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;box-shadow:0 10px 22px rgba(81,35,174,.3)" : "background:#EFE8F8;color:#A396C0;pointer-events:none"),
+        _ok: ok, _paid: paid, _change: change };
+    }
+
+    const SL = s.sales.find(x => x.no === s.saleNo);
+    const statusOf = (x) => x.status === "refunded" ? ["Refunded", "#FEE2E2", "#B91C1C"] : x.status === "deposit" ? ["Balance " + rm(x.balance), "#FEF3C7", "#92400E"] :
+      x.lines.some(l => l.claim === "later" && !l.claimed) ? ["Paid · to collect", "#E0F2FE", "#0369A1"] : ["Paid", "#DCFCE7", "#166534"];
+    const sale = SL ? (() => {
+      const [st, bg, fg] = statusOf(SL);
+      const sums = [{ label: "Subtotal", value: rm(SL.subtotal), style: "font-weight:800" }];
+      if (SL.memberDisc) sums.push({ label: "Member discount", value: rm(-SL.memberDisc), style: "font-weight:800;color:#15803D" });
+      if (SL.voucher) sums.push({ label: "Voucher " + (SL.voucherCode || ""), value: rm(-SL.voucher), style: "font-weight:800;color:#15803D" });
+      if (SL.manual) sums.push({ label: "Manual discount", value: rm(-SL.manual), style: "font-weight:800;color:#15803D" });
+      if (SL.sst) sums.push({ label: "SST 8%", value: rm(SL.sst), style: "font-weight:800" });
+      sums.push({ label: "Total", value: rm(SL.total), style: "font-weight:800;font-size:15px" });
+      SL.tenders.forEach(t => sums.push({ label: "Paid · " + MLABEL[t.m].label, value: rm(t.amt), style: "font-weight:800" }));
+      if (SL.change) sums.push({ label: "Change", value: rm(SL.change), style: "font-weight:800" });
+      if (SL.balance > 0) sums.push({ label: "Balance outstanding", value: rm(SL.balance), style: "font-weight:800;color:#B45309" });
+      if (SL.refund) sums.push({ label: "Refunded · " + SL.refund.reason, value: rm(-SL.refund.amt), style: "font-weight:800;color:#B91C1C" });
+      const notes = [];
+      const taken = SL.lines.filter(l => l.type === "prod" && l.claim === "now").reduce((a, l) => a + l.qty, 0);
+      const later = SL.lines.filter(l => l.type === "prod" && l.claim === "later" && !l.claimed).reduce((a, l) => a + l.qty, 0);
+      if (taken) notes.push({ icon: "ph-bold ph-package", text: taken + " product item(s) deducted from stock" });
+      if (later) notes.push({ icon: "ph-bold ph-clock-countdown", text: later + " item(s) kept at outlet for the customer to collect later" });
+      SL.lines.filter(l => l.sessions).forEach(l => notes.push({ icon: "ph-bold ph-stack", text: l.sessions + " sessions added to " + SL.customer + "'s package" }));
+      SL.comm.forEach(x => notes.push({ icon: "ph-bold ph-wallet", text: rm(x.amt) + " commission posted to " + x.staff + "'s live salary wallet (pending)" }));
+      const wa = () => { const txt = "TikBeli receipt " + SL.no + "\n" + SL.lines.map(l => l.qty + " x " + l.name + " " + rm(l.net)).join("\n") + "\nTotal " + rm(SL.total) +
+          (SL.balance > 0 ? "\nBalance " + rm(SL.balance) : "") + "\nThank you!";
+        window.open("https://wa.me/" + (SL.phone ? "60" + SL.phone.replace(/\D/g, "").replace(/^0/, "") : "") + "?text=" + encodeURIComponent(txt), "_blank"); };
+      return { no: SL.no, outlet: SL.outlet || s.outlet, when: "Today " + SL.time, customer: SL.customer, status: st, isNew: s.saleIsNew,
+        statusStyle: "display:inline-block;margin-top:7px;padding:4px 11px;border-radius:99px;font-size:11.5px;font-weight:800;background:" + bg + ";color:" + fg,
+        lines: SL.lines.map((l, i) => ({ qty: l.qty, name: l.name, total: rm(l.net),
+          meta: ["By " + l.seller + (l.split ? " + " + l.split : ""), l.doneBy ? "done by " + l.doneBy : "", l.remark ? "“" + l.remark + "”" : ""].filter(Boolean).join(" · "),
+          showPhoto: !!l.photo && isHq, photo: l.photo || "", photoStyle: "margin-top:8px;width:120px;height:120px;border-radius:12px;border:1px solid #E9DFF8;background:#F3EBFE center/cover no-repeat url(" + (l.photo || "") + ")", photoHidden: !!l.photo && !isHq,
+          canAddPhoto: l.type === "prod" && !l.photo && SL.status !== "refunded",
+          setPhoto: (e) => readPhoto(e, (d) => { const sales = this.state.sales.map(x => x.no !== SL.no ? x : { ...x, lines: x.lines.map((y, j) => j === i ? { ...y, photo: d } : y) }); this.save(sales); this.setState({ sales }); this.flash("Photo saved for HQ"); }),
+          pendingClaim: l.claim === "later" && !l.claimed && SL.status !== "refunded", wasClaimed: !!l.claimed, claimedNote: "Collected " + (l.claimedAt || ""),
+          markClaimed: () => { const t = new Date().toTimeString().slice(0, 5);
+            const sales = s.sales.map(x => x.no !== SL.no ? x : { ...x, lines: x.lines.map((y, j) => j === i ? { ...y, claimed: true, claimedAt: "today " + t } : y) });
+            const stock = { ...s.stock }; if (stock[l.id] != null) stock[l.id] = Math.max(0, stock[l.id] - l.qty);
+            this.save(sales); this.setState({ sales, stock }); this.flash("Marked collected · stock deducted"); } })),
+        sums, notes, hasNotes: notes.length > 0, whatsapp: wa,
+        canCollect: SL.status === "deposit", canRefund: SL.status !== "refunded",
+        collect: () => this.setState({ pay: { forSale: SL.no, custName: SL.customer, due: SL.balance, mode: "full", deposit: "", tenders: [] } }),
+        refund: () => this.setState({ pin: { kind: "refund", no: SL.no, amt0: SL.paid, reason: "", val: "", err: "" } }),
+        doneLabel: s.saleIsNew ? "New sale" : "Close" };
+    })() : {};
+
+    const f = s.histFilter;
+    const hist = [...s.sales].reverse().filter(x => (x.outlet || OUTLETS[0]) === s.outlet).filter(x => f === "all" || (f === "deposit" && x.status === "deposit") || (f === "claims" && x.status !== "refunded" && x.lines.some(l => l.claim === "later" && !l.claimed)) || (f === "refunded" && x.status === "refunded"));
+
+    const live = s.sales.filter(x => (x.outlet || OUTLETS[0]) === s.outlet);
+    const byM = {}; live.forEach(x => x.tenders.forEach(t => { byM[t.m] = (byM[t.m] || 0) + t.amt; }));
+    const refunds = live.filter(x => x.refund).reduce((a, x) => a + x.refund.amt, 0);
+    const cashRefunds = live.filter(x => x.refund && x.refund.m === "cash").reduce((a, x) => a + x.refund.amt, 0);
+    const changeOut = live.reduce((a, x) => a + (x.change || 0), 0);
+    const collected = Object.values(byM).reduce((a, v) => a + v, 0) - changeOut;
+    const float = 200, expected = r2(float + (byM.cash || 0) - changeOut - cashRefunds);
+    const counted = num(s.count), variance = r2(counted - expected), hasCount = s.count !== "";
+
+    return {
+      outlet: s.outlet, outletOpen: s.outletOpen, toggleOutlet: () => this.setState({ outletOpen: !s.outletOpen }),
+      outlets: OUTLETS.map(o => ({ label: o, style: chip(s.outlet === o), pick: () => { try { localStorage.setItem("tikbeli_outlet", o); } catch (e) {} this.setState({ outlet: o, outletOpen: false }); } })),
+      todayLabel: new Date().toLocaleDateString("en-MY", { weekday: "short", day: "numeric", month: "short" }),
+      userName: me, userInitials: ini(me), roleLabel: isHq ? "HQ" : s.role === "staff" ? "Staff" : s.role,
+      tabs: [["sell", "Checkout", "ph-bold ph-shopping-cart"], ["history", "Sales history", "ph-bold ph-receipt"], ["closing", "Daily closing", "ph-bold ph-calculator"]].map(([v, lb, ic]) => ({ label: lb, icon: ic,
+        style: "display:flex;align-items:center;gap:7px;padding:11px 16px;border-radius:14px 14px 0 0;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
+          (s.tab === v ? "background:#F4EEFB;color:#6D28D9" : "color:rgba(255,255,255,.9)"), pick: () => this.setState({ tab: v }) })),
+      isSell: s.tab === "sell", isHistory: s.tab === "history", isClosing: s.tab === "closing",
+
+      noCustomer: !c, hasCustomer: !!c, isWalkIn: !c && s.walkIn,
+      custQuery: s.custQuery, setCustQuery: (e) => this.setState({ custQuery: e.target.value, walkIn: false }),
+      hasCustResults: custResults.length > 0,
+      custResults: custResults.map(x => ({ name: x.name, phone: x.cid + " · " + x.phone, tier: x.tier, initials: ini(x.name), pick: () => this.setState({ customer: x, custQuery: "", walkIn: false }) })),
+      scanQr: () => { this.setState({ customer: s.customers[0], custQuery: "", walkIn: false }); this.flash("QR scanned · " + s.customers[0].name); },
+      walkIn: () => this.setState({ walkIn: true, custQuery: "" }),
+      clearCustomer: () => this.setState({ customer: null }),
+      cust: c ? { name: c.name, phone: c.cid + " · " + c.phone, initials: ini(c.name), tierLabel: c.tier + (TIERS[c.tier] ? " · " + Math.round(TIERS[c.tier] * 100) + "% off treatments" : ""), creditFmt: rm(c.credit), points: c.points.toLocaleString() } : {},
+
+      cats: Object.entries(TYPE).map(([v, [lb, ic]]) => ({ label: lb, icon: ic, style: chip(s.cat === v).replace("background:#F3EBFE", "background:#fff") + ";gap:7px;box-shadow:0 2px 8px rgba(124,58,237,.06)", pick: () => this.setState({ cat: v }) })),
+      q: s.q, setQ: (e) => this.setState({ q: e.target.value }), items,
+
+      cartOpen: s.cartOpen, cartOpenStr: s.cartOpen ? "true" : "false", openCart: () => this.setState({ cartOpen: true }), closeCart: () => this.setState({ cartOpen: false }),
+      hasLines: lines.length > 0, noLines: lines.length === 0, lines,
+      clearCart: () => this.setState({ cart: [], voucher: null, voucherMsg: "", manual: 0 }),
+      itemCountLabel: s.cart.reduce((a, l) => a + l.qty, 0) + " item(s)",
+      voucherInput: s.voucherInput, setVoucherInput: (e) => this.setState({ voucherInput: e.target.value }),
+      applyVoucher: () => { const code = s.voucherInput.trim().toUpperCase();
+        const V = { BEAUTY50: { kind: "fix", v: 50 }, WELCOME10: { kind: "pct", v: 0.1 } }[code];
+        this.setState(V ? { voucher: { ...V, code }, voucherMsg: "Voucher " + code + " applied" } : { voucher: null, voucherMsg: code ? "Code not valid. Try BEAUTY50 or WELCOME10" : "" }); },
+      hasVoucherMsg: !!s.voucherMsg, voucherMsg: s.voucherMsg, voucherMsgStyle: "font-size:12px;font-weight:800;color:" + (s.voucher ? "#15803D" : "#B91C1C"),
+      manualBtnLabel: s.manual ? "Manual discount " + rm(s.manual) : "Manual discount",
+      openManualDisc: () => this.setState({ pin: { kind: "disc", amt: s.manual ? String(s.manual) : "", val: "", err: "" } }),
+      toggleSst: () => this.setState({ sst: !s.sst }), sstIcon: s.sst ? "ph-fill ph-check-square" : "ph-bold ph-square",
+      sstStyle: "display:flex;align-items:center;gap:6px;height:40px;padding:0 12px;border-radius:12px;font-size:12.5px;font-weight:800;cursor:pointer;" + (s.sst ? "background:#EDE9FE;color:#6D28D9;border:1px solid #DDD0FB" : "border:1px solid #E9DFF8;color:#44336E"),
+      totals, totalFmt: rm(k.total), hasBlock: blockers.length > 0, blockMsg: blockers.join(" "),
+      chargeStyle: "display:flex;align-items:center;justify-content:center;gap:8px;height:56px;margin-top:12px;border-radius:17px;font-size:15.5px;font-weight:800;cursor:pointer;" +
+        (canCharge ? "background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff;box-shadow:0 10px 22px rgba(81,35,174,.3)" : "background:#EFE8F8;color:#A396C0;pointer-events:none"),
+      openPay: () => canCharge && this.setState({ pay: { mode: "full", deposit: "", tenders: [] } }),
+
+      editOpen: !!el, ed, closeEdit: () => this.setState({ editUid: null }),
+
+      pinOpen: !!P, pin, closePin: () => this.setState({ pin: null }),
+      confirmPin: () => {
+        if (!isHq && P.val !== PIN) return this.setState({ pin: { ...P, err: "Wrong PIN" } });
+        if (P.kind === "disc") { this.setState({ manual: Math.max(0, num(P.amt)), pin: null }); this.flash(num(P.amt) ? "Manual discount approved" : "Manual discount removed"); }
+        if (P.kind === "refund") {
+          if (!P.reason.trim()) return this.setState({ pin: { ...P, err: "Enter a reason" } });
+          const sales = s.sales.map(x => x.no !== P.no ? x : { ...x, status: "refunded", balance: 0, refund: { amt: x.paid, reason: P.reason.trim(), m: x.tenders[0] ? x.tenders[0].m : "cash" }, comm: x.comm.map(q => ({ ...q, amt: 0 })) });
+          this.save(sales); this.setState({ sales, pin: null }); this.flash("Refunded · commission reversed");
+        }
+        if (P.kind === "closing") { this.setState({ closed: { by: me, at: new Date().toTimeString().slice(0, 5) }, pin: null }); this.flash("Daily closing submitted"); }
+      },
+
+      payOpen: !!Y, pay, closePay: () => this.setState({ pay: null }),
+      confirmPay: () => {
+        if (!pay._ok) return;
+        const tenders = Y.tenders.map(t => ({ m: t.m, amt: r2(num(t.amt)) })).filter(t => t.amt > 0);
+        const paid = r2(pay._paid - pay._change);
+        if (Y.forSale) {
+          const sales = s.sales.map(x => { if (x.no !== Y.forSale) return x; const bal = r2(x.balance - paid);
+            return { ...x, tenders: [...x.tenders, ...tenders], paid: r2(x.paid + paid), balance: Math.max(0, bal), status: bal > 0.004 ? "deposit" : "paid", change: r2((x.change || 0) + pay._change) }; });
+          this.save(sales); this.setState({ sales, pay: null }); this.flash("Balance collected");
+        } else { this.finishSale(tenders, paid); if (pay._change) setTimeout(() => this.setState(st => ({ sales: st.sales.map(x => x.no === st.saleNo ? { ...x, change: pay._change } : x) })), 0); }
+      },
+
+      saleOpen: !!SL, sale, closeSale: () => this.setState({ saleNo: null, saleIsNew: false }), printReceipt: () => window.print(),
+
+      histFilters: [["all", "All"], ["deposit", "Balance due"], ["claims", "To collect"], ["refunded", "Refunded"]].map(([v, lb]) => ({ label: lb,
+        style: chip(f === v).replace("background:#F3EBFE", "background:#fff"), pick: () => this.setState({ histFilter: v }) })),
+      histEmpty: hist.length === 0,
+      history: hist.map(x => { const [st, bg, fg] = statusOf(x);
+        return { no: x.no, time: x.time, customer: x.customer, total: rm(x.total), status: st,
+          summary: x.lines.map(l => (l.qty > 1 ? l.qty + "× " : "") + l.name).join(", ") + " · " + [...new Set(x.lines.map(l => l.seller))].join(", "),
+          statusStyle: "display:inline-block;margin-top:4px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:800;background:" + bg + ";color:" + fg,
+          open: () => this.setState({ saleNo: x.no, saleIsNew: false }) }; }),
+
+      closed: !!s.closed, closedMsg: s.closed ? "Closed by " + s.closed.by + " at " + s.closed.at + ". Figures are locked." : "",
+      closeStats: [
+        { label: "Sales", value: String(live.length), style: "font-size:26px;font-weight:800;margin-top:6px" },
+        { label: "Collected", value: rm(collected - refunds), style: "font-size:22px;font-weight:800;margin-top:6px;color:#6D28D9" },
+        { label: "Refunds", value: rm(refunds), style: "font-size:22px;font-weight:800;margin-top:6px;color:#B91C1C" },
+        { label: "Balance outstanding", value: rm(live.filter(x => x.status === "deposit").reduce((a, x) => a + x.balance, 0)), style: "font-size:22px;font-weight:800;margin-top:6px;color:#B45309" },
+        { label: "Items to collect", value: String(live.filter(x => x.status !== "refunded").reduce((a, x) => a + x.lines.filter(l => l.claim === "later" && !l.claimed).reduce((b, l) => b + l.qty, 0), 0)), style: "font-size:26px;font-weight:800;margin-top:6px" }
+      ],
+      byMethod: METHODS.filter(m => byM[m.k]).map(m => ({ label: m.label, icon: m.icon, value: rm(m.k === "cash" ? byM[m.k] - changeOut : byM[m.k]) })),
+      drawer: [
+        { label: "Opening float", value: rm(float), style: "font-weight:800" },
+        { label: "Cash sales", value: rm((byM.cash || 0) - changeOut), style: "font-weight:800" },
+        { label: "Cash refunds", value: rm(-cashRefunds), style: "font-weight:800;color:#B91C1C" },
+        { label: "Expected in drawer", value: rm(expected), style: "font-weight:800;color:#6D28D9" }
+      ],
+      countValue: s.count, setCount: (e) => this.setState({ count: e.target.value }),
+      varianceLabel: !hasCount ? "Count the drawer and enter the total" : Math.abs(variance) < 0.005 ? "Drawer balanced" : (variance > 0 ? "Over by " : "Short by ") + rm(Math.abs(variance)),
+      varianceStyle: "margin-top:9px;font-size:13px;font-weight:800;color:" + (!hasCount ? "#8B7BAE" : Math.abs(variance) < 0.005 ? "#15803D" : "#B91C1C"),
+      closeBtnLabel: s.closed ? "Closing submitted" : "Submit closing",
+      closeBtnStyle: "display:flex;align-items:center;justify-content:center;gap:8px;height:54px;margin-top:14px;border-radius:16px;font-size:14.5px;font-weight:800;cursor:pointer;" +
+        (hasCount && !s.closed ? "background:linear-gradient(135deg,#7137e8,#a54bf0);color:#fff" : "background:#EFE8F8;color:#A396C0;pointer-events:none"),
+      submitClosing: () => this.setState({ pin: { kind: "closing", val: "", err: "" } }),
+
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
