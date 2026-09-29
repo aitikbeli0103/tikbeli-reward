@@ -30,7 +30,7 @@ input{font-family:inherit;font-size:16px}
 <div data-p="noprint" style="position:sticky;top:0;z-index:30;background:linear-gradient(135deg,#7137E8,#9B4DE0);color:#fff;padding:12px 16px 0;box-shadow:0 6px 20px rgba(81,35,174,.25)">
 <div style="max-width:1400px;margin:0 auto">
 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-<div style="width:40px;height:40px;border-radius:13px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="ph-fill ph-cash-register" style="font-size:22px"></i></div>
+<a href="{{ backHref }}" target="_top" title="Back to dashboard" style="width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;text-decoration:none"><i class="ph-bold ph-arrow-left" style="font-size:22px"></i></a>
 <div style="flex:1;min-width:140px">
 <div style="font-size:18px;font-weight:800;letter-spacing:-.3px">TikBeli POS</div>
 <div onClick="{{ toggleOutlet }}" style="display:inline-flex;align-items:center;gap:5px;margin-top:3px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.18);font-size:12px;font-weight:800;cursor:pointer"><i class="ph-fill ph-storefront" style="font-size:14px"></i>Outlet: {{ outlet }}<i class="ph-bold ph-caret-down" style="font-size:12px"></i><span style="opacity:.8;font-weight:600">· {{ todayLabel }}</span></div>
@@ -863,6 +863,7 @@ class Component extends DCLogic {
       outlet: s.outlet, outletOpen: s.outletOpen, toggleOutlet: () => this.setState({ outletOpen: !s.outletOpen }),
       outlets: OUTLETS.map(o => ({ label: o, style: chip(s.outlet === o), pick: () => { try { localStorage.setItem("tikbeli_outlet", o); } catch (e) {} this.setState({ outlet: o, outletOpen: false }); } })),
       todayLabel: new Date().toLocaleDateString("en-MY", { weekday: "short", day: "numeric", month: "short" }),
+      backHref: "TikBeli%20Admin.dc.html?role=" + s.role,
       userName: me, userInitials: ini(me), roleLabel: isHq ? "HQ" : s.role === "staff" ? "Staff" : s.role,
       tabs: [["sell", "Checkout", "ph-bold ph-shopping-cart"], ["history", "Sales history", "ph-bold ph-receipt"], ["closing", "Daily closing", "ph-bold ph-calculator"]].map(([v, lb, ic]) => ({ label: lb, icon: ic,
         style: "display:flex;align-items:center;gap:7px;padding:11px 16px;border-radius:14px 14px 0 0;font-size:13.5px;font-weight:800;cursor:pointer;white-space:nowrap;" +
