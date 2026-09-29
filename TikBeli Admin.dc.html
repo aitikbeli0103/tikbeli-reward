@@ -903,7 +903,6 @@ class Component extends DCLogic {
     ];
     const isStaff = s.role === "staff";
     const LINKS = [
-      { label: "POS", icon: "cash-register", href: "POS.dc.html" },
       { label: t.nQuote, icon: "note-pencil", href: "Consultant%20Quote%20App.dc.html" },
       ...(isStaff ? [{ label: ({ en: "My salary wallet", zh: "我的薪资钱包", ms: "Dompet gaji saya" })[lang] || "My salary wallet", icon: "wallet", href: "Staff%20Dashboard.dc.html" }] : []),
       ...(isStaff ? [] : [{ label: t.nReferralSettings, icon: "sliders-horizontal", href: "Referral%20Hub.dc.html" }]),
@@ -1068,7 +1067,7 @@ class Component extends DCLogic {
       startDayStyle: "display:inline-flex;align-items:center;gap:8px;margin-top:7.2%;padding:.74em 1.42em;border:1px solid rgba(255,255,255,.96);border-radius:99px;font-size:clamp(.82rem,1.16vw,1.1rem);font-weight:800;white-space:nowrap;cursor:pointer;text-shadow:none;box-shadow:5px 8px 13px rgba(69,31,133,.25),inset 1px 1px 1px #fff;" +
         (s.started ? "background:linear-gradient(145deg,#e6ffe9,#d3f7dc);color:#166534" : "background:linear-gradient(145deg,#fff,#f8ecff);color:#6030be"),
 
-      nav: [...visibleIds.map(i => ({ label: navItems[i][0], icon: navItems[i][1], id: i })), ...LINKS].map((it) => {
+      nav: [...visibleIds.map(i => i === 2 ? { label: navItems[i][0], icon: navItems[i][1], href: "POS.dc.html" } : { label: navItems[i][0], icon: navItems[i][1], id: i }), ...LINKS].map((it) => {
         const on = it.href ? s.frame === it.href : (!s.frame && s.nav === it.id);
         const label = it.label, icon = it.icon;
         return { label, icon,
